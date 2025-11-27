@@ -70,7 +70,7 @@ export default function DailyOutreach() {
             {/* Find Leads Section */}
             <div>
               <div className="px-2 mb-2 text-xs font-bold text-gray-400 uppercase tracking-wider">
-                  Find Leads
+                  Find Deals
               </div>
               <div className="space-y-1">
                   <a href="#" title="Latest MLS deals based on propensity to sell, Key words and percentage off ARV." className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
