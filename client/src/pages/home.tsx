@@ -228,19 +228,19 @@ export default function Home() {
                         </div>
                         <div className="text-[11px] text-gray-400 mt-1 font-normal">Type / Br / Ba / Garage / Built / Ft² / Lot / Pool</div>
                     </div>
-                    <div className="w-40 px-4">
+                    <div className="w-48 px-4">
                         <div className="flex items-center gap-2">
                             <div className="text-xs text-gray-600 font-bold">List Price</div>
                             <HelpCircle className="w-3 h-3 text-gray-400" />
                         </div>
-                        <div className="text-[11px] text-gray-400 mt-1 font-normal">Propensity to sale score</div>
+                        <div className="text-[11px] text-gray-400 mt-1 font-normal whitespace-nowrap">Propensity to sale score</div>
                     </div>
-                    <div className="w-56 px-4">
+                    <div className="w-64 px-4">
                         <div className="flex items-center gap-2">
                              <div className="text-xs text-gray-600 font-bold">Last Open / Last Communication</div>
                         </div>
                     </div>
-                    <div className="w-48 px-4 text-right">
+                    <div className="w-56 px-4 text-right">
                          <div className="flex items-center justify-end gap-2">
                             <div className="text-xs text-gray-600 font-bold">Offer Status</div>
                             <HelpCircle className="w-3 h-3 text-gray-400" />
@@ -283,20 +283,20 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div className="w-40 px-4 flex flex-col justify-start">
+                        <div className="w-48 px-4 flex flex-col justify-start">
                             <div className="font-bold text-gray-900 text-base mb-1">$390,000</div>
                             <div className="text-xs text-gray-400 mb-1">Propensity Score: N/A</div>
                             <div className="text-xs text-gray-500 font-medium">Source: <span className="font-bold text-gray-900">Off Market</span></div>
                         </div>
 
-                        <div className="w-56 px-4 flex flex-col justify-start">
+                        <div className="w-64 px-4 flex flex-col justify-start">
                             <div className="text-[11px] text-gray-400">
                                 LOD: 11/26/25<br/>
                                 LCD: 11/21/25
                             </div>
                         </div>
 
-                        <div className="w-48 px-4 flex flex-col items-end text-right">
+                        <div className="w-56 px-4 flex flex-col items-end text-right">
                             <button className="flex items-center gap-2 text-xs font-medium text-blue-600 hover:text-blue-800">
                                 <span className="font-bold">30%</span> Offer Terms Sent <ChevronDown className="w-3 h-3" />
                             </button>
@@ -325,7 +325,6 @@ export default function Home() {
                 </div>
 
             </div>
-          </div>
 
         </main>
       </div>
