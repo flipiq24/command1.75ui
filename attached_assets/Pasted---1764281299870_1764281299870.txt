@@ -1,0 +1,128 @@
+{/* ===================================================================================== */}
+        {/* HEADER SECTION (With Specific Tooltips) */}
+        {/* ===================================================================================== */}
+        <div className="bg-white p-8 rounded-b-xl border-b border-gray-200 shadow-sm mb-6">
+            
+            {/* TOP ROW */}
+            <div className="flex justify-between items-end mb-10">
+                <div>
+                    <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Nov 27, 2025 — Today's Outreach Plan!</h2>
+                    
+                    {/* PROGRESS BAR TOOLTIP */}
+                    <div className="space-y-2 group relative cursor-help w-fit">
+                        <p className="text-sm text-gray-500 font-medium">
+                            You have completed <span className="font-bold text-[#FF6600]">31%</span> of today's Outreach. <span className="text-gray-300">ⓘ</span>
+                        </p>
+                        <div className="w-64 bg-gray-100 h-1.5 rounded-full overflow-hidden">
+                            <div className="bg-[#FF6600] h-full rounded-full" style={{ width: '31%' }}></div>
+                        </div>
+                        <div className="absolute top-full left-0 mt-2 w-72 bg-gray-900 text-white text-xs p-3 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
+                            Your daily outreach progress based on agent connections, priority calls, and top of mind campaigns completed.
+                        </div>
+                    </div>
+                </div>
+
+                {/* GOAL WIDGET TOOLTIP */}
+                <div className="text-right group relative cursor-help">
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">New Agent Relationships</span>
+                    <div className="flex items-baseline justify-end gap-1">
+                        <span className="text-3xl font-black text-[#FF6600]">1</span>
+                        <span className="text-xl font-bold text-[#FF6600]">/ 5</span>
+                    </div>
+                    <div className="text-xs text-gray-400 mt-1">Relationships Built</div>
+                    
+                    <div className="absolute top-full right-0 mt-2 w-72 bg-gray-900 text-white text-xs p-4 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-left">
+                        <p className="font-bold text-[#FF6600] mb-2">New Agent Relationships</p>
+                        <p className="mb-2">Goal: 5 per day (100+ relationships/year)</p>
+                        <p className="mb-2">Increments when an agent's relationship status changes from "Cold" or "Unassigned" to "Warm" or "Hot".</p>
+                        <p className="text-gray-400 italic">Click to filter and see relationships built today.</p>
+                    </div>
+                </div>
+            </div>
+
+            {/* ===================================================================================== */}
+            {/* CIRCLE TOOLTIPS (Specific Updates) */}
+            {/* ===================================================================================== */}
+            <div className="grid grid-cols-4 gap-8 text-center">
+              
+              {/* 1. 30 NEW AGENT CALLS */}
+              <div 
+                onClick={() => setActiveSection('connections')}
+                className="flex flex-col items-center group cursor-pointer transition-all"
+              >
+                <div className="relative w-24 h-24 mb-3">
+                    <svg className="w-full h-full transform -rotate-90">
+                        <circle cx="48" cy="48" r="40" stroke="#f3f4f6" strokeWidth="6" fill="transparent" />
+                        <circle cx="48" cy="48" r="40" stroke="#f97316" strokeWidth="6" fill="transparent" strokeDasharray="83 251.2" strokeLinecap="round" />
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center text-2xl font-bold text-gray-900">10<span className="text-sm text-gray-400">/30</span></div>
+                </div>
+                
+                {/* TOOLTIP 1 */}
+                <div className="text-xs text-gray-400 mb-3 cursor-help hover:text-gray-600 transition group relative">
+                    Status: 10/30/30 ⓘ
+                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-center">
+                        Increments ONLY when Dialpad confirms a connected conversation (not attempts, not voicemails).
+                    </div>
+                </div>
+                
+                <button className="w-full bg-orange-500 text-white text-xs font-bold py-2 px-4 rounded-lg shadow-sm animate-pulse">Start Calling</button>
+              </div>
+
+              {/* 2. PRIORITY CALLS */}
+              <div onClick={() => setActiveSection('priority')} className="flex flex-col items-center group cursor-pointer">
+                <div className="relative w-24 h-24 mb-3">
+                    <svg className="w-full h-full transform -rotate-90">
+                        <circle cx="48" cy="48" r="40" stroke="#f3f4f6" strokeWidth="6" fill="transparent" />
+                        <circle cx="48" cy="48" r="40" stroke="#ef4444" strokeWidth="6" fill="transparent" strokeDasharray="100 251.2" strokeLinecap="round" />
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center text-2xl font-bold text-gray-900">2<span className="text-sm text-gray-400">/5</span></div>
+                </div>
+
+                {/* TOOLTIP 2 */}
+                <div className="text-xs text-gray-400 mb-3 cursor-help hover:text-gray-600 transition group relative">
+                    Status: 2/5/5 ⓘ
+                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-center">
+                        Connected calls only to Priority-status agents (not attempts, not voicemails).
+                    </div>
+                </div>
+
+                <button className="w-full bg-white border border-red-300 text-red-600 text-xs font-bold py-2 px-4 rounded-lg">Call Priority</button>
+              </div>
+
+              {/* 3. CAMPAIGNS */}
+              <div onClick={() => setActiveSection('topOfMind')} className="flex flex-col items-center group cursor-pointer">
+                <div className="relative w-24 h-24 mb-3">
+                    <svg className="w-full h-full transform -rotate-90">
+                        <circle cx="48" cy="48" r="40" stroke="#f3f4f6" strokeWidth="6" fill="transparent" />
+                        <circle cx="48" cy="48" r="40" stroke="#3b82f6" strokeWidth="6" fill="transparent" strokeDasharray="50 251.2" strokeLinecap="round" />
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center text-2xl font-bold text-gray-900">2<span className="text-sm text-gray-400">/10</span></div>
+                </div>
+
+                {/* TOOLTIP 3 */}
+                <div className="text-xs text-gray-400 mb-3 cursor-help hover:text-gray-600 transition group relative">
+                    Status: 2/10/10 ⓘ
+                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-center">
+                        Increments when text/email/voicemail is sent to Hot/Warm/Cold agents.
+                    </div>
+                </div>
+
+                <button className="w-full bg-white border border-blue-400 text-blue-600 text-xs font-bold py-2 px-4 rounded-lg">Send Campaigns</button>
+              </div>
+
+              {/* 4. NEW LEADS */}
+              <div className="flex flex-col items-center group opacity-40">
+                <div className="relative w-24 h-24 mb-3">
+                    <svg className="w-full h-full transform -rotate-90">
+                        <circle cx="48" cy="48" r="40" stroke="#f3f4f6" strokeWidth="6" fill="transparent" />
+                        <circle cx="48" cy="48" r="40" stroke="#9ca3af" strokeWidth="6" fill="transparent" strokeDasharray="0 251.2" />
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center text-2xl font-bold text-gray-900">0<span className="text-sm text-gray-400">/0</span></div>
+                </div>
+                <div className="text-xs text-gray-400 mb-3">Status: 0/0/0 ⓘ</div>
+                <button className="w-full bg-white border border-gray-300 text-gray-400 text-xs font-bold py-2 px-4 rounded-lg cursor-not-allowed">Process Leads</button>
+              </div>
+
+            </div>
+        </div>

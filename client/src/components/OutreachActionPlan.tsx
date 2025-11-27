@@ -150,7 +150,7 @@ export default function OutreachActionPlan({
               "px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2",
               isConnectionsComplete 
                 ? "bg-green-50 text-green-600 border border-green-200"
-                : "bg-[#FF6B4A] text-white shadow-lg hover:bg-[#e55a3a]"
+                : "bg-red-500 text-white shadow-lg shadow-red-500/50 animate-pulse hover:bg-red-600"
             )}
             data-testid="button-new-relationships"
           >
