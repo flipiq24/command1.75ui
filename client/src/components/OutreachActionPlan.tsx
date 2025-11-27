@@ -163,7 +163,7 @@ export default function OutreachActionPlan({
             ) : (
               <>
                 <Phone className="w-4 h-4" />
-                <span>Call New Agent Relationships</span>
+                <span>New Agent Relationships</span>
               </>
             )}
           </button>
