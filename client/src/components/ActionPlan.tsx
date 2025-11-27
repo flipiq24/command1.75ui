@@ -134,12 +134,12 @@ export default function ActionPlan() {
         </div>
 
         <div className="text-right">
-            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Daily Offer Goal</span>
+            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Daily Offer Goal</span>
             <div className="flex items-baseline justify-end gap-1">
-                <span className="text-3xl font-black text-[#FF6600]">1</span>
-                <span className="text-xl font-bold text-[#FF6600]">/ 3</span>
+                <span className="text-4xl font-black text-[#FF6600]">1</span>
+                <span className="text-2xl font-bold text-[#FF6600]">/ 3</span>
             </div>
-            <div className="text-xs text-gray-400 mt-1">Offers Made</div>
+            <div className="text-sm text-gray-400 mt-1">Offers Made</div>
         </div>
 
       </div>
