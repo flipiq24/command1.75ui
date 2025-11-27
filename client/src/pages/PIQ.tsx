@@ -371,103 +371,63 @@ export default function PIQ() {
               </div>
 
               {showIQPanel && (
-                <div className="mt-6 bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-                  <div className="flex items-center gap-6 mb-6">
-                    <div className="flex items-center gap-3">
-                      <div className="relative">
-                        <Lightbulb className="w-6 h-6 text-[#FF6600] animate-pulse" />
-                        <div className="absolute inset-0 w-6 h-6 bg-[#FF6600] rounded-full opacity-30 animate-ping"></div>
-                      </div>
-                      <h2 className="text-xl font-bold text-[#FF6600]">iQ Property Intelligence</h2>
+                <div className="mt-6 bg-white border border-gray-200 rounded-xl p-6 shadow-sm flex flex-col">
+                  <div className="flex items-center gap-2 mb-6 border-b border-gray-100 pb-4">
+                    <Lightbulb className="w-5 h-5 text-gray-900" />
+                    <h3 className="text-lg font-bold text-gray-900 uppercase tracking-tight">iQ Property Intelligence</h3>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-y-4 gap-x-8 mb-8 text-sm">
+                    <div>
+                      <span className="block text-xs font-bold text-gray-400 uppercase">Status</span>
+                      <span className="font-bold text-gray-900">Active</span>
                     </div>
-                    <div className="flex gap-2">
-                      <button 
-                        onClick={() => setIQViewMode('stats')}
-                        className={cn(
-                          "px-4 py-1.5 text-xs font-medium rounded-lg border transition",
-                          iQViewMode === 'stats' 
-                            ? "bg-[#FF6600] text-white border-[#FF6600]" 
-                            : "bg-white text-[#FF6600] border-gray-200 hover:bg-orange-50"
-                        )}
-                        data-testid="button-piq-stats"
-                      >
-                        Stats
-                      </button>
-                      <button 
-                        onClick={() => setIQViewMode('description')}
-                        className={cn(
-                          "px-4 py-1.5 text-xs font-medium rounded-lg border transition",
-                          iQViewMode === 'description' 
-                            ? "bg-[#FF6600] text-white border-[#FF6600]" 
-                            : "bg-white text-[#FF6600] border-gray-200 hover:bg-orange-50"
-                        )}
-                        data-testid="button-piq-description"
-                      >
-                        Description
-                      </button>
+                    <div>
+                      <span className="block text-xs font-bold text-gray-400 uppercase">Days on Market</span>
+                      <span className="font-bold text-gray-900">94 Days</span>
+                    </div>
+                    <div>
+                      <span className="block text-xs font-bold text-gray-400 uppercase">Price to Value</span>
+                      <span className="font-bold text-green-600">72% PTFV</span>
+                    </div>
+                    <div>
+                      <span className="block text-xs font-bold text-gray-400 uppercase">Propensity</span>
+                      <span className="font-bold text-red-600">High (7/8)</span>
                     </div>
                   </div>
 
-                  <div className="space-y-2 text-sm mb-8">
-                    <div>Status: <span className="text-gray-900 font-bold">Active</span></div>
-                    <div>Days on Market: <span className="text-gray-900 font-bold">45</span></div>
-                    <div>Price to Future Value: <span className="text-gray-900 font-bold">78%</span></div>
-                    <div>Propensity Score: <span className="text-gray-900 font-bold">6</span></div>
-                    <div>Agent: <span className="text-gray-900 font-bold">Sarah Mitchell</span> (Unassigned)</div>
-                    <div>Relationship Status: <span className="text-gray-900 font-bold">Warm</span></div>
-                    <div>Investor Source Count: <a href="#" className="text-blue-600 underline hover:text-blue-800">View Agent</a></div>
-                    <div>Last Communication Date: <span className="text-gray-900 font-bold">11/20/2025</span></div>
-                    <div>Last Address Discussed: <span className="text-gray-900 font-bold">8742 Oak Street, Riverside</span></div>
-                  </div>
-
-                  <div className="mb-6">
-                    <h3 className="text-lg font-bold text-gray-900 mb-4">Why this Property</h3>
-                    <ul className="space-y-2 text-sm text-gray-700">
-                      <li className="flex items-start gap-2">
-                        <span className="text-gray-400">•</span>
-                        <span>Aged listing (≥70 DOM) with strong discount potential.</span>
+                  <div className="mb-8">
+                    <h4 className="font-bold text-gray-900 mb-3 text-sm uppercase">Why This Property?</h4>
+                    <ul className="space-y-3">
+                      <li className="flex items-start gap-3 text-sm text-gray-700">
+                        <div className="w-1.5 h-1.5 rounded-full bg-black mt-1.5 shrink-0"></div>
+                        <span>
+                          <strong>Aged Listing:</strong> Property has been sitting for <span className="font-bold">94 days</span>. Seller motivation is likely increasing.
+                        </span>
                       </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-gray-400">•</span>
-                        <div>
-                          <span>Keywords detected:</span>
-                          <div className="flex flex-wrap gap-2 mt-2">
-                            <span className="px-3 py-1 bg-white text-red-600 text-xs rounded-full border border-red-300 cursor-pointer hover:bg-red-50 hover:border-red-400 transition">repairs</span>
-                            <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">investors</span>
-                            <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">Investment</span>
-                            <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">as-is</span>
-                            <span className="px-3 py-1 bg-white text-blue-600 text-xs rounded-full border border-blue-300 cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition">investor</span>
-                            <span className="px-3 py-1 bg-white text-blue-600 text-xs rounded-full border border-blue-300 cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition">estate</span>
-                            <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">opportunity</span>
-                            <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">Renovation</span>
-                          </div>
-                        </div>
+                      <li className="flex items-start gap-3 text-sm text-gray-700">
+                        <div className="w-1.5 h-1.5 rounded-full bg-black mt-1.5 shrink-0"></div>
+                        <span>
+                          <strong>Distress Signals:</strong> Detected <span className="text-red-600 font-bold">Notice of Default</span> and <span className="text-red-600 font-bold">Tax Delinquency</span>.
+                        </span>
                       </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-gray-400">•</span>
-                        <span>Currently unassigned and no active offer status — open field opportunity.</span>
+                      <li className="flex items-start gap-3 text-sm text-gray-700">
+                        <div className="w-1.5 h-1.5 rounded-full bg-black mt-1.5 shrink-0"></div>
+                        <span>
+                          <strong>Open Opportunity:</strong> Listing agent is currently <span className="font-bold">Unassigned</span>. Open field for a new relationship.
+                        </span>
                       </li>
                     </ul>
                   </div>
 
-                  <div className="mb-6">
-                    <span className="text-sm text-gray-700">Let's dive in to the property - </span>
-                    <button className="text-blue-600 underline font-medium hover:text-blue-800 ml-1" data-testid="button-piq-dive-yes">Yes</button>
-                    <button className="text-blue-600 underline font-medium hover:text-blue-800 ml-3" data-testid="button-piq-dive-no">No</button>
-                  </div>
-
-                  <div className="border-t border-gray-200 pt-6">
-                    <div className="flex items-center gap-3 bg-gray-50 rounded-full px-4 py-3 border border-gray-200">
-                      <Plus className="w-5 h-5 text-gray-400" />
-                      <input 
-                        type="text" 
-                        placeholder="Ask anything" 
-                        className="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none"
-                        data-testid="input-piq-ask-anything"
-                      />
-                      <Mic className="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-600" />
-                      <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center cursor-pointer hover:bg-blue-700">
-                        <MessageSquare className="w-4 h-4 text-white" />
+                  <div className="mt-auto border-t border-gray-100 pt-6">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-gray-600">Ready to review this deal?</span>
+                      <div className="flex gap-3">
+                        <button className="text-gray-400 hover:text-gray-600 font-medium text-sm px-4 py-2" data-testid="button-piq-skip">No, Skip</button>
+                        <button className="bg-black hover:bg-gray-800 text-white text-sm font-bold px-6 py-2 rounded-lg shadow-sm transition" data-testid="button-piq-dive-in">
+                          Yes, Dive In →
+                        </button>
                       </div>
                     </div>
                   </div>
