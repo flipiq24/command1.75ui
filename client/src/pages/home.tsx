@@ -31,52 +31,38 @@ interface Deal {
   isHot?: boolean;
 }
 
+const getPropensityScore = (propensity: string | string[]) => {
+  if (!Array.isArray(propensity)) return 0;
+  
+  let score = 0;
+  propensity.forEach(p => {
+    const item = PROPENSITY_LEGEND.find(l => l.indicator === p);
+    if (item) score += item.points;
+  });
+  return score;
+};
+
 const SAMPLE_DEALS: Deal[] = [
   {
     id: 1,
     address: "2011 Windsor Cir, Duarte, CA 91010",
     specs: "Single Family Residential / 3 Br / 0 Ba / 0 Gar / 1981 / 1,654 ft² / 2,396 ft² / Pool:N/A",
     price: "$500,000",
-    propensity: "N/A",
+    propensity: ["Notice of Default (NOD)", "Tax Delinquency"], // 6 + 5 = 11
     source: "Off Market",
-    type: "new",
+    type: "hot",
     statusPercent: "0%",
     status: "None",
     lastOpen: "11/26/25",
-    lastCalled: "11/26/25"
-  },
-  {
-    id: 2,
-    address: "420 Robinson, Bakersfield, CA 93305",
-    specs: "Single Family / 3 Br / 1 Ba / 0 Gar / 1959 / 1,013 ft² / 4,621 ft² / Pool:None",
-    price: "$75,000",
-    propensity: "N/A",
-    source: "MLS",
-    type: "new",
-    statusPercent: "0%",
-    status: "None",
-    lastOpen: "11/26/25",
-    lastCalled: "N/A"
-  },
-  {
-    id: 3,
-    address: "10573 Larch, Bloomington, CA 92316",
-    specs: "Single Family / 2 Br / 1 Ba / 4 Gar / 1940 / 1,951 ft² / 36,600 ft² / Pool:None",
-    price: "$975,000",
-    propensity: "N/A",
-    source: "MLS",
-    type: "cold",
-    statusPercent: "10%",
-    status: "Initial Contact Started",
-    lastOpen: "11/25/25",
-    lastCalled: "11/24/25"
+    lastCalled: "11/26/25",
+    isHot: true
   },
   {
     id: 4,
     address: "2842 Rosarita St, San Bernardino, CA 92407",
     specs: "Single Family Residential / 3 Br / 2 Ba / 1 Gar / 1990 / 1,169 ft² / 7,362 ft² / Pool:N/A",
     price: "$390,000",
-    propensity: ["Owned over 15 years", "Trust owned"],
+    propensity: ["Long Term Owner (20+ Yrs)", "Corporate / Trust Owned"], // 2 + 1 = 3
     source: "Off Market",
     type: "hot",
     statusPercent: "30%",
@@ -86,11 +72,38 @@ const SAMPLE_DEALS: Deal[] = [
     isHot: true
   },
   {
+    id: 101,
+    address: "8832 Elm Street, Rancho Cucamonga, CA 91730",
+    specs: "Single Family / 4 Br / 2 Ba / 2 Gar / 1975 / 2,100 ft² / 8,500 ft²",
+    price: "$620,000",
+    propensity: ["Notice of Trustee Sale (NTS)", "Vacant Property"], // 8 + 2 = 10
+    source: "MLS",
+    type: "hot",
+    statusPercent: "10%",
+    status: "Initial Contact Started",
+    lastOpen: "11/27/25",
+    lastCalled: "11/26/25",
+    isHot: true
+  },
+  {
+    id: 102,
+    address: "1245 Oak Avenue, Ontario, CA 91764",
+    specs: "Single Family / 3 Br / 1 Ba / 1 Gar / 1955 / 1,200 ft² / 6,000 ft²",
+    price: "$450,000",
+    propensity: ["Affidavit of Death", "High Equity (>50%)"], // 5 + 2 = 7
+    source: "Wholesaler",
+    type: "warm",
+    statusPercent: "20%",
+    status: "Continue to Follow",
+    lastOpen: "11/25/25",
+    lastCalled: "11/20/25"
+  },
+  {
     id: 5,
     address: "40591 Chantemar Way, Temecula, CA 92591",
     specs: "Single Family Residential / 5 Br / 3 Ba / 1 Gar / 2000 / 2,558 ft² / 6,098 ft² / Pool:N/A",
     price: "$580,000",
-    propensity: "N/A",
+    propensity: ["Expired Listing", "High Mortgage / Debt"], // 3 + 2 = 5
     source: "Off Market",
     type: "warm",
     statusPercent: "30%",
@@ -99,11 +112,50 @@ const SAMPLE_DEALS: Deal[] = [
     lastCalled: "11/18/25"
   },
   {
+    id: 3,
+    address: "10573 Larch, Bloomington, CA 92316",
+    specs: "Single Family / 2 Br / 1 Ba / 4 Gar / 1940 / 1,951 ft² / 36,600 ft² / Pool:None",
+    price: "$975,000",
+    propensity: ["Involuntary Liens", "Non-Owner Occupied"], // 3 + 2 = 5
+    source: "MLS",
+    type: "cold",
+    statusPercent: "10%",
+    status: "Initial Contact Started",
+    lastOpen: "11/25/25",
+    lastCalled: "11/24/25"
+  },
+  {
+    id: 103,
+    address: "7721 Magnolia Ave, Riverside, CA 92504",
+    specs: "Multi-Family / 6 Units / 1980 / 4,500 ft² / 12,000 ft²",
+    price: "$1,200,000",
+    propensity: ["Owns Multiple Properties", "Free & Clear"], // 1 + 1 = 2
+    source: "Off Market",
+    type: "cold",
+    statusPercent: "0%",
+    status: "None",
+    lastOpen: "11/22/25",
+    lastCalled: "11/15/25"
+  },
+  {
+    id: 2,
+    address: "420 Robinson, Bakersfield, CA 93305",
+    specs: "Single Family / 3 Br / 1 Ba / 0 Gar / 1959 / 1,013 ft² / 4,621 ft² / Pool:None",
+    price: "$75,000",
+    propensity: "N/A", // 0
+    source: "MLS",
+    type: "new",
+    statusPercent: "0%",
+    status: "None",
+    lastOpen: "11/26/25",
+    lastCalled: "N/A"
+  },
+  {
     id: 6,
     address: "230 W Knepp Avenue, Fullerton, CA 92832",
     specs: "Other (L) / 8 Br / 4 Ba / 4 Gar / 1958 / 3,752 ft² / 6,534 ft² / Pool:None",
     price: "$1,599,000",
-    propensity: "N/A",
+    propensity: ["Transferred in Last 2 Years"], // 0
     source: "MLS",
     type: "new",
     statusPercent: "0%",
@@ -116,7 +168,7 @@ const SAMPLE_DEALS: Deal[] = [
     address: "15620 Ramona Rd, Apple Valley, CA 92307",
     specs: "Single Family Residential / 4 Br / 3 Ba / 2 Gar / 1980 / 2,134 ft² / 43,473 ft² / Pool:N/A",
     price: "$375,000",
-    propensity: "N/A",
+    propensity: ["Bankruptcy / Judgment"], // 4
     source: "Off Market",
     type: "hot",
     statusPercent: "100%",
@@ -173,7 +225,14 @@ const getPropensityColor = (text: string) => {
 
 export default function Home() {
   const [activeFilter, setActiveFilter] = useState<DealType | 'goal' | 'completed' | null>(null);
-  const [deals, setDeals] = useState<Deal[]>(SAMPLE_DEALS);
+  // Sort deals by propensity score (descending)
+  const [deals, setDeals] = useState<Deal[]>(() => {
+    return [...SAMPLE_DEALS].sort((a, b) => {
+      const scoreA = getPropensityScore(a.propensity);
+      const scoreB = getPropensityScore(b.propensity);
+      return scoreB - scoreA;
+    });
+  });
 
   const handleStatusChange = (id: number, newStatus: string, newPercent: string) => {
     setDeals(deals.map(deal => 
@@ -379,19 +438,30 @@ export default function Home() {
                             <div className="w-2/12 px-4 flex flex-col items-center text-center">
                                 <div className="font-bold text-gray-900 text-base mb-1">{deal.price}</div>
                                 {Array.isArray(deal.propensity) ? (
-                                  <div className="flex flex-wrap justify-center gap-1 mb-1">
-                                    <div className="text-xs text-gray-400 mb-0.5 w-full">Propensity Score:</div>
-                                    {deal.propensity.map((item, idx) => (
-                                      <div key={idx} className="group relative cursor-help">
-                                        <span className={cn("text-[11px] font-bold px-1 py-0.5 inline-block", getPropensityColor(item))}>
-                                          {item}
-                                        </span>
-                                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-center">
-                                          {item}
+                                  <>
+                                    <div className="flex items-center gap-1 mb-1.5">
+                                      <span className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Score:</span>
+                                      <span className={cn(
+                                        "text-sm font-bold",
+                                        getPropensityScore(deal.propensity) >= 6 ? "text-red-600" : 
+                                        getPropensityScore(deal.propensity) >= 3 ? "text-green-600" : "text-blue-600"
+                                      )}>
+                                        {getPropensityScore(deal.propensity)}
+                                      </span>
+                                    </div>
+                                    <div className="flex flex-wrap justify-center gap-1 mb-1">
+                                      {deal.propensity.map((item, idx) => (
+                                        <div key={idx} className="group relative cursor-help">
+                                          <span className={cn("text-[10px] font-bold px-1 py-0.5 inline-block", getPropensityColor(item))}>
+                                            {item}
+                                          </span>
+                                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-center">
+                                            {item}
+                                          </div>
                                         </div>
-                                      </div>
-                                    ))}
-                                  </div>
+                                      ))}
+                                    </div>
+                                  </>
                                 ) : (
                                   <div className="text-xs text-gray-400 mb-1">Propensity Score: {deal.propensity}</div>
                                 )}
