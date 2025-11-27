@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
 import ActionPlan, { DealType } from "@/components/ActionPlan";
@@ -20,6 +20,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface Deal {
   id: number;
@@ -47,142 +48,6 @@ const getPropensityScore = (propensity: string | string[]) => {
   return score;
 };
 
-const SAMPLE_DEALS: Deal[] = [
-  {
-    id: 1,
-    address: "2011 Windsor Cir, Duarte, CA 91010",
-    specs: "Single Family Residential / 3 Br / 0 Ba / 0 Gar / 1981 / 1,654 ft² / 2,396 ft² / Pool:N/A",
-    price: "$500,000",
-    propensity: ["Notice of Default (NOD)", "Tax Delinquency"], // 6 + 5 = 11
-    source: "Off Market",
-    type: "hot",
-    statusPercent: "0%",
-    status: "None",
-    lastOpen: "11/26/25",
-    lastCalled: "11/26/25",
-    isHot: true
-  },
-  {
-    id: 4,
-    address: "2842 Rosarita St, San Bernardino, CA 92407",
-    specs: "Single Family Residential / 3 Br / 2 Ba / 1 Gar / 1990 / 1,169 ft² / 7,362 ft² / Pool:N/A",
-    price: "$390,000",
-    propensity: ["Long Term Owner (20+ Yrs)", "Corporate / Trust Owned"], // 2 + 1 = 3
-    source: "Off Market",
-    type: "hot",
-    statusPercent: "30%",
-    status: "Offer Terms Sent",
-    lastOpen: "11/26/25",
-    lastCalled: "11/21/25",
-    isHot: true
-  },
-  {
-    id: 101,
-    address: "8832 Elm Street, Rancho Cucamonga, CA 91730",
-    specs: "Single Family / 4 Br / 2 Ba / 2 Gar / 1975 / 2,100 ft² / 8,500 ft²",
-    price: "$620,000",
-    propensity: ["Notice of Trustee Sale (NTS)", "Vacant Property"], // 8 + 2 = 10
-    source: "MLS",
-    type: "hot",
-    statusPercent: "10%",
-    status: "Initial Contact Started",
-    lastOpen: "11/27/25",
-    lastCalled: "11/26/25",
-    isHot: true
-  },
-  {
-    id: 102,
-    address: "1245 Oak Avenue, Ontario, CA 91764",
-    specs: "Single Family / 3 Br / 1 Ba / 1 Gar / 1955 / 1,200 ft² / 6,000 ft²",
-    price: "$450,000",
-    propensity: ["Affidavit of Death", "High Equity (>50%)"], // 5 + 2 = 7
-    source: "Wholesaler",
-    type: "warm",
-    statusPercent: "20%",
-    status: "Continue to Follow",
-    lastOpen: "11/25/25",
-    lastCalled: "11/20/25"
-  },
-  {
-    id: 5,
-    address: "40591 Chantemar Way, Temecula, CA 92591",
-    specs: "Single Family Residential / 5 Br / 3 Ba / 1 Gar / 2000 / 2,558 ft² / 6,098 ft² / Pool:N/A",
-    price: "$580,000",
-    propensity: ["Expired Listing", "High Mortgage / Debt"], // 3 + 2 = 5
-    source: "Off Market",
-    type: "warm",
-    statusPercent: "30%",
-    status: "Offer Terms Sent",
-    lastOpen: "11/26/25",
-    lastCalled: "11/18/25"
-  },
-  {
-    id: 3,
-    address: "10573 Larch, Bloomington, CA 92316",
-    specs: "Single Family / 2 Br / 1 Ba / 4 Gar / 1940 / 1,951 ft² / 36,600 ft² / Pool:None",
-    price: "$975,000",
-    propensity: ["Involuntary Liens", "Non-Owner Occupied"], // 3 + 2 = 5
-    source: "MLS",
-    type: "cold",
-    statusPercent: "10%",
-    status: "Initial Contact Started",
-    lastOpen: "11/25/25",
-    lastCalled: "11/24/25"
-  },
-  {
-    id: 103,
-    address: "7721 Magnolia Ave, Riverside, CA 92504",
-    specs: "Multi-Family / 6 Units / 1980 / 4,500 ft² / 12,000 ft²",
-    price: "$1,200,000",
-    propensity: ["Owns Multiple Properties", "Free & Clear"], // 1 + 1 = 2
-    source: "Off Market",
-    type: "cold",
-    statusPercent: "0%",
-    status: "None",
-    lastOpen: "11/22/25",
-    lastCalled: "11/15/25"
-  },
-  {
-    id: 2,
-    address: "420 Robinson, Bakersfield, CA 93305",
-    specs: "Single Family / 3 Br / 1 Ba / 0 Gar / 1959 / 1,013 ft² / 4,621 ft² / Pool:None",
-    price: "$75,000",
-    propensity: "N/A", // 0
-    source: "MLS",
-    type: "new",
-    statusPercent: "0%",
-    status: "None",
-    lastOpen: "11/26/25",
-    lastCalled: "N/A"
-  },
-  {
-    id: 6,
-    address: "230 W Knepp Avenue, Fullerton, CA 92832",
-    specs: "Other (L) / 8 Br / 4 Ba / 4 Gar / 1958 / 3,752 ft² / 6,534 ft² / Pool:None",
-    price: "$1,599,000",
-    propensity: ["Transferred in Last 2 Years"], // 0
-    source: "MLS",
-    type: "new",
-    statusPercent: "0%",
-    status: "None",
-    lastOpen: "11/27/25",
-    lastCalled: "N/A"
-  },
-  {
-    id: 7,
-    address: "15620 Ramona Rd, Apple Valley, CA 92307",
-    specs: "Single Family Residential / 4 Br / 3 Ba / 2 Gar / 1980 / 2,134 ft² / 43,473 ft² / Pool:N/A",
-    price: "$375,000",
-    propensity: ["Bankruptcy / Judgment"], // 4
-    source: "Off Market",
-    type: "hot",
-    statusPercent: "100%",
-    status: "Acquired",
-    lastOpen: "11/24/25",
-    lastCalled: "10/27/25 - Tony Fletcher",
-    isHot: true
-  }
-];
 
 const STATUS_OPTIONS = [
   { percent: "100%", label: "Acquired" },
@@ -231,43 +96,65 @@ const getPropensityColor = (text: string) => {
 export default function Home() {
   const [activeFilter, setActiveFilter] = useState<DealType | 'goal' | 'completed' | null>(null);
   const [selectedDealIds, setSelectedDealIds] = useState<number[]>([]);
+  const queryClient = useQueryClient();
 
-  // Sort deals by propensity score (descending)
-  const [deals, setDeals] = useState<Deal[]>(() => {
-    return [...SAMPLE_DEALS].sort((a, b) => {
+  const { data: deals = [], isLoading } = useQuery({
+    queryKey: ['deals'],
+    queryFn: async () => {
+      const response = await fetch('/api/deals');
+      if (!response.ok) throw new Error('Failed to fetch deals');
+      return response.json();
+    }
+  });
+
+  const updateDealMutation = useMutation({
+    mutationFn: async ({ id, updates }: { id: number; updates: Partial<Deal> }) => {
+      const response = await fetch(`/api/deals/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updates)
+      });
+      if (!response.ok) throw new Error('Failed to update deal');
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['deals'] });
+    }
+  });
+
+  const handleStatusChange = (id: number, newStatus: string, newPercent: string) => {
+    updateDealMutation.mutate({
+      id,
+      updates: { status: newStatus, statusPercent: newPercent }
+    });
+  };
+
+  const sortedDeals = useMemo(() => {
+    return [...deals].map(deal => ({
+      ...deal,
+      isHot: deal.type === 'hot'
+    })).sort((a, b) => {
       const scoreA = getPropensityScore(a.propensity);
       const scoreB = getPropensityScore(b.propensity);
       return scoreB - scoreA;
     });
-  });
+  }, [deals]);
 
-  const handleStatusChange = (id: number, newStatus: string, newPercent: string) => {
-    setDeals(deals.map(deal => 
-      deal.id === id ? { ...deal, status: newStatus, statusPercent: newPercent } : deal
-    ));
-  };
+  const filteredDeals = useMemo(() => {
+    return sortedDeals.filter(deal => {
+      if (!activeFilter) return true;
+      
+      if (activeFilter === 'goal') {
+        return (deal.status === "Offer Terms Sent" || deal.status === "Contract Submitted");
+      }
 
-  // Filter Logic
-  const filteredDeals = deals.filter(deal => {
-    if (!activeFilter) return true;
-    
-    if (activeFilter === 'goal') {
-      // Filter for "Offer Terms Sent" or "Contract Submitted" status and LOD being today (11/27/25)
-      // Or specifically "1/3" goal logic - which implies we look for deals that contribute to the goal
-      return (deal.status === "Offer Terms Sent" || deal.status === "Contract Submitted");
-    }
+      if (activeFilter === 'completed') {
+        return (deal.type === 'hot' || deal.type === 'warm' || deal.type === 'cold') && deal.status !== 'None';
+      }
 
-    if (activeFilter === 'completed') {
-      // Filter for deals that are considered "completed" follow-ups
-      // Based on the tooltip, this tracks progress on Hot, Warm, and Cold deals.
-      // Let's assume "completed" means they are Hot/Warm/Cold AND have a status other than "None" or "Initial Contact Started" if we want to be strict,
-      // or just that they are Hot/Warm/Cold and have been touched.
-      // For this mockup, let's show Hot, Warm, and Cold deals that have a status.
-      return (deal.type === 'hot' || deal.type === 'warm' || deal.type === 'cold') && deal.status !== 'None';
-    }
-
-    return deal.type === activeFilter;
-  });
+      return deal.type === activeFilter;
+    });
+  }, [sortedDeals, activeFilter]);
 
   const [isBulkActionsOpen, setIsBulkActionsOpen] = useState(false);
 
@@ -473,7 +360,11 @@ export default function Home() {
                 </div>
 
                 {/* Deal Rows */}
-                {filteredDeals.length === 0 ? (
+                {isLoading ? (
+                  <div className="p-8 text-center text-gray-500 text-sm">
+                    Loading deals...
+                  </div>
+                ) : filteredDeals.length === 0 ? (
                   <div className="p-8 text-center text-gray-500 text-sm">
                     No deals found matching the selected filter.
                   </div>
