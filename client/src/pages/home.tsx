@@ -62,12 +62,12 @@ export default function Home() {
                   Today's Plan
               </div>
               <div className="space-y-1">
-                  <a href="#" className="group relative flex items-center justify-between px-3 py-2 text-sm font-medium bg-gray-100 text-gray-900 rounded-lg border border-gray-200 hover:bg-gray-200 transition">
+                  <a href="#" title="Deals in your pipeline that require action today." className="group relative flex items-center justify-between px-3 py-2 text-sm font-medium bg-gray-100 text-gray-900 rounded-lg border border-gray-200 hover:bg-gray-200 transition">
                       <span className="flex items-center gap-3">Deal Review</span>
                       <span className="bg-white text-gray-700 py-0.5 px-2 rounded border border-gray-300 text-xs font-bold shadow-sm">5 / 56</span>
                   </a>
 
-                  <a href="#" className="group relative flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg transition">
+                  <a href="#" title="Target agent calls to be made today designed to build relationships." className="group relative flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg transition">
                       <span className="flex items-center gap-3">Daily Outreach</span>
                       <span className="bg-gray-100 text-gray-600 py-0.5 px-2 rounded border border-gray-200 text-xs font-bold">3 / 30</span>
                   </a>
@@ -80,22 +80,22 @@ export default function Home() {
                   Find Leads
               </div>
               <div className="space-y-1">
-                  <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+                  <a href="#" title="Latest MLS deals based on propensity to sell, Key words and percentage off ARV." className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
                       <div className="text-gray-500"><Zap className="w-5 h-5" /></div>
                       MLS Hot Deals
                   </a>
 
-                  <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+                  <a href="#" title="Use standard MLS filters to find any deal on the MLS." className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
                        <div className="text-gray-500"><Search className="w-5 h-5" /></div>
                       MLS Search
                   </a>
 
-                  <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+                  <a href="#" title="Find investor friendly agents based on how they transact." className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
                        <div className="text-gray-500"><Users className="w-5 h-5" /></div>
                       Agent Search
                   </a>
 
-                  <a href="#" className="group relative flex items-center gap-2 pl-8 pr-3 py-1.5 text-xs font-medium text-gray-500 hover:text-gray-900 transition">
+                  <a href="#" title="My campaigns sent to my agent target list." className="group relative flex items-center gap-2 pl-8 pr-3 py-1.5 text-xs font-medium text-gray-500 hover:text-gray-900 transition">
                       <span className="text-gray-400">└──</span> Campaigns
                   </a>
               </div>
@@ -107,17 +107,17 @@ export default function Home() {
                     Tools
                 </div>
                 <div className="space-y-1">
-                    <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+                    <a href="#" title="Text, call, email and offer tracking." className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
                         <BarChart2 className="w-4 h-4 text-gray-500" />
                         My Stats
                     </a>
                     
-                    <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+                    <a href="#" title="Easily market and wholesale your deals to active buyers." className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
                         <FileText className="w-4 h-4 text-gray-500" />
-                        DisoPro
+                        DispoPro
                     </a>
 
-                    <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+                    <a href="#" title="Full detailed dashboard for Pro users." className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
                         <LayoutDashboard className="w-4 h-4 text-gray-500" />
                         Pro Dashboard
                     </a>
