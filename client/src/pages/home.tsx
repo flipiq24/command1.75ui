@@ -305,10 +305,10 @@ export default function Home() {
                         </div>
 
                         <div className="w-[20%] px-4 flex flex-col items-center justify-start">
-                            <button className="flex items-center gap-2 text-xs font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 border border-blue-200 py-1.5 px-3 rounded-md transition-colors w-full justify-between max-w-[160px]">
+                            <button className="flex items-center gap-2 text-xs font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 border border-blue-200 py-1.5 px-3 rounded-md transition-colors w-full justify-between max-w-[180px] whitespace-nowrap">
                                 <span className="font-bold">30%</span> 
                                 <span>Offer Terms Sent</span>
-                                <ChevronDown className="w-3 h-3" />
+                                <ChevronDown className="w-3 h-3 flex-shrink-0" />
                             </button>
                         </div>
 
