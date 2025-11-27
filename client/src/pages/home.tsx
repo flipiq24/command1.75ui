@@ -168,42 +168,57 @@ export default function Home() {
 
           {/* Action Plan (Gamified) */}
           <div className="mb-8">
-            <h2 className="text-lg font-bold text-gray-900 mb-4">Today's Action Plan</h2>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="flex justify-between items-baseline mb-4">
+                <h2 className="text-lg font-bold text-gray-900">Today's Action Plan</h2>
+                <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">Your Daily Goals</span>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
-                {/* Hot / Warm Deals */}
-                <div className="bg-white p-4 border border-orange-200 border-l-4 border-l-orange-500 rounded shadow-sm">
-                    <div className="text-xs text-gray-500 font-bold uppercase mb-1">Hot / Warm Deals</div>
-                    <div className="flex items-baseline gap-2">
-                        <span className="text-2xl font-bold text-gray-900">0/1</span>
-                        <span className="text-sm text-gray-500">Hot</span>
-                        <span className="text-gray-300">|</span>
-                        <span className="text-2xl font-bold text-gray-900">0/6</span>
-                        <span className="text-sm text-gray-500">Warm</span>
+                {/* Deal Review Card */}
+                <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm relative overflow-hidden group hover:border-blue-400 transition cursor-pointer">
+                    <div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
+                    <div className="flex justify-between items-start mb-2">
+                        <div>
+                            <h3 className="text-lg font-bold text-gray-900">Deal Review</h3>
+                            <p className="text-xs text-gray-500">New leads vs. Reviewed</p>
+                        </div>
+                        <div className="text-right">
+                            <span className="text-2xl font-bold text-gray-900">5</span>
+                            <span className="text-sm text-gray-400">/ 56</span>
+                        </div>
+                    </div>
+                    
+                    <div className="w-full bg-gray-100 rounded-full h-2.5 mb-2">
+                        <div className="bg-blue-500 h-2.5 rounded-full" style={{width: '9%'}}></div>
+                    </div>
+                    <div className="flex justify-between text-[10px] text-gray-400 uppercase font-semibold">
+                        <span>5 Completed</span>
+                        <span>56 Total Deals</span>
                     </div>
                 </div>
 
-                {/* New Agent Calls */}
-                <div className="bg-white p-4 border border-gray-200 border-l-4 border-l-blue-500 rounded shadow-sm">
-                    <div className="text-xs text-gray-500 font-bold uppercase mb-1">New Agent Calls</div>
-                    <div className="flex items-baseline justify-between gap-2">
-                        <span className="text-2xl font-bold text-gray-900">3/30</span>
-                        <button className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded border border-blue-200 font-bold hover:bg-blue-100 cursor-pointer transition-colors">
-                            Start Dialer
-                        </button>
+                {/* Daily Outreach Card */}
+                <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm relative overflow-hidden group hover:border-green-400 transition cursor-pointer">
+                    <div className="absolute top-0 left-0 w-1 h-full bg-green-500"></div>
+                    <div className="flex justify-between items-start mb-2">
+                        <div>
+                            <h3 className="text-lg font-bold text-gray-900">Daily Outreach</h3>
+                            <p className="text-xs text-gray-500">Calls & Agent Follow-ups</p>
+                        </div>
+                        <div className="text-right">
+                            <span className="text-2xl font-bold text-gray-900">3</span>
+                            <span className="text-sm text-gray-400">/ 30</span>
+                        </div>
                     </div>
-                </div>
 
-                {/* New Agent Relationships */}
-                <div className="bg-white p-4 border border-gray-200 rounded shadow-sm">
-                     <div className="text-xs text-gray-500 font-bold uppercase mb-1">New Agent Relationships</div>
-                     <div className="text-2xl font-bold text-gray-900">0/5</div>
-                </div>
-
-                {/* Offers Made Today */}
-                <div className="bg-white p-4 border border-gray-200 rounded shadow-sm">
-                    <div className="text-xs text-gray-500 font-bold uppercase mb-1">Offers Made Today</div>
-                    <div className="text-2xl font-bold text-gray-900">1/3</div>
+                     <div className="w-full bg-gray-100 rounded-full h-2.5 mb-2">
+                        <div className="bg-green-500 h-2.5 rounded-full" style={{width: '10%'}}></div>
+                    </div>
+                    <div className="flex justify-between text-[10px] text-gray-400 uppercase font-semibold">
+                        <span>3 Calls Made</span>
+                        <span>30 To Make</span>
+                    </div>
                 </div>
 
             </div>
