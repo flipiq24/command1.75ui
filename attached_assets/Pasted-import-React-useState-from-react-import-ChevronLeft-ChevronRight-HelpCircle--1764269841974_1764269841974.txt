@@ -1,0 +1,108 @@
+import React, { useState } from 'react';
+import { 
+  ChevronLeft,
+  ChevronRight,
+  HelpCircle,
+  Mail,
+  Phone,
+  MessageSquare,
+  Mic,
+  Bot,
+  Zap
+} from 'lucide-react';
+import { cn } from "@/lib/utils";
+import Sidebar from "@/components/Sidebar";
+
+// ... (Keep your existing Interfaces and Sample Data here) ...
+
+// ============================================
+// MAIN COMPONENT
+// ============================================
+
+export default function DailyOutreach() {
+  // State management
+  const [activeSection, setActiveSection] = useState('connections');
+  const [currentPropertyIndex, setCurrentPropertyIndex] = useState(0);
+  
+  // Progress tracking
+  const [connectionsCompleted, setConnectionsCompleted] = useState(3);
+  const [priorityCallsCompleted, setPriorityCallsCompleted] = useState(1);
+  const [topOfMindCompleted, setTopOfMindCompleted] = useState(2);
+  const [newRelationships, setNewRelationships] = useState(1);
+  
+  // Sample Data Placeholders (Use your actual data arrays here)
+  const currentProperty = {
+      address: "2011 Windsor Cir, Duarte, CA 91010",
+      specs: "SFR / 3 Br / 2 Ba / 1,654 ft² / 1981",
+      price: "$500,000",
+      ptfv: "72%",
+      dom: 94,
+      propensityScore: 7,
+      status: "Active",
+      agent: {
+          name: "Sarah Jenkins",
+          phone: "(909) 555-0123",
+          email: "sarah.j@kw.com",
+          brokerage: "Keller Williams Realty",
+          location: "San Bernardino, CA",
+          relationshipStatus: "Hot",
+          investorSourceCount: 12,
+          lastCommunication: "11/20/25",
+          lastAddressDiscussed: "1845 Oak St, Fontana"
+      },
+      whyChasing: [
+          "Aged listing at 94 DOM — seller likely more motivated",
+          "PTFV at 72% indicates strong discount potential",
+          "NOD + Tax Delinquency = high propensity to sell"
+      ],
+      propensityIndicators: ["Notice of Default", "Tax Delinquency"],
+      keywords: ["as is", "motivated"]
+  };
+
+  // Handlers
+  const handleNextProperty = () => setCurrentPropertyIndex(prev => prev + 1);
+  const handlePrevProperty = () => setCurrentPropertyIndex(prev => Math.max(0, prev - 1));
+  const handleCallConnected = () => {
+    if (activeSection === 'connections') setConnectionsCompleted(prev => Math.min(prev + 1, 30));
+  };
+
+  return (
+    <div className="bg-white text-gray-800 h-screen flex overflow-hidden font-sans">
+      {/* Sidebar */}
+      <Sidebar />
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col overflow-hidden relative z-10 bg-gray-50">
+        
+        {/* ===================================================================================== */}
+        {/* HEADER SECTION - UPDATED WITH GOAL WIDGET */}
+        {/* ===================================================================================== */}
+        <div className="bg-white p-8 rounded-b-xl border-b border-gray-200 shadow-sm mb-6">
+            
+            {/* TOP ROW */}
+            <div className="flex justify-between items-end mb-10">
+                <div>
+                    <div className="text-sm text-gray-500 font-medium mb-1">Wednesday, November 26</div>
+                    <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Daily Outreach Plan</h2>
+                    <p className="text-xs text-gray-500 mt-1 font-medium uppercase tracking-wider">Prioritized Agent Workflow</p>
+                </div>
+
+                {/* RIGHT: RELATIONSHIP GOAL WIDGET (With Tooltip) */}
+                <div className="text-right group relative cursor-help">
+                    
+                    {/* The Visual Widget */}
+                    <div>
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">New Agent Relationships</span>
+                        <div className="flex items-baseline justify-end gap-1">
+                            <span className="text-3xl font-black text-[#FF6600]">{newRelationships}</span>
+                            <span className="text-xl font-bold text-[#FF6600]">/ 5</span>
+                        </div>
+                        
+                        {/* Progress Bar */}
+                        <div className="w-48 bg-orange-100 h-1.5 rounded-full overflow-hidden mt-2 ml-auto">
+                            <div className="bg-[#FF6600] h-full rounded-full" style={{ width: `${(newRelationships / 5) * 100}%` }}></div>
+                        </div>
+                    </div>
+
+                    {/* *** THE TOOLTIP *** */}
+                    <div className="absolute top-full right-
