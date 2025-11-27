@@ -303,17 +303,17 @@ export default function Home() {
                         </div>
 
                         <div className="flex-1 px-4 flex flex-col justify-start">
-                            <div className="flex items-center gap-4 mb-2">
+                            <div className="flex items-center gap-2 mb-2">
                                 <div className="bg-red-50 rounded-full p-1 border border-red-100">
                                     <Flame className="w-4 h-4 text-red-500" />
                                 </div>
                                 <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
                                 <div className="relative">
-                                    <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium py-1 px-3 rounded flex items-center gap-1">
+                                    <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium py-1 px-2 rounded flex items-center gap-1 whitespace-nowrap">
                                         To do: Not set <ChevronDown className="w-3 h-3" />
                                     </button>
                                 </div>
-                                <div className="text-xs text-gray-400">• 0 Critical • 0 Reminders</div>
+                                <div className="text-xs text-gray-400 whitespace-nowrap">• 0 Critical • 0 Reminders</div>
                             </div>
                             <div className="text-[10px] text-gray-400 pl-12">
                                 LOD: 11/26/25<br/>
