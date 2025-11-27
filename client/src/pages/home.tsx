@@ -1,5 +1,5 @@
 import React from 'react';
-import logoUrl from '@assets/flipiQlogo_1764224673557.JPG';
+import logoUrl from '@assets/flipiQlogo_1764227557148.JPG';
 import { 
   LayoutDashboard, 
   ListTodo, 
@@ -49,8 +49,8 @@ export default function Home() {
         <div className="flex flex-col h-full">
           {/* Logo Area */}
           <div className="p-6 flex items-center gap-2">
-             <Zap className="w-8 h-8 text-gray-900 fill-current" />
-             <span className="text-2xl font-bold text-gray-900 tracking-tight">FlipIQ</span>
+             <img src={logoUrl} alt="FlipIQ" className="h-8 object-contain" />
+             {/* <span className="text-2xl font-bold text-gray-900 tracking-tight">FlipIQ</span> */}
           </div>
 
           {/* Scrollable Nav Area */}
