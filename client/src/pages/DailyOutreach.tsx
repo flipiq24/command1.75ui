@@ -5,6 +5,8 @@ import OutreachActionPlan, { OutreachType } from "@/components/OutreachActionPla
 import Sidebar from "@/components/Sidebar";
 import { 
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   MoreVertical,
   Target,
   Flame,
@@ -216,26 +218,28 @@ export default function DailyOutreach() {
 
       <div className="flex-1 flex flex-col overflow-hidden relative z-10">
         
-        <header className="bg-white border-b border-gray-200 py-4 px-6 flex justify-between items-center">
+        <div className="bg-white px-8 py-4 border-b border-gray-200 flex justify-between items-center sticky top-0 z-20">
           <div>
-            <div className="text-sm text-gray-500 font-medium mb-1">Wednesday, November 26</div>
-            <h1 className="text-xl font-bold text-gray-900" data-testid="text-page-title">Welcome, Tony!</h1>
+            <h2 className="text-xl font-bold text-gray-900" data-testid="text-page-title">Daily Outreach</h2>
+            <p className="text-xs text-gray-500">Step-by-step execution mode.</p>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="relative group">
-              <button className="bg-white hover:bg-gray-50 text-black text-sm font-medium px-4 py-2 rounded-lg flex items-center gap-2 transition-colors shadow-sm" data-testid="button-add-agent">
-                <span className="group-hover:text-[#FF6600] transition-colors">Add Agent</span>
-                <span className="text-[#FF6600] text-xl font-bold leading-none">+</span>
+
+          <div className="flex items-center gap-4">
+            <span className="text-sm font-bold text-gray-500">Property 1 of 30</span>
+            
+            <div className="flex gap-3">
+              <button className="flex items-center gap-1 px-4 py-2 border border-gray-300 rounded-lg text-xs font-bold text-gray-600 hover:bg-gray-50 transition" data-testid="button-prev-deal">
+                <ChevronLeft className="w-4 h-4" />
+                Previous Deal
               </button>
-              <div className="absolute top-full left-0 mt-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                Add a new agent to your outreach list for relationship building.
-              </div>
+              
+              <button className="flex items-center gap-1 px-4 py-2 bg-[#FF6600] hover:bg-[#e65c00] text-white rounded-lg text-xs font-bold shadow-sm transition" data-testid="button-next-deal">
+                Next Deal
+                <ChevronRight className="w-4 h-4" />
+              </button>
             </div>
-            <button className="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center justify-center text-gray-600 transition-colors border border-gray-200 shadow-sm" data-testid="button-ai-bot">
-              <Bot className="w-5 h-5" />
-            </button>
           </div>
-        </header>
+        </div>
 
         <main className="flex-1 overflow-y-auto p-6">
             
@@ -245,22 +249,8 @@ export default function DailyOutreach() {
           />
 
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm flex-1 flex flex-col">
-                
-                <div className="flex items-center px-4 py-3 border-b border-gray-100 bg-white rounded-t-xl">
-                    <div className="flex items-center gap-3">
-                        <button className="p-1.5 hover:bg-gray-100 hover:text-[#FF6600] transition rounded" title="Previous Deal" data-testid="button-prev-property">
-                            <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
-                        </button>
-                        <button className="p-1.5 hover:bg-gray-100 hover:text-[#FF6600] transition rounded" title="Next Deal" data-testid="button-next-property">
-                            <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
-                        </button>
-                        <span className="text-gray-300 mx-1">|</span>
-                        <span className="text-sm font-bold text-gray-900">Current Queue</span>
-                        <span className="text-sm text-gray-500 font-medium">1 of 30</span>
-                    </div>
-                </div>
 
-                <div className="flex py-3 bg-white border-b border-gray-200 text-[11px] uppercase tracking-wider font-bold text-gray-400 select-none">
+                <div className="flex py-3 bg-white border-b border-gray-200 text-[11px] uppercase tracking-wider font-bold text-gray-400 select-none rounded-t-xl">
                     <div className="w-[48px] shrink-0"></div> 
                     <div className="flex-1 flex items-center">
                     
