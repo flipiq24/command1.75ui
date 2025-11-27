@@ -221,26 +221,26 @@ export default function Home() {
                     <div className="w-12 shrink-0 flex justify-center">
                         <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
                     </div> 
-                    <div className="flex-1 px-4">
+                    <div className="w-[35%] px-4">
                         <div className="flex items-center gap-2">
                             <div className="text-xs text-gray-600 font-bold">Property</div>
                             <HelpCircle className="w-3 h-3 text-gray-400" />
                         </div>
                         <div className="text-[11px] text-gray-400 mt-1 font-normal">Type / Br / Ba / Garage / Built / Ft² / Lot / Pool</div>
                     </div>
-                    <div className="w-48 px-4">
+                    <div className="w-[15%] px-4 flex flex-col items-center">
                         <div className="flex items-center gap-2">
                             <div className="text-xs text-gray-600 font-bold">List Price</div>
                             <HelpCircle className="w-3 h-3 text-gray-400" />
                         </div>
                         <div className="text-[11px] text-gray-400 mt-1 font-normal whitespace-nowrap">Propensity to sale score</div>
                     </div>
-                    <div className="w-64 px-4">
+                    <div className="w-[25%] px-4">
                         <div className="flex items-center gap-2">
                              <div className="text-xs text-gray-600 font-bold">Last Open / Last Called</div>
                         </div>
                     </div>
-                    <div className="w-56 px-4 text-right">
+                    <div className="w-[25%] px-4 text-right">
                          <div className="flex items-center justify-end gap-2">
                             <div className="text-xs text-gray-600 font-bold">Offer Status</div>
                             <HelpCircle className="w-3 h-3 text-gray-400" />
@@ -261,7 +261,7 @@ export default function Home() {
 
                     <div className="flex-1 flex flex-col md:flex-row">
                         
-                        <div className="flex-1 px-4 flex flex-col justify-start gap-2">
+                        <div className="w-[35%] px-4 flex flex-col justify-start gap-2">
                             <div>
                                 <div className="font-bold text-gray-900 text-base mb-1">2842 Rosarita St, San Bernardino, CA 92407</div>
                                 <div className="text-xs text-gray-500">3 Br / 2 Ba / 1 Gar / 1990 / 1,169 ft² / 7,362 ft² / Pool:N/A</div>
@@ -283,13 +283,13 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div className="w-48 px-4 flex flex-col justify-start">
+                        <div className="w-[15%] px-4 flex flex-col items-center text-center">
                             <div className="font-bold text-gray-900 text-base mb-1">$390,000</div>
                             <div className="text-xs text-gray-400 mb-1">Propensity Score: N/A</div>
                             <div className="text-xs text-gray-500 font-medium">Source: <span className="font-bold text-gray-900">Off Market</span></div>
                         </div>
 
-                        <div className="w-64 px-4 flex flex-col justify-start">
+                        <div className="w-[25%] px-4 flex flex-col justify-start">
                             <div className="text-[11px] text-gray-400 space-y-1">
                                 <div className="flex flex-col">
                                     <span className="font-medium text-gray-500">Last Open Date:</span>
@@ -302,7 +302,7 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div className="w-56 px-4 flex flex-col items-end text-right">
+                        <div className="w-[25%] px-4 flex flex-col items-end text-right">
                             <button className="flex items-center gap-2 text-xs font-medium text-blue-600 hover:text-blue-800">
                                 <span className="font-bold">30%</span> Offer Terms Sent <ChevronDown className="w-3 h-3" />
                             </button>
