@@ -80,6 +80,14 @@ const mockPriceHistory = [
   { date: "06/01/25", price: "$100,000", change: "—" },
 ];
 
+const mockPropensityIndicators = [
+  { indicator: "Notice of Default (NOD)", category: "Foreclosure", points: 6, color: "red" },
+  { indicator: "Tax Delinquency", category: "Financial", points: 5, color: "red" },
+  { indicator: "Expired Listing", category: "Market Status", points: 3, color: "green" },
+  { indicator: "Vacant Property", category: "Occupancy", points: 2, color: "green" },
+  { indicator: "Long Term Owner (20+ Yrs)", category: "Ownership", points: 2, color: "green" },
+];
+
 export default function DailyOutreach() {
   const [activeFilter, setActiveFilter] = useState<OutreachType | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -300,30 +308,39 @@ export default function DailyOutreach() {
                   </div>
 
                   <div className="mb-6">
-                    <h5 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <h5 className="text-xs font-bold text-[#FF6600] uppercase tracking-wider mb-3 flex items-center gap-2">
                       <Target className="w-4 h-4" />
-                      Propensity to Sell Keywords
+                      Propensity to Sell iQ
                     </h5>
-                    <div className="flex flex-wrap gap-2">
-                      {Array.isArray(currentDeal.propensity) && currentDeal.propensity.length > 0 ? (
-                        currentDeal.propensity.map((keyword: string, idx: number) => (
-                          <span 
-                            key={idx} 
-                            className={cn(
-                              "px-2 py-1 rounded-full text-xs font-medium",
-                              keyword.includes("Trustee") || keyword.includes("Default") || keyword.includes("Tax") || keyword.includes("Death") || keyword.includes("Bankruptcy")
-                                ? "bg-red-100 text-red-700 border border-red-200"
-                                : keyword.includes("Lien") || keyword.includes("Expired") || keyword.includes("Vacant") || keyword.includes("Equity") || keyword.includes("Owner")
-                                  ? "bg-green-100 text-green-700 border border-green-200"
-                                  : "bg-blue-100 text-blue-700 border border-blue-200"
-                            )}
-                          >
-                            {keyword}
-                          </span>
-                        ))
-                      ) : (
-                        <span className="text-sm text-gray-400 italic">No propensity indicators detected</span>
-                      )}
+                    <div className="bg-orange-50 rounded-lg border border-orange-200 p-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-sm text-gray-600">Total Score:</span>
+                        <span className="text-2xl font-bold text-[#FF6600]">
+                          {mockPropensityIndicators.reduce((acc, item) => acc + item.points, 0)} pts
+                        </span>
+                      </div>
+                      <div className="space-y-2">
+                        {mockPropensityIndicators.map((item, idx) => (
+                          <div key={idx} className="flex items-center justify-between text-sm">
+                            <div className="flex items-center gap-2">
+                              <span className={cn(
+                                "w-2 h-2 rounded-full",
+                                item.color === "red" ? "bg-red-500" : 
+                                item.color === "green" ? "bg-green-500" : "bg-blue-500"
+                              )} />
+                              <span className="text-gray-700">{item.indicator}</span>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <span className="text-xs text-gray-400">{item.category}</span>
+                              <span className={cn(
+                                "font-bold text-xs px-2 py-0.5 rounded",
+                                item.color === "red" ? "bg-red-100 text-red-700" : 
+                                item.color === "green" ? "bg-green-100 text-green-700" : "bg-blue-100 text-blue-700"
+                              )}>+{item.points}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
 
