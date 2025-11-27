@@ -9,6 +9,12 @@ import {
   Target,
   Flame
 } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface Deal {
   id: number;
@@ -121,11 +127,34 @@ const SAMPLE_DEALS: Deal[] = [
   }
 ];
 
+const STATUS_OPTIONS = [
+  { percent: "100%", label: "Acquired" },
+  { percent: "80%", label: "Offer Accepted" },
+  { percent: "60%", label: "In Negotiations" },
+  { percent: "50%", label: "Contract Submitted" },
+  { percent: "30%", label: "Back Up" },
+  { percent: "30%", label: "Offer Terms Sent" },
+  { percent: "20%", label: "Continue to Follow" },
+  { percent: "10%", label: "Initial Contact Started" },
+  { percent: "0%", label: "Cancelled FEC" },
+  { percent: "0%", label: "DO NOT USE" },
+  { percent: "0%", label: "None" },
+  { percent: "0%", label: "Pass" },
+  { percent: "0%", label: "Sold Others/Closed" },
+];
+
 export default function Home() {
   const [activeFilter, setActiveFilter] = useState<DealType | 'goal' | 'completed' | null>(null);
+  const [deals, setDeals] = useState<Deal[]>(SAMPLE_DEALS);
+
+  const handleStatusChange = (id: number, newStatus: string, newPercent: string) => {
+    setDeals(deals.map(deal => 
+      deal.id === id ? { ...deal, status: newStatus, statusPercent: newPercent } : deal
+    ));
+  };
 
   // Filter Logic
-  const filteredDeals = SAMPLE_DEALS.filter(deal => {
+  const filteredDeals = deals.filter(deal => {
     if (!activeFilter) return true;
     
     if (activeFilter === 'goal') {
@@ -330,11 +359,27 @@ export default function Home() {
 
                             <div className="w-3/12 px-4 flex flex-col items-center justify-center gap-2">
                                 <div className="text-xs text-gray-500 font-medium">Source: <span className="font-bold text-gray-900">{deal.source}</span></div>
-                                <button className="flex items-center gap-2 text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 py-1.5 px-3 rounded-md transition-colors w-full justify-between max-w-[180px] whitespace-nowrap">
-                                    <span className="font-bold text-slate-600">{deal.statusPercent}</span> 
-                                    <span className="truncate">{deal.status}</span>
-                                    <ChevronDown className="w-3 h-3 flex-shrink-0 text-gray-400" />
-                                </button>
+                                <DropdownMenu>
+                                  <DropdownMenuTrigger asChild>
+                                    <button className="flex items-center gap-2 text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 py-1.5 px-3 rounded-md transition-colors w-full justify-between max-w-[180px] whitespace-nowrap border border-transparent hover:border-gray-200">
+                                        <span className="font-bold text-[#4A90E2]">{deal.statusPercent}</span> 
+                                        <span className="truncate">{deal.status}</span>
+                                        <ChevronDown className="w-3 h-3 flex-shrink-0 text-gray-400" />
+                                    </button>
+                                  </DropdownMenuTrigger>
+                                  <DropdownMenuContent align="end" className="w-[200px]">
+                                    {STATUS_OPTIONS.map((option) => (
+                                      <DropdownMenuItem 
+                                        key={option.label}
+                                        onClick={() => handleStatusChange(deal.id, option.label, option.percent)}
+                                        className="flex items-center justify-between text-xs gap-2 cursor-pointer"
+                                      >
+                                        <span className="font-bold text-[#4A90E2] w-8 text-right flex-shrink-0">{option.percent}</span>
+                                        <span className="truncate flex-1">{option.label}</span>
+                                      </DropdownMenuItem>
+                                    ))}
+                                  </DropdownMenuContent>
+                                </DropdownMenu>
                             </div>
 
                         </div>
@@ -344,7 +389,7 @@ export default function Home() {
 
                  {/* Footer Pagination */}
                 <div className="bg-white px-6 py-4 border-t border-gray-200 flex items-center justify-between">
-                    <div className="text-sm text-gray-500">Showing {filteredDeals.length} of {SAMPLE_DEALS.length} entries</div>
+                    <div className="text-sm text-gray-500">Showing {filteredDeals.length} of {deals.length} entries</div>
                     <div className="flex items-center gap-2">
                         <button className="px-3 py-1 border border-gray-300 rounded text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2">
                             25 / page <ChevronDown className="w-3 h-3" />
