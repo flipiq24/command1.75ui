@@ -1,4 +1,5 @@
 import React from 'react';
+import logoUrl from '@assets/flipiQlogo_1764224673557.JPG';
 import { 
   LayoutDashboard, 
   ListTodo, 
@@ -47,24 +48,12 @@ export default function Home() {
         <div className="flex flex-col h-full">
           {/* Logo Area */}
           <div className="pt-8 pb-6 px-6 flex flex-col items-center text-center">
-            <div className="mb-2 relative">
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-orange-500">
-                {/* House Roof */}
-                <path d="M4 20L24 4L44 20" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-                {/* House Walls - partial/implied or integrated with bulb */}
-                <path d="M9 20V38C9 40.2 10.8 42 13 42H35C37.2 42 39 40.2 39 38V20" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-                {/* Lightbulb inside */}
-                <path d="M24 32C28.4183 32 32 28.4183 32 24C32 19.5817 28.4183 16 24 16C19.5817 16 16 19.5817 16 24C16 26.5 17.2 28.8 19 30.2" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
-                <path d="M21 36H27" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
-                <path d="M22 40H26" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
-                {/* Radiance/Idea marks */}
-                <path d="M24 8V12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                <path d="M14 10L16 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                <path d="M34 10L32 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-            </div>
-            <div className="flex items-center justify-center gap-0.5 text-2xl font-bold tracking-tight mb-1">
-              <span className="text-slate-900">Flip</span><span className="text-orange-500">Iq</span>
+            <div className="mb-4 relative w-full flex justify-center">
+              <img 
+                src={logoUrl} 
+                alt="FlipIQ Logo" 
+                className="w-32 object-contain"
+              />
             </div>
             <p className="text-[10px] text-orange-500 font-medium tracking-wide">Together, We Flip Smarter</p>
           </div>
