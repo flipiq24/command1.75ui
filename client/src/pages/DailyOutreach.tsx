@@ -131,13 +131,21 @@ export default function DailyOutreach() {
   };
   
   const handleNextDeal = () => {
-    setCurrentIndex(prev => prev + 1);
-    triggerIQAnimation();
+    if (filteredDeals.length > 0 && currentIndex < filteredDeals.length - 1) {
+      setCurrentIndex(prev => prev + 1);
+      triggerIQAnimation();
+    } else if (filteredDeals.length > 0) {
+      setCurrentIndex(0);
+      triggerIQAnimation();
+    }
   };
   
   const handlePrevDeal = () => {
     if (currentIndex > 0) {
       setCurrentIndex(prev => prev - 1);
+      triggerIQAnimation();
+    } else if (filteredDeals.length > 0) {
+      setCurrentIndex(filteredDeals.length - 1);
       triggerIQAnimation();
     }
   };
@@ -281,7 +289,7 @@ export default function DailyOutreach() {
             <>
             <div className="flex items-center justify-start px-4 py-3 mb-4">
               <div className="flex items-center gap-4">
-                <span className="text-sm font-bold text-gray-500">Property {currentIndex + 1} of {totalDeals}</span>
+                <span className="text-sm font-bold text-gray-500">Property {currentIndex + 1} of {filteredDeals.length || totalDeals}</span>
                 
                 <div className="flex gap-3">
                   <button 
