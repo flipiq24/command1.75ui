@@ -125,7 +125,7 @@ export default function ActionPlan() {
         </div>
 
         <div className="text-right">
-          <div className="text-2xl font-bold text-green-600 tracking-tight">Offers Made Today <span className="ml-2">1/3</span></div>
+          <div className="text-2xl font-bold text-[#FB8C00] tracking-tight">Offers Made Today <span className="ml-2">1/3</span></div>
         </div>
       </div>
 
