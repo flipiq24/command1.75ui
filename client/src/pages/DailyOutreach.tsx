@@ -294,15 +294,31 @@ export default function DailyOutreach() {
                     Propensity to Sell iQ
                   </h4>
                   <div className="bg-orange-50 rounded-lg border border-orange-200 p-4">
-                    <p className="text-sm text-gray-700 leading-relaxed">
-                      High seller motivation detected. Property shows <span className="font-bold text-[#FF6600]">Notice of Default (NOD)</span> filed, 
-                      indicating the owner is behind on mortgage payments and facing potential foreclosure. Combined with 
-                      <span className="font-bold text-[#FF6600]"> tax delinquency</span> on record, this creates significant financial pressure to sell quickly. 
-                      The property has been <span className="font-bold text-[#FF6600]">vacant</span> based on utility data, reducing the owner's emotional attachment. 
-                      Owner has held the property for <span className="font-bold text-[#FF6600]">20+ years</span> with substantial equity built up, 
-                      making a cash sale attractive even at a discount. 
-                      <span className="font-bold text-[#FF6600]">This is a highly motivated seller situation — act fast.</span>
-                    </p>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-sm text-gray-600">Total Score:</span>
+                      <span className="text-2xl font-bold text-[#FF6600]">
+                        {mockPropensityIndicators.reduce((acc, item) => acc + item.points, 0)} pts
+                      </span>
+                    </div>
+                    <div className="space-y-2">
+                      {mockPropensityIndicators.map((item, idx) => (
+                        <div key={idx} className="flex items-center justify-between text-sm">
+                          <div className="flex items-center gap-2">
+                            <span className={cn(
+                              "w-2 h-2 rounded-full",
+                              item.color === "red" ? "bg-red-500" : 
+                              item.color === "green" ? "bg-green-500" : "bg-blue-500"
+                            )} />
+                            <span className="text-gray-700">{item.indicator}</span>
+                          </div>
+                          <span className={cn(
+                            "font-bold text-xs px-2 py-0.5 rounded",
+                            item.color === "red" ? "bg-red-100 text-red-700" : 
+                            item.color === "green" ? "bg-green-100 text-green-700" : "bg-blue-100 text-blue-700"
+                          )}>+{item.points}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
