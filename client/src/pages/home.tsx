@@ -21,7 +21,8 @@ import {
   ChevronLeft,
   LogOut,
   CalendarCheck,
-  BarChart2
+  BarChart2,
+  MoreVertical
 } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
@@ -207,117 +208,162 @@ export default function Home() {
 
           {/* Action Plan (Gamified) */}
           <div className="mb-8">
-            <div className="flex justify-between items-baseline mb-4">
-                <h2 className="text-lg font-bold text-gray-900">Today's Action Plan</h2>
-                <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">Complete these 4 categories to win the day</span>
-            </div>
+            <h2 className="text-lg font-bold text-gray-900 mb-4">Nov 26, 2025 Today's Action Plan!</h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-4 gap-6 text-center">
                 
                 {/* Hot Deals */}
-                <button className="bg-white p-4 rounded-xl border-2 border-orange-500 shadow-sm hover:shadow-md transition text-left relative overflow-hidden group cursor-pointer">
-                    <div className="flex justify-between items-center mb-2">
-                        <span className="text-xs font-bold text-orange-600 uppercase">Hot Deals</span>
-                        <Zap className="w-5 h-5 text-orange-500" />
+                <div className="flex flex-col items-center group cursor-pointer">
+                    <div className="w-16 h-16 rounded-full border-4 border-orange-100 border-t-orange-500 flex items-center justify-center mb-2 bg-white group-hover:bg-orange-50 transition">
+                        <span className="text-xl font-bold text-gray-900">0<span className="text-sm text-gray-400">/1</span></span>
                     </div>
-                    <div className="text-2xl font-bold text-gray-900 mb-1">0 <span className="text-sm text-gray-400 font-medium">/ 1 Done</span></div>
-                    <div className="w-full bg-gray-100 rounded-full h-2">
-                        <div className="bg-orange-500 h-2 rounded-full" style={{width: '0%'}}></div>
-                    </div>
-                    <div className="mt-2 text-[10px] text-gray-400 font-medium">1 Action Required</div>
-                </button>
+                    <div className="text-sm font-bold text-gray-900">Hot Deals</div>
+                    <div className="text-xs text-gray-500">1 Pending Action</div>
+                </div>
 
                 {/* Warm Deals */}
-                <button className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:border-blue-400 transition text-left cursor-pointer">
-                    <div className="flex justify-between items-center mb-2">
-                        <span className="text-xs font-bold text-gray-500 uppercase">Warm Deals</span>
-                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <div className="flex flex-col items-center group cursor-pointer">
+                    <div className="w-16 h-16 rounded-full border-4 border-gray-100 flex items-center justify-center mb-2 bg-white">
+                        <span className="text-xl font-bold text-gray-900">0<span className="text-sm text-gray-400">/6</span></span>
                     </div>
-                    <div className="text-2xl font-bold text-gray-900 mb-1">0 <span className="text-sm text-gray-400 font-medium">/ 6 Done</span></div>
-                    <div className="w-full bg-gray-100 rounded-full h-2">
-                        <div className="bg-blue-500 h-2 rounded-full" style={{width: '0%'}}></div>
-                    </div>
-                    <div className="mt-2 text-[10px] text-gray-400 font-medium">6 Actions Required</div>
-                </button>
+                    <div className="text-sm font-bold text-gray-500">Warm Deals</div>
+                </div>
 
                 {/* Cold Deals */}
-                <button className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:border-gray-400 transition text-left cursor-pointer">
-                    <div className="flex justify-between items-center mb-2">
-                        <span className="text-xs font-bold text-gray-500 uppercase">Cold Deals</span>
-                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                 <div className="flex flex-col items-center group cursor-pointer">
+                    <div className="w-16 h-16 rounded-full border-4 border-gray-100 flex items-center justify-center mb-2 bg-white">
+                        <span className="text-xl font-bold text-gray-900">0<span className="text-sm text-gray-400">/4</span></span>
                     </div>
-                    <div className="text-2xl font-bold text-gray-900 mb-1">0 <span className="text-sm text-gray-400 font-medium">/ 4 Done</span></div>
-                    <div className="w-full bg-gray-100 rounded-full h-2">
-                        <div className="bg-gray-400 h-2 rounded-full" style={{width: '0%'}}></div>
-                    </div>
-                    <div className="mt-2 text-[10px] text-gray-400 font-medium">4 Actions Required</div>
-                </button>
+                    <div className="text-sm font-bold text-gray-500">Cold Deals</div>
+                </div>
 
                 {/* New Deals */}
-                <button className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:border-green-400 transition text-left cursor-pointer">
-                    <div className="flex justify-between items-center mb-2">
-                        <span className="text-xs font-bold text-gray-500 uppercase">New Deals</span>
-                        <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <div className="flex flex-col items-center group cursor-pointer">
+                    <div className="w-16 h-16 rounded-full border-4 border-gray-100 border-r-gray-600 flex items-center justify-center mb-2 bg-white">
+                        <span className="text-xl font-bold text-gray-900">56<span className="text-sm text-gray-400">/60</span></span>
                     </div>
-                    <div className="text-2xl font-bold text-gray-900 mb-1">56 <span className="text-sm text-gray-400 font-medium">/ 60 Done</span></div>
-                    <div className="w-full bg-gray-100 rounded-full h-2">
-                        <div className="bg-green-500 h-2 rounded-full" style={{width: '93%'}}></div>
-                    </div>
-                    <div className="mt-2 text-[10px] text-green-600 font-bold">Only 4 Left!</div>
-                </button>
+                    <div className="text-sm font-bold text-gray-500">New Deals</div>
+                </div>
             </div>
 
-            {/* Current Task List - Replacing the old table header area */}
+            {/* Current Task List - Reorganized Layout */}
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden flex-1 flex flex-col">
-                <div className="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-                    <h3 className="font-bold text-gray-900">Current Task List</h3>
-                    <span className="text-xs font-medium text-gray-500">Sorted by Priority</span>
+                
+                {/* Table Header */}
+                <div className="flex py-3 px-2 bg-white border-b border-gray-200">
+                    <div className="w-12 shrink-0"></div> 
+                    <div className="w-1/3 px-4">
+                        <div className="text-[11px] text-gray-500 font-bold uppercase tracking-wider">Property</div>
+                        <div className="text-[10px] text-gray-400 mt-0.5 font-normal">Type / Br / Ba / SqFt / Yr</div>
+                    </div>
+                    <div className="w-1/6 px-4">
+                        <div className="text-[11px] text-gray-500 font-bold uppercase tracking-wider">List Price</div>
+                        <div className="text-[10px] text-gray-400 mt-0.5 font-normal">Propensity Score</div>
+                    </div>
+                    <div className="w-1/6 px-4">
+                        <div className="text-[11px] text-gray-500 font-bold uppercase tracking-wider">Market Info</div>
+                        <div className="text-[10px] text-gray-400 mt-0.5 font-normal">DOM / Created</div>
+                    </div>
+                    <div className="w-1/6 px-4">
+                        <div className="text-[11px] text-gray-500 font-bold uppercase tracking-wider">Evaluation</div>
+                        <div className="text-[10px] text-gray-400 mt-0.5 font-normal">Asking vs ARV / ARV</div>
+                    </div>
+                    <div className="w-1/6 px-4 text-right">
+                        <div className="text-[11px] text-gray-500 font-bold uppercase tracking-wider">Offer Status</div>
+                        <div className="text-[10px] text-gray-400 mt-0.5 font-normal">Next Action / Dates</div>
+                    </div>
                 </div>
 
-                {/* Task Item 1 */}
-                <div className="p-6 border-b border-gray-100 flex flex-col md:flex-row gap-6 items-center hover:bg-gray-50 transition cursor-pointer">
-                    
-                    <div className="shrink-0">
-                        <button className="w-8 h-8 rounded-full border-2 border-gray-300 hover:border-green-500 hover:bg-green-50 flex items-center justify-center transition group">
-                            <svg className="w-5 h-5 text-gray-300 group-hover:text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
-                        </button>
+                {/* Deal Row 1 */}
+                <div className="flex border-b border-gray-100 hover:bg-gray-50 transition group">
+                    <div className="w-12 shrink-0 flex flex-col items-center pt-4 gap-3 border-r border-gray-50 bg-gray-50/30">
+                        <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" title="Mark as Done" />
+                        <Zap className="w-5 h-5 text-gray-400 hover:text-orange-500 cursor-pointer transition-colors" />
+                        <div className="w-5 h-5 flex items-center justify-center text-gray-300 hover:text-gray-600 cursor-pointer">•••</div>
                     </div>
 
-                    <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-1">
-                            <h4 className="text-lg font-bold text-gray-900">2011 Windsor Cir</h4>
-                            <span className="bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase border border-yellow-200">In Negotiations</span>
-                        </div>
-                        <div className="text-sm text-gray-600 mb-2">Duarte, CA 91010 <span className="text-gray-300 mx-2">|</span> <span className="font-bold text-gray-900">$500,000</span></div>
+                    <div className="flex-1 flex py-4">
                         
-                        <div className="flex gap-4 text-xs text-gray-400">
-                            <span><strong className="text-gray-500">LOD:</strong> 11/26/25</span>
-                            <span><strong className="text-gray-500">LCD:</strong> 11/26/25</span>
+                        <div className="w-1/3 px-4 flex flex-col justify-center">
+                            <div className="mb-2">
+                                <span className="bg-yellow-50 text-yellow-700 border border-yellow-200 px-2 py-0.5 rounded text-[11px] font-bold uppercase mr-2">In Negotiations</span>
+                            </div>
+                            <div className="font-bold text-gray-900 text-base">2011 Windsor Cir</div>
+                            <div className="text-sm text-gray-500">Duarte, CA 91010</div>
+                            <div className="text-xs text-gray-400 mt-1">SFR • 3bd / 0ba • 1,654 sqft • 1981</div>
                         </div>
-                    </div>
 
-                    <div className="shrink-0 text-right flex flex-col items-end gap-2">
-                        <div className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Action Required</div>
-                        <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-sm flex items-center gap-2 transition transform hover:scale-105 cursor-pointer">
-                            <Phone className="w-4 h-4" />
-                            Call Agent
-                        </button>
+                        <div className="w-1/6 px-4 flex flex-col justify-center">
+                            <div className="font-bold text-gray-900 text-lg">$500,000</div>
+                        </div>
+
+                        <div className="w-1/6 px-4 flex flex-col justify-center">
+                            <div className="font-bold text-gray-700 text-sm">7 Days</div>
+                            <div className="text-[10px] text-gray-400 mt-1">Created: 11/26/25</div>
+                        </div>
+
+                        <div className="w-1/6 px-4 flex flex-col justify-center">
+                            <div className="font-bold text-gray-900 text-sm">0.00% Spread</div>
+                            <div className="text-xs text-gray-500 mt-1">ARV: $0</div>
+                        </div>
+
+                        <div className="w-1/6 px-4 flex flex-col justify-center items-end text-right">
+                            <button className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-1.5 px-3 rounded shadow-sm mb-2 transition cursor-pointer">
+                                Call Agent
+                            </button>
+                            <div className="text-[10px] text-gray-400">
+                                LOD: 11/26/25<br/>
+                                LCD: 11/26/25
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
-                {/* Task Item 2 (Disabled/Future) */}
-                <div className="p-6 flex flex-col md:flex-row gap-6 items-center opacity-50">
-                     <div className="shrink-0">
-                        <button className="w-8 h-8 rounded-full border-2 border-gray-200 flex items-center justify-center cursor-not-allowed">
-                            <svg className="w-5 h-5 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
-                        </button>
+                {/* Deal Row 2 */}
+                <div className="flex border-b border-gray-100 hover:bg-gray-50 transition group">
+                    <div className="w-12 shrink-0 flex flex-col items-center pt-4 gap-3 border-r border-gray-50 bg-gray-50/30">
+                        <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
+                        <Zap className="w-5 h-5 text-gray-400 hover:text-orange-500 cursor-pointer transition-colors" />
+                        <div className="w-5 h-5 flex items-center justify-center text-gray-300 hover:text-gray-600 cursor-pointer">•••</div>
                     </div>
-                    <div className="flex-1">
-                        <div className="h-4 w-48 bg-gray-200 rounded mb-2"></div>
-                        <div className="h-3 w-32 bg-gray-100 rounded"></div>
-                    </div>
-                    <div className="shrink-0">
-                        <span className="text-xs text-gray-400 italic">Complete top task first</span>
+
+                    <div className="flex-1 flex py-4">
+                        
+                        <div className="w-1/3 px-4 flex flex-col justify-center">
+                            <div className="mb-2">
+                                <span className="bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded text-[11px] font-bold uppercase mr-2">New</span>
+                            </div>
+                            <div className="font-bold text-gray-900 text-base">420 Robinson</div>
+                            <div className="text-sm text-gray-500">Bakersfield, CA 93305</div>
+                            <div className="text-xs text-gray-400 mt-1">SFR • 3bd / 1ba • 1,013 sqft • 1959</div>
+                        </div>
+
+                        <div className="w-1/6 px-4 flex flex-col justify-center">
+                            <div className="font-bold text-gray-900 text-lg">$75,000</div>
+                            <div className="text-[10px] text-green-600 font-bold mt-1">Active</div>
+                        </div>
+
+                        <div className="w-1/6 px-4 flex flex-col justify-center">
+                            <div className="font-bold text-gray-700 text-sm">3 Days</div>
+                            <div className="text-[10px] text-gray-400 mt-1">Created: 11/24/25</div>
+                        </div>
+
+                        <div className="w-1/6 px-4 flex flex-col justify-center">
+                            <div className="font-bold text-green-700 text-sm">33.05% Spread</div>
+                            <div className="text-xs text-gray-500 mt-1">ARV: $226,931</div>
+                        </div>
+
+                        <div className="w-1/6 px-4 flex flex-col justify-center items-end text-right">
+                            <button className="bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 text-xs font-bold py-1.5 px-3 rounded shadow-sm mb-2 transition cursor-pointer">
+                                Analyze
+                            </button>
+                            <div className="text-[10px] text-gray-400">
+                                LOD: 11/26/25<br/>
+                                LCD: N/A
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
