@@ -1,0 +1,172 @@
+import React from 'react';
+import { 
+  ChevronLeft, 
+  ChevronRight, 
+  Phone, 
+  MessageSquare, 
+  Mail, 
+  Mic, 
+  Zap,
+  MapPin,
+  Building2,
+  TrendingDown,
+  Bot
+} from 'lucide-react';
+import Sidebar from "@/components/Sidebar";
+
+export default function DailyOutreach() {
+  return (
+    <div className="flex h-screen bg-gray-50 font-sans overflow-hidden text-gray-800">
+      
+      {/* 1. SIDEBAR (Your existing component) */}
+      <Sidebar />
+
+      {/* 2. MAIN CONTENT AREA */}
+      <div className="flex-1 flex flex-col overflow-y-auto relative z-10">
+        
+        {/* === HEADER SECTION === */}
+        <div className="bg-white px-8 py-6 border-b border-gray-200">
+            <div className="flex justify-between items-end mb-8">
+                <div>
+                    <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Daily Outreach Plan</h2>
+                    <p className="text-xs text-gray-500 mt-1 font-medium uppercase tracking-wider">Build Relationships & Find Deals</p>
+                </div>
+                
+                {/* GOAL WIDGET */}
+                <div className="text-right">
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">New Relationships</span>
+                    <div className="flex items-baseline justify-end gap-1">
+                        <span className="text-3xl font-black text-[#FF6600]">1</span>
+                        <span className="text-xl font-bold text-gray-300">/ 5</span>
+                    </div>
+                </div>
+            </div>
+
+            {/* GAMIFIED WORKFLOW (4 Circles) */}
+            <div className="grid grid-cols-4 gap-6 text-center">
+                {/* 1. New Agent Calls (ACTIVE) */}
+                <div className="flex flex-col items-center cursor-pointer transform scale-105 transition">
+                    <div className="relative w-20 h-20 mb-3">
+                        <svg className="w-full h-full transform -rotate-90">
+                            <circle cx="40" cy="40" r="36" stroke="#f3f4f6" strokeWidth="6" fill="transparent" />
+                            <circle cx="40" cy="40" r="36" stroke="#f97316" strokeWidth="6" fill="transparent" strokeDasharray="220" strokeDashoffset="180" />
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center text-xl font-bold text-gray-900">3<span className="text-sm text-gray-400">/30</span></div>
+                    </div>
+                    <button className="w-full bg-[#FF6600] text-white text-xs font-bold py-2 px-4 rounded-lg shadow-md animate-pulse">
+                        Start Dialing
+                    </button>
+                </div>
+                {/* Other circles (Inactive) would go here... */}
+            </div>
+        </div>
+
+        {/* === WORKSPACE (The "One Deal" Card) === */}
+        <main className="p-6">
+            <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex h-[700px]">
+                
+                {/* LEFT COLUMN: PROPERTY INFO */}
+                <div className="w-[60%] p-6 overflow-y-auto border-r border-gray-100">
+                    
+                    {/* Navigation Header */}
+                    <div className="flex justify-between items-center mb-6">
+                        <div className="flex items-center gap-2">
+                            <span className="bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded border border-green-200">Active</span>
+                            <span className="text-xs text-gray-500">Property 1 of 30</span>
+                        </div>
+                        <div className="flex gap-2">
+                            <button className="p-1.5 border rounded hover:bg-gray-50"><ChevronLeft className="w-4 h-4 text-gray-500"/></button>
+                            <button className="p-1.5 border rounded hover:bg-gray-50"><ChevronRight className="w-4 h-4 text-gray-500"/></button>
+                        </div>
+                    </div>
+
+                    {/* Why Chasing Banner */}
+                    <div className="bg-orange-50 border border-orange-100 rounded-lg p-4 mb-6">
+                        <div className="flex items-center gap-2 mb-2">
+                            <Zap className="w-4 h-4 text-[#FF6600]" />
+                            <h3 className="text-sm font-bold text-gray-900">Why Chasing?</h3>
+                        </div>
+                        <ul className="space-y-1 text-xs text-gray-700">
+                            <li>• Aged listing (94 DOM) with strong discount potential.</li>
+                            <li>• Keywords: "Motivated Seller", "As-Is".</li>
+                            <li>• Unassigned Agent - Open Opportunity.</li>
+                        </ul>
+                    </div>
+
+                    {/* Property Specs */}
+                    <h2 className="text-xl font-bold text-gray-900 mb-1">2011 Windsor Cir, Duarte, CA</h2>
+                    <p className="text-xs text-gray-500 mb-6">SFR • 3 Br / 2 Ba / 1,654 ft² / 1981</p>
+
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                        <div className="bg-gray-50 p-3 rounded border border-gray-100">
+                            <div className="text-[10px] text-gray-400 uppercase">List Price</div>
+                            <div className="text-lg font-bold text-gray-900">$500,000</div>
+                        </div>
+                        <div className="bg-gray-50 p-3 rounded border border-gray-100">
+                            <div className="text-[10px] text-gray-400 uppercase">Propensity Score</div>
+                            <div className="text-lg font-bold text-red-600">7 / 8</div>
+                        </div>
+                    </div>
+
+                    {/* Script Box */}
+                    <div className="bg-blue-50 border border-blue-100 rounded-lg p-4">
+                        <h4 className="text-xs font-bold text-blue-800 uppercase mb-2 flex items-center gap-2">
+                            <MessageSquare className="w-3 h-3" /> Suggested Script
+                        </h4>
+                        <p className="text-sm text-blue-900 leading-relaxed">
+                            "Hey <span className="font-bold">Sarah</span>, this is Tony from FlipIQ. I noticed you sourced deals to investors like FairTrade. I'm calling about <span className="font-bold">2011 Windsor Cir</span> which has been on the market <span className="font-bold">94 days</span>. We are proven investors... is your seller open to a quick cash offer?"
+                        </p>
+                    </div>
+                </div>
+
+                {/* RIGHT COLUMN: AGENT CRM (Editable) */}
+                <div className="w-[40%] bg-gray-50 p-6 overflow-y-auto">
+                    
+                    {/* Agent Header */}
+                    <div className="mb-6">
+                        <h3 className="text-lg font-bold text-gray-900">Sarah Jenkins</h3>
+                        <p className="text-xs text-gray-500">Keller Williams Realty</p>
+                        <div className="mt-2 text-xl font-mono font-bold text-gray-800">(909) 555-0123</div>
+                    </div>
+
+                    {/* CALL BUTTON */}
+                    <button className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg shadow-sm flex items-center justify-center gap-2 mb-6 transition transform hover:scale-105">
+                        <Phone className="w-5 h-5" /> CALL NOW
+                    </button>
+
+                    {/* CRM FORM */}
+                    <div className="space-y-3">
+                        <div>
+                            <label className="text-[10px] font-bold text-gray-400 uppercase">Relationship</label>
+                            <select className="w-full text-xs p-2 border border-gray-200 rounded bg-white">
+                                <option>Cold</option>
+                                <option>Warm</option>
+                                <option>Hot</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label className="text-[10px] font-bold text-gray-400 uppercase">Rating</label>
+                            <select className="w-full text-xs p-2 border border-gray-200 rounded bg-white">
+                                <option>Investor Friendly</option>
+                                <option>Unresponsive</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label className="text-[10px] font-bold text-gray-400 uppercase">Investor Deals</label>
+                            <input type="number" value="12" className="w-full text-xs p-2 border border-gray-200 rounded bg-white font-bold text-[#FF6600]" />
+                        </div>
+                        <div>
+                            <label className="text-[10px] font-bold text-gray-400 uppercase">Last Note</label>
+                            <textarea className="w-full text-xs p-2 border border-gray-200 rounded bg-white h-20" placeholder="Type call notes here..."></textarea>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+
+      </div>
+    </div>
+  );
+}

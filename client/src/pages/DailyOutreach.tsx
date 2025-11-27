@@ -276,36 +276,15 @@ export default function DailyOutreach() {
                     <Bot className="w-4 h-4" />
                     iQ Property Intelligence
                   </h4>
-                  <p className="text-sm text-gray-600 mb-4">
-                    AI-powered valuation analysis based on comparable sales, market trends, and property condition estimates.
-                  </p>
                   <div className="bg-orange-50 rounded-lg border border-orange-200 p-4">
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-gray-500">Est. ARV:</span>
-                        <span className="font-bold text-gray-900">$125,000</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-500">Repair Est:</span>
-                        <span className="font-bold text-gray-900">$15,000</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-500">Max Offer:</span>
-                        <span className="font-bold text-[#FF6600]">$68,500</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-500">Comp Count:</span>
-                        <span className="font-bold text-gray-900">8</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-500">Avg $/SqFt:</span>
-                        <span className="font-bold text-gray-900">$142</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-500">Market Trend:</span>
-                        <span className="font-bold text-green-600">↑ 3.2%</span>
-                      </div>
-                    </div>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      This property at <span className="font-bold text-[#FF6600]">{currentDeal.address}</span> presents a strong acquisition opportunity. 
+                      The listing has been on market for <span className="font-bold text-[#FF6600]">{dom} days</span>, significantly above the area average, 
+                      suggesting seller fatigue and increased negotiation flexibility. Based on recent comparable sales within a 0.5-mile radius, 
+                      the after-repair value supports a profitable flip margin. The property's condition and location indicate moderate rehab costs. 
+                      Market velocity in this submarket remains healthy with properties moving within 45-60 days when priced correctly. 
+                      <span className="font-bold text-[#FF6600]">Recommend pursuing aggressively with initial offer at 65-70% of list price.</span>
+                    </p>
                   </div>
                 </div>
 
@@ -314,35 +293,16 @@ export default function DailyOutreach() {
                     <Target className="w-4 h-4" />
                     Propensity to Sell iQ
                   </h4>
-                  <p className="text-sm text-gray-600 mb-4">
-                    Seller motivation score based on distress indicators, ownership patterns, and financial signals.
-                  </p>
                   <div className="bg-orange-50 rounded-lg border border-orange-200 p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm text-gray-600">Total Score:</span>
-                      <span className="text-2xl font-bold text-[#FF6600]">
-                        {mockPropensityIndicators.reduce((acc, item) => acc + item.points, 0)} pts
-                      </span>
-                    </div>
-                    <div className="space-y-2">
-                      {mockPropensityIndicators.map((item, idx) => (
-                        <div key={idx} className="flex items-center justify-between text-sm">
-                          <div className="flex items-center gap-2">
-                            <span className={cn(
-                              "w-2 h-2 rounded-full",
-                              item.color === "red" ? "bg-red-500" : 
-                              item.color === "green" ? "bg-green-500" : "bg-blue-500"
-                            )} />
-                            <span className="text-gray-700">{item.indicator}</span>
-                          </div>
-                          <span className={cn(
-                            "font-bold text-xs px-2 py-0.5 rounded",
-                            item.color === "red" ? "bg-red-100 text-red-700" : 
-                            item.color === "green" ? "bg-green-100 text-green-700" : "bg-blue-100 text-blue-700"
-                          )}>+{item.points}</span>
-                        </div>
-                      ))}
-                    </div>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      High seller motivation detected. Property shows <span className="font-bold text-[#FF6600]">Notice of Default (NOD)</span> filed, 
+                      indicating the owner is behind on mortgage payments and facing potential foreclosure. Combined with 
+                      <span className="font-bold text-[#FF6600]"> tax delinquency</span> on record, this creates significant financial pressure to sell quickly. 
+                      The property has been <span className="font-bold text-[#FF6600]">vacant</span> based on utility data, reducing the owner's emotional attachment. 
+                      Owner has held the property for <span className="font-bold text-[#FF6600]">20+ years</span> with substantial equity built up, 
+                      making a cash sale attractive even at a discount. 
+                      <span className="font-bold text-[#FF6600]">This is a highly motivated seller situation — act fast.</span>
+                    </p>
                   </div>
                 </div>
               </div>
