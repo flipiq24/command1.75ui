@@ -143,7 +143,7 @@ export default function DailyOutreach() {
 
   const filteredDeals = useMemo(() => {
     return sortedDeals.filter(deal => {
-      if (!activeFilter) return true;
+      if (!activeFilter) return false;
       
       if (activeFilter === 'connections') {
         return deal.source === 'MLS' && deal.mlsStatus === 'Active';
@@ -157,7 +157,7 @@ export default function DailyOutreach() {
         return deal.type === 'warm' || deal.type === 'cold';
       }
 
-      return true;
+      return false;
     });
   }, [sortedDeals, activeFilter]);
 
