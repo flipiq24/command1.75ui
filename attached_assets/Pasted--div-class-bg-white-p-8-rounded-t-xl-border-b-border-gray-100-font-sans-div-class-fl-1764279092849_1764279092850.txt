@@ -1,0 +1,104 @@
+<div class="bg-white p-8 rounded-t-xl border-b border-gray-100 font-sans">
+    
+    <div class="flex justify-between items-end mb-10">
+        
+        <div class="w-1/2">
+            <h2 class="text-2xl font-bold text-gray-900 mb-3">Nov 27, 2025 — Today's Outreach Plan!</h2>
+            <div class="space-y-2 group relative cursor-help w-fit">
+                <p class="text-sm text-gray-500 font-medium">
+                    You have completed <span class="font-bold text-[#FF6600]">31%</span> of today's Outreach.
+                    <span class="text-gray-300 ml-1">ⓘ</span>
+                </p>
+                <div class="w-64 bg-gray-100 h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-[#FF6600] h-full rounded-full" style="width: 31%"></div>
+                </div>
+                <div class="absolute top-full left-0 mt-2 w-64 bg-gray-900 text-white text-xs p-3 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
+                    Your daily outreach progress based on agent connections, priority calls, and top of mind campaigns completed.
+                </div>
+            </div>
+        </div>
+
+        <div class="text-right group relative cursor-help">
+            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">New Agent Relationships</span>
+            <div class="flex items-baseline justify-end gap-1">
+                <span class="text-3xl font-black text-[#FF6600]">1</span>
+                <span class="text-xl font-bold text-[#FF6600]">/ 5</span>
+            </div>
+            <div class="text-xs text-gray-400 mt-1">Relationships Built</div>
+            <div class="absolute top-full right-0 mt-2 w-72 bg-gray-900 text-white text-xs p-4 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-left">
+                <p class="font-bold text-[#FF6600] mb-2">New Agent Relationships</p>
+                <p class="mb-2">Goal: 5 per day (100+ relationships/year)</p>
+                <p class="mb-2">Increments when an agent's relationship status changes from "Cold" or "Unassigned" to "Warm" or "Hot".</p>
+                <p class="text-gray-400 italic">Click to filter and see relationships built today.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-3 gap-8 text-center max-w-4xl mx-auto">
+        
+        <div class="flex flex-col items-center group relative">
+            <div class="relative w-24 h-24 mb-3">
+                <svg class="w-full h-full transform -rotate-90">
+                    <circle cx="48" cy="48" r="40" stroke="#f3f4f6" stroke-width="6" fill="transparent" />
+                    <circle cx="48" cy="48" r="40" stroke="#f97316" stroke-width="6" fill="transparent" stroke-dasharray="251.2" stroke-dashoffset="167" />
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center text-2xl font-bold text-gray-900">10<span class="text-sm text-gray-400">/30</span></div>
+            </div>
+            
+            <div class="text-xs text-gray-400 mb-3 cursor-help hover:text-gray-600 transition">
+                Status: 10/30/30 ⓘ
+                <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-center">
+                    Focuses on aged, pending, and backup listings with high propensity to sell.<br><br>
+                    <span class="text-[#FF6600] font-bold">Goal: 25 connections/week.</span>
+                </div>
+            </div>
+            
+            <button class="w-full bg-[#FF6600] text-white text-sm font-bold py-2 px-6 rounded-lg shadow-md animate-pulse hover:bg-orange-700 transition">
+                Start Calling
+            </button>
+        </div>
+
+        <div class="flex flex-col items-center group relative">
+            <div class="relative w-24 h-24 mb-3">
+                <svg class="w-full h-full transform -rotate-90">
+                    <circle cx="48" cy="48" r="40" stroke="#f3f4f6" stroke-width="6" fill="transparent" />
+                    <circle cx="48" cy="48" r="40" stroke="#ef4444" stroke-width="6" fill="transparent" stroke-dasharray="251.2" stroke-dashoffset="150" />
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center text-2xl font-bold text-gray-900">2<span class="text-sm text-gray-400">/5</span></div>
+            </div>
+
+            <div class="text-xs text-gray-400 mb-3 cursor-help hover:text-gray-600 transition">
+                Status: 2/5/5 ⓘ
+                <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-center">
+                    Live phone calls to reinforce your <span class="text-red-400 font-bold">100 Priority Relationships</span>.
+                </div>
+            </div>
+
+            <button class="w-full bg-white border border-red-300 text-red-600 text-sm font-bold py-2 px-6 rounded-lg hover:bg-red-50 transition">
+                Call Priority
+            </button>
+        </div>
+
+        <div class="flex flex-col items-center group relative">
+            <div class="relative w-24 h-24 mb-3">
+                <svg class="w-full h-full transform -rotate-90">
+                    <circle cx="48" cy="48" r="40" stroke="#f3f4f6" stroke-width="6" fill="transparent" />
+                    <circle cx="48" cy="48" r="40" stroke="#3b82f6" stroke-width="6" fill="transparent" stroke-dasharray="251.2" stroke-dashoffset="200" />
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center text-2xl font-bold text-gray-900">2<span class="text-sm text-gray-400">/10</span></div>
+            </div>
+
+            <div class="text-xs text-gray-400 mb-3 cursor-help hover:text-gray-600 transition">
+                Status: 2/10/10 ⓘ
+                <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-center">
+                    Send content <span class="text-blue-400 font-bold">every 2 weeks</span> to Hot, Warm, and Cold agents.
+                </div>
+            </div>
+
+            <button class="w-full bg-white border border-blue-300 text-blue-600 text-sm font-bold py-2 px-6 rounded-lg hover:bg-blue-50 transition">
+                Send Campaigns
+            </button>
+        </div>
+
+    </div>
+</div>

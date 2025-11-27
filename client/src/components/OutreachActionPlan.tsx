@@ -139,8 +139,8 @@ export default function OutreachActionPlan({
             <span>Status: {connectionsCompleted}/{connectionsTotal}/{connectionsTotal}</span>
             <div className="group/tip relative">
               <HelpCircle className="w-3 h-3 cursor-help" />
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-56 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover/tip:opacity-100 transition pointer-events-none z-50">
-                Increments ONLY when Dialpad confirms a connected conversation (not attempts, not voicemails).
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover/tip:opacity-100 transition pointer-events-none z-50 text-center">
+                Focuses on aged, pending, and backup listings with high propensity to sell.<br/><br/><span className="text-[#FF6600] font-bold">Goal: 25 connections/week.</span>
               </div>
             </div>
           </div>
@@ -205,8 +205,8 @@ export default function OutreachActionPlan({
             <span>Status: {priorityCompleted}/{priorityTotal}/{priorityTotal}</span>
             <div className="group/tip relative">
               <HelpCircle className="w-3 h-3 cursor-help" />
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-56 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover/tip:opacity-100 transition pointer-events-none z-50">
-                Connected calls only to Priority-status agents (not attempts, not voicemails).
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover/tip:opacity-100 transition pointer-events-none z-50 text-center">
+                Live phone calls to reinforce your <span className="text-red-400 font-bold">100 Priority Relationships</span>.
               </div>
             </div>
           </div>
@@ -273,8 +273,8 @@ export default function OutreachActionPlan({
             <span>Status: {topOfMindCompleted}/{topOfMindTotal}/{topOfMindTotal}</span>
             <div className="group/tip relative">
               <HelpCircle className="w-3 h-3 cursor-help" />
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-56 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover/tip:opacity-100 transition pointer-events-none z-50">
-                Increments when text/email/voicemail is sent to Hot/Warm/Cold agents.
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover/tip:opacity-100 transition pointer-events-none z-50 text-center">
+                Send content <span className="text-blue-400 font-bold">every 2 weeks</span> to Hot, Warm, and Cold agents.
               </div>
             </div>
           </div>
