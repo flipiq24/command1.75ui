@@ -1,73 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { cn } from "@/lib/utils";
-import { Info } from 'lucide-react';
-
-type DealType = 'hot' | 'warm' | 'cold' | 'new';
-
-interface ActionItem {
-  id: DealType;
-  label: string;
-  count: number;
-  total: number;
-  color: string;
-  buttonText: string;
-  tooltipTitle: string;
-  tooltipText: string;
-}
-
-const ACTION_ITEMS: ActionItem[] = [
-  {
-    id: 'hot',
-    label: 'Hot Deals',
-    count: 0,
-    total: 1,
-    color: '#ef4444', // red-500
-    buttonText: 'View Hot Deals',
-    tooltipTitle: 'Hot Deals',
-    tooltipText: 'These deals require immediate follow-up. 0 completed out of 1. Total: 1.'
-  },
-  {
-    id: 'warm',
-    label: 'Warm Deals',
-    count: 0,
-    total: 8,
-    color: '#f59e0b', // amber-500
-    buttonText: 'Review Warm Deals',
-    tooltipTitle: 'Warm Deals',
-    tooltipText: 'Warm leads showing moderate engagement. 0 completed out of 8. Total: 8.'
-  },
-  {
-    id: 'cold',
-    label: 'Cold Deals',
-    count: 0,
-    total: 5,
-    color: '#3b82f6', // blue-500
-    buttonText: 'Open Cold Deals',
-    tooltipTitle: 'Cold Deals',
-    tooltipText: 'Cold leads with low recent engagement. 0 completed out of 5. Total: 5.'
-  },
-  {
-    id: 'new',
-    label: 'New Deals',
-    count: 56,
-    total: 60,
-    color: '#6b7280', // gray-500
-    buttonText: 'Process New Deals',
-    tooltipTitle: 'New Deals',
-    tooltipText: 'These are new incoming deals that do not have a temperature assigned yet (Hot, Warm, Cold) or are offer status "None"  They need to be reviewed and categorized.'
-  }
-];
+import { Check } from 'lucide-react';
 
 const CircularProgress = ({ 
   count, 
   total, 
   color, 
-  size = 120, 
-  strokeWidth = 10 
+  bgColor = "#f3f4f6",
+  size = 80, 
+  strokeWidth = 6 
 }: { 
   count: number; 
   total: number; 
   color: string; 
+  bgColor?: string;
   size?: number; 
   strokeWidth?: number; 
 }) => {
@@ -84,7 +30,7 @@ const CircularProgress = ({
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          stroke="#E5E7EB" // gray-200
+          stroke={bgColor}
           strokeWidth={strokeWidth}
           fill="none"
         />
@@ -103,111 +49,105 @@ const CircularProgress = ({
         />
       </svg>
       {/* Inner Text */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-2xl font-bold text-gray-900">
-          {count}<span className="text-gray-400 text-lg">/{total}</span>
-        </span>
+      <div className="absolute inset-0 flex items-center justify-center text-2xl font-bold text-gray-900">
+        {count}<span className="text-sm text-gray-400">/{total}</span>
       </div>
     </div>
   );
 };
 
 export default function ActionPlan() {
-  const [hoveredId, setHoveredId] = useState<DealType | null>(null);
-  const [statusTooltipId, setStatusTooltipId] = useState<DealType | null>(null);
-
   return (
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
-      <div className="flex justify-between items-baseline mb-8">
+      
+      <div className="flex justify-between items-end mb-8">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Nov 27, 2025 — Today's Action Plan!</h2>
-          <p className="text-sm text-gray-500 mt-1 uppercase tracking-wide font-semibold">Deals to Follow Up Today</p>
+          <h2 className="text-2xl font-bold text-gray-900">Nov 27, 2025 — Today's Action Plan</h2>
+          <p className="text-xs text-gray-500 mt-1 uppercase tracking-wide font-semibold">Prioritized Workflow</p>
         </div>
 
-        <div className="text-right">
-          <div className="text-2xl font-bold text-green-600 tracking-tight">Offers Made Today <span className="ml-2">1/3</span></div>
+        <div className="bg-gray-50 border border-gray-200 rounded-lg px-5 py-2 flex items-center gap-4">
+          <div className="text-right">
+            <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Daily Offer Goal</div>
+            <div className="text-xs text-gray-400">Target: 3 Offers</div>
+          </div>
+          <div className="h-8 w-px bg-gray-200"></div>
+          <div className="flex items-baseline gap-1">
+            <span className="text-3xl font-black text-blue-600">1</span>
+            <span className="text-xl font-bold text-gray-300">/ 3</span>
+          </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {ACTION_ITEMS.map((item) => (
-          <div 
-            key={item.id} 
-            className="relative flex flex-col items-center group"
-            onMouseEnter={() => setHoveredId(item.id)}
-            onMouseLeave={() => setHoveredId(null)}
-          >
-            {/* Tooltip */}
-            <div 
-              className={cn(
-                "absolute -top-32 left-1/2 transform -translate-x-1/2 w-80 bg-white p-4 rounded-lg shadow-xl border border-gray-100 z-20 transition-all duration-200 pointer-events-none text-center",
-                hoveredId === item.id ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-              )}
-            >
-              <div className="font-bold text-gray-900 mb-1">{item.tooltipTitle}</div>
-              <p className="text-xs text-gray-600 leading-relaxed">{item.tooltipText}</p>
-              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rotate-45 w-3 h-3 bg-white border-b border-r border-gray-100"></div>
-            </div>
-
-            {/* Circle */}
-            <div className="mb-4 relative">
-               <CircularProgress count={item.count} total={item.total} color={item.color} />
-            </div>
-
-            {/* Labels */}
-            <div className="text-center mb-4 flex flex-col items-center">
-              <div className="relative flex items-center gap-1.5 mb-1">
-                <div className="text-base font-semibold text-gray-700 tracking-tight">
-                  Status: {item.count}/{item.total}/{item.total}
-                </div>
-                
-                <div 
-                  className="text-gray-400 hover:text-gray-600 cursor-help"
-                  onMouseEnter={() => setStatusTooltipId(item.id)}
-                  onMouseLeave={() => setStatusTooltipId(null)}
-                >
-                  <Info className="w-4 h-4" />
-                </div>
-
-                {/* Status Tooltip */}
-                <div 
-                  className={cn(
-                    "absolute bottom-8 left-1/2 transform -translate-x-1/2 w-80 bg-gray-900 text-white p-4 rounded-lg shadow-xl z-30 transition-all duration-200 pointer-events-none text-left text-xs leading-relaxed",
-                    statusTooltipId === item.id ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-                  )}
-                >
-                  <div className="font-bold text-white mb-2 text-sm">Status Breakdown:</div>
-                  <div className="space-y-2">
-                    <div>
-                      <span className="font-bold text-gray-300">• First Number — Not Started:</span><br/>
-                      <span className="text-gray-400">Deals that have NOT been opened yet.</span>
-                    </div>
-                    <div>
-                      <span className="font-bold text-gray-300">• Second Number — In Progress:</span><br/>
-                      <span className="text-gray-400">Deals that HAVE been opened but have NO completed communication.</span>
-                    </div>
-                    <div>
-                      <span className="font-bold text-gray-300">• Third Number — Completed:</span><br/>
-                      <span className="text-gray-400">Deals where communication WAS completed and the status was properly updated.</span>
-                    </div>
-                  </div>
-                  <div className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 rotate-45 w-3 h-3 bg-gray-900"></div>
-                </div>
-              </div>
-            </div>
-
-            {/* CTA Button */}
-            <button 
-              className="px-4 py-2 rounded-full text-sm font-bold border-2 bg-white hover:bg-gray-50 transition-colors w-full max-w-[180px]"
-              style={{ 
-                borderColor: item.color, 
-                color: item.color 
-              }}
-            >
-              {item.buttonText}
-            </button>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        {/* Hot Deals - Start Here */}
+        <div className="relative bg-white border-2 border-red-500 rounded-xl p-4 flex flex-col items-center shadow-sm">
+          <div className="absolute -top-3 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wide">
+            Start Here
           </div>
-        ))}
+          
+          <div className="mb-3">
+            <CircularProgress 
+              count={0} 
+              total={1} 
+              color="#ef4444" 
+              bgColor="#fee2e2" 
+              size={80} 
+              strokeWidth={6} 
+            />
+          </div>
+          
+          <button className="w-full bg-red-600 hover:bg-red-700 text-white text-xs font-bold py-2 px-4 rounded-lg shadow-sm transition">
+            View Hot Deals
+          </button>
+        </div>
+
+        {/* Warm Deals - Review Complete */}
+        <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 flex flex-col items-center opacity-75">
+          <div className="w-20 h-20 mb-3 flex items-center justify-center bg-green-100 rounded-full">
+            <Check className="w-10 h-10 text-green-600" strokeWidth={3} />
+          </div>
+          
+          <button className="w-full bg-gray-200 text-gray-500 text-xs font-bold py-2 px-4 rounded-lg cursor-default">
+            Review Complete
+          </button>
+        </div>
+
+        {/* Cold Deals */}
+        <div className="bg-white border border-gray-200 rounded-xl p-4 flex flex-col items-center hover:border-blue-300 transition">
+          <div className="mb-3">
+            <CircularProgress 
+              count={0} 
+              total={5} 
+              color="#3b82f6" 
+              size={80} 
+              strokeWidth={6} 
+            />
+          </div>
+          
+          <button className="w-full border border-blue-200 text-blue-600 hover:bg-blue-50 text-xs font-bold py-2 px-4 rounded-lg transition">
+            Open Cold Deals
+          </button>
+        </div>
+
+        {/* New Deals */}
+        <div className="bg-white border border-gray-200 rounded-xl p-4 flex flex-col items-center hover:border-gray-300 transition">
+          <div className="mb-3">
+            <CircularProgress 
+              count={56} 
+              total={60} 
+              color="#22c55e" 
+              size={80} 
+              strokeWidth={6} 
+            />
+          </div>
+          
+          <button className="w-full border border-gray-300 text-gray-600 hover:bg-gray-50 text-xs font-bold py-2 px-4 rounded-lg transition">
+            Process New Deals
+          </button>
+        </div>
+
       </div>
     </div>
   );
