@@ -564,116 +564,70 @@ export default function DailyOutreach() {
                               </div>
                               <h2 className="text-xl font-bold text-[#FF6600]">iQ Property Intelligence</h2>
                             </div>
-                            <div className="flex gap-2">
-                              <button 
-                                onClick={() => handleViewModeChange('stats')}
-                                className={cn(
-                                  "px-4 py-1.5 text-xs font-medium rounded-lg border transition",
-                                  iQViewMode === 'stats' 
-                                    ? "bg-white text-[#FF6600] border-[#FF6600]" 
-                                    : "bg-white text-[#FF6600] border-gray-200 hover:border-[#FF6600]"
-                                )}
-                                data-testid="button-iq-stats"
-                              >
-                                Stats
-                              </button>
-                              <button 
-                                onClick={() => handleViewModeChange('description', deal.id)}
-                                className={cn(
-                                  "px-4 py-1.5 text-xs font-medium rounded-lg border transition",
-                                  iQViewMode === 'description' 
-                                    ? "bg-white text-[#FF6600] border-[#FF6600]" 
-                                    : "bg-white text-[#FF6600] border-gray-200 hover:border-[#FF6600]"
-                                )}
-                                data-testid="button-iq-description"
-                              >
-                                Description
-                              </button>
-                            </div>
                           </div>
 
-                          {iQViewMode === 'stats' ? (
-                            <>
-                              <div className="space-y-2 text-sm mb-8">
-                                <div>Status: <span className="text-gray-900 font-semibold">Active</span></div>
-                                <div>Days on Market: <span className="text-gray-900 font-semibold">45</span></div>
-                                <div>Price to Future Value: <span className="text-gray-900 font-semibold">82%</span></div>
-                                <div>Propensity Score: <span className="text-gray-900 font-semibold">6</span></div>
-                                <div>Agent: <span className="text-gray-900 font-semibold">Sarah Johnson</span> (Unassigned)</div>
-                                <div>Relationship Status: <span className="text-gray-900 font-semibold">Warm</span></div>
-                                <div>Investor Source Count: <a href="https://nextjs-flipiq-agent.vercel.app/agents/AaronMills" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline hover:text-blue-800">[View Agent]</a></div>
-                                <div>Last Communication Date: <span className="text-gray-900 font-semibold">11/15/2025</span></div>
-                                <div>Last Address Discussed: <span className="text-gray-900 font-semibold">1234 Oak Street, Phoenix AZ</span></div>
-                              </div>
+                          <div className="space-y-2 text-sm mb-8">
+                            <div>Status: <span className="text-gray-900 font-semibold">Active</span></div>
+                            <div>Days on Market: <span className="text-gray-900 font-semibold">45</span></div>
+                            <div>Price to Future Value: <span className="text-gray-900 font-semibold">82%</span></div>
+                            <div>Propensity Score: <span className="text-gray-900 font-semibold">6</span></div>
+                            <div>Agent: <span className="text-gray-900 font-semibold">Sarah Johnson</span> (Unassigned)</div>
+                            <div>Relationship Status: <span className="text-gray-900 font-semibold">Warm</span></div>
+                            <div>Investor Source Count: <a href="https://nextjs-flipiq-agent.vercel.app/agents/AaronMills" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline hover:text-blue-800">[View Agent]</a></div>
+                            <div>Last Communication Date: <span className="text-gray-900 font-semibold">11/15/2025</span></div>
+                            <div>Last Address Discussed: <span className="text-gray-900 font-semibold">1234 Oak Street, Phoenix AZ</span></div>
+                          </div>
 
-                              <div className="mb-6">
-                                <h3 className="text-lg font-bold text-gray-900 mb-4">Why this Property</h3>
-                                <ul className="space-y-2 text-sm text-gray-700">
-                                  <li className="flex items-start gap-2">
-                                    <span className="text-gray-400">•</span>
-                                    <span>Aged listing (≥70 DOM) with strong discount potential.</span>
-                                  </li>
-                                  <li className="flex items-start gap-2">
-                                    <span className="text-gray-400">•</span>
-                                    <span>Currently unassigned and no active offer status — open field opportunity.</span>
-                                  </li>
-                                </ul>
-                              </div>
+                          <div className="mb-6">
+                            <h3 className="text-lg font-bold text-gray-900 mb-4">Why this Property</h3>
+                            <ul className="space-y-2 text-sm text-gray-700">
+                              <li className="flex items-start gap-2">
+                                <span className="text-gray-400">•</span>
+                                <span>Aged listing (≥70 DOM) with strong discount potential.</span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <span className="text-gray-400">•</span>
+                                <span>Currently unassigned and no active offer status — open field opportunity.</span>
+                              </li>
+                            </ul>
+                          </div>
 
-                              <div className="mb-6">
-                                <span className="text-sm text-gray-700">Let's dive in to the property - </span>
-                                <button 
-                                  onClick={() => setLocation(`/piq/${deal.id}?from=new-agent`)}
-                                  className="text-blue-600 underline font-medium hover:text-blue-800 ml-1" 
-                                  data-testid="button-dive-yes"
-                                >
-                                  Yes
-                                </button>
-                                <button className="text-blue-600 underline font-medium hover:text-blue-800 ml-3" data-testid="button-dive-no">No</button>
-                              </div>
-                            </>
-                          ) : (
-                            <>
-                              <div className="mb-6">
-                                <h3 className="text-lg font-bold text-gray-900 mb-4">Why this Property</h3>
-                                <ul className="space-y-2 text-sm text-gray-700">
-                                  <li className="flex items-start gap-2">
-                                    <span className="text-gray-400">•</span>
-                                    <span>Aged listing (≥70 DOM) with strong discount potential.</span>
-                                  </li>
-                                  <li className="flex items-start gap-2">
-                                    <span className="text-gray-400">•</span>
-                                    <span>Currently unassigned and no active offer status — open field opportunity.</span>
-                                  </li>
-                                </ul>
-                              </div>
+                          <div className="mb-6">
+                            <span className="text-sm text-gray-700">Let's dive in to the property - </span>
+                            <button 
+                              onClick={() => setLocation(`/piq/${deal.id}?from=new-agent`)}
+                              className="text-blue-600 underline font-medium hover:text-blue-800 ml-1" 
+                              data-testid="button-dive-yes"
+                            >
+                              Yes
+                            </button>
+                            <button className="text-blue-600 underline font-medium hover:text-blue-800 ml-3" data-testid="button-dive-no">No</button>
+                          </div>
 
-                              <div className="mb-6">
-                                <span className="text-sm text-gray-700">Let's dive in to the property - </span>
-                                <button 
-                                  onClick={() => setLocation(`/piq/${deal.id}`)}
-                                  className="text-blue-600 underline font-medium hover:text-blue-800 ml-1" 
-                                  data-testid="button-dive-yes-desc"
-                                >
-                                  Yes
-                                </button>
-                                <button className="text-blue-600 underline font-medium hover:text-blue-800 ml-3" data-testid="button-dive-no-desc">No</button>
-                              </div>
+                          <div className="mb-6">
+                            <button 
+                              onClick={() => handleViewModeChange('description', deal.id)}
+                              className="px-4 py-2 bg-[#FF6600] hover:bg-[#e65c00] text-white text-sm font-medium rounded-lg shadow-sm transition"
+                              data-testid="button-generate-ai-report"
+                            >
+                              Generate AI Report
+                            </button>
+                          </div>
 
-                              <div className="mb-6 border-t border-gray-200 pt-4">
-                                <h3 className="text-lg font-bold text-gray-900 mb-4">AI Property Story</h3>
-                                {isLoadingStory ? (
-                                  <div className="flex items-center gap-3 text-gray-500">
-                                    <div className="animate-spin w-5 h-5 border-2 border-[#FF6600] border-t-transparent rounded-full"></div>
-                                    <span>Generating story...</span>
-                                  </div>
-                                ) : (
-                                  <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
-                                    {propertyStory || 'Loading AI-generated story...'}
-                                  </div>
-                                )}
-                              </div>
-                            </>
+                          {iQViewMode === 'description' && (
+                            <div className="mb-6 border-t border-gray-200 pt-4">
+                              <h3 className="text-lg font-bold text-gray-900 mb-4">AI Property Story</h3>
+                              {isLoadingStory ? (
+                                <div className="flex items-center gap-3 text-gray-500">
+                                  <div className="animate-spin w-5 h-5 border-2 border-[#FF6600] border-t-transparent rounded-full"></div>
+                                  <span>Generating story...</span>
+                                </div>
+                              ) : (
+                                <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
+                                  {propertyStory || 'Loading AI-generated story...'}
+                                </div>
+                              )}
+                            </div>
                           )}
 
                           <div className="border-t border-gray-200 pt-6">
