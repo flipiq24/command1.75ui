@@ -150,9 +150,7 @@ export default function ActionPlan() {
 
             {/* Labels */}
             <div className="text-center mb-4 flex flex-col items-center">
-              <div className="text-lg font-bold text-gray-900 mb-1">{item.label}</div>
-              
-              <div className="relative flex items-center gap-1.5">
+              <div className="relative flex items-center gap-1.5 mb-1">
                 <div className="text-base font-semibold text-gray-700 tracking-tight">
                   Status: {item.count}/{item.total}/{item.total}
                 </div>
@@ -168,7 +166,7 @@ export default function ActionPlan() {
                 {/* Status Tooltip */}
                 <div 
                   className={cn(
-                    "absolute top-8 left-1/2 transform -translate-x-1/2 w-80 bg-gray-900 text-white p-4 rounded-lg shadow-xl z-30 transition-all duration-200 pointer-events-none text-left text-xs leading-relaxed",
+                    "absolute bottom-8 left-1/2 transform -translate-x-1/2 w-80 bg-gray-900 text-white p-4 rounded-lg shadow-xl z-30 transition-all duration-200 pointer-events-none text-left text-xs leading-relaxed",
                     statusTooltipId === item.id ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
                   )}
                 >
@@ -187,9 +185,11 @@ export default function ActionPlan() {
                       <span className="text-gray-400">Deals where communication WAS completed and the status was properly updated.</span>
                     </div>
                   </div>
-                  <div className="absolute -top-1.5 left-1/2 transform -translate-x-1/2 rotate-45 w-3 h-3 bg-gray-900"></div>
+                  <div className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 rotate-45 w-3 h-3 bg-gray-900"></div>
                 </div>
               </div>
+
+              <div className="text-lg font-bold text-gray-900">{item.label}</div>
             </div>
 
             {/* CTA Button */}
