@@ -289,13 +289,33 @@ export default function Home() {
 
                             <div className="w-2/12 px-4 flex flex-col items-center">
                                 <div className="text-[11px] text-gray-400 space-y-1 text-left w-full max-w-[140px]">
-                                    <div className="flex flex-col">
+                                    <div className="flex flex-col group relative cursor-help">
                                         <span className="font-medium text-gray-500">Last Open Date:</span>
-                                        <span className="text-gray-900 bg-yellow-100 px-1.5 py-0.5 rounded font-bold w-fit">{deal.lastOpen}</span>
+                                        <span className={cn(
+                                          "text-gray-900 font-medium", 
+                                          deal.lastOpen === 'N/A' && "bg-yellow-100 px-1.5 py-0.5 rounded font-bold w-fit"
+                                        )}>
+                                          {deal.lastOpen}
+                                        </span>
+                                        {deal.lastOpen === 'N/A' && (
+                                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
+                                            Needs attention: This deal hasn't been opened recently.
+                                          </div>
+                                        )}
                                     </div>
-                                    <div className="flex flex-col">
+                                    <div className="flex flex-col group relative cursor-help">
                                         <span className="font-medium text-gray-500">Last Called Date:</span>
-                                        <span className="text-gray-900 bg-yellow-100 px-1.5 py-0.5 rounded font-bold w-fit">{deal.lastCalled}</span>
+                                        <span className={cn(
+                                          "text-gray-900 font-medium", 
+                                          deal.lastCalled === 'N/A' && "bg-yellow-100 px-1.5 py-0.5 rounded font-bold w-fit"
+                                        )}>
+                                          {deal.lastCalled}
+                                        </span>
+                                        {deal.lastCalled === 'N/A' && (
+                                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
+                                            Needs attention: No recent call recorded.
+                                          </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
