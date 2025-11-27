@@ -223,22 +223,6 @@ export default function DailyOutreach() {
             <h2 className="text-xl font-bold text-gray-900" data-testid="text-page-title">Daily Outreach</h2>
             <p className="text-xs text-gray-500">Step-by-step execution mode.</p>
           </div>
-
-          <div className="flex items-center gap-4">
-            <span className="text-sm font-bold text-gray-500">Property 1 of 30</span>
-            
-            <div className="flex gap-3">
-              <button className="flex items-center gap-1 px-4 py-2 border border-gray-300 rounded-lg text-xs font-bold text-gray-600 hover:bg-gray-50 transition" data-testid="button-prev-deal">
-                <ChevronLeft className="w-4 h-4" />
-                Previous Deal
-              </button>
-              
-              <button className="flex items-center gap-1 px-4 py-2 bg-[#FF6600] hover:bg-[#e65c00] text-white rounded-lg text-xs font-bold shadow-sm transition" data-testid="button-next-deal">
-                Next Deal
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
         </div>
 
         <main className="flex-1 overflow-y-auto p-6">
@@ -247,6 +231,25 @@ export default function DailyOutreach() {
             activeFilter={activeFilter} 
             onFilterChange={setActiveFilter} 
           />
+
+            <div className="flex items-center justify-between px-4 py-3 mb-4">
+              <div></div>
+              <div className="flex items-center gap-4">
+                <span className="text-sm font-bold text-gray-500">Property 1 of 30</span>
+                
+                <div className="flex gap-3">
+                  <button className="flex items-center gap-1 px-4 py-2 border border-gray-300 rounded-lg text-xs font-bold text-gray-600 hover:bg-gray-50 transition" data-testid="button-prev-deal">
+                    <ChevronLeft className="w-4 h-4" />
+                    Previous Deal
+                  </button>
+                  
+                  <button className="flex items-center gap-1 px-4 py-2 bg-[#FF6600] hover:bg-[#e65c00] text-white rounded-lg text-xs font-bold shadow-sm transition" data-testid="button-next-deal">
+                    Next Deal
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
 
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm flex-1 flex flex-col">
 
