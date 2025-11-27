@@ -6,6 +6,8 @@ import {
   ArrowLeft,
   Snowflake,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   RefreshCw,
   Globe,
   Edit,
@@ -92,13 +94,28 @@ export default function PIQ() {
           <div className="border-b border-gray-200 px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <button 
-                  onClick={() => setLocation('/daily-outreach')}
-                  className="p-2 hover:bg-gray-100 rounded-lg"
-                  data-testid="button-back"
-                >
-                  <ArrowLeft className="w-5 h-5 text-gray-600" />
-                </button>
+                <div className="flex items-center gap-2">
+                  <button 
+                    onClick={() => setLocation('/daily-outreach')}
+                    className="p-1 hover:bg-gray-100 rounded text-gray-500 hover:text-gray-700"
+                    data-testid="button-prev-property"
+                    title="Previous Property"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <button 
+                    className="p-1 hover:bg-gray-100 rounded text-gray-500 hover:text-gray-700"
+                    data-testid="button-next-deal"
+                    title="Next Deal"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                  <div className="flex items-center gap-1 ml-1">
+                    <div className="w-1 h-5 bg-blue-600 rounded-sm"></div>
+                    <span className="px-2 py-1 bg-blue-600 text-white text-xs font-medium rounded">Current Queue</span>
+                    <span className="text-gray-600 text-sm ml-1">1 of 30</span>
+                  </div>
+                </div>
                 
                 <div className="flex items-center gap-2">
                   <h2 className="text-lg font-semibold text-gray-900">10573 Larch , Bloomington , CA 92316</h2>
