@@ -14,7 +14,8 @@ import {
   Mic,
   Bot,
   Lightbulb,
-  Plus
+  Plus,
+  Globe
 } from 'lucide-react';
 import {
   DropdownMenu,
