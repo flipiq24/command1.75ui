@@ -562,6 +562,7 @@ export default function DailyOutreach() {
                             <div>Propensity Score: <span className="text-[#FF6600] font-bold">[0-8]</span></div>
                             <div>Agent: <span className="text-[#FF6600] font-bold">[Name]</span> (Unassigned)</div>
                             <div>Relationship Status: <span className="text-[#FF6600] font-bold">[Cold/Warm/Hot]</span></div>
+                            <div>Investor Source Count: <a href="https://nextjs-flipiq-agent.vercel.app/agents/AaronMills" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline hover:text-blue-800">[View Agent]</a></div>
                             <div>Last Communication Date: <span className="text-[#FF6600] font-bold">Date or Blank</span></div>
                             <div>Last Address Discussed: <span className="text-[#FF6600] font-bold">Address or blank</span></div>
                           </div>
