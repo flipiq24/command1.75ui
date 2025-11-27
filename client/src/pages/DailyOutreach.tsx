@@ -655,7 +655,7 @@ export default function DailyOutreach() {
                               <div className="mb-6">
                                 <span className="text-sm text-gray-700">Let's dive in to the property - </span>
                                 <button 
-                                  onClick={() => setLocation(`/piq/${deal.id}`)}
+                                  onClick={() => setLocation(`/piq/${deal.id}?from=new-agent`)}
                                   className="text-blue-600 underline font-medium hover:text-blue-800 ml-1" 
                                   data-testid="button-dive-yes"
                                 >

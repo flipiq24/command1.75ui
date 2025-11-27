@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useLocation } from 'wouter';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useSearch } from 'wouter';
 import { cn } from "@/lib/utils";
 import Sidebar from '@/components/Sidebar';
 import { 
@@ -10,13 +10,33 @@ import {
   Globe,
   Edit,
   MoreVertical,
-  MessageSquare
+  MessageSquare,
+  Lightbulb,
+  Plus,
+  Mic
 } from 'lucide-react';
 
 export default function PIQ() {
   const [, setLocation] = useLocation();
+  const searchString = useSearch();
+  const fromNewAgent = searchString.includes('from=new-agent');
+  
   const [activeTab, setActiveTab] = useState('piq');
-  const [activeRightTab, setActiveRightTab] = useState('ai-connect');
+  const [activeRightTab, setActiveRightTab] = useState(fromNewAgent ? 'iq' : 'notes');
+  const [showIQPanel, setShowIQPanel] = useState(fromNewAgent);
+  const [iQViewMode, setIQViewMode] = useState<'stats' | 'description'>('stats');
+
+  useEffect(() => {
+    if (fromNewAgent) {
+      setShowIQPanel(true);
+      setActiveRightTab('iq');
+    }
+  }, [fromNewAgent]);
+
+  const handleIQClick = () => {
+    setActiveRightTab('iq');
+    setShowIQPanel(true);
+  };
 
   const leftTabs = [
     { id: 'piq', label: 'PIQ' },
@@ -27,7 +47,7 @@ export default function PIQ() {
   ];
 
   const rightTabs = [
-    { id: 'ai-connect', label: 'AI Connect' },
+    { id: 'iq', label: 'IQ', isIQ: true },
     { id: 'notes', label: 'Notes' },
     { id: 'reminders', label: 'Reminders' },
     { id: 'activity', label: 'Activity' },
@@ -177,12 +197,16 @@ export default function PIQ() {
                   {rightTabs.map((tab) => (
                     <button
                       key={tab.id}
-                      onClick={() => setActiveRightTab(tab.id)}
+                      onClick={() => tab.id === 'iq' ? handleIQClick() : setActiveRightTab(tab.id)}
                       className={cn(
                         "px-3 py-1.5 text-xs font-medium rounded-lg border transition",
-                        activeRightTab === tab.id
-                          ? "bg-gray-100 border-gray-300 text-gray-900"
-                          : "bg-white border-gray-200 text-gray-500 hover:bg-gray-50"
+                        tab.id === 'iq'
+                          ? activeRightTab === 'iq'
+                            ? "bg-[#FF6600] border-[#FF6600] text-white"
+                            : "bg-[#FF6600] border-[#FF6600] text-white hover:bg-[#e55c00]"
+                          : activeRightTab === tab.id
+                            ? "bg-gray-100 border-gray-300 text-gray-900"
+                            : "bg-white border-gray-200 text-gray-500 hover:bg-gray-50"
                       )}
                       data-testid={`tab-right-${tab.id}`}
                     >
@@ -343,6 +367,110 @@ export default function PIQ() {
                   </div>
                 </div>
               </div>
+
+              {showIQPanel && (
+                <div className="mt-6 bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                      <div className="relative">
+                        <Lightbulb className="w-6 h-6 text-[#FF6600] animate-pulse" />
+                        <div className="absolute inset-0 w-6 h-6 bg-[#FF6600] rounded-full opacity-30 animate-ping"></div>
+                      </div>
+                      <h2 className="text-xl font-bold text-[#FF6600]">iQ Property Intelligence</h2>
+                    </div>
+                    <div className="flex gap-2">
+                      <button 
+                        onClick={() => setIQViewMode('stats')}
+                        className={cn(
+                          "px-4 py-1.5 text-xs font-medium rounded-lg transition",
+                          iQViewMode === 'stats' 
+                            ? "bg-[#FF6600] text-white" 
+                            : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
+                        )}
+                        data-testid="button-piq-stats"
+                      >
+                        Stats
+                      </button>
+                      <button 
+                        onClick={() => setIQViewMode('description')}
+                        className={cn(
+                          "px-4 py-1.5 text-xs font-medium rounded-lg transition",
+                          iQViewMode === 'description' 
+                            ? "bg-[#FF6600] text-white" 
+                            : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
+                        )}
+                        data-testid="button-piq-description"
+                      >
+                        Description
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 text-sm font-mono mb-8">
+                    <div>Status: <span className="text-[#FF6600] font-bold">[Active/Backup/Pending]</span></div>
+                    <div>Days on Market: <span className="text-[#FF6600] font-bold">[DOM]</span></div>
+                    <div>Price to Future Value: <span className="text-[#FF6600] font-bold">[PTFV%]</span></div>
+                    <div>Propensity Score: <span className="text-[#FF6600] font-bold">[0-8]</span></div>
+                    <div>Agent: <span className="text-[#FF6600] font-bold">[Name]</span> (Unassigned)</div>
+                    <div>Relationship Status: <span className="text-[#FF6600] font-bold">[Cold/Warm/Hot]</span></div>
+                    <div>Investor Source Count: <a href="#" className="text-blue-600 underline hover:text-blue-800">[View Agent]</a></div>
+                    <div>Last Communication Date: <span className="text-[#FF6600] font-bold">Date or Blank</span></div>
+                    <div>Last Address Discussed: <span className="text-[#FF6600] font-bold">Address or blank</span></div>
+                  </div>
+
+                  <div className="mb-6">
+                    <h3 className="text-lg font-bold text-gray-900 mb-4">Why this Property</h3>
+                    <ul className="space-y-2 text-sm text-gray-700">
+                      <li className="flex items-start gap-2">
+                        <span className="text-gray-400">•</span>
+                        <span>Aged listing (≥70 DOM) with strong discount potential.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-gray-400">•</span>
+                        <div>
+                          <span>Keywords detected:</span>
+                          <div className="flex flex-wrap gap-2 mt-2">
+                            <span className="px-3 py-1 bg-white text-red-600 text-xs rounded-full border border-red-300 cursor-pointer hover:bg-red-50 hover:border-red-400 transition">repairs</span>
+                            <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">investors</span>
+                            <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">Investment</span>
+                            <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">as-is</span>
+                            <span className="px-3 py-1 bg-white text-blue-600 text-xs rounded-full border border-blue-300 cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition">investor</span>
+                            <span className="px-3 py-1 bg-white text-blue-600 text-xs rounded-full border border-blue-300 cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition">estate</span>
+                            <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">opportunity</span>
+                            <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">Renovation</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-gray-400">•</span>
+                        <span>Currently unassigned and no active offer status — open field opportunity.</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="mb-6">
+                    <span className="text-sm text-gray-700">Let's dive in to the property - </span>
+                    <button className="text-blue-600 underline font-medium hover:text-blue-800 ml-1" data-testid="button-piq-dive-yes">Yes</button>
+                    <button className="text-blue-600 underline font-medium hover:text-blue-800 ml-3" data-testid="button-piq-dive-no">No</button>
+                  </div>
+
+                  <div className="border-t border-gray-200 pt-6">
+                    <div className="flex items-center gap-3 bg-gray-50 rounded-full px-4 py-3 border border-gray-200">
+                      <Plus className="w-5 h-5 text-gray-400" />
+                      <input 
+                        type="text" 
+                        placeholder="Ask anything" 
+                        className="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none"
+                        data-testid="input-piq-ask-anything"
+                      />
+                      <Mic className="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-600" />
+                      <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center cursor-pointer hover:bg-blue-700">
+                        <MessageSquare className="w-4 h-4 text-white" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </main>
