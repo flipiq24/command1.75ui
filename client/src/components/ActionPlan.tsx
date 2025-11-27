@@ -144,7 +144,7 @@ export default function ActionPlan({ onFilterChange, activeFilter }: ActionPlanP
                 
                 <div 
                     className={cn(
-                        "flex items-center gap-1.5 group relative w-fit cursor-pointer transition-opacity hover:opacity-80",
+                        "flex items-center gap-1.5 group relative w-fit cursor-pointer transition-opacity hover:opacity-80 z-20",
                         activeFilter === 'completed' && "ring-2 ring-[#FF6600] ring-offset-2 rounded px-2 bg-orange-50 -ml-2"
                     )}
                     onClick={() => handleFilterClick('completed')}
