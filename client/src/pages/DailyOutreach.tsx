@@ -544,7 +544,19 @@ export default function DailyOutreach() {
                           </li>
                           <li className="flex items-start gap-2">
                             <span className="text-gray-400">•</span>
-                            <span>Keywords detected: <span className="text-[#FF6600] font-bold">[Distress Indicators]</span>.</span>
+                            <div>
+                              <span>Keywords detected:</span>
+                              <div className="flex flex-wrap gap-2 mt-2">
+                                <span className="px-3 py-1 bg-blue-50 text-blue-600 text-xs rounded-full border border-blue-200">repairs</span>
+                                <span className="px-3 py-1 bg-blue-50 text-blue-600 text-xs rounded-full border border-blue-200">investors</span>
+                                <span className="px-3 py-1 bg-blue-50 text-blue-600 text-xs rounded-full border border-blue-200">Investment</span>
+                                <span className="px-3 py-1 bg-blue-50 text-blue-600 text-xs rounded-full border border-blue-200">as-is</span>
+                                <span className="px-3 py-1 bg-blue-50 text-blue-600 text-xs rounded-full border border-blue-200">investor</span>
+                                <span className="px-3 py-1 bg-blue-50 text-blue-600 text-xs rounded-full border border-blue-200">estate</span>
+                                <span className="px-3 py-1 bg-blue-50 text-blue-600 text-xs rounded-full border border-blue-200">opportunity</span>
+                                <span className="px-3 py-1 bg-blue-50 text-blue-600 text-xs rounded-full border border-blue-200">Renovation</span>
+                              </div>
+                            </div>
                           </li>
                           <li className="flex items-start gap-2">
                             <span className="text-gray-400">•</span>
