@@ -9,37 +9,114 @@ import {
   ChevronDown,
   Search,
   Plus,
-  Bell
+  Bell,
+  Home as HomeIcon,
+  Briefcase,
+  Database,
+  Folder,
+  FileText,
+  Bug,
+  Zap,
+  ChevronLeft,
+  LogOut
 } from 'lucide-react';
 import { cn } from "@/lib/utils";
+
+const NavItem = ({ icon: Icon, label, active, className }: { icon: any, label: string, active?: boolean, className?: string }) => (
+  <a 
+    href="#" 
+    className={cn(
+      "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+      active 
+        ? "bg-gray-100 text-gray-900" 
+        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
+      className
+    )}
+  >
+    <Icon className={cn("w-5 h-5", active ? "text-gray-900" : "text-gray-500")} />
+    <span className="truncate">{label}</span>
+  </a>
+);
 
 export default function Home() {
   return (
     <div className="bg-gray-50 text-gray-800 h-screen flex overflow-hidden font-sans">
       {/* Sidebar */}
-      <div className="w-16 lg:w-64 bg-white border-r border-gray-200 flex flex-col justify-between hidden md:flex">
-        <div className="p-4">
-          <div className="flex items-center gap-2 mb-8 text-orange-500 font-bold text-xl">
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-            </svg>
-            <span className="hidden lg:block">FlipIQ</span>
+      <div className="w-64 bg-white border-r border-gray-200 flex flex-col justify-between hidden md:flex shrink-0 z-20">
+        <div className="flex flex-col h-full">
+          {/* Logo Area */}
+          <div className="pt-8 pb-6 px-6 flex flex-col items-center text-center">
+            <div className="mb-2 relative">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-orange-500">
+                {/* House Roof */}
+                <path d="M4 20L24 4L44 20" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                {/* House Walls - partial/implied or integrated with bulb */}
+                <path d="M9 20V38C9 40.2 10.8 42 13 42H35C37.2 42 39 40.2 39 38V20" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                {/* Lightbulb inside */}
+                <path d="M24 32C28.4183 32 32 28.4183 32 24C32 19.5817 28.4183 16 24 16C19.5817 16 16 19.5817 16 24C16 26.5 17.2 28.8 19 30.2" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+                <path d="M21 36H27" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
+                <path d="M22 40H26" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
+                {/* Radiance/Idea marks */}
+                <path d="M24 8V12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M14 10L16 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M34 10L32 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+            </div>
+            <div className="flex items-center justify-center gap-0.5 text-2xl font-bold tracking-tight mb-1">
+              <span className="text-slate-900">Flip</span><span className="text-orange-500">Iq</span>
+            </div>
+            <p className="text-[10px] text-orange-500 font-medium tracking-wide">Together, We Flip Smarter</p>
           </div>
-          <nav className="space-y-1">
-            <a href="#" className="flex items-center gap-3 px-3 py-2 bg-gray-100 text-gray-900 rounded-md text-sm font-medium">
-              <LayoutDashboard className="w-5 h-5 text-gray-500" />
-              <span className="hidden lg:block">Dashboard</span>
-            </a>
-            <a href="#" className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-md text-sm font-medium">
-              <ListTodo className="w-5 h-5 text-gray-400" />
-              <span className="hidden lg:block">Deals</span>
-            </a>
-          </nav>
+
+          {/* Scrollable Nav Area */}
+          <div className="flex-1 overflow-y-auto px-3 py-2 space-y-6">
+            
+            {/* Main Section */}
+            <div>
+              <div className="flex items-center justify-between px-3 py-2 text-xs font-bold text-gray-400 uppercase tracking-wider cursor-pointer hover:text-gray-600 transition-colors group">
+                MAIN
+                <ChevronDown className="w-3 h-3 group-hover:text-gray-600" />
+              </div>
+              <nav className="space-y-0.5 mt-1">
+                <NavItem icon={HomeIcon} label="Dashboard" active />
+                <NavItem icon={Briefcase} label="Deals" />
+                <NavItem icon={Database} label="MLS" />
+                <NavItem icon={Users} label="Agents" />
+                <NavItem icon={Folder} label="Campaigns" />
+              </nav>
+            </div>
+
+            {/* Secondary Section - implied grouping based on image spacing */}
+            <div className="space-y-0.5">
+               <NavItem icon={FileText} label="Agent/Investor Reports" className="leading-tight" />
+               <NavItem icon={Bug} label="Bug Report" />
+               <NavItem icon={Zap} label="AI Connect Test" />
+            </div>
+
+          </div>
+
+          {/* Sidebar Footer */}
+          <div className="p-3 mt-auto border-t border-gray-100">
+             <button className="w-full flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-50 rounded-lg text-sm font-medium transition-colors mb-4">
+                <ChevronLeft className="w-5 h-5" />
+                <span>Collapse sidebar</span>
+             </button>
+
+             <div className="flex items-center gap-3 px-3 py-2">
+                <div className="flex-1 min-w-0">
+                  <div className="font-bold text-gray-900 text-sm truncate">Tony Fletcher</div>
+                  <div className="text-xs text-gray-500 truncate">tonyf@fairclose.net</div>
+                </div>
+                <button className="text-gray-400 hover:text-gray-600 p-1 rounded-md hover:bg-gray-100">
+                  <LogOut className="w-4 h-4" />
+                </button>
+             </div>
+          </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden relative z-10">
         
         <header className="bg-white border-b border-gray-200 py-4 px-6 flex justify-between items-center">
           <h1 className="text-xl font-bold text-gray-900">Welcome, Tony!</h1>
