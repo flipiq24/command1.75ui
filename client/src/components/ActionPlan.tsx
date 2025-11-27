@@ -124,13 +124,24 @@ export default function ActionPlan() {
         <div className="w-1/2">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Nov 27, 2025 — Today's Action Plan!</h2>
             
-            <div className="space-y-2">
-                <p className="text-sm text-gray-500 font-medium">
+            <div className="space-y-2 group relative w-fit cursor-help">
+                
+                <p className="text-sm text-gray-500 font-medium decoration-dotted underline decoration-gray-400 underline-offset-4">
                     You have completed <span className="font-bold text-[#FF6600]">32%</span> of today's follow-ups.
                 </p>
+
                 <div className="w-full max-w-md bg-gray-100 h-2 rounded-full overflow-hidden">
                     <div className="bg-[#FF6600] h-full rounded-full" style={{ width: '32%' }}></div>
                 </div>
+
+                <div className="absolute top-full left-0 mt-2 w-64 bg-gray-900 text-white text-xs p-3 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-left leading-relaxed">
+                    <p className="mb-2">This tracks your contact progress on <strong>Hot, Warm, and Cold</strong> deals.</p>
+                    <hr className="border-gray-700 my-2" />
+                    <p className="text-gray-300">
+                        To hit <strong className="text-[#FF6600]">100% Daily Completion</strong>, you must finish these follow-ups <strong>AND</strong> meet your Daily Offer Goal.
+                    </p>
+                </div>
+
             </div>
         </div>
 
