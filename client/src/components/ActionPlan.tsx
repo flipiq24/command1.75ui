@@ -132,7 +132,7 @@ export default function ActionPlan() {
             {/* Tooltip */}
             <div 
               className={cn(
-                "absolute -top-24 left-1/2 transform -translate-x-1/2 w-64 bg-white p-4 rounded-lg shadow-xl border border-gray-100 z-20 transition-all duration-200 pointer-events-none text-center",
+                "absolute -top-32 left-1/2 transform -translate-x-1/2 w-80 bg-white p-4 rounded-lg shadow-xl border border-gray-100 z-20 transition-all duration-200 pointer-events-none text-center",
                 hoveredId === item.id ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
               )}
             >
