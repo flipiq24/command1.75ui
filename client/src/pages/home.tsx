@@ -62,26 +62,69 @@ export default function Home() {
           {/* Scrollable Nav Area */}
           <div className="flex-1 overflow-y-auto px-3 py-2 space-y-6">
             
-            {/* Main Section */}
+            {/* Today's Plan Section */}
             <div>
-              <div className="flex items-center justify-between px-3 py-2 text-xs font-bold text-gray-400 uppercase tracking-wider cursor-pointer hover:text-gray-600 transition-colors group">
-                MAIN
-                <ChevronDown className="w-3 h-3 group-hover:text-gray-600" />
+              <div className="px-2 mb-2 text-xs font-bold text-orange-600 uppercase tracking-wider">
+                  Today's Plan
               </div>
-              <nav className="space-y-0.5 mt-1">
-                <NavItem icon={CalendarCheck} label="Today's Plan" />
-                <NavItem icon={HomeIcon} label="Dashboard" active />
-                <NavItem icon={BarChart2} label="My Stats" />
-                <NavItem icon={Briefcase} label="Deals" />
-                <NavItem icon={Database} label="MLS" />
-                <NavItem icon={Users} label="Agents" />
-                <NavItem icon={Folder} label="Campaigns" />
-              </nav>
+              <div className="space-y-1">
+                  <a href="#" className="group relative flex items-center justify-between px-3 py-2 text-sm font-medium bg-orange-50 text-orange-700 rounded-lg border border-orange-100 hover:bg-orange-100 transition">
+                      <span className="flex items-center gap-3">Deal Review</span>
+                      <span className="bg-white text-orange-700 py-0.5 px-2 rounded border border-orange-200 text-xs font-bold shadow-sm">5 / 56</span>
+                  </a>
+
+                  <a href="#" className="group relative flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition">
+                      <span className="flex items-center gap-3">Daily Outreach</span>
+                      <span className="bg-gray-100 text-gray-600 py-0.5 px-2 rounded border border-gray-200 text-xs font-bold">3 / 30</span>
+                  </a>
+              </div>
             </div>
 
-            {/* Secondary Section - implied grouping based on image spacing */}
-            <div className="space-y-0.5">
-               <NavItem icon={FileText} label="DisoPro" className="leading-tight" />
+            {/* Find Leads Section */}
+            <div>
+              <div className="px-2 mb-2 text-xs font-bold text-gray-400 uppercase tracking-wider">
+                  Find Leads
+              </div>
+              <div className="space-y-1">
+                  <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+                      <span>🔥</span> MLS Hot Deals
+                  </a>
+
+                  <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+                      <span>🔍</span> MLS Search
+                  </a>
+
+                  <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+                      <span>👥</span> Agent Search
+                  </a>
+
+                  <a href="#" className="group relative flex items-center gap-2 pl-8 pr-3 py-1.5 text-xs font-medium text-gray-500 hover:text-orange-600 transition">
+                      <span className="text-gray-300">└──</span> Campaigns
+                  </a>
+              </div>
+            </div>
+
+            {/* Tools Section */}
+            <div>
+                <div className="px-2 mb-2 text-xs font-bold text-gray-400 uppercase tracking-wider">
+                    Tools
+                </div>
+                <div className="space-y-1">
+                    <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+                        <BarChart2 className="w-4 h-4" />
+                        My Stats
+                    </a>
+                    
+                    <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+                        <FileText className="w-4 h-4" />
+                        DisoPro
+                    </a>
+
+                    <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+                        <LayoutDashboard className="w-4 h-4" />
+                        Pro Dashboard
+                    </a>
+                </div>
             </div>
 
           </div>
