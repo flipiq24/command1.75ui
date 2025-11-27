@@ -5,7 +5,8 @@ import {
   Check,
   Phone,
   Users,
-  MessageSquare
+  MessageSquare,
+  Flame
 } from 'lucide-react';
 
 export type OutreachType = 'connections' | 'priority' | 'topOfMind';
@@ -119,7 +120,7 @@ export default function OutreachActionPlan({
               />
               <circle 
                 cx="56" cy="56" r="48" 
-                stroke={isConnectionsComplete ? "#22c55e" : "#ef4444"}
+                stroke={isConnectionsComplete ? "#22c55e" : "#dc2626"}
                 strokeWidth="8" 
                 fill="none" 
                 strokeDasharray={`${(connectionsCompleted / connectionsTotal) * 301.6} 301.6`}
@@ -150,10 +151,10 @@ export default function OutreachActionPlan({
               isConnectionsComplete 
                 ? "bg-green-50 text-green-600 border border-green-200"
                 : activeFilter === 'connections'
-                  ? "bg-red-500 text-white shadow-md"
-                  : "bg-red-50 text-red-600 border border-red-200 hover:bg-red-100"
+                  ? "bg-red-600 text-white shadow-lg animate-pulse"
+                  : "bg-red-600 text-white hover:bg-red-700 shadow-md"
             )}
-            data-testid="button-start-calling"
+            data-testid="button-new-relationships"
           >
             {isConnectionsComplete ? (
               <>
@@ -162,8 +163,8 @@ export default function OutreachActionPlan({
               </>
             ) : (
               <>
-                <Phone className="w-4 h-4" />
-                <span>Start Calling</span>
+                <Flame className="w-4 h-4" />
+                <span>New Agent Relationships</span>
               </>
             )}
           </button>
@@ -187,7 +188,7 @@ export default function OutreachActionPlan({
               />
               <circle 
                 cx="56" cy="56" r="48" 
-                stroke={isPriorityComplete ? "#22c55e" : "#f97316"}
+                stroke={isPriorityComplete ? "#22c55e" : "#f59e0b"}
                 strokeWidth="8" 
                 fill="none" 
                 strokeDasharray={`${(priorityCompleted / priorityTotal) * 301.6} 301.6`}
@@ -218,8 +219,8 @@ export default function OutreachActionPlan({
               isPriorityComplete 
                 ? "bg-green-50 text-green-600 border border-green-200"
                 : activeFilter === 'priority'
-                  ? "bg-orange-500 text-white shadow-md"
-                  : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
+                  ? "bg-amber-500 text-white shadow-lg"
+                  : "bg-amber-500 text-white hover:bg-amber-600 shadow-md"
             )}
             data-testid="button-call-priority"
           >
@@ -230,7 +231,7 @@ export default function OutreachActionPlan({
               </>
             ) : (
               <>
-                <Users className="w-4 h-4" />
+                <Phone className="w-4 h-4" />
                 <span>Call Priority</span>
               </>
             )}
@@ -255,7 +256,7 @@ export default function OutreachActionPlan({
               />
               <circle 
                 cx="56" cy="56" r="48" 
-                stroke={isTopOfMindComplete ? "#22c55e" : "#6b7280"}
+                stroke={isTopOfMindComplete ? "#22c55e" : "#2563eb"}
                 strokeWidth="8" 
                 fill="none" 
                 strokeDasharray={`${(topOfMindCompleted / topOfMindTotal) * 301.6} 301.6`}
@@ -286,8 +287,8 @@ export default function OutreachActionPlan({
               isTopOfMindComplete 
                 ? "bg-green-50 text-green-600 border border-green-200"
                 : activeFilter === 'topOfMind'
-                  ? "bg-gray-600 text-white shadow-md"
-                  : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
+                  ? "bg-blue-600 text-white shadow-lg"
+                  : "bg-blue-600 text-white hover:bg-blue-700 shadow-md"
             )}
             data-testid="button-send-campaigns"
           >
