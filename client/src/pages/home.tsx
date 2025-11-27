@@ -243,6 +243,16 @@ export default function Home() {
                             <div className="absolute top-8 right-0 w-[400px] bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed max-h-[80vh] overflow-y-auto border border-gray-700">
                                 <div className="font-bold text-[#FF6600] mb-3 text-sm border-b border-gray-700 pb-2">Offer Status Definitions & Tasks</div>
                                 <div className="mb-3 italic text-gray-400">Includes Lead Source.</div>
+                                
+                                <div className="mb-4 bg-gray-800/50 p-2 rounded border border-gray-700">
+                                  <div className="font-bold text-[#FF6600] mb-1.5 text-xs">Source Definitions</div>
+                                  <div className="space-y-1.5">
+                                    <div><span className="font-bold text-gray-300">MLS:</span> <span className="text-gray-400">Deals listed on the Multiple Listing Service.</span></div>
+                                    <div><span className="font-bold text-gray-300">Off Market:</span> <span className="text-gray-400">Deals manually added by an Acquisition Associate (AA).</span></div>
+                                    <div><span className="font-bold text-gray-300">Wholesaler:</span> <span className="text-gray-400">Deals emailed directly to Deals@youremail.com.</span></div>
+                                  </div>
+                                </div>
+
                                 <div className="space-y-3">
                                     <div><span className="font-bold text-[#FF6600] block mb-0.5">100% - Acquired</span> Closed Escrow. Make sure to update Agent 365 Report.</div>
 
