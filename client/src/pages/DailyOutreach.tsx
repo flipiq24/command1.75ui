@@ -221,10 +221,10 @@ export default function DailyOutreach() {
                 <div className="flex justify-between items-center px-4 py-3 border-b border-gray-100 bg-white rounded-t-xl">
                     <div className="flex items-center gap-3">
                         <span className="text-sm font-bold text-gray-900">Current Queue</span>
-                        <span className="bg-gray-100 text-gray-500 text-xs px-2 py-0.5 rounded-full font-medium">{filteredDeals.length} Items</span>
+                        <span className="bg-gray-100 text-gray-500 text-xs px-2 py-0.5 rounded-full font-medium">1 of 30</span>
                     </div>
                     <div className="flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-1.5">
-                        <span className="text-xs font-bold text-gray-700 uppercase tracking-wide">Property 1 of {filteredDeals.length}</span>
+                        <span className="text-xs font-bold text-gray-700 uppercase tracking-wide">Property 1 of 30</span>
                         <button className="p-1.5 hover:bg-white hover:text-[#FF6600] transition rounded" title="Previous Property" data-testid="button-prev-property">
                             <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
                         </button>
