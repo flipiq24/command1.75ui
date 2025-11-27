@@ -147,10 +147,10 @@ export default function OutreachActionPlan({
 
           <button 
             className={cn(
-              "px-6 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2",
+              "px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2",
               isConnectionsComplete 
                 ? "bg-green-50 text-green-600 border border-green-200"
-                : "bg-red-600 text-white shadow-lg animate-pulse hover:bg-red-700"
+                : "bg-[#FF6B4A] text-white shadow-lg hover:bg-[#e55a3a]"
             )}
             data-testid="button-new-relationships"
           >
@@ -161,7 +161,7 @@ export default function OutreachActionPlan({
               </>
             ) : (
               <>
-                <Flame className="w-4 h-4" />
+                <Phone className="w-4 h-4" />
                 <span>New Agent Relationships</span>
               </>
             )}
@@ -213,12 +213,10 @@ export default function OutreachActionPlan({
 
           <button 
             className={cn(
-              "px-6 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2",
+              "px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2",
               isPriorityComplete 
                 ? "bg-green-50 text-green-600 border border-green-200"
-                : activeFilter === 'priority'
-                  ? "bg-amber-500 text-white shadow-lg"
-                  : "bg-white text-amber-500 border-2 border-amber-500 hover:bg-amber-50"
+                : "bg-white text-amber-500 border-2 border-amber-400 hover:bg-amber-50"
             )}
             data-testid="button-call-priority"
           >
@@ -281,12 +279,10 @@ export default function OutreachActionPlan({
 
           <button 
             className={cn(
-              "px-6 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2",
+              "px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2",
               isTopOfMindComplete 
                 ? "bg-green-50 text-green-600 border border-green-200"
-                : activeFilter === 'topOfMind'
-                  ? "bg-blue-600 text-white shadow-lg"
-                  : "bg-white text-blue-600 border-2 border-blue-600 hover:bg-blue-50"
+                : "bg-white text-blue-600 border-2 border-blue-400 hover:bg-blue-50"
             )}
             data-testid="button-send-campaigns"
           >
