@@ -1,0 +1,83 @@
+Here are the specific instructions to implement the "Pulse Swap" logic and fix the gauge counter. This creates a "Guide the Eye" effect where the UI tells the user exactly what to click next.
+
+The Logic Plan
+Gauge Update: Connect the First Gauge number to your Current Queue Index.
+
+Current: Hardcoded "10/30".
+
+New: Dynamic {currentIndex + 1} / {totalDeals}.
+
+The "Pulse Swap":
+
+State A (Start): When on Property 1, the RED "Start Calling" button pulses. The "Next Deal" button is static.
+
+State B (In Flow): When on Property 2 or higher, the RED button stops pulsing. The ORANGE "Next Deal" button starts pulsing (glowing).
+
+The Prompt for Replit
+Task: Implement "Pulse Swap" Navigation Logic
+
+1. Update Gauge 1 Data:
+
+Change the "30 New Agent Calls" gauge text. Instead of a static number (10/30), bind it to the Current View Index.
+
+Display: {currentIndex + 1} / {totalDeals}.
+
+As the user clicks "Next", this number should increment (1/30 -> 2/30 -> 3/30).
+
+2. Implement "Pulse Swap" Animation:
+
+Condition: Check if currentIndex === 0 (First property) vs currentIndex > 0 (Subsequent properties).
+
+Red Button ("Start Calling"):
+
+IF currentIndex === 0: Add animate-pulse and shadow-lg.
+
+IF currentIndex > 0: Remove animation, reduce opacity to 90%.
+
+Orange Button ("Next Deal"):
+
+IF currentIndex === 0: Standard style.
+
+IF currentIndex > 0: Add animate-pulse, shadow-lg, and a ring-2 ring-orange-200 effect to draw the eye.
+
+3. Fix Button Label:
+
+Rename the Red button in the header from "New Agent Relationships" to "Start Calling".
+
+Additional UI Cleanup Recommendations (Based on Image)
+I noticed a few small things in your screenshot (image_7a1fcf.png) that should be tightened up while you are editing:
+
+Fix the Red Button Label: In your image, the big red button still says "New Agent Relationships." This is confusing because the Goal Widget on the right says the same thing. Change the Red Button to "Start Calling" or "30 New Calls".
+
+Remove "Generate AI Report": You have the "iQ Property Intelligence" section right above it. The "Generate" button implies the data isn't there yet. Remove that button to clean up the bottom area.
+
+Photo Placeholder: The blue square that says "Photo" looks broken. Ensure this is wired to a real image tag or a better placeholder icon.
+
+Code Snippet for the "Pulse Swap" (Logic)
+Use this logic inside your component:
+
+JavaScript
+
+// Logic to determine which button glows
+const isStartMode = currentIndex === 0;
+
+// 1. The Header Gauge
+<div className="text-2xl font-bold">
+   {currentIndex + 1}<span className="text-sm text-gray-400">/{totalDeals}</span>
+</div>
+
+// 2. The Red Button (Top)
+<button className={cn(
+    "w-full bg-[#FF6600] text-white ...", 
+    isStartMode ? "animate-pulse shadow-xl" : "opacity-90"
+)}>
+    Start Calling
+</button>
+
+// 3. The Orange Next Button (Navigation)
+<button className={cn(
+    "px-4 py-2 bg-[#FF6600] text-white ...",
+    !isStartMode && "animate-pulse shadow-orange-200 shadow-lg ring-2 ring-orange-100"
+)}>
+    Next Deal >
+</button>

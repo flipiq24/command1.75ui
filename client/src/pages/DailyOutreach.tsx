@@ -106,7 +106,23 @@ export default function DailyOutreach() {
   const [iQViewMode, setIQViewMode] = useState<'stats' | 'description'>('stats');
   const [propertyStory, setPropertyStory] = useState<string>('');
   const [isLoadingStory, setIsLoadingStory] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const queryClient = useQueryClient();
+  
+  const totalDeals = 30;
+  const isStartMode = currentIndex === 0;
+  
+  const handleNextDeal = () => {
+    if (currentIndex < totalDeals - 1) {
+      setCurrentIndex(prev => prev + 1);
+    }
+  };
+  
+  const handlePrevDeal = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(prev => prev - 1);
+    }
+  };
 
   const { data: deals = [], isLoading } = useQuery({
     queryKey: ['deals'],
@@ -229,20 +245,37 @@ export default function DailyOutreach() {
             
           <OutreachActionPlan 
             activeFilter={activeFilter} 
-            onFilterChange={setActiveFilter} 
+            onFilterChange={setActiveFilter}
+            currentIndex={currentIndex}
+            isStartMode={isStartMode}
           />
 
             <div className="flex items-center justify-start px-4 py-3 mb-4">
               <div className="flex items-center gap-4">
-                <span className="text-sm font-bold text-gray-500">Property 1 of 30</span>
+                <span className="text-sm font-bold text-gray-500">Property {currentIndex + 1} of {totalDeals}</span>
                 
                 <div className="flex gap-3">
-                  <button className="flex items-center gap-1 px-4 py-2 border border-gray-300 rounded-lg text-xs font-bold text-gray-600 hover:bg-gray-50 transition" data-testid="button-prev-deal">
+                  <button 
+                    onClick={handlePrevDeal}
+                    disabled={currentIndex === 0}
+                    className={cn(
+                      "flex items-center gap-1 px-4 py-2 border border-gray-300 rounded-lg text-xs font-bold text-gray-600 hover:bg-gray-50 transition",
+                      currentIndex === 0 && "opacity-50 cursor-not-allowed"
+                    )} 
+                    data-testid="button-prev-deal"
+                  >
                     <ChevronLeft className="w-4 h-4" />
                     Previous Deal
                   </button>
                   
-                  <button className="flex items-center gap-1 px-4 py-2 bg-[#FF6600] hover:bg-[#e65c00] text-white rounded-lg text-xs font-bold shadow-sm transition" data-testid="button-next-deal">
+                  <button 
+                    onClick={handleNextDeal}
+                    className={cn(
+                      "flex items-center gap-1 px-4 py-2 bg-[#FF6600] hover:bg-[#e65c00] text-white rounded-lg text-xs font-bold shadow-sm transition",
+                      !isStartMode && "animate-pulse shadow-lg ring-2 ring-orange-200"
+                    )} 
+                    data-testid="button-next-deal"
+                  >
                     Next Deal
                     <ChevronRight className="w-4 h-4" />
                   </button>
@@ -603,32 +636,6 @@ export default function DailyOutreach() {
                             </button>
                             <button className="text-blue-600 underline font-medium hover:text-blue-800 ml-3" data-testid="button-dive-no">No</button>
                           </div>
-
-                          <div className="mb-6">
-                            <button 
-                              onClick={() => handleViewModeChange('description', deal.id)}
-                              className="px-4 py-2 bg-[#FF6600] hover:bg-[#e65c00] text-white text-sm font-medium rounded-lg shadow-sm transition"
-                              data-testid="button-generate-ai-report"
-                            >
-                              Generate AI Report
-                            </button>
-                          </div>
-
-                          {iQViewMode === 'description' && (
-                            <div className="mb-6 border-t border-gray-200 pt-4">
-                              <h3 className="text-lg font-bold text-gray-900 mb-4">AI Property Story</h3>
-                              {isLoadingStory ? (
-                                <div className="flex items-center gap-3 text-gray-500">
-                                  <div className="animate-spin w-5 h-5 border-2 border-[#FF6600] border-t-transparent rounded-full"></div>
-                                  <span>Generating story...</span>
-                                </div>
-                              ) : (
-                                <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
-                                  {propertyStory || 'Loading AI-generated story...'}
-                                </div>
-                              )}
-                            </div>
-                          )}
 
                           <div className="border-t border-gray-200 pt-6">
                             <div className="flex items-center gap-3 bg-gray-50 rounded-full px-4 py-3 border border-gray-200">

@@ -14,14 +14,18 @@ export type OutreachType = 'connections' | 'priority' | 'topOfMind';
 interface OutreachActionPlanProps {
   activeFilter?: OutreachType | null;
   onFilterChange?: (filter: OutreachType | null) => void;
+  currentIndex?: number;
+  isStartMode?: boolean;
 }
 
 export default function OutreachActionPlan({ 
   activeFilter = null, 
-  onFilterChange 
+  onFilterChange,
+  currentIndex = 0,
+  isStartMode = true
 }: OutreachActionPlanProps) {
   
-  const connectionsCompleted = 10;
+  const connectionsCompleted = currentIndex;
   const connectionsTotal = 30;
   
   const priorityCompleted = 2;
@@ -152,7 +156,9 @@ export default function OutreachActionPlan({
               "px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2",
               isConnectionsComplete 
                 ? "bg-green-50 text-green-600 border border-green-200"
-                : "bg-red-500 text-white shadow-lg shadow-red-500/50 animate-pulse hover:bg-red-600"
+                : isStartMode
+                  ? "bg-red-500 text-white shadow-xl shadow-red-500/50 animate-pulse hover:bg-red-600"
+                  : "bg-red-500 text-white opacity-90 hover:bg-red-600"
             )}
             data-testid="button-new-relationships"
           >
@@ -164,7 +170,7 @@ export default function OutreachActionPlan({
             ) : (
               <>
                 <Phone className="w-4 h-4" />
-                <span>New Agent Relationships</span>
+                <span>Start Calling</span>
               </>
             )}
           </button>
