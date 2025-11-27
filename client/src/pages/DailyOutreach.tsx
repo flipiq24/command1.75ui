@@ -544,7 +544,7 @@ export default function DailyOutreach() {
                         {/* Property Images - Left Side */}
                         <div className="w-1/3 p-4 border-r border-gray-200">
                           <div className="flex gap-2 mb-3">
-                            <button className="px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded">Images 1-6</button>
+                            <button className="px-3 py-1.5 bg-gray-200 text-gray-700 text-xs font-medium rounded">Images 1-6</button>
                             <button className="px-3 py-1.5 bg-white text-gray-600 text-xs font-medium rounded border border-gray-200 hover:bg-gray-50">Images 7-8</button>
                           </div>
                           <div className="grid grid-cols-3 gap-2">
