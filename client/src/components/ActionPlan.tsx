@@ -21,7 +21,7 @@ const ACTION_ITEMS: ActionItem[] = [
     label: 'Hot Deals',
     count: 0,
     total: 1,
-    color: '#E53935',
+    color: '#ef4444', // red-500
     buttonText: 'View Hot Deals',
     tooltipTitle: 'Hot Deals',
     tooltipText: 'These deals require immediate follow-up. 0 completed out of 1. Total: 1.'
@@ -31,7 +31,7 @@ const ACTION_ITEMS: ActionItem[] = [
     label: 'Warm Deals',
     count: 0,
     total: 8,
-    color: '#FB8C00',
+    color: '#f59e0b', // amber-500
     buttonText: 'Review Warm Deals',
     tooltipTitle: 'Warm Deals',
     tooltipText: 'Warm leads showing moderate engagement. 0 completed out of 8. Total: 8.'
@@ -41,7 +41,7 @@ const ACTION_ITEMS: ActionItem[] = [
     label: 'Cold Deals',
     count: 0,
     total: 5,
-    color: '#1E88E5',
+    color: '#3b82f6', // blue-500
     buttonText: 'Open Cold Deals',
     tooltipTitle: 'Cold Deals',
     tooltipText: 'Cold leads with low recent engagement. 0 completed out of 5. Total: 5.'
@@ -51,7 +51,7 @@ const ACTION_ITEMS: ActionItem[] = [
     label: 'New Deals',
     count: 56,
     total: 60,
-    color: '#43A047',
+    color: '#22c55e', // green-500
     buttonText: 'Process New Deals',
     tooltipTitle: 'New Deals',
     tooltipText: 'These are new incoming deals that do not have a temperature assigned yet (Hot, Warm, Cold) or are offer status "None"  They need to be reviewed and categorized.'
@@ -188,8 +188,6 @@ export default function ActionPlan() {
                   <div className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 rotate-45 w-3 h-3 bg-gray-900"></div>
                 </div>
               </div>
-
-              <div className="text-lg font-bold text-gray-900">{item.label}</div>
             </div>
 
             {/* CTA Button */}
