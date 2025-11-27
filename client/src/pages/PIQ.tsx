@@ -316,38 +316,28 @@ export default function PIQ() {
                   </div>
                 </div>
 
-                <div className="w-80 flex-shrink-0">
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="col-span-2 relative rounded-lg overflow-hidden">
-                      <img 
-                        src="https://maps.googleapis.com/maps/api/staticmap?center=10573+Larch+Ave+Bloomington+CA&zoom=17&size=400x200&maptype=satellite&key=demo" 
-                        alt="Map view"
-                        className="w-full h-40 object-cover bg-gray-200"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-br from-green-600/20 to-transparent"></div>
-                      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-2 py-1 rounded shadow text-xs font-medium">
-                        10573 Larch Ave
-                        <div className="text-[10px] text-gray-500">Recently viewed</div>
+                <div className="w-96 flex-shrink-0">
+                  <div className="grid grid-cols-3 gap-2">
+                    <div className="relative rounded-lg overflow-hidden aspect-[4/3]">
+                      <div className="w-full h-full bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center">
+                        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMjAwIj48cmVjdCBmaWxsPSIjMjI4QjIyIiB3aWR0aD0iNDAwIiBoZWlnaHQ9IjIwMCIvPjwvc3ZnPg==')] bg-cover"></div>
+                      </div>
+                      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-2 py-1 rounded shadow text-xs font-medium text-center">
+                        <div className="flex items-center gap-1">
+                          <svg className="w-3 h-3 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" /></svg>
+                          <span>10573 Larch Ave</span>
+                        </div>
+                        <div className="text-[10px] text-blue-500">Recently viewed</div>
                       </div>
                     </div>
-                    <div className="aspect-square rounded-lg overflow-hidden bg-gray-200">
-                      <div className="w-full h-full bg-gradient-to-br from-amber-200 to-amber-300 flex items-center justify-center text-gray-500 text-xs">
+                    <div className="rounded-lg overflow-hidden aspect-[4/3] bg-gray-200">
+                      <div className="w-full h-full bg-gradient-to-br from-green-300 to-green-400 flex items-center justify-center text-gray-600 text-xs">
                         Photo 1
                       </div>
                     </div>
-                    <div className="aspect-square rounded-lg overflow-hidden bg-gray-200">
+                    <div className="rounded-lg overflow-hidden aspect-[4/3] bg-gray-200">
                       <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-gray-500 text-xs">
                         Photo 2
-                      </div>
-                    </div>
-                    <div className="aspect-square rounded-lg overflow-hidden bg-gray-200">
-                      <div className="w-full h-full bg-gradient-to-br from-green-200 to-green-300 flex items-center justify-center text-gray-500 text-xs">
-                        Photo 3
-                      </div>
-                    </div>
-                    <div className="aspect-square rounded-lg overflow-hidden bg-gray-200">
-                      <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-gray-500 text-xs">
-                        Photo 4
                       </div>
                     </div>
                   </div>
