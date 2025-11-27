@@ -149,7 +149,7 @@ export default function ActionPlan({ onFilterChange, activeFilter }: ActionPlanP
                     )}
                     onClick={() => handleFilterClick('completed')}
                 >
-                    <p className="text-xs text-gray-500 font-medium">
+                    <p className="text-sm text-gray-500 font-medium">
                         You have completed <span className="font-bold text-[#FF6600]">32%</span> of today's follow-ups.
                     </p>
                     <Info className="w-3.5 h-3.5 text-gray-400" />

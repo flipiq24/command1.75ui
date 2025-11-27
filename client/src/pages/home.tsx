@@ -6,9 +6,8 @@ import Sidebar from "@/components/Sidebar";
 import { 
   ChevronDown,
   MoreVertical,
-  Zap,
-  Flame,
-  Check
+  Target,
+  Flame
 } from 'lucide-react';
 
 interface Deal {
@@ -254,73 +253,88 @@ export default function Home() {
                   </div>
                 ) : (
                   filteredDeals.map((deal) => (
-                    <div key={deal.id} className="deal-row flex py-4 border-b border-gray-100 hover:bg-gray-50 transition group">
-                        <div className="w-[48px] shrink-0 flex flex-col items-center gap-3 pt-1 border-r border-gray-50">
+                    <div key={deal.id} className="flex border-b border-gray-100 hover:bg-gray-50 transition group py-4">
+                        <div className="w-12 shrink-0 flex flex-col items-center gap-3 pt-1">
                             <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
-                            <button className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center text-gray-400 hover:bg-gray-200">
-                                <Zap className="w-4 h-4" />
-                            </button>
-                            <button className="text-gray-400 hover:text-gray-600">
-                                <MoreVertical className="w-4 h-4" />
-                            </button>
+                            <div className="bg-gray-100 rounded-lg p-1 flex flex-col items-center gap-2 w-8">
+                                <Target className="w-4 h-4 text-gray-500 hover:text-gray-800 cursor-pointer" />
+                                <div className="w-4 h-[1px] bg-gray-300"></div>
+                                <MoreVertical className="w-4 h-4 text-gray-500 hover:text-gray-800 cursor-pointer" />
+                            </div>
                         </div>
 
                         <div className="flex-1 flex flex-col md:flex-row">
                             
                             <div className="w-5/12 px-4 flex flex-col justify-start gap-2">
                                 <div>
-                                    <div className="font-bold text-gray-900 text-sm mb-1">{deal.address}</div>
-                                    <div className="text-[10px] text-gray-400 mb-2">{deal.specs}</div>
+                                    <div className="font-bold text-gray-900 text-base mb-1">{deal.address}</div>
+                                    <div className="text-xs text-gray-500">{deal.specs}</div>
                                 </div>
                                 
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-2 mt-1">
                                     {deal.isHot && (
                                       <div className="bg-red-50 rounded-full px-2 py-0.5 border border-red-100 flex items-center gap-1">
                                           <Flame className="w-3 h-3 text-red-500" />
-                                          <span className="text-[9px] font-bold text-red-500 uppercase">Hot</span>
+                                          <span className="text-[10px] font-bold text-red-500 uppercase">Hot</span>
                                       </div>
                                     )}
                                     {deal.isHot && <div className="w-1 h-1 rounded-full bg-gray-300"></div>}
                                     
-                                    <div className="flex items-center gap-1 bg-gray-50 px-2 py-0.5 rounded border border-gray-200 text-[10px] text-gray-500">
-                                        <input type="checkbox" className="w-3 h-3 rounded border-gray-300" />
-                                        <span>To do: Not set</span>
-                                        <ChevronDown className="w-3 h-3" />
+                                    <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
+                                    <div className="relative">
+                                        <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium py-1 px-2 rounded flex items-center gap-1 whitespace-nowrap">
+                                            To do: Not set <ChevronDown className="w-3 h-3" />
+                                        </button>
                                     </div>
-                                    <div className="text-[9px] text-gray-400 whitespace-nowrap">• 0 Critical • 0 Reminders</div>
+                                    <div className="text-xs text-gray-400 whitespace-nowrap">• 0 Critical • 0 Reminders</div>
                                 </div>
                             </div>
 
                             <div className="w-2/12 px-4 flex flex-col items-center text-center">
-                                <div className="font-bold text-gray-900 text-sm">{deal.price}</div>
-                                <div className="text-[10px] text-gray-400 mt-0.5">Propensity Score: {deal.propensity}</div>
-                                <div className="text-[10px] text-gray-900 font-bold mt-2">Source: <span className="font-normal text-gray-500">{deal.source}</span></div>
+                                <div className="font-bold text-gray-900 text-base mb-1">{deal.price}</div>
+                                <div className="text-xs text-gray-400 mb-1">Propensity Score: {deal.propensity}</div>
+                                <div className="text-xs text-gray-500 font-medium">Source: <span className="font-bold text-gray-900">{deal.source}</span></div>
                             </div>
 
-                            <div className="w-2/12 px-4 text-[10px] text-gray-500">
-                                <div className="mb-1">
-                                    <span className="block text-gray-400 text-[9px] uppercase">Last Open:</span>
-                                    <span className={cn(
-                                      deal.lastOpen === 'N/A' && "bg-yellow-100 px-1 rounded font-bold text-gray-900"
-                                    )}>
-                                      {deal.lastOpen}
-                                    </span>
-                                </div>
-                                <div>
-                                    <span className="block text-gray-400 text-[9px] uppercase">Last Called:</span>
-                                    <span className={cn(
-                                      deal.lastCalled === 'N/A' && "bg-yellow-100 px-1 rounded font-bold text-gray-900"
-                                    )}>
-                                      {deal.lastCalled}
-                                    </span>
+                            <div className="w-2/12 px-4 flex flex-col items-center">
+                                <div className="text-[11px] text-gray-400 space-y-1 text-left w-full max-w-[140px]">
+                                    <div className="flex flex-col group relative cursor-help">
+                                        <span className="font-medium text-gray-500">Last Open Date:</span>
+                                        <span className={cn(
+                                          "text-gray-900 font-medium", 
+                                          deal.lastOpen === 'N/A' && "bg-yellow-100 px-1.5 py-0.5 rounded font-bold w-fit"
+                                        )}>
+                                          {deal.lastOpen}
+                                        </span>
+                                        {deal.lastOpen === 'N/A' && (
+                                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
+                                            Needs attention: This deal hasn't been opened recently.
+                                          </div>
+                                        )}
+                                    </div>
+                                    <div className="flex flex-col group relative cursor-help">
+                                        <span className="font-medium text-gray-500">Last Called Date:</span>
+                                        <span className={cn(
+                                          "text-gray-900 font-medium", 
+                                          deal.lastCalled === 'N/A' && "bg-yellow-100 px-1.5 py-0.5 rounded font-bold w-fit"
+                                        )}>
+                                          {deal.lastCalled}
+                                        </span>
+                                        {deal.lastCalled === 'N/A' && (
+                                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
+                                            Needs attention: No recent call recorded.
+                                          </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="w-3/12 px-4 text-right flex flex-col items-end justify-center">
-                                <div className="inline-flex items-center justify-between bg-blue-50 border border-blue-100 text-blue-700 px-3 py-1.5 rounded text-xs font-bold cursor-pointer hover:bg-blue-100 transition mb-1 w-fit">
-                                    <span className="mr-2">{deal.statusPercent} {deal.status}</span>
-                                    <Check className="w-3 h-3" />
-                                </div>
+                            <div className="w-3/12 px-4 flex flex-col items-center justify-center">
+                                <button className="flex items-center gap-2 text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 py-1.5 px-3 rounded-md transition-colors w-full justify-between max-w-[180px] whitespace-nowrap">
+                                    <span className="font-bold text-slate-600">{deal.statusPercent}</span> 
+                                    <span className="truncate">{deal.status}</span>
+                                    <ChevronDown className="w-3 h-3 flex-shrink-0 text-gray-400" />
+                                </button>
                             </div>
 
                         </div>
