@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import OutreachActionPlan, { OutreachType } from "@/components/OutreachActionPlan";
 import Sidebar from "@/components/Sidebar";
@@ -97,6 +97,7 @@ const getPropensityColor = (text: string) => {
 };
 
 export default function DailyOutreach() {
+  const [, setLocation] = useLocation();
   const [activeFilter, setActiveFilter] = useState<OutreachType | null>('connections');
   const [selectedDealIds, setSelectedDealIds] = useState<number[]>([]);
   const [iQViewMode, setIQViewMode] = useState<'stats' | 'description'>('stats');
@@ -653,7 +654,13 @@ export default function DailyOutreach() {
 
                               <div className="mb-6">
                                 <span className="text-sm text-gray-700">Let's dive in to the property - </span>
-                                <button className="text-blue-600 underline font-medium hover:text-blue-800 ml-1" data-testid="button-dive-yes">Yes</button>
+                                <button 
+                                  onClick={() => setLocation(`/piq/${deal.id}`)}
+                                  className="text-blue-600 underline font-medium hover:text-blue-800 ml-1" 
+                                  data-testid="button-dive-yes"
+                                >
+                                  Yes
+                                </button>
                                 <button className="text-blue-600 underline font-medium hover:text-blue-800 ml-3" data-testid="button-dive-no">No</button>
                               </div>
                             </>
@@ -691,7 +698,13 @@ export default function DailyOutreach() {
 
                               <div className="mb-6">
                                 <span className="text-sm text-gray-700">Let's dive in to the property - </span>
-                                <button className="text-blue-600 underline font-medium hover:text-blue-800 ml-1" data-testid="button-dive-yes-desc">Yes</button>
+                                <button 
+                                  onClick={() => setLocation(`/piq/${deal.id}`)}
+                                  className="text-blue-600 underline font-medium hover:text-blue-800 ml-1" 
+                                  data-testid="button-dive-yes-desc"
+                                >
+                                  Yes
+                                </button>
                                 <button className="text-blue-600 underline font-medium hover:text-blue-800 ml-3" data-testid="button-dive-no-desc">No</button>
                               </div>
 

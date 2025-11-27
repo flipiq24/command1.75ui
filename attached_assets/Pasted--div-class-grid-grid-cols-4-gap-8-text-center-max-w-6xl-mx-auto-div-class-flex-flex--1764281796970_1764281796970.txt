@@ -1,0 +1,83 @@
+<div class="grid grid-cols-4 gap-8 text-center max-w-6xl mx-auto">
+    
+    <div class="flex flex-col items-center group relative">
+        <div class="relative w-24 h-24 mb-3">
+            <svg class="w-full h-full transform -rotate-90">
+                <circle cx="48" cy="48" r="40" stroke="#f3f4f6" stroke-width="6" fill="transparent" />
+                <circle cx="48" cy="48" r="40" stroke="#f97316" stroke-width="6" fill="transparent" stroke-dasharray="251.2" stroke-dashoffset="167" />
+            </svg>
+            <div class="absolute inset-0 flex items-center justify-center text-2xl font-bold text-gray-900">10<span class="text-sm text-gray-400">/30</span></div>
+        </div>
+        
+        <div class="text-xs text-gray-400 mb-3 cursor-help hover:text-gray-600 transition group/tooltip relative">
+            Status: 10/30/30 ⓘ
+            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-80 bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover/tooltip:opacity-100 transition pointer-events-none z-50 text-left leading-relaxed">
+                <p class="mb-2">Focuses on <strong>High-Value Agents</strong> with Aged, Pending, and Backup listings that have a high <strong>Propensity to Sell</strong>.</p>
+                <hr class="border-gray-700 my-2">
+                <p><strong>Goal:</strong> 30 Contacts per day that create <strong>5 new solid relationships</strong> per day (25/week or 1,300/year).</p>
+            </div>
+        </div>
+        
+        <button class="w-full bg-[#FF6600] text-white text-sm font-bold py-2 px-6 rounded-lg shadow-md animate-pulse hover:bg-orange-700 transition">
+            Start Calling
+        </button>
+    </div>
+
+    <div class="flex flex-col items-center group relative">
+        <div class="relative w-24 h-24 mb-3">
+            <svg class="w-full h-full transform -rotate-90">
+                <circle cx="48" cy="48" r="40" stroke="#f3f4f6" stroke-width="6" fill="transparent" />
+                <circle cx="48" cy="48" r="40" stroke="#ef4444" stroke-width="6" fill="transparent" stroke-dasharray="251.2" stroke-dashoffset="150" />
+            </svg>
+            <div class="absolute inset-0 flex items-center justify-center text-2xl font-bold text-gray-900">2<span class="text-sm text-gray-400">/5</span></div>
+        </div>
+
+        <div class="text-xs text-gray-400 mb-3 cursor-help hover:text-gray-600 transition group/tooltip relative">
+            Status: 2/5/5 ⓘ
+            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-72 bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover/tooltip:opacity-100 transition pointer-events-none z-50 text-center leading-relaxed">
+                Constant live phone calls to reinforce your <strong>100 Priority Relationships</strong>.<br><br>
+                <span class="text-green-400 font-bold block mt-1">This is your long term money maker!</span>
+            </div>
+        </div>
+
+        <button class="w-full bg-white border border-red-300 text-red-600 text-sm font-bold py-2 px-6 rounded-lg hover:bg-red-50 transition">
+            Call Priority
+        </button>
+    </div>
+
+    <div class="flex flex-col items-center group relative">
+        <div class="relative w-24 h-24 mb-3">
+            <svg class="w-full h-full transform -rotate-90">
+                <circle cx="48" cy="48" r="40" stroke="#f3f4f6" stroke-width="6" fill="transparent" />
+                <circle cx="48" cy="48" r="40" stroke="#3b82f6" stroke-width="6" fill="transparent" stroke-dasharray="251.2" stroke-dashoffset="200" />
+            </svg>
+            <div class="absolute inset-0 flex items-center justify-center text-2xl font-bold text-gray-900">2<span class="text-sm text-gray-400">/10</span></div>
+        </div>
+
+        <div class="text-xs text-gray-400 mb-3 cursor-help hover:text-gray-600 transition group/tooltip relative">
+            Status: 2/10/10 ⓘ
+            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover/tooltip:opacity-100 transition pointer-events-none z-50 text-center leading-relaxed">
+                Send valuable, relevant content <strong>every 2 weeks</strong> to Hot, Warm, and Cold agents to stay top of mind.
+            </div>
+        </div>
+
+        <button class="w-full bg-white border border-blue-300 text-blue-600 text-sm font-bold py-2 px-6 rounded-lg hover:bg-blue-50 transition">
+            Send Campaigns
+        </button>
+    </div>
+
+    <div class="flex flex-col items-center group relative opacity-50">
+        <div class="relative w-24 h-24 mb-3">
+            <svg class="w-full h-full transform -rotate-90">
+                <circle cx="48" cy="48" r="40" stroke="#f3f4f6" stroke-width="6" fill="transparent" />
+                <circle cx="48" cy="48" r="40" stroke="#9ca3af" stroke-width="6" fill="transparent" stroke-dasharray="0 251.2" />
+            </svg>
+            <div class="absolute inset-0 flex items-center justify-center text-2xl font-bold text-gray-900">0<span class="text-sm text-gray-400">/0</span></div>
+        </div>
+        <div class="text-xs text-gray-400 mb-3">Status: 0/0/0</div>
+        <button class="w-full bg-white border border-gray-300 text-gray-400 text-sm font-bold py-2 px-6 rounded-lg cursor-not-allowed">
+            Process Leads
+        </button>
+    </div>
+
+</div>
