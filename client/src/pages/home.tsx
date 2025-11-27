@@ -293,7 +293,6 @@ export default function Home() {
                             <div className="w-2/12 px-4 flex flex-col items-center text-center">
                                 <div className="font-bold text-gray-900 text-base mb-1">{deal.price}</div>
                                 <div className="text-xs text-gray-400 mb-1">Propensity Score: {deal.propensity}</div>
-                                <div className="text-xs text-gray-500 font-medium">Source: <span className="font-bold text-gray-900">{deal.source}</span></div>
                             </div>
 
                             <div className="w-2/12 px-4 flex flex-col items-center">
@@ -329,7 +328,8 @@ export default function Home() {
                                 </div>
                             </div>
 
-                            <div className="w-3/12 px-4 flex flex-col items-center justify-center">
+                            <div className="w-3/12 px-4 flex flex-col items-center justify-center gap-2">
+                                <div className="text-xs text-gray-500 font-medium">Source: <span className="font-bold text-gray-900">{deal.source}</span></div>
                                 <button className="flex items-center gap-2 text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 py-1.5 px-3 rounded-md transition-colors w-full justify-between max-w-[180px] whitespace-nowrap">
                                     <span className="font-bold text-slate-600">{deal.statusPercent}</span> 
                                     <span className="truncate">{deal.status}</span>
