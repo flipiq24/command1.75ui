@@ -441,9 +441,29 @@ export default function DailyOutreach() {
                                     <div className="text-xs text-gray-400 whitespace-nowrap">• 0 Critical • 0 Reminders</div>
                                 </div>
                                 
-                                <div>
-                                    <div className="font-bold text-gray-900 text-base mb-1">{deal.address}</div>
-                                    <div className="text-xs text-gray-500">{deal.specs}</div>
+                                <div className="flex items-start gap-3">
+                                    <div className="w-16 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-gray-200">
+                                      <div className="w-full h-full bg-gradient-to-br from-blue-200 to-blue-300 flex items-center justify-center text-gray-500 text-[10px]">
+                                        Photo
+                                      </div>
+                                    </div>
+                                    <div className="flex-1">
+                                        <div className="font-bold text-gray-900 text-base mb-0.5 flex items-center gap-1">
+                                            {deal.address}
+                                            <Globe className="w-3 h-3 text-gray-400" />
+                                        </div>
+                                        <div className="text-xs text-gray-500 mb-2">{deal.specs}</div>
+                                        <div className="flex flex-wrap gap-1">
+                                            <span className="px-2 py-0.5 bg-white text-red-600 text-[10px] rounded-full border border-red-300">repairs</span>
+                                            <span className="px-2 py-0.5 bg-white text-green-600 text-[10px] rounded-full border border-green-300">investors</span>
+                                            <span className="px-2 py-0.5 bg-white text-green-600 text-[10px] rounded-full border border-green-300">Investment</span>
+                                            <span className="px-2 py-0.5 bg-white text-green-600 text-[10px] rounded-full border border-green-300">as-is</span>
+                                            <span className="px-2 py-0.5 bg-white text-blue-600 text-[10px] rounded-full border border-blue-300">investor</span>
+                                            <span className="px-2 py-0.5 bg-white text-blue-600 text-[10px] rounded-full border border-blue-300">estate</span>
+                                            <span className="px-2 py-0.5 bg-white text-green-600 text-[10px] rounded-full border border-green-300">opportunity</span>
+                                            <span className="px-2 py-0.5 bg-white text-green-600 text-[10px] rounded-full border border-green-300">Renovation</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -542,34 +562,6 @@ export default function DailyOutreach() {
 
                     {/* IQ Property Intelligence Section */}
                     <div className="bg-white border border-gray-200 rounded-xl mt-4 shadow-sm">
-                        {/* Property Header with Image and Tags */}
-                        <div className="flex items-start gap-4 p-4 border-b border-gray-100">
-                          <div className="w-24 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-gray-200">
-                            <div className="w-full h-full bg-gradient-to-br from-blue-200 to-blue-300 flex items-center justify-center text-gray-500 text-xs">
-                              Photo
-                            </div>
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-1">
-                              <h3 className="font-semibold text-gray-900">{deal.address}</h3>
-                              <Globe className="w-4 h-4 text-gray-400" />
-                            </div>
-                            <div className="text-xs text-gray-500 mb-3">
-                              Single Family / {deal.beds} Br / {deal.baths} Ba / Gar / 1947 / 1,412 ft² / 4,964 ft² / Pool:None
-                            </div>
-                            <div className="flex flex-wrap gap-2">
-                              <span className="px-3 py-1 bg-white text-red-600 text-xs rounded-full border border-red-300">repairs</span>
-                              <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300">investors</span>
-                              <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300">Investment</span>
-                              <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300">as-is</span>
-                              <span className="px-3 py-1 bg-white text-blue-600 text-xs rounded-full border border-blue-300">investor</span>
-                              <span className="px-3 py-1 bg-white text-blue-600 text-xs rounded-full border border-blue-300">estate</span>
-                              <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300">opportunity</span>
-                              <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300">Renovation</span>
-                            </div>
-                          </div>
-                        </div>
-
                         {/* iQ Intelligence Content */}
                         <div className="p-6">
                           <div className="flex items-center gap-6 mb-6">
