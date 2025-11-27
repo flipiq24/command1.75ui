@@ -1,0 +1,82 @@
+Create a modern, high-clarity React component for a proptech dashboard titled:
+
+“Nov 26, 2025 — Today’s Action Plan!”
+
+The component must contain FOUR large circular progress indicators:
+- Hot Deals
+- Warm Deals
+- Cold Deals
+- New Deals
+
+### REQUIREMENTS
+
+### 1. GENERAL LAYOUT
+Display all four circles in a single row on desktop and collapse to 2x2 grid on mobile.
+
+Top title:
+- Large, bold text: “Nov 26, 2025 — Today’s Action Plan!”
+- Subheader: “Deals to Follow Up Today:”
+
+### 2. CIRCLE STYLE
+Each circle uses:
+- Thick progress ring
+- Inner text show: “0/1”, “0/8”, “0/5”, “56/60”
+- Below the circle: the label (Hot Deals, Warm Deals, Cold Deals, New Deals)
+- Below label: small status line, e.g. “Status: 0/1/1”
+- Very clear color coding:
+    - Hot Deals: Red (#E53935)
+    - Warm Deals: Orange (#FB8C00)
+    - Cold Deals: Blue (#1E88E5)
+    - New Deals: Green (#43A047)
+
+### 3. CTAs UNDER EACH CIRCLE
+Below the labels add a CTA button for each item:
+
+Hot Deals → “View Hot Deals”
+Warm Deals → “Review Warm Deals”
+Cold Deals → “Open Cold Deals”
+New Deals → “Process New Deals”
+
+Buttons:
+- Rounded, colored border based on the circle color
+- Hover state darkens color
+- Clickable callback props exposed: onHotClick, onWarmClick, etc.
+
+### 4. TOOLTIP / HOVER INTERACTION
+Hovering on each circle shows a tooltip with this text:
+
+- Hot Deals:
+  “These deals require immediate follow-up. 0 completed out of 1. Total: 1.”
+- Warm Deals:
+  “Warm leads showing moderate engagement. 0 completed out of 8. Total: 8.”
+- Cold Deals:
+  “Cold leads with low recent engagement. 0 completed out of 5. Total: 5.”
+- New Deals:
+  “New incoming deals for review. 56 completed out of 60. Total: 60.”
+
+Tooltips must be:
+- Clean white box with shadow
+- Positioned near the circle
+- Fade in/out smoothly
+
+### 5. VISUAL HIERARCHY
+- Circles must be LARGE and unmistakable.
+- Labels must be bold and centered.
+- Status line is smaller but readable.
+- Buttons have strong visual weight but not overpowering the circles.
+
+### 6. TECH
+- Use React + TailwindCSS
+- Use a circular progress SVG (or Tailwind-based ring with mask)
+- Component must be self-contained
+- Export default React component
+
+### 7. FINAL DELIVERABLE
+Return:
+- Complete React component (JSX)
+- Tailwind classes for all styling
+- Tooltip logic
+- Progress circle logic
+- Fully responsive layout
+
+This UI must feel premium, clean, and highly actionable for proptech operators who need clarity at a glance.

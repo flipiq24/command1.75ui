@@ -28,6 +28,7 @@ import {
   Flame
 } from 'lucide-react';
 import { cn } from "@/lib/utils";
+import ActionPlan from "@/components/ActionPlan";
 
 const NavItem = ({ icon: Icon, label, active, className }: { icon: any, label: string, active?: boolean, className?: string }) => (
   <a 
@@ -209,45 +210,8 @@ export default function Home() {
             </div>
           </div> */}
 
-          {/* Action Plan (Gamified) */}
-          <div className="mb-8">
-            <h2 className="text-lg font-bold text-gray-900 mb-4">Nov 26, 2025 Today's Action Plan!</h2>
-            
-            <div className="grid grid-cols-4 gap-6 text-center">
-                
-                {/* Hot Deals */}
-                <div className="flex flex-col items-center group cursor-pointer">
-                    <div className="w-16 h-16 rounded-full border-4 border-orange-100 border-t-orange-500 flex items-center justify-center mb-2 bg-white group-hover:bg-orange-50 transition">
-                        <span className="text-xl font-bold text-gray-900">0<span className="text-sm text-gray-400">/1</span></span>
-                    </div>
-                    <div className="text-sm font-bold text-gray-900">Hot Deals</div>
-                    <div className="text-xs text-gray-500">1 Pending Action</div>
-                </div>
-
-                {/* Warm Deals */}
-                <div className="flex flex-col items-center group cursor-pointer">
-                    <div className="w-16 h-16 rounded-full border-4 border-gray-100 flex items-center justify-center mb-2 bg-white">
-                        <span className="text-xl font-bold text-gray-900">0<span className="text-sm text-gray-400">/6</span></span>
-                    </div>
-                    <div className="text-sm font-bold text-gray-500">Warm Deals</div>
-                </div>
-
-                {/* Cold Deals */}
-                 <div className="flex flex-col items-center group cursor-pointer">
-                    <div className="w-16 h-16 rounded-full border-4 border-gray-100 flex items-center justify-center mb-2 bg-white">
-                        <span className="text-xl font-bold text-gray-900">0<span className="text-sm text-gray-400">/4</span></span>
-                    </div>
-                    <div className="text-sm font-bold text-gray-500">Cold Deals</div>
-                </div>
-
-                {/* New Deals */}
-                <div className="flex flex-col items-center group cursor-pointer">
-                    <div className="w-16 h-16 rounded-full border-4 border-gray-100 border-r-gray-600 flex items-center justify-center mb-2 bg-white">
-                        <span className="text-xl font-bold text-gray-900">56<span className="text-sm text-gray-400">/60</span></span>
-                    </div>
-                    <div className="text-sm font-bold text-gray-500">New Deals</div>
-                </div>
-            </div>
+          {/* Action Plan Component */}
+          <ActionPlan />
 
             {/* Current Task List - Reorganized Layout */}
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden flex-1 flex flex-col">
