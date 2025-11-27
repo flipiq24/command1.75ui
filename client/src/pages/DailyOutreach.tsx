@@ -270,6 +270,83 @@ export default function DailyOutreach() {
                 </div>
               </div>
 
+              <div className="grid grid-cols-2 gap-0 border-b border-gray-200">
+                <div className="p-5 border-r border-gray-200">
+                  <h4 className="text-xs font-bold text-[#FF6600] uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <Bot className="w-4 h-4" />
+                    iQ Property Intelligence
+                  </h4>
+                  <p className="text-sm text-gray-600 mb-4">
+                    AI-powered valuation analysis based on comparable sales, market trends, and property condition estimates.
+                  </p>
+                  <div className="bg-orange-50 rounded-lg border border-orange-200 p-4">
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-500">Est. ARV:</span>
+                        <span className="font-bold text-gray-900">$125,000</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-500">Repair Est:</span>
+                        <span className="font-bold text-gray-900">$15,000</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-500">Max Offer:</span>
+                        <span className="font-bold text-[#FF6600]">$68,500</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-500">Comp Count:</span>
+                        <span className="font-bold text-gray-900">8</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-500">Avg $/SqFt:</span>
+                        <span className="font-bold text-gray-900">$142</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-500">Market Trend:</span>
+                        <span className="font-bold text-green-600">↑ 3.2%</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-5">
+                  <h4 className="text-xs font-bold text-[#FF6600] uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <Target className="w-4 h-4" />
+                    Propensity to Sell iQ
+                  </h4>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Seller motivation score based on distress indicators, ownership patterns, and financial signals.
+                  </p>
+                  <div className="bg-orange-50 rounded-lg border border-orange-200 p-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-sm text-gray-600">Total Score:</span>
+                      <span className="text-2xl font-bold text-[#FF6600]">
+                        {mockPropensityIndicators.reduce((acc, item) => acc + item.points, 0)} pts
+                      </span>
+                    </div>
+                    <div className="space-y-2">
+                      {mockPropensityIndicators.map((item, idx) => (
+                        <div key={idx} className="flex items-center justify-between text-sm">
+                          <div className="flex items-center gap-2">
+                            <span className={cn(
+                              "w-2 h-2 rounded-full",
+                              item.color === "red" ? "bg-red-500" : 
+                              item.color === "green" ? "bg-green-500" : "bg-blue-500"
+                            )} />
+                            <span className="text-gray-700">{item.indicator}</span>
+                          </div>
+                          <span className={cn(
+                            "font-bold text-xs px-2 py-0.5 rounded",
+                            item.color === "red" ? "bg-red-100 text-red-700" : 
+                            item.color === "green" ? "bg-green-100 text-green-700" : "bg-blue-100 text-blue-700"
+                          )}>+{item.points}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div className="flex border-b border-gray-200">
                 
                 <div className="w-[60%] p-6 border-r border-gray-200">
@@ -304,43 +381,6 @@ export default function DailyOutreach() {
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-500">Source</span>
                       <span className="font-bold text-gray-900">{currentDeal.source} / Active</span>
-                    </div>
-                  </div>
-
-                  <div className="mb-6">
-                    <h5 className="text-xs font-bold text-[#FF6600] uppercase tracking-wider mb-3 flex items-center gap-2">
-                      <Target className="w-4 h-4" />
-                      Propensity to Sell iQ
-                    </h5>
-                    <div className="bg-orange-50 rounded-lg border border-orange-200 p-4">
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-sm text-gray-600">Total Score:</span>
-                        <span className="text-2xl font-bold text-[#FF6600]">
-                          {mockPropensityIndicators.reduce((acc, item) => acc + item.points, 0)} pts
-                        </span>
-                      </div>
-                      <div className="space-y-2">
-                        {mockPropensityIndicators.map((item, idx) => (
-                          <div key={idx} className="flex items-center justify-between text-sm">
-                            <div className="flex items-center gap-2">
-                              <span className={cn(
-                                "w-2 h-2 rounded-full",
-                                item.color === "red" ? "bg-red-500" : 
-                                item.color === "green" ? "bg-green-500" : "bg-blue-500"
-                              )} />
-                              <span className="text-gray-700">{item.indicator}</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                              <span className="text-xs text-gray-400">{item.category}</span>
-                              <span className={cn(
-                                "font-bold text-xs px-2 py-0.5 rounded",
-                                item.color === "red" ? "bg-red-100 text-red-700" : 
-                                item.color === "green" ? "bg-green-100 text-green-700" : "bg-blue-100 text-blue-700"
-                              )}>+{item.points}</span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
                     </div>
                   </div>
 
@@ -487,41 +527,6 @@ export default function DailyOutreach() {
                       <input type="text" placeholder="Name of AA..." className="w-full text-xs p-2 border border-gray-200 rounded bg-gray-50 focus:border-orange-500 outline-none" data-testid="input-last-aa" />
                     </div>
 
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-gradient-to-r from-orange-50 to-amber-50 border-b border-orange-200 px-6 py-5">
-                <h4 className="text-xs font-bold text-[#FF6600] uppercase tracking-wider mb-3 flex items-center gap-2">
-                  <Bot className="w-4 h-4" />
-                  iQ Property Intelligence
-                </h4>
-                <div className="bg-white rounded-lg border border-orange-200 p-4 shadow-sm">
-                  <div className="grid grid-cols-3 gap-4 text-sm">
-                    <div>
-                      <span className="text-gray-500">Est. ARV:</span>
-                      <span className="ml-2 font-bold text-gray-900">$125,000</span>
-                    </div>
-                    <div>
-                      <span className="text-gray-500">Repair Est:</span>
-                      <span className="ml-2 font-bold text-gray-900">$15,000</span>
-                    </div>
-                    <div>
-                      <span className="text-gray-500">Max Offer:</span>
-                      <span className="ml-2 font-bold text-[#FF6600]">$68,500</span>
-                    </div>
-                    <div>
-                      <span className="text-gray-500">Comp Count:</span>
-                      <span className="ml-2 font-bold text-gray-900">8</span>
-                    </div>
-                    <div>
-                      <span className="text-gray-500">Avg $/SqFt:</span>
-                      <span className="ml-2 font-bold text-gray-900">$142</span>
-                    </div>
-                    <div>
-                      <span className="text-gray-500">Market Trend:</span>
-                      <span className="ml-2 font-bold text-green-600">↑ 3.2%</span>
-                    </div>
                   </div>
                 </div>
               </div>
