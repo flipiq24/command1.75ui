@@ -223,7 +223,7 @@ export default function Home() {
                             <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             
                             <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                                <span className="font-bold text-[#FF6600]">Propensity Score:</span> Higher score = Higher likelihood to sell.<br/><br/>Also shows current Asking Price and Lead Source.
+                                <span className="font-bold text-[#FF6600]">Propensity Score:</span> Higher score = Higher likelihood to sell.<br/><br/>Also shows current Asking Price.
                             </div>
                         </div>
                         
@@ -242,6 +242,7 @@ export default function Home() {
                             
                             <div className="absolute top-8 right-0 w-[400px] bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed max-h-[80vh] overflow-y-auto border border-gray-700">
                                 <div className="font-bold text-[#FF6600] mb-3 text-sm border-b border-gray-700 pb-2">Offer Status Definitions & Tasks</div>
+                                <div className="mb-3 italic text-gray-400">Includes Lead Source.</div>
                                 <div className="space-y-3">
                                     <div><span className="font-bold text-[#FF6600] block mb-0.5">100% - Acquired</span> Closed Escrow. Make sure to update Agent 365 Report.</div>
 
