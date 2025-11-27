@@ -315,8 +315,8 @@ export default function ActionPlan({ onFilterChange, activeFilter }: ActionPlanP
             >
               {item.count >= item.total && item.id !== 'new' ? (
                 <>
-                  <span>Complete</span>
-                  <CheckCircle className="w-4 h-4 text-green-500" />
+                  <span>{item.label.split(' ')[0]} Complete</span>
+                  <CheckCircle className="w-6 h-6 text-green-500" />
                 </>
               ) : (
                 item.buttonText
