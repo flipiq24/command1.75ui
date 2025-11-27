@@ -360,6 +360,10 @@ export default function DailyOutreach() {
                   </div>
                   
                   <div className="flex items-center gap-3">
+                    <button className="flex items-center gap-2 px-6 py-3 bg-[#FF6600] hover:bg-[#e55b00] rounded-lg text-sm font-bold text-white transition-colors shadow-md" data-testid="button-call-agent">
+                      <Phone className="w-5 h-5" />
+                      Call Agent
+                    </button>
                     <button className="flex items-center gap-2 px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium text-gray-700 transition-colors" data-testid="button-text">
                       <MessageSquare className="w-4 h-4" />
                       Text
@@ -371,10 +375,6 @@ export default function DailyOutreach() {
                     <button className="flex items-center gap-2 px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium text-gray-700 transition-colors" data-testid="button-voicemail">
                       <Mic className="w-4 h-4" />
                       Drop VM
-                    </button>
-                    <button className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg text-sm font-bold text-white transition-colors shadow-md" data-testid="button-call-agent">
-                      <Phone className="w-5 h-5" />
-                      Call Agent
                     </button>
                   </div>
                 </div>
