@@ -507,23 +507,6 @@ export default function DailyOutreach() {
                   ))
                 )}
 
-                 <div className="bg-white px-6 py-4 border-t border-gray-200 flex items-center justify-between rounded-b-xl">
-                    <div className="text-sm text-gray-500">Showing {filteredDeals.length} of {deals.length} entries</div>
-                    <div className="flex items-center gap-2">
-                        <button className="px-3 py-1 border border-gray-300 rounded text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2">
-                            25 / page <ChevronDown className="w-3 h-3" />
-                        </button>
-                        <button className="px-3 py-1 border border-gray-300 rounded text-sm text-gray-600 hover:bg-gray-50 disabled:opacity-50">
-                            Previous
-                        </button>
-                        <button className="px-3 py-1 bg-blue-600 text-white rounded text-sm font-medium hover:bg-blue-700">
-                            1
-                        </button>
-                        <button className="px-3 py-1 border border-gray-300 rounded text-sm text-gray-600 hover:bg-gray-50 disabled:opacity-50">
-                            Next
-                        </button>
-                    </div>
-                </div>
 
             </div>
 
