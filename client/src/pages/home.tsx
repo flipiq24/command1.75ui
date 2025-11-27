@@ -144,7 +144,7 @@ export default function Home() {
             <h1 className="text-xl font-bold text-gray-900">Welcome, Tony!</h1>
           </div>
           <div className="flex items-center gap-4">
-            <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm">TF</div>
+            
           </div>
         </header>
 
