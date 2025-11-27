@@ -289,7 +289,7 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div className="w-[20%] px-4 flex flex-col items-center justify-start">
+                        <div className="w-[20%] px-4 flex flex-col items-center justify-center">
                             <button className="flex items-center gap-2 text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 py-1.5 px-3 rounded-md transition-colors w-full justify-between max-w-[180px] whitespace-nowrap">
                                 <span className="font-bold text-slate-600">10%</span> 
                                 <span>Initial Contact Started</span>
