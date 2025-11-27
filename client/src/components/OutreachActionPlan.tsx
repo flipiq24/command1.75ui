@@ -139,8 +139,10 @@ export default function OutreachActionPlan({
             <span>Status: {connectionsCompleted}/{connectionsTotal}/{connectionsTotal}</span>
             <div className="group/tip relative">
               <HelpCircle className="w-3 h-3 cursor-help" />
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-72 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover/tip:opacity-100 transition pointer-events-none z-50 text-center">
-                Focuses on High-Value Agents with Aged, Pending, and Backup listings that have a high Propensity to Sell.<br/><br/><span className="text-[#FF6600] font-bold">Goal: 5 new solid relationships per day (25/week or 1,300/year).</span>
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-80 bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover/tip:opacity-100 transition pointer-events-none z-50 text-left leading-relaxed">
+                <p className="mb-2">Focuses on <strong>High-Value Agents</strong> with Aged, Pending, and Backup listings that have a high <strong>Propensity to Sell</strong>.</p>
+                <hr className="border-gray-700 my-2" />
+                <p><strong>Goal:</strong> 30 Contacts per day that create <strong className="text-[#FF6600]">5 new solid relationships</strong> per day (25/week or 1,300/year).</p>
               </div>
             </div>
           </div>
@@ -205,8 +207,9 @@ export default function OutreachActionPlan({
             <span>Status: {priorityCompleted}/{priorityTotal}/{priorityTotal}</span>
             <div className="group/tip relative">
               <HelpCircle className="w-3 h-3 cursor-help" />
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover/tip:opacity-100 transition pointer-events-none z-50 text-center">
-                Consistent Live phone calls to reinforce your <span className="text-amber-400 font-bold">100 Priority Relationships</span>.
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-72 bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover/tip:opacity-100 transition pointer-events-none z-50 text-center leading-relaxed">
+                Constant live phone calls to reinforce your <strong>100 Priority Relationships</strong>.
+                <span className="text-green-400 font-bold block mt-2">This is your long term money maker!</span>
               </div>
             </div>
           </div>
@@ -271,8 +274,8 @@ export default function OutreachActionPlan({
             <span>Status: {topOfMindCompleted}/{topOfMindTotal}/{topOfMindTotal}</span>
             <div className="group/tip relative">
               <HelpCircle className="w-3 h-3 cursor-help" />
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover/tip:opacity-100 transition pointer-events-none z-50 text-center">
-                Send content <span className="text-blue-400 font-bold">every 2 weeks</span> to Hot, Warm, and Cold agents to stay visible.
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover/tip:opacity-100 transition pointer-events-none z-50 text-center leading-relaxed">
+                Send valuable, relevant content <strong>every 2 weeks</strong> to Hot, Warm, and Cold agents to stay top of mind.
               </div>
             </div>
           </div>
