@@ -541,37 +541,8 @@ export default function DailyOutreach() {
 
                     {/* IQ Property Intelligence Section */}
                     <div className="bg-white border border-gray-200 rounded-xl mt-4 shadow-sm">
-                      <div className="flex">
-                        {/* Property Images - Left Side */}
-                        <div className="w-1/3 p-4 border-r border-gray-200">
-                          <div className="flex gap-2 mb-3">
-                            <button className="px-3 py-1.5 bg-gray-200 text-gray-700 text-xs font-medium rounded">Images 1-6</button>
-                            <button className="px-3 py-1.5 bg-white text-gray-600 text-xs font-medium rounded border border-gray-200 hover:bg-gray-50">Images 7-8</button>
-                          </div>
-                          <div className="grid grid-cols-3 gap-2">
-                            <div className="aspect-square bg-gray-200 rounded-lg overflow-hidden">
-                              <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-gray-500 text-xs">Photo 1</div>
-                            </div>
-                            <div className="aspect-square bg-gray-200 rounded-lg overflow-hidden">
-                              <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-gray-500 text-xs">Photo 2</div>
-                            </div>
-                            <div className="aspect-square bg-gray-200 rounded-lg overflow-hidden">
-                              <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-gray-500 text-xs">Photo 3</div>
-                            </div>
-                            <div className="aspect-square bg-gray-200 rounded-lg overflow-hidden">
-                              <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-gray-500 text-xs">Photo 4</div>
-                            </div>
-                            <div className="aspect-square bg-gray-200 rounded-lg overflow-hidden">
-                              <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-gray-500 text-xs">Photo 5</div>
-                            </div>
-                            <div className="aspect-square bg-gray-200 rounded-lg overflow-hidden">
-                              <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-gray-500 text-xs">Photo 6</div>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* iQ Intelligence Content - Right Side */}
-                        <div className="w-2/3 p-6">
+                        {/* iQ Intelligence Content */}
+                        <div className="p-6">
                           <div className="flex items-center gap-6 mb-6">
                             <div className="flex items-center gap-3">
                               <div className="relative">
@@ -740,7 +711,6 @@ export default function DailyOutreach() {
                             </div>
                           </div>
                         </div>
-                      </div>
                     </div>
                     </React.Fragment>
                   ))
