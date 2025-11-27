@@ -84,5 +84,40 @@ export async function registerRoutes(
     }
   });
 
+  // AI endpoints
+  const { generateAIResponse, analyzeProperty } = await import("./openai");
+
+  app.post("/api/ai/chat", async (req, res) => {
+    try {
+      const { message, dealContext } = req.body;
+      if (!message) {
+        return res.status(400).json({ message: "Message is required" });
+      }
+      const response = await generateAIResponse(message, dealContext);
+      res.json({ response });
+    } catch (error) {
+      console.error("Error generating AI response:", error);
+      res.status(500).json({ message: "Failed to generate AI response" });
+    }
+  });
+
+  app.post("/api/ai/analyze-property", async (req, res) => {
+    try {
+      const { dealId } = req.body;
+      if (!dealId) {
+        return res.status(400).json({ message: "Deal ID is required" });
+      }
+      const deal = await storage.getDeal(dealId);
+      if (!deal) {
+        return res.status(404).json({ message: "Deal not found" });
+      }
+      const analysis = await analyzeProperty(deal);
+      res.json({ analysis });
+    } catch (error) {
+      console.error("Error analyzing property:", error);
+      res.status(500).json({ message: "Failed to analyze property" });
+    }
+  });
+
   return httpServer;
 }
