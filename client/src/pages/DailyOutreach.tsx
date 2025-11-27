@@ -203,7 +203,7 @@ export default function DailyOutreach() {
                 
                 <div className="flex items-center gap-4">
                   <span className="text-sm text-gray-500">
-                    Property <span className="font-bold text-gray-900">{currentIndex + 1}</span> of <span className="font-bold text-gray-900">{totalDeals}</span>
+                    Property <span className="font-bold text-gray-900">{currentIndex + 1}</span> of <span className="font-bold text-gray-900">30</span>
                   </span>
                   <div className="flex items-center gap-2">
                     <button 
