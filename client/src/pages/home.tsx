@@ -248,6 +248,35 @@ export default function Home() {
                         <div className="w-3/12 px-4 flex items-center gap-1 group relative cursor-help">
                             <span>Offer Status</span>
                             <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            
+                            <div className="absolute top-8 right-0 w-[400px] bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed max-h-[80vh] overflow-y-auto border border-gray-700">
+                                <div className="font-bold text-[#FF6600] mb-3 text-sm border-b border-gray-700 pb-2">Offer Status Definitions & Tasks</div>
+                                <div className="space-y-3">
+                                    <div><span className="font-bold text-gray-300 block mb-0.5">Initial Contact Started</span> Property is assigned to AA and under review. <span className="text-red-400 font-bold">MUST CALL Agent.</span> Do not rely on text or emails. Turn on auto tracker if agent is not calling back.</div>
+                                    
+                                    <div><span className="font-bold text-gray-300 block mb-0.5">Offer Terms Sent</span> Terms sent but receipt not confirmed. Use Reminders and Auto Trackers if agent is not responding.</div>
+                                    
+                                    <div><span className="font-bold text-gray-300 block mb-0.5">Contract Submitted</span> Self-represented RPA sent to listing agent. <span className="text-red-400 font-bold">CALL to confirm receipt.</span> Ask when and how they are presenting offers.</div>
+                                    
+                                    <div><span className="font-bold text-gray-300 block mb-0.5">In Negotiations</span> We are negotiating and agent is engaging/guiding us. Can be Hot/Warm/Cold. <span className="text-red-400 font-bold">MUST CALL minimum once per day.</span> Do not rely on text and emails.</div>
+                                    
+                                    <div><span className="font-bold text-gray-300 block mb-0.5">Offer Accepted</span> In Escrow. Make sure terms are correct in the contract.</div>
+                                    
+                                    <div><span className="font-bold text-gray-300 block mb-0.5">Acquired</span> Closed Escrow. Make sure to update Agent 365 Report.</div>
+                                    
+                                    <div><span className="font-bold text-gray-300 block mb-0.5">Continue to Follow</span> Not ready to accept our price, but may sell later. Use reminders to keep property out of Daily Tasks until the set reminder date.</div>
+                                    
+                                    <div><span className="font-bold text-gray-300 block mb-0.5">Back Up</span> Pending with other buyer; we are backup. Use reminders to keep property out of Daily Tasks until the set reminder date.</div>
+                                    
+                                    <div><span className="font-bold text-gray-300 block mb-0.5">Canceled FEC</span> Fully executed contract (FEC) was canceled. Update Agent 365 Report.</div>
+                                    
+                                    <div><span className="font-bold text-gray-300 block mb-0.5">Sold Others / Closed</span> Sold to other buyer. Set reminder for 3 weeks out to see who purchased it and for how much.</div>
+                                    
+                                    <div><span className="font-bold text-gray-300 block mb-0.5">Pass</span> Does not qualify or offer not considered. Make sure to set a Pass Reason.</div>
+                                    
+                                    <div><span className="font-bold text-gray-300 block mb-0.5">None</span> File needs attention. Update the status and set tag (Hot, Warm, Cold).</div>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
