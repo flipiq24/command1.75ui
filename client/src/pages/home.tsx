@@ -20,7 +20,8 @@ import {
   Zap,
   ChevronLeft,
   LogOut,
-  CalendarCheck
+  CalendarCheck,
+  BarChart2
 } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
@@ -70,6 +71,7 @@ export default function Home() {
               <nav className="space-y-0.5 mt-1">
                 <NavItem icon={CalendarCheck} label="Today's Plan" />
                 <NavItem icon={HomeIcon} label="Dashboard" active />
+                <NavItem icon={BarChart2} label="My Stats" />
                 <NavItem icon={Briefcase} label="Deals" />
                 <NavItem icon={Database} label="MLS" />
                 <NavItem icon={Users} label="Agents" />
