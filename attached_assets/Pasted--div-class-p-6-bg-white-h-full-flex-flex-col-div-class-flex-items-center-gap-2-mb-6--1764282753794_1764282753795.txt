@@ -1,0 +1,63 @@
+<div class="p-6 bg-white h-full flex flex-col">
+    
+    <div class="flex items-center gap-2 mb-6 border-b border-gray-100 pb-4">
+        <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+        <h3 className="text-lg font-bold text-gray-900 uppercase tracking-tight">iQ Property Intelligence</h3>
+    </div>
+
+    <div class="grid grid-cols-2 gap-y-4 gap-x-8 mb-8 text-sm">
+        <div>
+            <span class="block text-xs font-bold text-gray-400 uppercase">Status</span>
+            <span class="font-bold text-gray-900">Active</span>
+        </div>
+        <div>
+            <span class="block text-xs font-bold text-gray-400 uppercase">Days on Market</span>
+            <span class="font-bold text-gray-900">94 Days</span>
+        </div>
+        <div>
+            <span class="block text-xs font-bold text-gray-400 uppercase">Price to Value</span>
+            <span class="font-bold text-green-600">72% PTFV</span>
+        </div>
+        <div>
+            <span class="block text-xs font-bold text-gray-400 uppercase">Propensity</span>
+            <span class="font-bold text-red-600">High (7/8)</span>
+        </div>
+    </div>
+
+    <div class="mb-8">
+        <h4 class="font-bold text-gray-900 mb-3 text-sm uppercase">Why This Property?</h4>
+        <ul class="space-y-3">
+            <li class="flex items-start gap-3 text-sm text-gray-700">
+                <div class="w-1.5 h-1.5 rounded-full bg-black mt-1.5 shrink-0"></div>
+                <span>
+                    <strong>Aged Listing:</strong> Property has been sitting for <span class="font-bold">94 days</span>. Seller motivation is likely increasing.
+                </span>
+            </li>
+            <li class="flex items-start gap-3 text-sm text-gray-700">
+                <div class="w-1.5 h-1.5 rounded-full bg-black mt-1.5 shrink-0"></div>
+                <span>
+                    <strong>Distress Signals:</strong> Detected <span class="text-red-600 font-bold">Notice of Default</span> and <span class="text-red-600 font-bold">Tax Delinquency</span>.
+                </span>
+            </li>
+            <li class="flex items-start gap-3 text-sm text-gray-700">
+                <div class="w-1.5 h-1.5 rounded-full bg-black mt-1.5 shrink-0"></div>
+                <span>
+                    <strong>Open Opportunity:</strong> Listing agent is currently <span class="font-bold">Unassigned</span>. Open field for a new relationship.
+                </span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="mt-auto border-t border-gray-100 pt-6">
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-600">Ready to review this deal?</span>
+            <div class="flex gap-3">
+                <button class="text-gray-400 hover:text-gray-600 font-medium text-sm px-4 py-2">No, Skip</button>
+                <button class="bg-black hover:bg-gray-800 text-white text-sm font-bold px-6 py-2 rounded-lg shadow-sm transition">
+                    Yes, Dive In &rarr;
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
