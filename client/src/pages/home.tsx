@@ -7,7 +7,12 @@ import {
   ChevronDown,
   MoreVertical,
   Target,
-  Flame
+  Flame,
+  Phone,
+  MessageSquare,
+  Mail,
+  Mic,
+  Bot
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -225,6 +230,8 @@ const getPropensityColor = (text: string) => {
 
 export default function Home() {
   const [activeFilter, setActiveFilter] = useState<DealType | 'goal' | 'completed' | null>(null);
+  const [selectedDealIds, setSelectedDealIds] = useState<number[]>([]);
+
   // Sort deals by propensity score (descending)
   const [deals, setDeals] = useState<Deal[]>(() => {
     return [...SAMPLE_DEALS].sort((a, b) => {
@@ -262,6 +269,22 @@ export default function Home() {
     return deal.type === activeFilter;
   });
 
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      setSelectedDealIds(filteredDeals.map(d => d.id));
+    } else {
+      setSelectedDealIds([]);
+    }
+  };
+
+  const handleSelectDeal = (id: number, checked: boolean) => {
+    if (checked) {
+      setSelectedDealIds(prev => [...prev, id]);
+    } else {
+      setSelectedDealIds(prev => prev.filter(dealId => dealId !== id));
+    }
+  };
+
   return (
     <div className="bg-gray-50 text-gray-800 h-screen flex overflow-hidden font-sans">
       {/* Sidebar */}
@@ -293,16 +316,57 @@ export default function Home() {
                 
                 {/* Table Header */}
                 <div className="flex py-3 bg-white border-b border-gray-200 text-[11px] uppercase tracking-wider font-bold text-gray-400 select-none">
-                    <div className="w-[48px] shrink-0"></div> 
+                    <div className="w-[48px] shrink-0 flex flex-col justify-center items-center gap-0.5">
+                        <span className="text-[8px] font-bold text-gray-400 uppercase leading-none">All</span>
+                        <input 
+                          type="checkbox" 
+                          className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                          checked={filteredDeals.length > 0 && filteredDeals.every(d => selectedDealIds.includes(d.id))}
+                          onChange={(e) => handleSelectAll(e.target.checked)}
+                          title="Select All Filtered Deals"
+                        />
+                    </div> 
                     <div className="flex-1 flex items-center">
                     
-                        <div className="w-5/12 px-4 flex items-center gap-1 group relative cursor-help">
-                            <span>Property</span>
-                            <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            
-                            <div className="absolute bottom-full left-0 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                                Details include Address, Specs, Deal Tag (Hot/Warm/Cold), Next Actions (To-Do), and Notifications.
+                        <div className="w-5/12 px-4 flex items-center gap-2 group relative">
+                            <div className="flex items-center gap-1 cursor-help">
+                                <span>Property</span>
+                                <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                
+                                <div className="absolute bottom-full left-0 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                                    Details include Address, Specs, Deal Tag (Hot/Warm/Cold), Next Actions (To-Do), and Notifications.
+                                </div>
                             </div>
+
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <button className="bg-[#FF6600] hover:bg-[#e65c00] text-white text-[10px] font-bold px-3 py-1 rounded shadow-sm flex items-center gap-1 transition-colors ml-2 normal-case">
+                                  Bulk Actions
+                                </button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="start" className="w-48 bg-white z-50">
+                                <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
+                                  <Phone className="w-4 h-4" />
+                                  <span>Call</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
+                                  <MessageSquare className="w-4 h-4" />
+                                  <span>Text</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
+                                  <Mail className="w-4 h-4" />
+                                  <span>Email</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
+                                  <Mic className="w-4 h-4" />
+                                  <span>Text Voicemail</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
+                                  <Bot className="w-4 h-4" />
+                                  <span>AI Connect</span>
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
                         </div>
                         
                         <div className="w-2/12 px-4 flex items-center gap-1 group relative cursor-help">
@@ -398,9 +462,14 @@ export default function Home() {
                   </div>
                 ) : (
                   filteredDeals.map((deal) => (
-                    <div key={deal.id} className="flex border-b border-gray-100 hover:bg-gray-50 transition group py-4">
+                    <div key={deal.id} className={cn("flex border-b border-gray-100 hover:bg-gray-50 transition group py-4", selectedDealIds.includes(deal.id) && "bg-blue-50/50 hover:bg-blue-50")}>
                         <div className="w-12 shrink-0 flex flex-col items-center gap-3 pt-1">
-                            <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
+                            <input 
+                              type="checkbox" 
+                              className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                              checked={selectedDealIds.includes(deal.id)}
+                              onChange={(e) => handleSelectDeal(deal.id, e.target.checked)}
+                            />
                             <div className="bg-gray-100 rounded-lg p-1 flex flex-col items-center gap-2 w-8">
                                 <Target className="w-4 h-4 text-gray-500 hover:text-gray-800 cursor-pointer" />
                                 <div className="w-4 h-[1px] bg-gray-300"></div>
