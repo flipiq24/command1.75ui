@@ -119,7 +119,7 @@ export default function OutreachActionPlan({
               />
               <circle 
                 cx="56" cy="56" r="48" 
-                stroke={isConnectionsComplete ? "#22c55e" : "#f97316"}
+                stroke={isConnectionsComplete ? "#22c55e" : "#ef4444"}
                 strokeWidth="8" 
                 fill="none" 
                 strokeDasharray={`${(connectionsCompleted / connectionsTotal) * 301.6} 301.6`}
@@ -150,8 +150,8 @@ export default function OutreachActionPlan({
               isConnectionsComplete 
                 ? "bg-green-50 text-green-600 border border-green-200"
                 : activeFilter === 'connections'
-                  ? "bg-orange-500 text-white shadow-md"
-                  : "bg-orange-50 text-orange-600 border border-orange-200 hover:bg-orange-100"
+                  ? "bg-red-500 text-white shadow-md"
+                  : "bg-red-50 text-red-600 border border-red-200 hover:bg-red-100"
             )}
             data-testid="button-start-calling"
           >
