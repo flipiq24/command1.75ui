@@ -296,16 +296,11 @@ export default function Home() {
                         <div className="flex-1 flex flex-col md:flex-row">
                             
                             <div className="w-5/12 px-4 flex flex-col justify-start gap-2">
-                                <div>
-                                    <div className="font-bold text-gray-900 text-base mb-1">{deal.address}</div>
-                                    <div className="text-xs text-gray-500">{deal.specs}</div>
-                                </div>
-                                
                                 <div className="flex items-center gap-2 mt-1">
                                     {deal.isHot && (
-                                      <div className="bg-red-50 rounded-full px-2 py-0.5 border border-red-100 flex items-center gap-1">
-                                          <Flame className="w-3 h-3 text-red-500" />
-                                          <span className="text-[10px] font-bold text-red-500 uppercase">Hot</span>
+                                      <div className="bg-red-500 rounded-full px-2 py-0.5 border border-red-500 flex items-center gap-1 shadow-sm">
+                                          <Flame className="w-3 h-3 text-white" />
+                                          <span className="text-[10px] font-bold text-white uppercase">Hot</span>
                                       </div>
                                     )}
                                     {deal.isHot && <div className="w-1 h-1 rounded-full bg-gray-300"></div>}
@@ -317,6 +312,11 @@ export default function Home() {
                                         </button>
                                     </div>
                                     <div className="text-xs text-gray-400 whitespace-nowrap">• 0 Critical • 0 Reminders</div>
+                                </div>
+                                
+                                <div>
+                                    <div className="font-bold text-gray-900 text-base mb-1">{deal.address}</div>
+                                    <div className="text-xs text-gray-500">{deal.specs}</div>
                                 </div>
                             </div>
 

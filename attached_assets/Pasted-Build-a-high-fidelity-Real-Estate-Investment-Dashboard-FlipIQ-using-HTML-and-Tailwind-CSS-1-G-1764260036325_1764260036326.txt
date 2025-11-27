@@ -1,0 +1,61 @@
+Build a high-fidelity Real Estate Investment Dashboard ("FlipIQ") using HTML and Tailwind CSS.
+
+1. Global Styling & Colors:
+
+Font: Inter (Clean, professional sans-serif).
+
+Background: Light gray (bg-gray-50) for the app, White for cards.
+
+Brand Color: Safety Orange (#FF6600) used for the Logo, Progress Bars, and "Offer Goal" text.
+
+Action Color: Solid Red (#ef4444) strictly for the "Hot Deals" primary action.
+
+2. Sidebar (Left - Fixed Width 256px):
+
+Logo: FlipIQ (Text: #111827, Icon: #FF6600).
+
+Menu Structure: Split into 3 Groups with small uppercase headers:
+
+TODAY'S PLAN: Deal Review (Badge: 5/56), Daily Outreach (Badge: 3/30), IQ (Icon: Lightbulb).
+
+FIND LEADS: MLS Hot Deals, MLS Search, Agent Search, Campaigns (Indented sub-item).
+
+TOOLS: My Stats, DispoPro, Pro Dashboard.
+
+Style: Monotone gray icons and text. Hover effects should be subtle gray backgrounds.
+
+3. Main Content Area:
+
+A. Header Widget (White Card):
+
+Top Left: Title "Nov 27, 2025 — Today's Action Plan!". Below it, a progress text "You have completed 32% of today's follow-ups" with a Brand Orange progress bar (width: 32%).
+
+Top Right: "Daily Offer Goal" widget. Text is Brand Orange (#FF6600). Displays "1 / 3".
+
+B. Workflow Gauges (4-Column Grid):
+
+Layout: 4 circular gauges (Hot, Warm, Cold, New).
+
+Crucial Button Styling:
+
+Hot Deals: Button must be SOLID RED (bg-red-600, text-white) with a pulse animation.
+
+Warm/Cold/New: Buttons must be White with colored outlines (Orange/Blue/Gray).
+
+C. Property List (Data Table):
+
+Columns: 4-Column Layout.
+
+Col 1 (Property): Checkbox + Action Row (Status Tag, To-Do Dropdown, Criticals) on top. Address (Bold) and Specs (Gray) below.
+
+Col 2 (List Price): Price (Bold) on top. "Propensity Score: N/A" (Gray) below.
+
+Col 3 (Last Open / Called): Two rows of dates. Use a yellow badge (bg-yellow-100) for "N/A" values.
+
+Col 4 (Offer Status): "Source: [Source Name]" (Bold) at the Top. The Status Dropdown (e.g., "0% None") at the Bottom.
+
+4. Data Accuracy:
+
+Replicate the sample data exactly (e.g., "2011 Windsor Cir", "420 Robinson").
+
+Ensure the "Hot" tag in the list matches the Red color of the "Hot Deals" button in the header.

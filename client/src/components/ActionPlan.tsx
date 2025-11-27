@@ -300,13 +300,12 @@ export default function ActionPlan({ onFilterChange, activeFilter }: ActionPlanP
               className={cn(
                 "px-4 py-2 rounded-full text-sm font-bold border-2 transition-all w-full max-w-[180px]",
                 item.id === 'hot' 
-                  ? "text-white animate-red-glow hover:scale-105" 
+                  ? "bg-red-500 border-red-500 text-white animate-pulse hover:scale-105 shadow-lg shadow-red-200" 
                   : "bg-white hover:bg-gray-50",
                 activeFilter === item.id && "ring-2 ring-offset-2"
               )}
               style={{ 
-                borderColor: item.color, 
-                backgroundColor: item.id === 'hot' ? item.color : 'white',
+                borderColor: item.id === 'hot' ? '#ef4444' : item.color, // red-500
                 color: item.id === 'hot' ? 'white' : item.color
               }}
               onClick={() => handleFilterClick(item.id)}
