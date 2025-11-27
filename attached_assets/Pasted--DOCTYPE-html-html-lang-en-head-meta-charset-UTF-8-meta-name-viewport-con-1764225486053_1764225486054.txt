@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlipIQ Actionable Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; font-size: 14px; }
+        
+        /* Custom "Pill" styles for Status tags */
+        .status-pill { padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        .status-hot { background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+        .status-warm { background-color: #fff7ed; color: #9a3412; border: 1px solid #fdba74; }
+        .status-new { background-color: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+        
+        /* Table Header Style */
+        th { font-size: 11px; color: #6b7280; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; padding: 12px 16px; background-color: #f9fafb; border-bottom: 2px solid #e5e7eb; }
+        td { padding: 16px; vertical-align: top; border-bottom: 1px solid #e5e7eb; }
+    </style>
+</head>
+<body class="bg-white text-gray-900 h-screen flex flex-col">
+
+    <div class="p-6 bg-gray-50 border-b border-gray-200">
+        <h2 class="text-lg font-bold mb-4">Today's Action Plan</h2>
+        <div class="grid grid-cols-4 gap-4">
+            <div class="bg-white p-4 border border-orange-200 border-l-4 border-l-orange-500 rounded shadow-sm">
+                <div class="text-xs text-gray-500 font-bold uppercase mb-1">Hot / Warm Deals</div>
+                <div class="flex items-baseline gap-2">
+                    <span class="text-2xl font-bold text-gray-900">0/1</span>
+                    <span class="text-sm text-gray-500">Hot</span>
+                    <span class="text-gray-300">|</span>
+                    <span class="text-2xl font-bold text-gray-900">0/6</span>
+                    <span class="text-sm text-gray-500">Warm</span>
+                </div>
+            </div>
+            
+            <div class="bg-white p-4 border border-gray-200 border-l-4 border-l-blue-500 rounded shadow-sm">
+                <div class="text-xs text-gray-500 font-bold uppercase mb-1">New Agent Calls</div>
+                <div class="flex items-baseline gap-2">
+                    <span class="text-2xl font-bold text-gray-900">3/30</span>
+                    <button class="ml-auto text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded border border-blue-200 font-bold hover:bg-blue-100">Start Dialer</button>
+                </div>
+            </div>
+
+            <div class="bg-white p-4 border border-gray-200 rounded shadow-sm">
+                 <div class="text-xs text-gray-500 font-bold uppercase mb-1">New Agent Relationships</div>
+                 <div class="text-2xl font-bold text-gray-900">0/5</div>
+            </div>
+
+            <div class="bg-white p-4 border border-gray-200 rounded shadow-sm">
+                <div class="text-xs text-gray-500 font-bold uppercase mb-1">Offers Made Today</div>
+                <div class="text-2xl font-bold text-gray-900">1/3</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-1 overflow-auto">
+        <table class="w-full text-left border-collapse">
+            <thead class="sticky top-0 z-10">
+                <tr>
+                    <th style="width: 25%">Property</th>
+                    <th style="width: 15%">List Price / Score</th>
+                    <th style="width: 15%">Market Info (Dates)</th>
+                    <th style="width: 20%">Evaluation (Asking vs ARV)</th>
+                    <th style="width: 15%">Offer Status / Source</th>
+                    <th style="width: 10%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr class="hover:bg-gray-50 transition">
+                    <td>
+                        <div class="flex gap-2 mb-2">
+                            <span class="status-pill status-new">New</span>
+                            <span class="text-xs text-red-500 font-bold flex items-center">0 Critical</span>
+                        </div>
+                        <div class="font-bold text-base text-gray-900">2011 Windsor Cir</div>
+                        <div class="text-sm text-gray-600">Duarte, CA 91010</div>
+                        <div class="text-xs text-gray-400 mt-1">3 Br / 0 Ba / 1,654 ft² / 1981</div>
+                    </td>
+                    <td>
+                        <div class="font-bold text-lg">$500,000</div>
+                        <div class="text-xs text-gray-500 mt-1">Propensity Score: N/A</div>
+                    </td>
+                    <td>
+                        <div class="font-bold text-sm text-gray-700">2 Days</div>
+                        <div class="text-xs text-gray-500 mt-1">
+                            DOM: 0 / CDOM: 0<br>
+                            Created: 11/26/25
+                        </div>
+                    </td>
+                    <td class="bg-red-50">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-xs font-bold text-red-700">0.00% Spread</span>
+                        </div>
+                        <div class="text-sm font-medium">ARV: $0</div>
+                        <div class="text-xs text-gray-500 mt-1">Comp Data: 0</div>
+                    </td>
+                    <td>
+                        <div class="font-bold text-sm text-gray-900">0% None</div>
+                        <div class="text-xs text-gray-500 mt-1">Source: Off Market</div>
+                        <div class="text-[10px] text-gray-400 mt-2">
+                            LOD: 11/26/25<br>
+                            LCD: 11/26/25
+                        </div>
+                    </td>
+                    <td>
+                         <button class="w-full border border-gray-300 bg-white hover:bg-gray-100 text-gray-700 font-bold py-2 px-3 rounded text-xs shadow-sm">
+                            View Deal
+                        </button>
+                    </td>
+                </tr>
+
+                <tr class="hover:bg-gray-50 transition">
+                    <td>
+                        <div class="flex gap-2 mb-2">
+                            <span class="status-pill status-new">New</span>
+                        </div>
+                        <div class="font-bold text-base text-gray-900">420 Robinson</div>
+                        <div class="text-sm text-gray-600">Bakersfield, CA 93305</div>
+                        <div class="text-xs text-gray-400 mt-1">3 Br / 1 Ba / 1,013 ft² / 1959</div>
+                    </td>
+                    <td>
+                        <div class="font-bold text-lg">$75,000</div>
+                        <div class="text-xs text-gray-500 mt-1">Propensity Score: N/A</div>
+                    </td>
+                    <td>
+                        <div class="font-bold text-sm text-gray-700">3 Days / Active</div>
+                        <div class="text-xs text-gray-500 mt-1">
+                            DOM: 3 / CDOM: 3<br>
+                            Created: 11/24/25
+                        </div>
+                    </td>
+                    <td class="bg-green-50">
+                         <div class="flex items-center gap-2 mb-1">
+                            <span class="text-xs font-bold text-green-700">33.05% Spread</span>
+                        </div>
+                        <div class="text-sm font-medium">ARV: $226,931</div>
+                        <div class="text-xs text-gray-500 mt-1">Comp Data: 5S, 0P, 0B, 0A</div>
+                    </td>
+                    <td>
+                        <div class="font-bold text-sm text-gray-900">0% None</div>
+                        <div class="text-xs text-gray-500 mt-1">Source: MLS</div>
+                        <div class="text-[10px] text-gray-400 mt-2">
+                            LOD: 11/26/25<br>
+                            LCD: N/A
+                        </div>
+                    </td>
+                    <td>
+                        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded text-xs shadow-sm">
+                            Analyze
+                        </button>
+                    </td>
+                </tr>
+
+                <tr class="hover:bg-gray-50 transition">
+                    <td>
+                        <div class="flex gap-2 mb-2">
+                            <span class="status-pill status-new">New</span>
+                        </div>
+                        <div class="font-bold text-base text-gray-900">10573 Larch</div>
+                        <div class="text-sm text-gray-600">Bloomington, CA 92316</div>
+                        <div class="text-xs text-gray-400 mt-1">2 Br / 1 Ba / 1,951 ft² / 1940</div>
+                    </td>
+                    <td>
+                        <div class="font-bold text-lg">$975,000</div>
+                        <div class="text-xs text-gray-500 mt-1">Propensity Score: N/A</div>
+                    </td>
+                    <td>
+                        <div class="font-bold text-sm text-gray-700">4 Days / Active</div>
+                        <div class="text-xs text-gray-500 mt-1">
+                            DOM: 4 / CDOM: 4<br>
+                            Created: 11/23/25
+                        </div>
+                    </td>
+                    <td class="bg-green-100">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-xs font-bold text-green-800">151.59% Spread</span>
+                        </div>
+                        <div class="text-sm font-medium">ARV: $643,184</div>
+                        <div class="text-xs text-gray-500 mt-1">Comp Data: 1S, 0P, 0B, 0A</div>
+                    </td>
+                    <td>
+                        <div class="font-bold text-sm text-gray-900">10% Initial Contact</div>
+                        <div class="text-xs text-gray-500 mt-1">Source: MLS</div>
+                        <div class="text-[10px] text-gray-400 mt-2">
+                            LOD: 11/25/25<br>
+                            LCD: 11/24/25
+                        </div>
+                    </td>
+                    <td>
+                        <button class="w-full bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 font-bold py-2 px-3 rounded text-xs shadow-sm">
+                            Follow Up
+                        </button>
+                    </td>
+                </tr>
+
+                 <tr class="hover:bg-gray-50 transition">
+                    <td>
+                        <div class="flex gap-2 mb-2">
+                            <span class="status-pill status-hot">Hot</span>
+                        </div>
+                        <div class="font-bold text-base text-gray-900">2842 Rosarita St</div>
+                        <div class="text-sm text-gray-600">San Bernardino, CA 92407</div>
+                        <div class="text-xs text-gray-400 mt-1">3 Br / 2 Ba / 1,169 ft² / 1990</div>
+                    </td>
+                    <td>
+                        <div class="font-bold text-lg">$390,000</div>
+                        <div class="text-xs text-gray-500 mt-1">Propensity Score: N/A</div>
+                    </td>
+                    <td>
+                        <div class="font-bold text-sm text-gray-700">7 Days</div>
+                        <div class="text-xs text-gray-500 mt-1">
+                            DOM: 0 / CDOM: 0<br>
+                            Created: 11/21/25
+                        </div>
+                    </td>
+                    <td class="bg-red-50">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-xs font-bold text-red-700">0.00% Spread</span>
+                        </div>
+                        <div class="text-sm font-medium">ARV: $0</div>
+                        <div class="text-xs text-gray-500 mt-1">Comp Data: 0</div>
+                    </td>
+                    <td>
+                        <div class="font-bold text-sm text-gray-900">30% Offer Terms Sent</div>
+                        <div class="text-xs text-gray-500 mt-1">Source: Off Market</div>
+                        <div class="text-[10px] text-gray-400 mt-2">
+                            LOD: 11/26/25<br>
+                            LCD: 11/21/25
+                        </div>
+                    </td>
+                    <td>
+                        <button class="w-full bg-orange-100 text-orange-800 border border-orange-200 hover:bg-orange-200 font-bold py-2 px-3 rounded text-xs shadow-sm">
+                            Close Deal
+                        </button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
