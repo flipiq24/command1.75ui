@@ -208,266 +208,119 @@ export default function Home() {
           {/* Action Plan (Gamified) */}
           <div className="mb-8">
             <div className="flex justify-between items-baseline mb-4">
-                <h2 className="text-lg font-bold text-gray-900">Today's Action Plan</h2>
-                <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">Your Daily Goals</span>
+                <h2 className="text-lg font-bold text-gray-900">Today's Missions</h2>
+                <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">Complete these 4 categories to win the day</span>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
                 
-                {/* Deal Review Card */}
-                <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm relative overflow-hidden group hover:border-blue-400 transition cursor-pointer">
-                    <div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
-                    <div className="flex justify-between items-start mb-2">
-                        <div>
-                            <h3 className="text-lg font-bold text-gray-900">Deal Review</h3>
-                            <p className="text-xs text-gray-500">New leads vs. Reviewed</p>
-                        </div>
-                        <div className="text-right">
-                            <span className="text-2xl font-bold text-gray-900">5</span>
-                            <span className="text-sm text-gray-400">/ 56</span>
-                        </div>
+                {/* Hot Deals */}
+                <button className="bg-white p-4 rounded-xl border-2 border-orange-500 shadow-sm hover:shadow-md transition text-left relative overflow-hidden group cursor-pointer">
+                    <div className="flex justify-between items-center mb-2">
+                        <span className="text-xs font-bold text-orange-600 uppercase">Hot Deals</span>
+                        <Zap className="w-5 h-5 text-orange-500" />
                     </div>
-                    
-                    <div className="w-full bg-gray-100 rounded-full h-2.5 mb-2">
-                        <div className="bg-blue-500 h-2.5 rounded-full" style={{width: '9%'}}></div>
+                    <div className="text-2xl font-bold text-gray-900 mb-1">0 <span className="text-sm text-gray-400 font-medium">/ 1 Done</span></div>
+                    <div className="w-full bg-gray-100 rounded-full h-2">
+                        <div className="bg-orange-500 h-2 rounded-full" style={{width: '0%'}}></div>
                     </div>
-                    <div className="flex justify-between text-[10px] text-gray-400 uppercase font-semibold">
-                        <span>5 Completed</span>
-                        <span>56 Total Deals</span>
-                    </div>
-                </div>
+                    <div className="mt-2 text-[10px] text-gray-400 font-medium">1 Action Required</div>
+                </button>
 
-                {/* Daily Outreach Card */}
-                <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm relative overflow-hidden group hover:border-green-400 transition cursor-pointer">
-                    <div className="absolute top-0 left-0 w-1 h-full bg-green-500"></div>
-                    <div className="flex justify-between items-start mb-2">
-                        <div>
-                            <h3 className="text-lg font-bold text-gray-900">Daily Outreach</h3>
-                            <p className="text-xs text-gray-500">Calls & Agent Follow-ups</p>
-                        </div>
-                        <div className="text-right">
-                            <span className="text-2xl font-bold text-gray-900">3</span>
-                            <span className="text-sm text-gray-400">/ 30</span>
-                        </div>
+                {/* Warm Deals */}
+                <button className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:border-blue-400 transition text-left cursor-pointer">
+                    <div className="flex justify-between items-center mb-2">
+                        <span className="text-xs font-bold text-gray-500 uppercase">Warm Deals</span>
+                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                     </div>
+                    <div className="text-2xl font-bold text-gray-900 mb-1">0 <span className="text-sm text-gray-400 font-medium">/ 6 Done</span></div>
+                    <div className="w-full bg-gray-100 rounded-full h-2">
+                        <div className="bg-blue-500 h-2 rounded-full" style={{width: '0%'}}></div>
+                    </div>
+                    <div className="mt-2 text-[10px] text-gray-400 font-medium">6 Actions Required</div>
+                </button>
 
-                     <div className="w-full bg-gray-100 rounded-full h-2.5 mb-2">
-                        <div className="bg-green-500 h-2.5 rounded-full" style={{width: '10%'}}></div>
+                {/* Cold Deals */}
+                <button className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:border-gray-400 transition text-left cursor-pointer">
+                    <div className="flex justify-between items-center mb-2">
+                        <span className="text-xs font-bold text-gray-500 uppercase">Cold Deals</span>
+                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
                     </div>
-                    <div className="flex justify-between text-[10px] text-gray-400 uppercase font-semibold">
-                        <span>3 Calls Made</span>
-                        <span>30 To Make</span>
+                    <div className="text-2xl font-bold text-gray-900 mb-1">0 <span className="text-sm text-gray-400 font-medium">/ 4 Done</span></div>
+                    <div className="w-full bg-gray-100 rounded-full h-2">
+                        <div className="bg-gray-400 h-2 rounded-full" style={{width: '0%'}}></div>
                     </div>
-                </div>
+                    <div className="mt-2 text-[10px] text-gray-400 font-medium">4 Actions Required</div>
+                </button>
 
+                {/* New Deals */}
+                <button className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:border-green-400 transition text-left cursor-pointer">
+                    <div className="flex justify-between items-center mb-2">
+                        <span className="text-xs font-bold text-gray-500 uppercase">New Deals</span>
+                        <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div className="text-2xl font-bold text-gray-900 mb-1">56 <span class="text-sm text-gray-400 font-medium">/ 60 Done</span></div>
+                    <div className="w-full bg-gray-100 rounded-full h-2">
+                        <div className="bg-green-500 h-2 rounded-full" style={{width: '93%'}}></div>
+                    </div>
+                    <div className="mt-2 text-[10px] text-green-600 font-bold">Only 4 Left!</div>
+                </button>
             </div>
-          </div>
 
-          {/* Detailed Deals Table */}
-          <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden flex-1 flex flex-col">
-            <div className="overflow-auto">
-                <table className="w-full text-left border-collapse">
-                    <thead className="sticky top-0 z-10 bg-gray-50 text-gray-500 text-[11px] uppercase font-bold tracking-wider border-b-2 border-gray-200">
-                        <tr>
-                            <th className="px-4 py-3 w-1/4">Property<br/><span className="font-normal text-[10px] normal-case">Type / Br / Ba / Garage / Built / Ft² / Lot</span></th>
-                            <th className="px-4 py-3 w-[15%]">List Price<br/><span className="font-normal text-[10px] normal-case">Propensity Score</span></th>
-                            <th className="px-4 py-3 w-[15%]">Market Info<br/><span className="font-normal text-[10px] normal-case">Change / DOM / Created</span></th>
-                            <th className="px-4 py-3 w-1/5">Evaluation Metrics<br/><span className="font-normal text-[10px] normal-case">List to ARV / Comp Data</span></th>
-                            <th className="px-4 py-3 w-[15%]">Offer Status<br/><span className="font-normal text-[10px] normal-case">Source / LOD / LCD</span></th>
-                            <th className="px-4 py-3 w-[10%]"></th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-100 text-sm">
+            {/* Current Task List - Replacing the old table header area */}
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden flex-1 flex flex-col">
+                <div className="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                    <h3 className="font-bold text-gray-900">Current Task List</h3>
+                    <span className="text-xs font-medium text-gray-500">Sorted by Priority</span>
+                </div>
 
-                        {/* Row 1 */}
-                        <tr className="hover:bg-gray-50 transition group">
-                            <td className="px-4 py-4 align-top">
-                                <div className="flex items-center gap-2 mb-1.5">
-                                    <span className="px-2 py-0.5 rounded bg-blue-50 text-blue-800 border border-blue-200 text-[10px] font-bold uppercase">New</span>
-                                    <span className="text-[10px] text-gray-400">To do: Not Set</span>
-                                </div>
-                                <div className="font-bold text-gray-900 text-sm">2011 Windsor Cir</div>
-                                <div className="text-xs text-gray-500 mb-2">Duarte, CA 91010</div>
-                                <div className="text-[11px] text-gray-500 leading-relaxed">
-                                    SFR / 3 Br / 0 Ba / 0 Gar<br/>
-                                    1981 / 1,654 ft² / 2,396 ft²
-                                </div>
-                            </td>
-                            <td className="px-4 py-4 align-top">
-                                <div className="font-bold text-gray-900 text-base">$500,000</div>
-                                <div className="text-[11px] text-gray-400 mt-1">Score: N/A</div>
-                            </td>
-                            <td className="px-4 py-4 align-top">
-                                <div className="font-bold text-xs text-gray-700">2 Days</div>
-                                <div className="text-[11px] text-gray-500 mt-1 leading-relaxed">
-                                    <span className="text-gray-400 mr-1">DOM:</span>0 / <span className="text-gray-400 mr-1">CDOM:</span>0<br/>
-                                    <span className="text-gray-400 mr-1">Created:</span>11/26/25
-                                </div>
-                            </td>
-                            <td className="px-4 py-4 align-top">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <span className="bg-red-50 text-red-700 px-2 py-0.5 rounded text-xs font-bold border border-red-100">0.00% Spread</span>
-                                </div>
-                                <div className="text-sm font-medium text-gray-900">ARV: $0</div>
-                                <div className="text-[11px] text-gray-400 mt-1">Comp Data: 0</div>
-                            </td>
-                            <td className="px-4 py-4 align-top">
-                                <div className="font-bold text-xs text-gray-900">Off Market</div>
-                                <div className="text-[11px] text-gray-500 mt-1 leading-relaxed">
-                                    <span className="text-gray-400 mr-1">Status:</span>0% None<br/>
-                                    <span className="text-gray-400 mr-1">LOD:</span>11/26/25<br/>
-                                    <span className="text-gray-400 mr-1">LCD:</span>11/26/25
-                                </div>
-                            </td>
-                            <td className="px-4 py-4 align-top text-right">
-                                 <button className="text-gray-400 hover:text-blue-600 transition-colors">
-                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
-                                </button>
-                            </td>
-                        </tr>
+                {/* Task Item 1 */}
+                <div className="p-6 border-b border-gray-100 flex flex-col md:flex-row gap-6 items-center hover:bg-gray-50 transition cursor-pointer">
+                    
+                    <div className="shrink-0">
+                        <button className="w-8 h-8 rounded-full border-2 border-gray-300 hover:border-green-500 hover:bg-green-50 flex items-center justify-center transition group">
+                            <svg className="w-5 h-5 text-gray-300 group-hover:text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
+                        </button>
+                    </div>
 
-                        {/* Row 2 */}
-                        <tr className="hover:bg-gray-50 transition group">
-                            <td className="px-4 py-4 align-top">
-                                <div className="flex items-center gap-2 mb-1.5">
-                                    <span className="px-2 py-0.5 rounded bg-blue-50 text-blue-800 border border-blue-200 text-[10px] font-bold uppercase">New</span>
-                                </div>
-                                <div className="font-bold text-gray-900 text-sm">420 Robinson</div>
-                                <div className="text-xs text-gray-500 mb-2">Bakersfield, CA 93305</div>
-                                <div className="text-[11px] text-gray-500 leading-relaxed">
-                                    SFR / 3 Br / 1 Ba / 0 Gar<br/>
-                                    1959 / 1,013 ft² / 4,621 ft²
-                                </div>
-                            </td>
-                            <td className="px-4 py-4 align-top">
-                                <div className="font-bold text-gray-900 text-base">$75,000</div>
-                                <div className="text-[11px] text-gray-400 mt-1">Score: N/A</div>
-                                <div className="text-[10px] text-green-600 mt-0.5 font-medium">Active</div>
-                            </td>
-                            <td className="px-4 py-4 align-top">
-                                <div className="font-bold text-xs text-gray-700">3 Days</div>
-                                <div className="text-[11px] text-gray-500 mt-1 leading-relaxed">
-                                    <span className="text-gray-400 mr-1">DOM:</span>3 / <span className="text-gray-400 mr-1">CDOM:</span>3<br/>
-                                    <span className="text-gray-400 mr-1">Created:</span>11/24/25
-                                </div>
-                            </td>
-                            <td className="px-4 py-4 align-top">
-                                 <div className="flex items-center gap-2 mb-1">
-                                    <span className="bg-green-50 text-green-700 px-2 py-0.5 rounded text-xs font-bold border border-green-100">33.05% Spread</span>
-                                </div>
-                                <div className="text-sm font-medium text-gray-900">ARV: $226,931</div>
-                                <div className="text-[11px] text-gray-400 mt-1">Comp Data: 5S, 0P, 0B, 0A</div>
-                            </td>
-                            <td className="px-4 py-4 align-top">
-                                <div className="font-bold text-xs text-gray-900">MLS</div>
-                                <div className="text-[11px] text-gray-500 mt-1 leading-relaxed">
-                                    <span className="text-gray-400 mr-1">Status:</span>0% None<br/>
-                                    <span className="text-gray-400 mr-1">LOD:</span>11/26/25<br/>
-                                    <span className="text-gray-400 mr-1">LCD:</span>N/A
-                                </div>
-                            </td>
-                            <td className="px-4 py-4 align-top text-right">
-                                 <button className="bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded hover:bg-blue-700 transition-colors">
-                                    Analyze
-                                </button>
-                            </td>
-                        </tr>
+                    <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-1">
+                            <h4 className="text-lg font-bold text-gray-900">2011 Windsor Cir</h4>
+                            <span className="bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase border border-yellow-200">In Negotiations</span>
+                        </div>
+                        <div className="text-sm text-gray-600 mb-2">Duarte, CA 91010 <span className="text-gray-300 mx-2">|</span> <span className="font-bold text-gray-900">$500,000</span></div>
+                        
+                        <div className="flex gap-4 text-xs text-gray-400">
+                            <span><strong className="text-gray-500">LOD:</strong> 11/26/25</span>
+                            <span><strong className="text-gray-500">LCD:</strong> 11/26/25</span>
+                        </div>
+                    </div>
 
-                        {/* Row 3 */}
-                        <tr className="hover:bg-gray-50 transition group">
-                            <td className="px-4 py-4 align-top">
-                                <div className="flex items-center gap-2 mb-1.5">
-                                    <span className="px-2 py-0.5 rounded bg-blue-50 text-blue-800 border border-blue-200 text-[10px] font-bold uppercase">New</span>
-                                </div>
-                                <div className="font-bold text-gray-900 text-sm">10573 Larch</div>
-                                <div className="text-xs text-gray-500 mb-2">Bloomington, CA 92316</div>
-                                <div className="text-[11px] text-gray-500 leading-relaxed">
-                                    SFR / 2 Br / 1 Ba / 4 Gar<br/>
-                                    1940 / 1,951 ft² / 20,800 ft²
-                                </div>
-                            </td>
-                            <td className="px-4 py-4 align-top">
-                                <div className="font-bold text-gray-900 text-base">$975,000</div>
-                                <div className="text-[11px] text-gray-400 mt-1">Score: N/A</div>
-                                <div className="text-[10px] text-green-600 mt-0.5 font-medium">Active</div>
-                            </td>
-                            <td className="px-4 py-4 align-top">
-                                <div className="font-bold text-xs text-gray-700">4 Days</div>
-                                <div className="text-[11px] text-gray-500 mt-1 leading-relaxed">
-                                    <span className="text-gray-400 mr-1">DOM:</span>4 / <span className="text-gray-400 mr-1">CDOM:</span>4<br/>
-                                    <span className="text-gray-400 mr-1">Created:</span>11/23/25
-                                </div>
-                            </td>
-                            <td className="px-4 py-4 align-top">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <span className="bg-green-50 text-green-800 px-2 py-0.5 rounded text-xs font-bold border border-green-100">151.59% Spread</span>
-                                </div>
-                                <div className="text-sm font-medium text-gray-900">ARV: $643,184</div>
-                                <div className="text-[11px] text-gray-400 mt-1">Comp Data: 1S, 0P, 0B, 0A</div>
-                            </td>
-                            <td className="px-4 py-4 align-top">
-                                <div className="font-bold text-xs text-gray-900">MLS</div>
-                                <div className="text-[11px] text-gray-500 mt-1 leading-relaxed">
-                                    <span className="text-gray-400 mr-1">Status:</span>10% Initial Contact<br/>
-                                    <span className="text-gray-400 mr-1">LOD:</span>11/25/25<br/>
-                                    <span className="text-gray-400 mr-1">LCD:</span>11/24/25
-                                </div>
-                            </td>
-                            <td className="px-4 py-4 align-top text-right">
-                                <button className="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 text-xs font-bold px-3 py-1.5 rounded transition-colors">
-                                    Follow Up
-                                </button>
-                            </td>
-                        </tr>
+                    <div className="shrink-0 text-right flex flex-col items-end gap-2">
+                        <div className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Action Required</div>
+                        <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-sm flex items-center gap-2 transition transform hover:scale-105 cursor-pointer">
+                            <Phone className="w-4 h-4" />
+                            Call Agent
+                        </button>
+                    </div>
+                </div>
 
-                         {/* Row 4 */}
-                         <tr className="hover:bg-gray-50 transition group">
-                            <td className="px-4 py-4 align-top">
-                                <div className="flex items-center gap-2 mb-1.5">
-                                    <span className="px-2 py-0.5 rounded bg-red-50 text-red-800 border border-red-200 text-[10px] font-bold uppercase">Hot</span>
-                                </div>
-                                <div className="font-bold text-gray-900 text-sm">2842 Rosarita St</div>
-                                <div className="text-xs text-gray-500 mb-2">San Bernardino, CA 92407</div>
-                                <div className="text-[11px] text-gray-500 leading-relaxed">
-                                    SFR / 3 Br / 2 Ba / 2 Gar<br/>
-                                    1990 / 1,169 ft² / 7,200 ft²
-                                </div>
-                            </td>
-                            <td className="px-4 py-4 align-top">
-                                <div className="font-bold text-gray-900 text-base">$390,000</div>
-                                <div className="text-[11px] text-gray-400 mt-1">Score: N/A</div>
-                            </td>
-                            <td className="px-4 py-4 align-top">
-                                <div className="font-bold text-xs text-gray-700">7 Days</div>
-                                <div className="text-[11px] text-gray-500 mt-1 leading-relaxed">
-                                    <span className="text-gray-400 mr-1">DOM:</span>0 / <span className="text-gray-400 mr-1">CDOM:</span>0<br/>
-                                    <span className="text-gray-400 mr-1">Created:</span>11/21/25
-                                </div>
-                            </td>
-                            <td className="px-4 py-4 align-top">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <span className="bg-red-50 text-red-700 px-2 py-0.5 rounded text-xs font-bold border border-red-100">0.00% Spread</span>
-                                </div>
-                                <div className="text-sm font-medium text-gray-900">ARV: $0</div>
-                                <div className="text-[11px] text-gray-400 mt-1">Comp Data: 0</div>
-                            </td>
-                            <td className="px-4 py-4 align-top">
-                                <div className="font-bold text-xs text-gray-900">Off Market</div>
-                                <div className="text-[11px] text-gray-500 mt-1 leading-relaxed">
-                                    <span className="text-gray-400 mr-1">Status:</span>30% Offer Terms Sent<br/>
-                                    <span className="text-gray-400 mr-1">LOD:</span>11/26/25<br/>
-                                    <span className="text-gray-400 mr-1">LCD:</span>11/21/25
-                                </div>
-                            </td>
-                            <td className="px-4 py-4 align-top text-right">
-                                <button className="text-gray-400 hover:text-blue-600 transition-colors">
-                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
-                                </button>
-                            </td>
-                        </tr>
+                {/* Task Item 2 (Disabled/Future) */}
+                <div className="p-6 flex flex-col md:flex-row gap-6 items-center opacity-50">
+                     <div className="shrink-0">
+                        <button className="w-8 h-8 rounded-full border-2 border-gray-200 flex items-center justify-center cursor-not-allowed">
+                            <svg className="w-5 h-5 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
+                        </button>
+                    </div>
+                    <div className="flex-1">
+                        <div className="h-4 w-48 bg-gray-200 rounded mb-2"></div>
+                        <div className="h-3 w-32 bg-gray-100 rounded"></div>
+                    </div>
+                    <div className="shrink-0">
+                        <span className="text-xs text-gray-400 italic">Complete top task first</span>
+                    </div>
+                </div>
 
-                    </tbody>
-                </table>
             </div>
           </div>
 
