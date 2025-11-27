@@ -219,17 +219,7 @@ export default function DailyOutreach() {
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm flex-1 flex flex-col">
                 
                 <div className="flex py-3 bg-white border-b border-gray-200 text-[11px] uppercase tracking-wider font-bold text-gray-400 select-none">
-                    <div className="w-[48px] shrink-0 flex flex-col justify-center items-center gap-0.5">
-                        <span className="text-[8px] font-bold text-gray-400 uppercase leading-none">All</span>
-                        <input 
-                          type="checkbox" 
-                          className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
-                          checked={filteredDeals.length > 0 && filteredDeals.every(d => selectedDealIds.includes(d.id))}
-                          onChange={(e) => handleSelectAll(e.target.checked)}
-                          title="Select All Filtered Deals"
-                          data-testid="checkbox-select-all"
-                        />
-                    </div> 
+                    <div className="w-[48px] shrink-0"></div> 
                     <div className="flex-1 flex items-center">
                     
                         <div className="w-5/12 px-4 flex items-center gap-2 group relative">
