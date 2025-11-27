@@ -107,10 +107,16 @@ export default function DailyOutreach() {
   const [propertyStory, setPropertyStory] = useState<string>('');
   const [isLoadingStory, setIsLoadingStory] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
   const queryClient = useQueryClient();
   
   const totalDeals = 30;
   const isStartMode = currentIndex === 0;
+  
+  const handleStart = () => {
+    setHasStarted(true);
+    setCurrentIndex(0);
+  };
   
   const handleNextDeal = () => {
     if (currentIndex < totalDeals - 1) {
@@ -248,8 +254,12 @@ export default function DailyOutreach() {
             onFilterChange={setActiveFilter}
             currentIndex={currentIndex}
             isStartMode={isStartMode}
+            hasStarted={hasStarted}
+            onStart={handleStart}
           />
 
+          {hasStarted ? (
+            <>
             <div className="flex items-center justify-start px-4 py-3 mb-4">
               <div className="flex items-center gap-4">
                 <span className="text-sm font-bold text-gray-500">Property {currentIndex + 1} of {totalDeals}</span>
@@ -660,6 +670,16 @@ export default function DailyOutreach() {
 
 
             </div>
+            </>
+          ) : (
+            <div className="flex-1 flex flex-col items-center justify-center bg-gray-50 text-center p-12 rounded-xl border border-gray-200">
+              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mb-6 shadow-sm border border-gray-100">
+                <Phone className="w-10 h-10 text-gray-300" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Ready to Start?</h3>
+              <p className="text-gray-500 max-w-md mb-8">You have {totalDeals} new calls queued up for today. Click the red "Start Calling" button above to begin your outreach session.</p>
+            </div>
+          )}
 
         </main>
       </div>

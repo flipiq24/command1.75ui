@@ -16,16 +16,20 @@ interface OutreachActionPlanProps {
   onFilterChange?: (filter: OutreachType | null) => void;
   currentIndex?: number;
   isStartMode?: boolean;
+  hasStarted?: boolean;
+  onStart?: () => void;
 }
 
 export default function OutreachActionPlan({ 
   activeFilter = null, 
   onFilterChange,
   currentIndex = 0,
-  isStartMode = true
+  isStartMode = true,
+  hasStarted = false,
+  onStart
 }: OutreachActionPlanProps) {
   
-  const connectionsCompleted = currentIndex;
+  const connectionsCompleted = hasStarted ? currentIndex + 1 : 0;
   const connectionsTotal = 30;
   
   const priorityCompleted = 2;
@@ -152,11 +156,12 @@ export default function OutreachActionPlan({
           </div>
 
           <button 
+            onClick={onStart}
             className={cn(
               "px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2",
               isConnectionsComplete 
                 ? "bg-green-50 text-green-600 border border-green-200"
-                : isStartMode
+                : (!hasStarted || isStartMode)
                   ? "bg-red-500 text-white shadow-xl shadow-red-500/50 animate-pulse hover:bg-red-600"
                   : "bg-red-500 text-white opacity-90 hover:bg-red-600"
             )}

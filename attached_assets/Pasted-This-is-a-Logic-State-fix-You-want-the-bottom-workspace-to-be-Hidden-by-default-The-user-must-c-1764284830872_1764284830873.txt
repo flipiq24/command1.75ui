@@ -1,0 +1,180 @@
+This is a Logic & State fix.
+
+You want the bottom workspace to be Hidden by default. The user must commit to the action by clicking "Start Calling" to reveal the first property.
+
+The Logic:
+Default State: hasStarted = false. (Bottom section is invisible).
+
+Trigger: Clicking the Red "Start Calling" button sets hasStarted = true.
+
+Result: The Property Card and Navigation Bar appear instantly.
+
+The Code (DailyOutreach.tsx)
+Copy this full component to replace your existing file. It adds the hasStarted logic.
+
+TypeScript
+
+import React, { useState } from 'react';
+import { 
+  ChevronLeft, ChevronRight, Phone, MessageSquare, Mail, Mic, 
+  Zap, MapPin, Building2, TrendingDown, Bot, Image
+} from 'lucide-react';
+import Sidebar from "@/components/Sidebar";
+import { cn } from "@/lib/utils";
+
+export default function DailyOutreach() {
+  // STATE: Controls if the session is active
+  const [hasStarted, setHasStarted] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  
+  // LOGIC: Determines button styling
+  const isFirstDeal = currentIndex === 0;
+  const totalDeals = 30; // Based on your data
+
+  const handleStart = () => {
+    setHasStarted(true); // REVEALS THE PROPERTY
+    setCurrentIndex(0);
+  };
+
+  const handleNext = () => {
+    if (currentIndex < totalDeals - 1) {
+      setCurrentIndex(prev => prev + 1);
+    }
+  };
+
+  return (
+    <div className="flex h-screen bg-gray-50 font-sans overflow-hidden text-gray-800">
+      <Sidebar />
+
+      <div className="flex-1 flex flex-col overflow-y-auto relative z-10">
+        
+        {/* === HEADER SECTION === */}
+        <div className="bg-white px-8 py-6 border-b border-gray-200">
+            <div className="flex justify-between items-end mb-8">
+                <div>
+                    <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Daily Outreach Plan</h2>
+                    <p className="text-xs text-gray-500 mt-1 font-medium uppercase tracking-wider">Build Relationships & Find Deals</p>
+                </div>
+                {/* GOAL WIDGET */}
+                <div className="text-right">
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">New Relationships</span>
+                    <div className="flex items-baseline justify-end gap-1">
+                        <span className="text-3xl font-black text-[#FF6600]">1</span>
+                        <span className="text-xl font-bold text-gray-300">/ 5</span>
+                    </div>
+                </div>
+            </div>
+
+            {/* GAMIFIED WORKFLOW */}
+            <div className="grid grid-cols-4 gap-6 text-center">
+                
+                {/* 1. START CALLING (THE TRIGGER) */}
+                <div className="flex flex-col items-center">
+                    <div className="relative w-24 h-24 mb-3">
+                        <svg className="w-full h-full transform -rotate-90">
+                            <circle cx="48" cy="48" r="40" stroke="#f3f4f6" strokeWidth="6" fill="transparent" />
+                            <circle cx="48" cy="48" r="40" stroke="#f97316" strokeWidth="6" fill="transparent" strokeDasharray="251.2" strokeDashoffset="167" />
+                        </svg>
+                        {/* Dynamic Counter */}
+                        <div className="absolute inset-0 flex items-center justify-center text-2xl font-bold text-gray-900">
+                            {hasStarted ? currentIndex + 1 : 0}<span className="text-sm text-gray-400">/{totalDeals}</span>
+                        </div>
+                    </div>
+                    
+                    {/* BUTTON: Becomes Active only on Deal 1 */}
+                    <button 
+                        onClick={handleStart}
+                        className={cn(
+                            "w-full text-sm font-bold py-2 px-6 rounded-lg transition-all duration-300",
+                            (!hasStarted || isFirstDeal) 
+                                ? "bg-red-600 text-white shadow-md animate-pulse" // Active State
+                                : "bg-white border border-red-200 text-red-600"   // Inactive State
+                        )}
+                    >
+                        Start Calling
+                    </button>
+                </div>
+
+                {/* 2. Priority (Placeholder) */}
+                <div className="flex flex-col items-center opacity-60">
+                    <div className="w-24 h-24 rounded-full border-4 border-gray-100 mb-3"></div>
+                    <button className="w-full bg-white border border-gray-300 text-gray-400 text-sm font-bold py-2 px-6 rounded-lg">Call Priority</button>
+                </div>
+                {/* 3. Campaigns (Placeholder) */}
+                <div className="flex flex-col items-center opacity-60">
+                    <div className="w-24 h-24 rounded-full border-4 border-gray-100 mb-3"></div>
+                    <button className="w-full bg-white border border-gray-300 text-gray-400 text-sm font-bold py-2 px-6 rounded-lg">Send Campaigns</button>
+                </div>
+                {/* 4. New Leads (Placeholder) */}
+                <div className="flex flex-col items-center opacity-60">
+                    <div className="w-24 h-24 rounded-full border-4 border-gray-100 mb-3"></div>
+                    <button className="w-full bg-white border border-gray-300 text-gray-400 text-sm font-bold py-2 px-6 rounded-lg">Process Leads</button>
+                </div>
+
+            </div>
+        </div>
+
+        {/* === WORKSPACE (HIDDEN UNTIL STARTED) === */}
+        {hasStarted ? (
+            <div className="flex-1 flex flex-col">
+                
+                {/* NAVIGATION HEADER */}
+                <div className="flex justify-between items-center px-8 py-4 border-b border-gray-200 bg-white sticky top-0 z-20">
+                    <div className="flex items-center gap-2">
+                        <span className="text-sm font-bold text-gray-900">Current Queue</span>
+                        <span className="bg-gray-100 text-gray-500 text-xs px-2 py-0.5 rounded-full font-medium">{totalDeals} Items</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                        <span className="text-xs font-medium text-gray-400 uppercase tracking-wide">Property {currentIndex + 1} of {totalDeals}</span>
+                        <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
+                            <button className="p-2 hover:bg-gray-50 hover:text-[#FF6600] transition border-r border-gray-200" title="Previous">
+                                <ChevronLeft className="w-4 h-4 text-gray-500" />
+                            </button>
+                            {/* NEXT BUTTON: Pulses after Deal 1 */}
+                            <button 
+                                onClick={handleNext}
+                                className={cn(
+                                    "flex items-center gap-1 px-4 py-2 bg-[#FF6600] hover:bg-orange-700 text-white text-xs font-bold transition-all",
+                                    !isFirstDeal && "animate-pulse shadow-lg shadow-orange-200"
+                                )}
+                            >
+                                Next Deal <ChevronRight className="w-4 h-4" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* THE CARD CONTENT */}
+                <main className="p-6 flex-1 overflow-y-auto">
+                    <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex h-full min-h-[600px]">
+                        
+                        {/* LEFT: INTELLIGENCE */}
+                        <div className="w-[60%] p-8 overflow-y-auto border-r border-gray-100">
+                            {/* ... (Your Property/Intelligence Code Goes Here) ... */}
+                            <h2 className="text-xl font-bold text-gray-900 mb-1">2011 Windsor Cir, Duarte, CA</h2>
+                            <p className="text-sm text-gray-500 mb-4">Sample Data for View {currentIndex + 1}</p>
+                        </div>
+
+                        {/* RIGHT: AGENT CRM */}
+                        <div className="w-[40%] p-6 bg-gray-50 overflow-y-auto">
+                            {/* ... (Your Agent/Script Code Goes Here) ... */}
+                            <button className="w-full bg-green-500 text-white font-bold py-3 rounded-lg shadow-sm">CALL AGENT</button>
+                        </div>
+
+                    </div>
+                </main>
+            </div>
+        ) : (
+            /* === EMPTY STATE (WAITING FOR START) === */
+            <div className="flex-1 flex flex-col items-center justify-center bg-gray-50 text-center p-12">
+                <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mb-6 shadow-sm border border-gray-100">
+                    <Phone className="w-10 h-10 text-gray-300" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Ready to Start?</h3>
+                <p className="text-gray-500 max-w-md mb-8">You have 30 new calls queued up for today. Click the red button above to begin your outreach session.</p>
+            </div>
+        )}
+
+      </div>
+    </div>
+  );
