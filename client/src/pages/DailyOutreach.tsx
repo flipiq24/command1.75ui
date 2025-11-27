@@ -188,8 +188,8 @@ export default function DailyOutreach() {
         
         <header className="bg-white border-b border-gray-200 py-4 px-6 flex justify-between items-center">
           <div>
-            <div className="text-sm text-gray-500 font-medium mb-1">Thursday, November 27</div>
-            <h1 className="text-xl font-bold text-gray-900" data-testid="text-page-title">Daily Outreach</h1>
+            <div className="text-sm text-gray-500 font-medium mb-1">Wednesday, November 26</div>
+            <h1 className="text-xl font-bold text-gray-900" data-testid="text-page-title">Welcome, Tony!</h1>
           </div>
           <div className="flex items-center gap-3">
             <div className="relative group">
