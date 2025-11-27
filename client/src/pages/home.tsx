@@ -449,10 +449,12 @@ export default function Home() {
                                         {getPropensityScore(deal.propensity)}
                                       </span>
                                     </div>
-                                    <div className="flex flex-wrap justify-center gap-1 mb-1">
+                                    <div className="flex flex-wrap justify-center gap-x-1 gap-y-0.5 mb-1">
                                       {deal.propensity.map((item, idx) => (
-                                        <div key={idx} className="group relative cursor-help hover:z-50">
-                                          <div className={cn("w-3 h-3 rounded-full", getPropensityColor(item).replace('text-', 'bg-'))}></div>
+                                        <div key={idx} className="group relative cursor-help leading-none hover:z-50">
+                                          <span className={cn("text-[10px] font-normal inline-block", getPropensityColor(item))}>
+                                            {item}
+                                          </span>
                                           <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none z-50 text-center hidden group-hover:block">
                                             {item}
                                           </div>
