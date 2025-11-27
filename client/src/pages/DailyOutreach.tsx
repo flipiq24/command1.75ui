@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useCallback, useLayoutEffect } from 'react';
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import OutreachActionPlan, { OutreachType } from "@/components/OutreachActionPlan";
@@ -17,7 +17,9 @@ import {
   Bot,
   Lightbulb,
   Plus,
-  Globe
+  Globe,
+  Sparkles,
+  Check
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -52,6 +54,84 @@ const getPropensityScore = (propensity: string | string[]) => {
     if (item) score += item.points;
   });
   return score;
+};
+
+interface StreamingLine {
+  type: 'stat' | 'header' | 'bullet' | 'action';
+  label?: string;
+  value?: string;
+  isLink?: boolean;
+  linkUrl?: string;
+}
+
+const useTypingEffect = (lines: StreamingLine[], triggerKey: number) => {
+  const [displayedLines, setDisplayedLines] = useState<Map<number, string>>(() => new Map());
+  const [currentLineIndex, setCurrentLineIndex] = useState(0);
+  const [currentCharIndex, setCurrentCharIndex] = useState(0);
+  const [isComplete, setIsComplete] = useState(false);
+  const [cursorVisible, setCursorVisible] = useState(true);
+
+  useLayoutEffect(() => {
+    setDisplayedLines(new Map());
+    setCurrentLineIndex(0);
+    setCurrentCharIndex(0);
+    setIsComplete(false);
+    setCursorVisible(true);
+  }, [triggerKey]);
+
+  useEffect(() => {
+    if (isComplete) return;
+    const cursorInterval = setInterval(() => {
+      setCursorVisible(prev => !prev);
+    }, 530);
+    return () => clearInterval(cursorInterval);
+  }, [isComplete]);
+
+  useEffect(() => {
+    if (currentLineIndex >= lines.length) {
+      setIsComplete(true);
+      setCursorVisible(false);
+      return;
+    }
+
+    const currentLine = lines[currentLineIndex];
+    let fullText = '';
+    
+    if (currentLine.type === 'stat' && currentLine.label && currentLine.value) {
+      fullText = `${currentLine.label}: ${currentLine.value}`;
+    } else if (currentLine.type === 'header' && currentLine.value) {
+      fullText = currentLine.value;
+    } else if (currentLine.type === 'bullet' && currentLine.value) {
+      fullText = currentLine.value;
+    } else if (currentLine.type === 'action' && currentLine.value) {
+      fullText = currentLine.value;
+    }
+
+    if (currentCharIndex >= fullText.length) {
+      const pauseTime = currentLine.type === 'header' ? 400 : 150;
+      const timeout = setTimeout(() => {
+        setCurrentLineIndex(prev => prev + 1);
+        setCurrentCharIndex(0);
+      }, pauseTime);
+      return () => clearTimeout(timeout);
+    }
+
+    const randomDelay = Math.floor(Math.random() * 25) + 15;
+    const timeout = setTimeout(() => {
+      setDisplayedLines(prev => {
+        const newMap = new Map(prev);
+        newMap.set(currentLineIndex, fullText.slice(0, currentCharIndex + 1));
+        return newMap;
+      });
+      setCurrentCharIndex(prev => prev + 1);
+    }, randomDelay);
+
+    return () => clearTimeout(timeout);
+  }, [currentLineIndex, currentCharIndex, lines, triggerKey]);
+
+  const showCursor = cursorVisible && !isComplete;
+
+  return { displayedLines, currentLineIndex, isComplete, showCursor };
 };
 
 
@@ -109,7 +189,6 @@ export default function DailyOutreach() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
   const [connectionsMade, setConnectionsMade] = useState(0);
-  const [isIQAnimating, setIsIQAnimating] = useState(false);
   const [iqRevealKey, setIqRevealKey] = useState(0);
   const queryClient = useQueryClient();
   
@@ -118,9 +197,7 @@ export default function DailyOutreach() {
   const isStartMode = currentIndex === 0;
   
   const triggerIQAnimation = () => {
-    setIsIQAnimating(true);
     setIqRevealKey(prev => prev + 1);
-    setTimeout(() => setIsIQAnimating(false), 1500);
   };
   
   const handleStart = () => {
@@ -215,6 +292,39 @@ export default function DailyOutreach() {
   }, [sortedDeals, activeFilter]);
   
   const currentDeal = filteredDeals[currentIndex] || filteredDeals[0];
+
+  const streamingLines: StreamingLine[] = useMemo(() => [
+    { type: 'stat', label: 'Status', value: currentDeal?.mlsStatus || 'Active' },
+    { type: 'stat', label: 'Days on Market', value: '45' },
+    { type: 'stat', label: 'Price to Future Value', value: '82%' },
+    { type: 'stat', label: 'Propensity Score', value: '0' },
+    { type: 'stat', label: 'Agent', value: 'Sarah Johnson (Unassigned)' },
+    { type: 'stat', label: 'Relationship Status', value: 'Warm' },
+    { type: 'stat', label: 'Investor Source Count', value: '[View Agent]', isLink: true, linkUrl: 'https://nextjs-flipiq-agent.vercel.app/agents/AaronMills' },
+    { type: 'stat', label: 'Last Communication Date', value: '11/15/2025' },
+    { type: 'stat', label: 'Last Address Discussed', value: '1234 Oak Street, Phoenix AZ' },
+    { type: 'header', value: 'Why this Property' },
+    { type: 'bullet', value: 'Aged listing (≥70 DOM) with strong discount potential.' },
+    { type: 'bullet', value: 'Currently unassigned and no active offer status — open field opportunity.' },
+    { type: 'bullet', value: 'Agent has history of investor-friendly transactions.' },
+    { type: 'bullet', value: 'Price-to-value ratio suggests room for negotiation.' },
+    { type: 'action', value: 'Would you like me to run a detailed AI report?' },
+  ], [currentDeal, iqRevealKey]);
+
+  const { displayedLines, currentLineIndex, isComplete: isTypingComplete, showCursor } = useTypingEffect(streamingLines, iqRevealKey);
+
+  const [showCompletionState, setShowCompletionState] = useState(false);
+
+  useEffect(() => {
+    if (isTypingComplete) {
+      const timer = setTimeout(() => {
+        setShowCompletionState(true);
+      }, 300);
+      return () => clearTimeout(timer);
+    } else {
+      setShowCompletionState(false);
+    }
+  }, [isTypingComplete]);
 
   const [isBulkActionsOpen, setIsBulkActionsOpen] = useState(false);
 
@@ -619,74 +729,133 @@ export default function DailyOutreach() {
                     </div>
 
                     {/* IQ Property Intelligence Section */}
-                    <div className="bg-white border border-gray-200 rounded-xl mt-4 shadow-sm">
+                    <div className="bg-gradient-to-br from-white to-orange-50/30 border border-gray-200 rounded-xl mt-4 shadow-sm">
                         {/* iQ Intelligence Content */}
                         <div className="p-6">
-                          <div className="flex items-center gap-6 mb-6">
+                          {/* Header with pulsing animation */}
+                          <div className="flex items-center justify-between mb-6">
                             <div className="flex items-center gap-3">
-                              <div className="relative">
-                                <Lightbulb className="w-6 h-6 text-[#FF6600] animate-pulse" />
-                                <div className="absolute inset-0 w-6 h-6 bg-[#FF6600] rounded-full opacity-30 animate-ping"></div>
+                              <div className="relative w-10 h-10 bg-gradient-to-br from-[#FF6600] to-[#FF8533] rounded-xl flex items-center justify-center shadow-sm">
+                                <Lightbulb className="w-5 h-5 text-white" />
+                                {!showCompletionState && (
+                                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#FF6600] rounded-full animate-ping"></div>
+                                )}
                               </div>
-                              <h2 className="text-xl font-bold text-[#FF6600]">iQ Property Intelligence</h2>
+                              <div>
+                                <h2 className="text-lg font-bold text-gray-900">iQ Property Intelligence</h2>
+                                {!showCompletionState ? (
+                                  <div className="flex items-center gap-1 text-xs text-gray-500">
+                                    <span>analyzing</span>
+                                    <span className="inline-flex gap-0.5">
+                                      <span className="w-1 h-1 bg-[#FF6600] rounded-full animate-bounce" style={{animationDelay: '0ms'}}></span>
+                                      <span className="w-1 h-1 bg-[#FF6600] rounded-full animate-bounce" style={{animationDelay: '150ms'}}></span>
+                                      <span className="w-1 h-1 bg-[#FF6600] rounded-full animate-bounce" style={{animationDelay: '300ms'}}></span>
+                                    </span>
+                                  </div>
+                                ) : (
+                                  <div className="flex items-center gap-1.5 text-xs text-green-600 animate-in fade-in duration-300">
+                                    <Check className="w-3 h-3" />
+                                    <span>Analysis complete</span>
+                                  </div>
+                                )}
+                              </div>
                             </div>
                           </div>
 
-                          {isIQAnimating ? (
-                            <div className="space-y-3 animate-pulse">
-                              <div className="flex items-center gap-2 text-sm text-gray-500">
-                                <div className="w-2 h-2 bg-[#FF6600] rounded-full animate-bounce"></div>
-                                <span>Analyzing property intelligence...</span>
-                              </div>
-                              <div className="h-3 bg-gray-200 rounded w-3/4"></div>
-                              <div className="h-3 bg-gray-200 rounded w-1/2"></div>
-                              <div className="h-3 bg-gray-200 rounded w-2/3"></div>
-                              <div className="h-3 bg-gray-200 rounded w-5/6"></div>
-                            </div>
-                          ) : (
-                            <div key={iqRevealKey} className="animate-in slide-in-from-bottom-4 fade-in duration-700">
-                              <div className="space-y-2 text-sm mb-8">
-                                <div className="animate-in fade-in duration-300" style={{animationDelay: '100ms'}}>Status: <span className="text-gray-900 font-semibold">{currentDeal.mlsStatus || 'N/A'}</span></div>
-                                <div className="animate-in fade-in duration-300" style={{animationDelay: '200ms'}}>Days on Market: <span className="text-gray-900 font-semibold">45</span></div>
-                                <div className="animate-in fade-in duration-300" style={{animationDelay: '300ms'}}>Price to Future Value: <span className="text-gray-900 font-semibold">82%</span></div>
-                                <div className="animate-in fade-in duration-300" style={{animationDelay: '400ms'}}>Propensity Score: <span className="text-gray-900 font-semibold">{Array.isArray(currentDeal.propensity) ? getPropensityScore(currentDeal.propensity) : 0}</span></div>
-                                <div className="animate-in fade-in duration-300" style={{animationDelay: '500ms'}}>Agent: <span className="text-gray-900 font-semibold">Sarah Johnson</span> (Unassigned)</div>
-                                <div className="animate-in fade-in duration-300" style={{animationDelay: '600ms'}}>Relationship Status: <span className="text-gray-900 font-semibold">Warm</span></div>
-                                <div className="animate-in fade-in duration-300" style={{animationDelay: '700ms'}}>Investor Source Count: <a href="https://nextjs-flipiq-agent.vercel.app/agents/AaronMills" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline hover:text-blue-800">[View Agent]</a></div>
-                                <div className="animate-in fade-in duration-300" style={{animationDelay: '800ms'}}>Last Communication Date: <span className="text-gray-900 font-semibold">11/15/2025</span></div>
-                                <div className="animate-in fade-in duration-300" style={{animationDelay: '900ms'}}>Last Address Discussed: <span className="text-gray-900 font-semibold">1234 Oak Street, Phoenix AZ</span></div>
-                              </div>
+                          {/* Streaming Content */}
+                          <div key={iqRevealKey} className="space-y-2 text-sm">
+                            {streamingLines.map((line, index) => {
+                              const displayedText = displayedLines.get(index) || '';
+                              const isCurrentLine = index === currentLineIndex;
+                              const hasStarted = index <= currentLineIndex;
 
-                              <div className="mb-6 animate-in fade-in duration-500" style={{animationDelay: '1000ms'}}>
-                                <h3 className="text-lg font-bold text-gray-900 mb-4">Why this Property</h3>
-                                <ul className="space-y-2 text-sm text-gray-700">
-                                  <li className="flex items-start gap-2">
-                                    <span className="text-gray-400">•</span>
-                                    <span>Aged listing (≥70 DOM) with strong discount potential.</span>
-                                  </li>
-                                  <li className="flex items-start gap-2">
-                                    <span className="text-gray-400">•</span>
-                                    <span>Currently unassigned and no active offer status — open field opportunity.</span>
-                                  </li>
-                                </ul>
-                              </div>
+                              if (!hasStarted) return null;
 
-                              <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200 animate-in fade-in duration-500" style={{animationDelay: '1200ms'}}>
-                                <p className="text-sm text-gray-600">
-                                  Would you like me to run a detailed AI report? 
-                                  <button 
-                                    onClick={() => setLocation(`/piq/${currentDeal.id}?from=new-agent&report=true`)}
-                                    className="ml-2 bg-[#FF6600] hover:bg-[#e65c00] text-white text-xs font-bold py-1.5 px-4 rounded-lg shadow-sm transition"
-                                    data-testid="button-generate-ai-report"
-                                  >
-                                    Generate AI Report
-                                  </button>
-                                </p>
-                              </div>
-                            </div>
-                          )}
+                              if (line.type === 'stat') {
+                                const fullText = `${line.label}: ${line.value}`;
+                                const colonIndex = fullText.indexOf(':');
+                                const displayedLabel = displayedText.slice(0, Math.min(displayedText.length, colonIndex + 1));
+                                const displayedValue = displayedText.length > colonIndex + 1 ? displayedText.slice(colonIndex + 1) : '';
+                                
+                                return (
+                                  <div key={index} className="flex items-center">
+                                    <span className="text-gray-500">{displayedLabel}</span>
+                                    {line.isLink && displayedValue.includes('[View Agent]') ? (
+                                      <a 
+                                        href={line.linkUrl} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        className="text-blue-600 underline hover:text-blue-800 font-semibold"
+                                      >
+                                        {displayedValue}
+                                      </a>
+                                    ) : (
+                                      <span className="text-gray-900 font-semibold">{displayedValue}</span>
+                                    )}
+                                    {isCurrentLine && showCursor && (
+                                      <span className="inline-block w-0.5 h-4 bg-[#FF6600] ml-0.5 animate-pulse"></span>
+                                    )}
+                                  </div>
+                                );
+                              }
 
-                          <div className="border-t border-gray-200 pt-6">
+                              if (line.type === 'header') {
+                                return (
+                                  <div key={index} className="pt-6 pb-2">
+                                    <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+                                      <Sparkles className="w-5 h-5 text-[#FF6600]" />
+                                      {displayedText}
+                                      {isCurrentLine && showCursor && (
+                                        <span className="inline-block w-0.5 h-5 bg-[#FF6600] animate-pulse"></span>
+                                      )}
+                                    </h3>
+                                  </div>
+                                );
+                              }
+
+                              if (line.type === 'bullet') {
+                                return (
+                                  <div key={index} className="flex items-start gap-2 pl-2">
+                                    <span className="text-[#FF6600] mt-0.5">•</span>
+                                    <span className="text-gray-700">
+                                      {displayedText}
+                                      {isCurrentLine && showCursor && (
+                                        <span className="inline-block w-0.5 h-4 bg-[#FF6600] ml-0.5 animate-pulse"></span>
+                                      )}
+                                    </span>
+                                  </div>
+                                );
+                              }
+
+                              if (line.type === 'action') {
+                                return (
+                                  <div key={index} className="pt-4">
+                                    <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                      <p className="text-sm text-gray-600">
+                                        {displayedText}
+                                        {isCurrentLine && showCursor && (
+                                          <span className="inline-block w-0.5 h-4 bg-[#FF6600] ml-0.5 animate-pulse"></span>
+                                        )}
+                                      </p>
+                                      {showCompletionState && (
+                                        <button 
+                                          onClick={() => setLocation(`/piq/${currentDeal.id}?from=new-agent&report=true`)}
+                                          className="mt-3 bg-[#FF6600] hover:bg-[#e65c00] text-white text-xs font-bold py-2 px-4 rounded-lg shadow-sm transition animate-in fade-in duration-300"
+                                          data-testid="button-generate-ai-report"
+                                        >
+                                          Generate AI Report
+                                        </button>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              }
+
+                              return null;
+                            })}
+                          </div>
+
+                          <div className="border-t border-gray-200 pt-6 mt-6">
                             <div className="flex items-center gap-3 bg-gray-50 rounded-full px-4 py-3 border border-gray-200">
                               <Plus className="w-5 h-5 text-gray-400" />
                               <input 
@@ -703,6 +872,31 @@ export default function DailyOutreach() {
                           </div>
                         </div>
                     </div>
+
+                    {/* Let's dive into the property — Yes | No (OUTSIDE the IQ component) */}
+                    {showCompletionState && (
+                      <div className="mt-6 p-4 bg-white rounded-xl border border-gray-200 shadow-sm animate-in fade-in slide-in-from-bottom-2 duration-500">
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm text-gray-700 font-medium">Let's dive into the property —</p>
+                          <div className="flex items-center gap-3">
+                            <button 
+                              onClick={() => setLocation(`/piq/${currentDeal.id}`)}
+                              className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-bold rounded-lg shadow-sm transition"
+                              data-testid="button-yes-dive-in"
+                            >
+                              Yes
+                            </button>
+                            <button 
+                              onClick={handleNextDeal}
+                              className="px-6 py-2 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-lg border border-gray-300 shadow-sm transition"
+                              data-testid="button-no-skip"
+                            >
+                              No
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                     </>
                 )}
 

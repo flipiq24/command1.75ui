@@ -1,0 +1,49 @@
+Update the iQ Property Intelligence component to have a true ChatGPT-style streaming effect where text types in word-by-word (not all at once). Make it feel like AI is actually thinking and typing in real-time.
+
+REQUIREMENTS:
+
+1. TYPING EFFECT:
+- Each character appears one at a time (15-40ms random delay for natural feel)
+- Blinking cursor (orange #FF6600) follows the text as it types
+- Pause slightly longer between lines (150ms) and longer after headers (400ms)
+
+2. CONTENT ORDER (stream in this sequence):
+- Status: Active
+- Days on Market: 94 days
+- Price to Future Value: 72%
+- Propensity Score: 6 / 8
+- Agent: Sarah Johnson (Unassigned)
+- Relationship Status: Warm
+- Investor Source Count: 12 transactions (make this a clickable link)
+- Last Communication: 11/15/2025
+- Last Address Discussed: 1234 Oak Street, Phoenix AZ
+- [HEADER] "Why this Property" with sparkle icon
+- [BULLET] 4 bullet points explaining why we're chasing this property
+- [ACTION] "Let's dive into the property details —"
+- [BUTTONS] Yes (green) / No (gray) fade in AFTER typing completes
+
+3. HEADER SECTION:
+- Lightbulb icon in orange gradient box
+- Pulsing orange dot while typing (ping animation)
+- "iQ Property Intelligence" title
+- "analyzing..." text with 3 bouncing dots while streaming
+- When complete: green checkmark badge "✓ Analysis complete"
+- Pulsing stops, analyzing text disappears
+
+4. VISUAL STYLE:
+- Background: gradient from white to orange-50/30
+- Orange accent color: #FF6600
+- Cursor: thin vertical bar, same orange, blinks
+- Labels in gray-500, values in bold gray-900
+- Bullets: orange • character
+
+5. RESET TRIGGER:
+- Animation resets and restarts when triggerKey prop changes (when user clicks Next/Previous/Start)
+
+6. STATE MANAGEMENT:
+- Track currentLineIndex and currentCharIndex
+- Map to store displayed content per line
+- isComplete boolean to show actions
+- showCursor boolean for blink effect
+
+Make it smooth, professional, and feel like talking to an AI assistant that's analyzing the property in real-time.
