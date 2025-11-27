@@ -641,22 +641,6 @@ export default function DailyOutreach() {
                                   </li>
                                   <li className="flex items-start gap-2">
                                     <span className="text-gray-400">•</span>
-                                    <div>
-                                      <span>Keywords detected:</span>
-                                      <div className="flex flex-wrap gap-2 mt-2">
-                                        <span className="px-3 py-1 bg-white text-red-600 text-xs rounded-full border border-red-300 cursor-pointer hover:bg-red-50 hover:border-red-400 transition">repairs</span>
-                                        <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">investors</span>
-                                        <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">Investment</span>
-                                        <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">as-is</span>
-                                        <span className="px-3 py-1 bg-white text-blue-600 text-xs rounded-full border border-blue-300 cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition">investor</span>
-                                        <span className="px-3 py-1 bg-white text-blue-600 text-xs rounded-full border border-blue-300 cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition">estate</span>
-                                        <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">opportunity</span>
-                                        <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">Renovation</span>
-                                      </div>
-                                    </div>
-                                  </li>
-                                  <li className="flex items-start gap-2">
-                                    <span className="text-gray-400">•</span>
                                     <span>Currently unassigned and no active offer status — open field opportunity.</span>
                                   </li>
                                 </ul>
