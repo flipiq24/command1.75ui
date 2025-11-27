@@ -440,7 +440,7 @@ export default function Home() {
                                 {Array.isArray(deal.propensity) ? (
                                   <>
                                     <div className="flex items-center gap-1 mb-0.5">
-                                      <span className="text-[10px] text-gray-400">Score:</span>
+                                      <span className="text-[10px] text-gray-400">Propensity Score:</span>
                                       <span className={cn(
                                         "text-[11px] font-medium",
                                         getPropensityScore(deal.propensity) >= 6 ? "text-red-600" : 
