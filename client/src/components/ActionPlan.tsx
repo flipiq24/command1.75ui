@@ -51,7 +51,7 @@ const ACTION_ITEMS: ActionItem[] = [
     label: 'New Deals',
     count: 56,
     total: 60,
-    color: '#6b7280', // gray-500
+    color: '#22c55e', // green-500
     buttonText: 'Process New Deals',
     tooltipTitle: 'New Deals',
     tooltipText: 'These are new incoming deals that do not have a temperature assigned yet (Hot, Warm, Cold) or are offer status "None"  They need to be reviewed and categorized.'
@@ -121,11 +121,18 @@ export default function ActionPlan() {
       <div className="flex justify-between items-baseline mb-8">
         <div>
           <h2 className="text-2xl font-bold text-gray-900">Nov 27, 2025 — Today's Action Plan!</h2>
-          <p className="text-sm text-gray-500 mt-1 uppercase tracking-wide font-semibold">Deals to Follow Up Today</p>
+          <p className="text-sm text-gray-500 mt-1 uppercase tracking-wide font-semibold">Prioritized Workflow</p>
         </div>
 
-        <div className="text-right">
-          <div className="text-2xl font-bold text-green-600 tracking-tight">Offers Made Today <span className="ml-2">1/3</span></div>
+        <div className="bg-white border border-gray-100 rounded-xl px-6 py-4 shadow-sm flex flex-col items-center min-w-[140px]">
+          <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Daily Offer Goal</div>
+          <div className="flex items-baseline gap-1 mb-2">
+            <span className="text-4xl font-black text-blue-600 leading-none">1</span>
+            <span className="text-lg font-bold text-gray-300">/ 3</span>
+          </div>
+          <div className="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+            <div className="bg-blue-500 h-full rounded-full" style={{ width: '33%' }}></div>
+          </div>
         </div>
       </div>
 
@@ -198,11 +205,16 @@ export default function ActionPlan() {
 
             {/* CTA Button */}
             <button 
-              className="px-4 py-2 rounded-full text-sm font-bold border-2 bg-white hover:bg-gray-50 transition-colors w-full max-w-[180px]"
-              style={{ 
-                borderColor: item.color, 
-                color: item.color 
-              }}
+              className={cn(
+                "px-4 py-2 rounded-full text-sm font-bold transition-colors w-full max-w-[180px] border-2",
+                item.id === 'hot' 
+                  ? "bg-red-600 text-white border-red-600 animate-pulse hover:bg-red-700" 
+                  : "bg-white hover:bg-gray-50"
+              )}
+              style={item.id !== 'hot' ? { 
+                borderColor: item.id === 'new' ? '#d1d5db' : item.color, 
+                color: item.id === 'new' ? '#6b7280' : item.color 
+              } : {}}
             >
               {item.buttonText}
             </button>
