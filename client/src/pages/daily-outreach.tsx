@@ -161,34 +161,46 @@ export default function DailyOutreach() {
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden flex-1 flex flex-col">
                 
                 {/* Table Header */}
-                <div className="flex py-4 px-2 bg-white border-b border-gray-200 items-center">
-                    <div className="w-12 shrink-0 flex justify-center">
-                        <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
-                    </div> 
+                <div className="flex py-3 bg-white border-b border-gray-200 text-[11px] uppercase tracking-wider font-bold text-gray-400 select-none">
+                    <div className="w-[48px] shrink-0"></div> 
                     <div className="flex-1 flex items-center">
-                        <div className="w-[40%] px-4">
-                            <div className="flex items-center gap-2">
-                                <div className="text-xs text-gray-600 font-bold">Agent / Contact</div>
-                                <HelpCircle className="w-3 h-3 text-gray-400" />
-                            </div>
-                            <div className="text-[11px] text-gray-400 mt-1 font-normal truncate">Brokerage / Location / Type</div>
-                        </div>
-                        <div className="w-[20%] px-4 flex flex-col items-center">
-                            <div className="flex items-center gap-2">
-                                <div className="text-xs text-gray-600 font-bold">Contact Info</div>
+                    
+                        <div className="w-[40%] px-4 flex items-center gap-1 group relative cursor-help">
+                            <span>Agent / Contact</span>
+                            <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            
+                            <div className="absolute bottom-full left-0 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                                Details include Name, Brokerage, Location, Priority Tag, and assigned Tasks.
                             </div>
                         </div>
-                        <div className="w-[20%] px-4 flex flex-col items-center">
-                            <div className="flex items-center gap-2">
-                                <div className="text-xs text-gray-600 font-bold">Last Interaction</div>
+                        
+                        <div className="w-[20%] px-4 flex items-center gap-1 group relative cursor-help">
+                            <span>Contact Info</span>
+                            <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            
+                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                                Direct Phone number and Email address.<br/><br/>Click email to copy or start a draft.
                             </div>
                         </div>
-                        <div className="w-[20%] px-4 flex flex-col items-center">
-                            <div className="flex items-center justify-center gap-2">
-                                <div className="text-xs text-gray-600 font-bold">Outreach Status</div>
-                                <HelpCircle className="w-3 h-3 text-gray-400" />
+                        
+                        <div className="w-[20%] px-4 flex items-center gap-1 group relative cursor-help">
+                            <span>Last Interaction</span>
+                            <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            
+                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                                Tracks the last time you logged a call, email, or text message with this agent.
                             </div>
                         </div>
+                        
+                        <div className="w-[20%] px-4 flex items-center gap-1 group relative cursor-help">
+                            <span>Outreach Status</span>
+                            <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+
+                            <div className="absolute bottom-full right-0 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                                Current status of your relationship and action buttons to initiate contact.
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 

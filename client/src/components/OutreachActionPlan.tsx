@@ -134,13 +134,13 @@ export default function OutreachActionPlan() {
             {/* Tooltip */}
             <div 
               className={cn(
-                "absolute -top-32 left-1/2 transform -translate-x-1/2 w-80 bg-white p-4 rounded-lg shadow-xl border border-gray-100 z-20 transition-all duration-200 pointer-events-none text-center",
+                "absolute -top-32 left-1/2 transform -translate-x-1/2 w-80 bg-gray-900 text-white p-4 rounded-lg shadow-xl z-20 transition-all duration-200 pointer-events-none text-center",
                 hoveredId === item.id ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
               )}
             >
-              <div className="font-bold text-gray-900 mb-1">{item.tooltipTitle}</div>
-              <p className="text-xs text-gray-600 leading-relaxed">{item.tooltipText}</p>
-              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rotate-45 w-3 h-3 bg-white border-b border-r border-gray-100"></div>
+              <div className="font-bold text-white mb-1">{item.tooltipTitle}</div>
+              <p className="text-xs text-gray-300 leading-relaxed">{item.tooltipText}</p>
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rotate-45 w-3 h-3 bg-gray-900"></div>
             </div>
 
             {/* Circle */}
