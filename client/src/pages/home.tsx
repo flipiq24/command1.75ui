@@ -269,11 +269,15 @@ export default function Home() {
     return deal.type === activeFilter;
   });
 
+  const [isBulkActionsOpen, setIsBulkActionsOpen] = useState(false);
+
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
       setSelectedDealIds(filteredDeals.map(d => d.id));
+      setIsBulkActionsOpen(true);
     } else {
       setSelectedDealIds([]);
+      setIsBulkActionsOpen(false);
     }
   };
 
@@ -343,35 +347,37 @@ export default function Home() {
                                 </div>
                             </div>
 
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <button className="bg-[#FF6600] hover:bg-[#e65c00] text-white text-[10px] font-bold px-3 py-1 rounded shadow-sm flex items-center gap-1 transition-colors ml-2 normal-case">
-                                  Bulk Actions
-                                </button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="start" className="w-48 bg-white z-50">
-                                <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
-                                  <Phone className="w-4 h-4" />
-                                  <span>Call</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
-                                  <MessageSquare className="w-4 h-4" />
-                                  <span>Text</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
-                                  <Mail className="w-4 h-4" />
-                                  <span>Email</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
-                                  <Mic className="w-4 h-4" />
-                                  <span>Text Voicemail</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
-                                  <Bot className="w-4 h-4" />
-                                  <span>AI Connect</span>
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
+                            {selectedDealIds.length > 0 && (
+                              <DropdownMenu open={isBulkActionsOpen} onOpenChange={setIsBulkActionsOpen}>
+                                <DropdownMenuTrigger asChild>
+                                  <button className="bg-[#FF6600] hover:bg-[#e65c00] text-white text-[10px] font-bold px-3 py-1 rounded shadow-sm flex items-center gap-1 transition-colors ml-2 normal-case">
+                                    Bulk Actions
+                                  </button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="start" className="w-48 bg-white z-50">
+                                  <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
+                                    <Phone className="w-4 h-4" />
+                                    <span>Call</span>
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
+                                    <MessageSquare className="w-4 h-4" />
+                                    <span>Text</span>
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
+                                    <Mail className="w-4 h-4" />
+                                    <span>Email</span>
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
+                                    <Mic className="w-4 h-4" />
+                                    <span>Text Voicemail</span>
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
+                                    <Bot className="w-4 h-4" />
+                                    <span>AI Connect</span>
+                                  </DropdownMenuItem>
+                                </DropdownMenuContent>
+                              </DropdownMenu>
+                            )}
                         </div>
                         
                         <div className="w-2/12 px-4 flex items-center gap-1 group relative cursor-help">
