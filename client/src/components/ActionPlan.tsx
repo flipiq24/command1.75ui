@@ -201,7 +201,7 @@ export default function ActionPlan() {
               className={cn(
                 "px-4 py-2 rounded-full text-sm font-bold border-2 transition-all w-full max-w-[180px]",
                 item.id === 'hot' 
-                  ? "text-white shadow-[0_0_15px_rgba(239,68,68,0.6)] hover:shadow-[0_0_20px_rgba(239,68,68,0.8)] hover:scale-105" 
+                  ? "text-white animate-red-glow hover:scale-105" 
                   : "bg-white hover:bg-gray-50"
               )}
               style={{ 
