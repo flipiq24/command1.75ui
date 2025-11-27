@@ -89,8 +89,6 @@ export default function Home() {
             {/* Secondary Section - implied grouping based on image spacing */}
             <div className="space-y-0.5">
                <NavItem icon={FileText} label="Agent/Investor Reports" className="leading-tight" />
-               <NavItem icon={Bug} label="Bug Report" />
-               <NavItem icon={Zap} label="AI Connect Test" />
             </div>
 
           </div>
