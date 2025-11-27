@@ -1,7 +1,10 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertDealSchema } from "@shared/schema";
+import { insertDealSchema, insertAgentSchema } from "@shared/schema";
+
+const patchDealSchema = insertDealSchema.partial();
+const patchAgentSchema = insertAgentSchema.partial();
 
 export async function registerRoutes(
   httpServer: Server,
@@ -81,6 +84,84 @@ export async function registerRoutes(
     } catch (error) {
       console.error("Error bulk updating deals:", error);
       res.status(400).json({ message: "Failed to bulk update deals" });
+    }
+  });
+
+  // Agent endpoints
+  app.get("/api/agents", async (req, res) => {
+    try {
+      const agents = await storage.getAllAgents();
+      res.json(agents);
+    } catch (error) {
+      console.error("Error fetching agents:", error);
+      res.status(500).json({ message: "Failed to fetch agents" });
+    }
+  });
+
+  app.get("/api/agents/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const agent = await storage.getAgent(id);
+      if (!agent) {
+        return res.status(404).json({ message: "Agent not found" });
+      }
+      res.json(agent);
+    } catch (error) {
+      console.error("Error fetching agent:", error);
+      res.status(500).json({ message: "Failed to fetch agent" });
+    }
+  });
+
+  app.post("/api/agents", async (req, res) => {
+    try {
+      const validatedData = insertAgentSchema.parse(req.body);
+      const agent = await storage.createAgent(validatedData);
+      res.status(201).json(agent);
+    } catch (error) {
+      console.error("Error creating agent:", error);
+      res.status(400).json({ message: "Failed to create agent" });
+    }
+  });
+
+  app.patch("/api/agents/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const agent = await storage.updateAgent(id, req.body);
+      if (!agent) {
+        return res.status(404).json({ message: "Agent not found" });
+      }
+      res.json(agent);
+    } catch (error) {
+      console.error("Error updating agent:", error);
+      res.status(400).json({ message: "Failed to update agent" });
+    }
+  });
+
+  app.delete("/api/agents/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const success = await storage.deleteAgent(id);
+      if (!success) {
+        return res.status(404).json({ message: "Agent not found" });
+      }
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting agent:", error);
+      res.status(500).json({ message: "Failed to delete agent" });
+    }
+  });
+
+  app.post("/api/agents/bulk-update", async (req, res) => {
+    try {
+      const { ids, updates } = req.body;
+      if (!Array.isArray(ids) || !updates) {
+        return res.status(400).json({ message: "Invalid request body" });
+      }
+      const agents = await storage.bulkUpdateAgents(ids, updates);
+      res.json(agents);
+    } catch (error) {
+      console.error("Error bulk updating agents:", error);
+      res.status(400).json({ message: "Failed to bulk update agents" });
     }
   });
 

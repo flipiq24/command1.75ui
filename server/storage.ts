@@ -1,12 +1,15 @@
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { db } from "./db";
 import { 
   type User, 
   type InsertUser, 
   type Deal, 
   type InsertDeal,
+  type Agent,
+  type InsertAgent,
   users,
-  deals 
+  deals,
+  agents
 } from "@shared/schema";
 
 export interface IStorage {
@@ -20,6 +23,13 @@ export interface IStorage {
   updateDeal(id: number, deal: Partial<InsertDeal>): Promise<Deal | undefined>;
   deleteDeal(id: number): Promise<boolean>;
   bulkUpdateDeals(ids: number[], updates: Partial<InsertDeal>): Promise<Deal[]>;
+
+  getAllAgents(): Promise<Agent[]>;
+  getAgent(id: number): Promise<Agent | undefined>;
+  createAgent(agent: InsertAgent): Promise<Agent>;
+  updateAgent(id: number, agent: Partial<InsertAgent>): Promise<Agent | undefined>;
+  deleteAgent(id: number): Promise<boolean>;
+  bulkUpdateAgents(ids: number[], updates: Partial<InsertAgent>): Promise<Agent[]>;
 }
 
 export class DbStorage implements IStorage {
@@ -63,12 +73,37 @@ export class DbStorage implements IStorage {
   }
 
   async bulkUpdateDeals(ids: number[], updates: Partial<InsertDeal>): Promise<Deal[]> {
-    const results: Deal[] = [];
-    for (const id of ids) {
-      const result = await db.update(deals).set(updates).where(eq(deals.id, id)).returning();
-      if (result[0]) results.push(result[0]);
-    }
-    return results;
+    if (ids.length === 0) return [];
+    return db.update(deals).set(updates).where(inArray(deals.id, ids)).returning();
+  }
+
+  async getAllAgents(): Promise<Agent[]> {
+    return db.select().from(agents);
+  }
+
+  async getAgent(id: number): Promise<Agent | undefined> {
+    const result = await db.select().from(agents).where(eq(agents.id, id));
+    return result[0];
+  }
+
+  async createAgent(agent: InsertAgent): Promise<Agent> {
+    const result = await db.insert(agents).values(agent).returning();
+    return result[0];
+  }
+
+  async updateAgent(id: number, agent: Partial<InsertAgent>): Promise<Agent | undefined> {
+    const result = await db.update(agents).set(agent).where(eq(agents.id, id)).returning();
+    return result[0];
+  }
+
+  async deleteAgent(id: number): Promise<boolean> {
+    const result = await db.delete(agents).where(eq(agents.id, id)).returning();
+    return result.length > 0;
+  }
+
+  async bulkUpdateAgents(ids: number[], updates: Partial<InsertAgent>): Promise<Agent[]> {
+    if (ids.length === 0) return [];
+    return db.update(agents).set(updates).where(inArray(agents.id, ids)).returning();
   }
 }
 
