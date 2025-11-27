@@ -122,7 +122,7 @@ const SAMPLE_DEALS: Deal[] = [
 ];
 
 export default function Home() {
-  const [activeFilter, setActiveFilter] = useState<DealType | 'goal' | null>(null);
+  const [activeFilter, setActiveFilter] = useState<DealType | 'goal' | 'completed' | null>(null);
 
   // Filter Logic
   const filteredDeals = SAMPLE_DEALS.filter(deal => {
@@ -132,6 +132,15 @@ export default function Home() {
       // Filter for "Offer Terms Sent" or "Contract Submitted" status and LOD being today (11/27/25)
       // Or specifically "1/3" goal logic - which implies we look for deals that contribute to the goal
       return (deal.status === "Offer Terms Sent" || deal.status === "Contract Submitted");
+    }
+
+    if (activeFilter === 'completed') {
+      // Filter for deals that are considered "completed" follow-ups
+      // Based on the tooltip, this tracks progress on Hot, Warm, and Cold deals.
+      // Let's assume "completed" means they are Hot/Warm/Cold AND have a status other than "None" or "Initial Contact Started" if we want to be strict,
+      // or just that they are Hot/Warm/Cold and have been touched.
+      // For this mockup, let's show Hot, Warm, and Cold deals that have a status.
+      return (deal.type === 'hot' || deal.type === 'warm' || deal.type === 'cold') && deal.status !== 'None';
     }
 
     return deal.type === activeFilter;

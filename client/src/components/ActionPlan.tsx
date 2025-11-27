@@ -113,8 +113,8 @@ const CircularProgress = ({
 };
 
 interface ActionPlanProps {
-  onFilterChange?: (filter: DealType | 'goal' | null) => void;
-  activeFilter?: DealType | 'goal' | null;
+  onFilterChange?: (filter: DealType | 'goal' | 'completed' | null) => void;
+  activeFilter?: DealType | 'goal' | 'completed' | null;
 }
 
 export default function ActionPlan({ onFilterChange, activeFilter }: ActionPlanProps) {
@@ -122,7 +122,7 @@ export default function ActionPlan({ onFilterChange, activeFilter }: ActionPlanP
   const [statusTooltipId, setStatusTooltipId] = useState<DealType | null>(null);
   const [goalTooltipOpen, setGoalTooltipOpen] = useState(false);
 
-  const handleFilterClick = (filter: DealType | 'goal') => {
+  const handleFilterClick = (filter: DealType | 'goal' | 'completed') => {
     if (onFilterChange) {
       // Toggle off if already active
       if (activeFilter === filter) {
@@ -142,7 +142,13 @@ export default function ActionPlan({ onFilterChange, activeFilter }: ActionPlanP
             
             <div className="space-y-2">
                 
-                <div className="flex items-center gap-1.5 group relative w-fit cursor-help">
+                <div 
+                    className={cn(
+                        "flex items-center gap-1.5 group relative w-fit cursor-pointer transition-opacity hover:opacity-80",
+                        activeFilter === 'completed' && "ring-2 ring-[#FF6600] ring-offset-2 rounded px-2 bg-orange-50 -ml-2"
+                    )}
+                    onClick={() => handleFilterClick('completed')}
+                >
                     <p className="text-sm text-gray-500 font-medium">
                         You have completed <span className="font-bold text-[#FF6600]">32%</span> of today's follow-ups.
                     </p>
