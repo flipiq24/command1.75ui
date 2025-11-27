@@ -218,6 +218,24 @@ export default function DailyOutreach() {
 
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm flex-1 flex flex-col">
                 
+                <div className="flex justify-between items-center px-4 py-4 border-b border-gray-100 bg-white rounded-t-xl">
+                    <div className="flex items-center gap-2">
+                        <span className="text-sm font-bold text-gray-900">Current Queue</span>
+                        <span className="bg-gray-100 text-gray-500 text-xs px-2 py-0.5 rounded-full font-medium">{filteredDeals.length} Items</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                        <span className="text-xs font-medium text-gray-400 uppercase tracking-wide">Property 1 of {filteredDeals.length}</span>
+                        <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
+                            <button className="p-2 hover:bg-gray-50 hover:text-[#FF6600] transition border-r border-gray-200" title="Previous Property" data-testid="button-prev-property">
+                                <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
+                            </button>
+                            <button className="p-2 hover:bg-gray-50 hover:text-[#FF6600] transition" title="Next Property" data-testid="button-next-property">
+                                <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <div className="flex py-3 bg-white border-b border-gray-200 text-[11px] uppercase tracking-wider font-bold text-gray-400 select-none">
                     <div className="w-[48px] shrink-0"></div> 
                     <div className="flex-1 flex items-center">
