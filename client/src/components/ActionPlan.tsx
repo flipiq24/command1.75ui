@@ -118,17 +118,30 @@ export default function ActionPlan() {
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
-      <div className="flex justify-between items-baseline mb-8">
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900">Nov 27, 2025 — Today's Action Plan!</h2>
-          <p className="text-sm text-gray-500 mt-1 uppercase tracking-wide font-semibold">
-            Deals to Follow Up Today <span className="normal-case text-black ml-1">— 32% of your goal</span>
-          </p>
+      <div className="flex justify-between items-end mb-8">
+        
+        <div className="w-1/2">
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Nov 27, 2025 — Today's Action Plan!</h2>
+            
+            <div className="space-y-2">
+                <p className="text-sm text-gray-500 font-medium">
+                    You have completed <span className="font-bold text-[#FF6600]">32%</span> of today's follow-ups.
+                </p>
+                <div className="w-full max-w-md bg-gray-100 h-2 rounded-full overflow-hidden">
+                    <div className="bg-[#FF6600] h-full rounded-full" style={{ width: '32%' }}></div>
+                </div>
+            </div>
         </div>
 
         <div className="text-right">
-          <div className="text-2xl font-bold text-[#FF6600] tracking-tight">Offers Made Today <span className="ml-2">1/3</span></div>
+            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Daily Offer Goal</span>
+            <div className="flex items-baseline justify-end gap-1">
+                <span className="text-3xl font-black text-[#FF6600]">1</span>
+                <span className="text-xl font-bold text-[#FF6600]">/ 3</span>
+            </div>
+            <div className="text-xs text-gray-400 mt-1">Offers Made</div>
         </div>
+
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
