@@ -169,40 +169,52 @@ export default function Home() {
           {/* Action Plan */}
           <div className="mb-8">
             <h2 className="text-lg font-bold text-gray-900 mb-4">Today's Action Plan</h2>
-            <div className="flex flex-wrap gap-4">
-              {/* Hot Deals Button */}
-              <button className="bg-white border-2 border-orange-500 rounded-lg p-3 min-w-[140px] text-center hover:bg-orange-50 transition shadow-sm group cursor-pointer">
-                <div className="relative w-12 h-12 mx-auto mb-2 rounded-full border-4 border-orange-200 border-t-orange-500 flex items-center justify-center">
-                  <span className="text-sm font-bold text-gray-900">0/1</span>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                
+                <div className="bg-white p-4 rounded-xl border-2 border-orange-500 shadow-sm hover:shadow-md transition cursor-pointer">
+                    <div className="flex justify-between items-start mb-2">
+                        <div className="p-2 bg-orange-100 rounded-lg text-orange-600">
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path></svg>
+                        </div>
+                        <span className="text-3xl font-bold text-gray-900">0/1</span>
+                    </div>
+                    <h3 className="font-bold text-gray-900">Hot Deals</h3>
+                    <p className="text-xs text-orange-600 font-medium mt-1">View 1 Deal &rarr;</p>
                 </div>
-                <div className="text-xs font-bold text-gray-900">Hot Deals</div>
-                <div className="text-[10px] text-orange-600 font-medium group-hover:underline">View 1 Deal</div>
-              </button>
 
-              {/* Warm Deals Button */}
-              <div className="bg-white border border-gray-200 rounded-lg p-3 min-w-[140px] text-center opacity-70">
-                <div className="relative w-12 h-12 mx-auto mb-2 rounded-full border-4 border-gray-100 flex items-center justify-center">
-                  <span className="text-sm font-bold text-gray-400">0/6</span>
+                <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition cursor-pointer">
+                    <div className="flex justify-between items-start mb-2">
+                        <div className="p-2 bg-gray-100 rounded-lg text-gray-600">
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                        </div>
+                        <span className="text-3xl font-bold text-gray-900 opacity-60">0/6</span>
+                    </div>
+                    <h3 className="font-bold text-gray-700">Warm Deals</h3>
+                    <p className="text-xs text-gray-400 mt-1">Review Updates</p>
                 </div>
-                <div className="text-xs text-gray-500">Warm Deals</div>
-              </div>
 
-              {/* New Agent Calls Button */}
-              <button className="bg-white border border-gray-200 rounded-lg p-3 min-w-[140px] text-center hover:border-blue-400 hover:shadow-md transition cursor-pointer">
-                <div className="relative w-12 h-12 mx-auto mb-2 rounded-full border-4 border-blue-100 border-l-blue-500 flex items-center justify-center">
-                  <span className="text-sm font-bold text-gray-900">3/30</span>
+                <div className="bg-white p-4 rounded-xl border border-blue-200 shadow-sm hover:shadow-md transition cursor-pointer">
+                    <div className="flex justify-between items-start mb-2">
+                        <div className="p-2 bg-blue-50 rounded-lg text-blue-600">
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                        </div>
+                        <span className="text-3xl font-bold text-gray-900">3/30</span>
+                    </div>
+                    <h3 className="font-bold text-gray-900">New Agent Calls</h3>
+                    <p className="text-xs text-blue-600 font-medium mt-1">Start Dialer &rarr;</p>
                 </div>
-                <div className="text-xs font-medium text-gray-900">New Agent Calls</div>
-                <div className="text-[10px] text-blue-600 font-medium">Start Dialer</div>
-              </button>
-              
-              {/* Offers Made Button */}
-              <div className="bg-white border border-gray-200 rounded-lg p-3 min-w-[140px] text-center">
-                <div className="relative w-12 h-12 mx-auto mb-2 rounded-full border-4 border-gray-100 border-r-green-500 flex items-center justify-center">
-                  <span className="text-sm font-bold text-gray-900">1/3</span>
+
+                <div className="bg-white p-4 rounded-xl border border-green-200 shadow-sm hover:shadow-md transition cursor-pointer">
+                    <div className="flex justify-between items-start mb-2">
+                        <div className="p-2 bg-green-50 rounded-lg text-green-600">
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <span className="text-3xl font-bold text-gray-900">1/3</span>
+                    </div>
+                    <h3 className="font-bold text-gray-900">Offers Made</h3>
+                    <p className="text-xs text-green-600 font-medium mt-1">View Offers &rarr;</p>
                 </div>
-                <div className="text-xs text-gray-500">Offers Made</div>
-              </div>
+
             </div>
           </div>
 
