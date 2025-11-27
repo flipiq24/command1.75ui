@@ -150,9 +150,7 @@ export default function OutreachActionPlan({
               "px-6 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2",
               isConnectionsComplete 
                 ? "bg-green-50 text-green-600 border border-green-200"
-                : activeFilter === 'connections'
-                  ? "bg-red-600 text-white shadow-lg animate-pulse"
-                  : "bg-red-600 text-white hover:bg-red-700 shadow-md"
+                : "bg-red-600 text-white shadow-lg animate-pulse hover:bg-red-700"
             )}
             data-testid="button-new-relationships"
           >
@@ -220,7 +218,7 @@ export default function OutreachActionPlan({
                 ? "bg-green-50 text-green-600 border border-green-200"
                 : activeFilter === 'priority'
                   ? "bg-amber-500 text-white shadow-lg"
-                  : "bg-amber-500 text-white hover:bg-amber-600 shadow-md"
+                  : "bg-white text-amber-500 border-2 border-amber-500 hover:bg-amber-50"
             )}
             data-testid="button-call-priority"
           >
@@ -288,7 +286,7 @@ export default function OutreachActionPlan({
                 ? "bg-green-50 text-green-600 border border-green-200"
                 : activeFilter === 'topOfMind'
                   ? "bg-blue-600 text-white shadow-lg"
-                  : "bg-blue-600 text-white hover:bg-blue-700 shadow-md"
+                  : "bg-white text-blue-600 border-2 border-blue-600 hover:bg-blue-50"
             )}
             data-testid="button-send-campaigns"
           >
