@@ -1,83 +1,214 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { cn } from "@/lib/utils";
+import { Info } from 'lucide-react';
+
+type DealType = 'hot' | 'warm' | 'cold' | 'new';
+
+interface ActionItem {
+  id: DealType;
+  label: string;
+  count: number;
+  total: number;
+  color: string;
+  buttonText: string;
+  tooltipTitle: string;
+  tooltipText: string;
+}
+
+const ACTION_ITEMS: ActionItem[] = [
+  {
+    id: 'hot',
+    label: 'Hot Deals',
+    count: 0,
+    total: 1,
+    color: '#ef4444', // red-500
+    buttonText: 'View Hot Deals',
+    tooltipTitle: 'Hot Deals',
+    tooltipText: 'These deals require immediate follow-up. 0 completed out of 1. Total: 1.'
+  },
+  {
+    id: 'warm',
+    label: 'Warm Deals',
+    count: 0,
+    total: 8,
+    color: '#f59e0b', // amber-500
+    buttonText: 'Review Warm Deals',
+    tooltipTitle: 'Warm Deals',
+    tooltipText: 'Warm leads showing moderate engagement. 0 completed out of 8. Total: 8.'
+  },
+  {
+    id: 'cold',
+    label: 'Cold Deals',
+    count: 0,
+    total: 5,
+    color: '#3b82f6', // blue-500
+    buttonText: 'Open Cold Deals',
+    tooltipTitle: 'Cold Deals',
+    tooltipText: 'Cold leads with low recent engagement. 0 completed out of 5. Total: 5.'
+  },
+  {
+    id: 'new',
+    label: 'New Deals',
+    count: 56,
+    total: 60,
+    color: '#6b7280', // gray-500
+    buttonText: 'Process New Deals',
+    tooltipTitle: 'New Deals',
+    tooltipText: 'These are new incoming deals that do not have a temperature assigned yet (Hot, Warm, Cold) or are offer status "None"  They need to be reviewed and categorized.'
+  }
+];
+
+const CircularProgress = ({ 
+  count, 
+  total, 
+  color, 
+  size = 120, 
+  strokeWidth = 10 
+}: { 
+  count: number; 
+  total: number; 
+  color: string; 
+  size?: number; 
+  strokeWidth?: number; 
+}) => {
+  const radius = (size - strokeWidth) / 2;
+  const circumference = radius * 2 * Math.PI;
+  const progress = total === 0 ? 0 : count / total;
+  const dashOffset = circumference - progress * circumference;
+
+  return (
+    <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
+      {/* Background Circle */}
+      <svg width={size} height={size} className="transform -rotate-90">
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          stroke="#E5E7EB" // gray-200
+          strokeWidth={strokeWidth}
+          fill="none"
+        />
+        {/* Progress Circle */}
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          stroke={color}
+          strokeWidth={strokeWidth}
+          fill="none"
+          strokeDasharray={circumference}
+          strokeDashoffset={dashOffset}
+          strokeLinecap="round"
+          className="transition-all duration-1000 ease-out"
+        />
+      </svg>
+      {/* Inner Text */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span className="text-2xl font-bold text-gray-900">
+          {count}<span className="text-gray-400 text-lg">/{total}</span>
+        </span>
+      </div>
+    </div>
+  );
+};
 
 export default function ActionPlan() {
+  const [hoveredId, setHoveredId] = useState<DealType | null>(null);
+  const [statusTooltipId, setStatusTooltipId] = useState<DealType | null>(null);
+
   return (
-    <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm mb-6">
-        
-        <div className="flex justify-between items-center mb-12">
-            <div>
-                <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Today's Action Plan</h2>
-                <p className="text-xs text-gray-500 mt-1 font-medium uppercase tracking-wider">Prioritized Workflow</p>
-            </div>
-            
-            <div className="bg-gray-50 rounded-xl px-6 py-3 border border-gray-100 flex flex-col items-center">
-                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Daily Goal</span>
-                <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-black text-blue-600">1</span>
-                    <span className="text-xl font-bold text-gray-300">/ 3</span>
-                </div>
-            </div>
+    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
+      <div className="flex justify-between items-baseline mb-8">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900">Nov 27, 2025 — Today's Action Plan!</h2>
+          <p className="text-sm text-gray-500 mt-1 uppercase tracking-wide font-semibold">Deals to Follow Up Today</p>
         </div>
 
-        <div className="grid grid-cols-4 gap-4 items-end text-center h-48">
-            
-            <div className="relative z-10 transform scale-110 -mt-4 transition-all duration-300">
-                <div className="bg-white p-4 rounded-2xl shadow-xl border-2 border-red-50">
-                    <div className="relative w-28 h-28 mx-auto mb-3">
-                        <svg className="w-full h-full transform -rotate-90">
-                            <circle cx="56" cy="56" r="48" stroke="#fee2e2" strokeWidth="6" fill="transparent" />
-                            <circle cx="56" cy="56" r="48" stroke="#ef4444" strokeWidth="6" fill="transparent" strokeDasharray="301" strokeDashoffset="200" />
-                        </svg>
-                        <div className="absolute inset-0 flex flex-col items-center justify-center">
-                            <span className="text-3xl font-black text-gray-900">1</span>
-                            <span className="text-[10px] font-bold text-red-500 uppercase">Pending</span>
-                        </div>
+        <div className="text-right">
+          <div className="text-2xl font-bold text-green-600 tracking-tight">Offers Made Today <span className="ml-2">1/3</span></div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {ACTION_ITEMS.map((item) => (
+          <div 
+            key={item.id} 
+            className="relative flex flex-col items-center group"
+            onMouseEnter={() => setHoveredId(item.id)}
+            onMouseLeave={() => setHoveredId(null)}
+          >
+            {/* Tooltip */}
+            <div 
+              className={cn(
+                "absolute -top-32 left-1/2 transform -translate-x-1/2 w-80 bg-white p-4 rounded-lg shadow-xl border border-gray-100 z-20 transition-all duration-200 pointer-events-none text-center",
+                hoveredId === item.id ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+              )}
+            >
+              <div className="font-bold text-gray-900 mb-1">{item.tooltipTitle}</div>
+              <p className="text-xs text-gray-600 leading-relaxed">{item.tooltipText}</p>
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rotate-45 w-3 h-3 bg-white border-b border-r border-gray-100"></div>
+            </div>
+
+            {/* Circle */}
+            <div className="mb-4 relative">
+               <CircularProgress count={item.count} total={item.total} color={item.color} />
+            </div>
+
+            {/* Labels */}
+            <div className="text-center mb-4 flex flex-col items-center">
+              <div className="relative flex items-center gap-1.5 mb-1">
+                <div className="text-base font-semibold text-gray-700 tracking-tight">
+                  Status: {item.count}/{item.total}/{item.total}
+                </div>
+                
+                <div 
+                  className="text-gray-400 hover:text-gray-600 cursor-help"
+                  onMouseEnter={() => setStatusTooltipId(item.id)}
+                  onMouseLeave={() => setStatusTooltipId(null)}
+                >
+                  <Info className="w-4 h-4" />
+                </div>
+
+                {/* Status Tooltip */}
+                <div 
+                  className={cn(
+                    "absolute bottom-8 left-1/2 transform -translate-x-1/2 w-80 bg-gray-900 text-white p-4 rounded-lg shadow-xl z-30 transition-all duration-200 pointer-events-none text-left text-xs leading-relaxed",
+                    statusTooltipId === item.id ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+                  )}
+                >
+                  <div className="font-bold text-white mb-2 text-sm">Status Breakdown:</div>
+                  <div className="space-y-2">
+                    <div>
+                      <span className="font-bold text-gray-300">• First Number — Not Started:</span><br/>
+                      <span className="text-gray-400">Deals that have NOT been opened yet.</span>
                     </div>
-                    <button className="w-full bg-red-600 hover:bg-red-700 text-white text-sm font-bold py-3 px-4 rounded-xl shadow-lg shadow-red-200 transition-all transform hover:-translate-y-1">
-                        ▶ Start Here
-                    </button>
+                    <div>
+                      <span className="font-bold text-gray-300">• Second Number — In Progress:</span><br/>
+                      <span className="text-gray-400">Deals that HAVE been opened but have NO completed communication.</span>
+                    </div>
+                    <div>
+                      <span className="font-bold text-gray-300">• Third Number — Completed:</span><br/>
+                      <span className="text-gray-400">Deals where communication WAS completed and the status was properly updated.</span>
+                    </div>
+                  </div>
+                  <div className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 rotate-45 w-3 h-3 bg-gray-900"></div>
                 </div>
-                <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-red-500 font-bold text-xs animate-bounce">
-                    DO THIS FIRST ↓
-                </div>
+              </div>
             </div>
 
-            <div className="flex flex-col items-center opacity-70 hover:opacity-100 transition">
-                <div className="w-20 h-20 mb-4 bg-green-50 rounded-full flex items-center justify-center border-4 border-white shadow-sm">
-                    <svg className="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
-                </div>
-                <button className="w-full border border-gray-200 bg-gray-50 text-green-600 text-xs font-bold py-2 px-4 rounded-lg cursor-default">
-                    Review Complete
-                </button>
-            </div>
-
-            <div className="flex flex-col items-center opacity-40 hover:opacity-100 transition scale-90">
-                <div className="relative w-20 h-20 mb-4 grayscale">
-                    <svg className="w-full h-full transform -rotate-90">
-                        <circle cx="40" cy="40" r="36" stroke="#f3f4f6" strokeWidth="4" fill="transparent" />
-                        <circle cx="40" cy="40" r="36" stroke="#3b82f6" strokeWidth="4" fill="transparent" strokeDasharray="226" strokeDashoffset="226" />
-                    </svg>
-                    <div className="absolute inset-0 flex items-center justify-center text-xl font-bold text-gray-400">0<span className="text-sm text-gray-300">/5</span></div>
-                </div>
-                <button className="w-full border border-gray-100 text-gray-400 bg-white text-xs font-bold py-2 px-4 rounded-lg cursor-not-allowed">
-                    Open Cold Deals
-                </button>
-            </div>
-
-            <div className="flex flex-col items-center opacity-40 hover:opacity-100 transition scale-90">
-                <div className="relative w-20 h-20 mb-4 grayscale">
-                    <svg className="w-full h-full transform -rotate-90">
-                        <circle cx="40" cy="40" r="36" stroke="#f3f4f6" strokeWidth="4" fill="transparent" />
-                        <circle cx="40" cy="40" r="36" stroke="#22c55e" strokeWidth="4" fill="transparent" strokeDasharray="226" strokeDashoffset="15" />
-                    </svg>
-                    <div className="absolute inset-0 flex items-center justify-center text-xl font-bold text-gray-400">56<span className="text-sm text-gray-300">/60</span></div>
-                </div>
-                <button className="w-full border border-gray-100 text-gray-400 bg-white text-xs font-bold py-2 px-4 rounded-lg cursor-not-allowed">
-                    Process New Deals
-                </button>
-            </div>
-
-        </div>
+            {/* CTA Button */}
+            <button 
+              className="px-4 py-2 rounded-full text-sm font-bold border-2 bg-white hover:bg-gray-50 transition-colors w-full max-w-[180px]"
+              style={{ 
+                borderColor: item.color, 
+                color: item.color 
+              }}
+            >
+              {item.buttonText}
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
