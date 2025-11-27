@@ -1,179 +1,20 @@
 import React from 'react';
-import logoUrl from '@assets/flipiQlogo_1764227557148.JPG';
-import { 
-  LayoutDashboard, 
-  ListTodo, 
-  Phone, 
-  MessageSquare, 
-  CheckCircle, 
-  Users, 
-  ChevronDown,
-  Search,
-  Plus,
-  Bell,
-  Home as HomeIcon,
-  Briefcase,
-  Database,
-  Folder,
-  FileText,
-  Bug,
-  Zap,
-  ChevronLeft,
-  LogOut,
-  CalendarCheck,
-  BarChart2,
-  MoreVertical,
-  Target,
-  HelpCircle,
-  Flame
-} from 'lucide-react';
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
 import ActionPlan from "@/components/ActionPlan";
+import Sidebar from "@/components/Sidebar";
+import { 
+  ChevronDown,
+  MoreVertical,
+  Target,
+  Flame
+} from 'lucide-react';
 
 export default function Home() {
   return (
     <div className="bg-gray-50 text-gray-800 h-screen flex overflow-hidden font-sans">
       {/* Sidebar */}
-      <div className="w-64 bg-white border-r border-gray-200 flex flex-col justify-between hidden md:flex shrink-0 z-20">
-        <div className="flex flex-col h-full">
-          {/* Logo Area */}
-          <div className="p-6 flex justify-center">
-             <img src={logoUrl} alt="FlipIQ" className="w-40 object-contain" />
-          </div>
-
-          {/* Scrollable Nav Area */}
-          <div className="flex-1 px-3 py-2 space-y-6 overflow-visible">
-            
-            {/* Today's Plan Section */}
-            <div>
-              <div className="px-2 mb-2 text-xs font-bold text-gray-600 uppercase tracking-wider">
-                  Today's Plan
-              </div>
-              <div className="space-y-1">
-                  <Link href="/" className="group relative flex items-center justify-between px-3 py-2 text-sm font-medium bg-gray-100 text-gray-900 rounded-lg border border-gray-200 hover:bg-gray-200 transition">
-                      <span className="flex items-center gap-3"><ListTodo className="w-4 h-4" /> Deal Review</span>
-                      <span className="text-gray-600 text-xs font-bold">5 / 56</span>
-                      
-                      {/* Tooltip */}
-                      <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                          <span className="font-bold text-[#FF6600]">Deal Review:</span><br/>
-                          deals that are assigned to you they need attention today
-                      </div>
-                  </Link>
-
-                  <Link href="/daily-outreach" className="group relative flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg transition">
-                      <span className="flex items-center gap-3"><Phone className="w-4 h-4" /> Daily Outreach</span>
-                      <span className="text-gray-600 text-xs font-bold">3 / 30</span>
-                      
-                      {/* Tooltip */}
-                      <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                          <span className="font-bold text-[#FF6600]">Daily Outreach:</span><br/>
-                          list of Agents to call today focusing on relationship building
-                      </div>
-                  </Link>
-              </div>
-            </div>
-
-            {/* Find Leads Section */}
-            <div>
-              <div className="px-2 mb-2 text-xs font-bold text-gray-400 uppercase tracking-wider">
-                  Find Deals
-              </div>
-              <div className="space-y-1">
-                  <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
-                      <div className="text-gray-500"><Zap className="w-5 h-5" /></div>
-                      MLS Hot Deals
-                      <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                          <span className="font-bold text-[#FF6600]">MLS Hot Deals:</span><br/>
-                          Latest MLS deals based on propensity to sell, Key words and percentage off ARV.
-                      </div>
-                  </a>
-
-                  <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
-                       <div className="text-gray-500"><Search className="w-5 h-5" /></div>
-                      MLS Search
-                      <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                          <span className="font-bold text-[#FF6600]">MLS Search:</span><br/>
-                          Use standard MLS filters to find any deal on the MLS.
-                      </div>
-                  </a>
-
-                  <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
-                       <div className="text-gray-500"><Users className="w-5 h-5" /></div>
-                      Agent Search
-                      <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                          <span className="font-bold text-[#FF6600]">Agent Search:</span><br/>
-                          Find investor friendly agents based on how they transact.
-                      </div>
-                  </a>
-
-                  <a href="#" className="group relative flex items-center gap-2 pl-8 pr-3 py-1.5 text-xs font-medium text-gray-500 hover:text-gray-900 transition">
-                      <span className="text-gray-400">└──</span> Campaigns
-                      <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                          <span className="font-bold text-[#FF6600]">Campaigns:</span><br/>
-                          My campaigns sent to my agent target list.
-                      </div>
-                  </a>
-              </div>
-            </div>
-
-            {/* Tools Section */}
-            <div>
-                <div className="px-2 mb-2 text-xs font-bold text-gray-400 uppercase tracking-wider">
-                    Tools
-                </div>
-                <div className="space-y-1">
-                    <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
-                        <BarChart2 className="w-4 h-4 text-gray-500" />
-                        My Stats
-                        <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                            <span className="font-bold text-[#FF6600]">My Stats:</span><br/>
-                            Text, call, email and offer tracking.
-                        </div>
-                    </a>
-                    
-                    <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
-                        <FileText className="w-4 h-4 text-gray-500" />
-                        DispoPro
-                        <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                            <span className="font-bold text-[#FF6600]">DispoPro:</span><br/>
-                            Easily market and wholesale your deals to active buyers.
-                        </div>
-                    </a>
-
-                    <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
-                        <LayoutDashboard className="w-4 h-4 text-gray-500" />
-                        Pro Dashboard
-                        <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                            <span className="font-bold text-[#FF6600]">Pro Dashboard:</span><br/>
-                            Full detailed dashboard for Pro users.
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-          </div>
-
-          {/* Sidebar Footer */}
-          <div className="p-3 mt-auto border-t border-gray-100">
-             <button className="w-full flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-50 rounded-lg text-sm font-medium transition-colors mb-4">
-                <ChevronLeft className="w-5 h-5" />
-                <span>Collapse sidebar</span>
-             </button>
-
-             <div className="flex items-center gap-3 px-3 py-2">
-                <div className="flex-1 min-w-0">
-                  <div className="font-bold text-gray-900 text-sm truncate">Tony Fletcher</div>
-                  <div className="text-xs text-gray-500 truncate">tonyf@fairclose.net</div>
-                </div>
-                <button className="text-gray-400 hover:text-gray-600 p-1 rounded-md hover:bg-gray-100">
-                  <LogOut className="w-4 h-4" />
-                </button>
-             </div>
-          </div>
-        </div>
-      </div>
+      <Sidebar />
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden relative z-10">
