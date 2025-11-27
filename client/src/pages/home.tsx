@@ -355,7 +355,7 @@ export default function Home() {
                                     Bulk Actions
                                   </button>
                                 </DropdownMenuTrigger>
-                                <DropdownMenuContent align="start" className="w-48 bg-white z-50">
+                                <DropdownMenuContent align="start" className="w-48 bg-white z-50 border-none shadow-xl">
                                   <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
                                     <Phone className="w-4 h-4" />
                                     <span>Call</span>
@@ -421,7 +421,7 @@ export default function Home() {
                             <span>Offer Status / Source</span>
                             <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             
-                            <div className="absolute top-8 right-0 w-[400px] bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed max-h-[80vh] overflow-y-auto border border-gray-700">
+                            <div className="absolute top-8 right-0 w-[400px] bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed max-h-[80vh] overflow-y-auto">
                                 <div className="font-bold text-[#FF6600] mb-3 text-sm border-b border-gray-700 pb-2">Offer Status Definitions & Tasks</div>
                                 <div className="mb-3 italic text-gray-400">Includes Lead Source.</div>
                                 
