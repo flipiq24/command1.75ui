@@ -367,12 +367,12 @@ export default function Home() {
                                         <ChevronDown className="w-3 h-3 flex-shrink-0 text-gray-400" />
                                     </button>
                                   </DropdownMenuTrigger>
-                                  <DropdownMenuContent align="end" className="w-[200px]">
+                                  <DropdownMenuContent align="end" className="w-[200px] bg-white z-50">
                                     {STATUS_OPTIONS.map((option) => (
                                       <DropdownMenuItem 
                                         key={option.label}
                                         onClick={() => handleStatusChange(deal.id, option.label, option.percent)}
-                                        className="flex items-center justify-between text-xs gap-2 cursor-pointer"
+                                        className="flex items-center justify-between text-xs gap-2 cursor-pointer hover:bg-gray-50"
                                       >
                                         <span className="font-bold text-[#4A90E2] w-8 text-right flex-shrink-0">{option.percent}</span>
                                         <span className="truncate flex-1">{option.label}</span>
