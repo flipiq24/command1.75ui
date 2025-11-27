@@ -280,10 +280,7 @@ export default function DailyOutreach() {
                   
                   <button 
                     onClick={handleNextDeal}
-                    className={cn(
-                      "flex items-center gap-1 px-4 py-2 bg-[#FF6600] hover:bg-[#e65c00] text-white rounded-lg text-xs font-bold shadow-sm transition",
-                      !isStartMode && "animate-pulse shadow-lg ring-2 ring-orange-200"
-                    )} 
+                    className="flex items-center gap-1 px-4 py-2 bg-[#FF6600] hover:bg-[#e65c00] text-white rounded-lg text-xs font-bold shadow-sm transition animate-pulse shadow-lg ring-2 ring-orange-200"
                     data-testid="button-next-deal"
                   >
                     Next Deal

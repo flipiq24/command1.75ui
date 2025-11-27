@@ -161,9 +161,9 @@ export default function OutreachActionPlan({
               "px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2",
               isConnectionsComplete 
                 ? "bg-green-50 text-green-600 border border-green-200"
-                : (!hasStarted || isStartMode)
-                  ? "bg-red-500 text-white shadow-xl shadow-red-500/50 animate-pulse hover:bg-red-600"
-                  : "bg-red-500 text-white opacity-90 hover:bg-red-600"
+                : !hasStarted
+                  ? "bg-red-600 text-white shadow-xl shadow-red-500/50 animate-pulse hover:bg-red-700"
+                  : "bg-white text-red-600 border-2 border-red-500 hover:bg-red-50"
             )}
             data-testid="button-new-relationships"
           >
@@ -172,10 +172,15 @@ export default function OutreachActionPlan({
                 <span>Connections Complete</span>
                 <Check className="w-4 h-4" />
               </>
-            ) : (
+            ) : !hasStarted ? (
               <>
                 <Phone className="w-4 h-4" />
                 <span>Start Calling</span>
+              </>
+            ) : (
+              <>
+                <Phone className="w-4 h-4" />
+                <span>New Agent Relationships</span>
               </>
             )}
           </button>
