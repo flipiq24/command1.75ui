@@ -1,0 +1,82 @@
+<div class="p-8 border-b border-gray-100 bg-white rounded-t-2xl">
+    
+    <div class="flex justify-between items-center mb-10">
+        
+        <div>
+            <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Nov 27, 2025 — Today's Action Plan</h2>
+            <p class="text-xs text-gray-500 mt-1 font-medium uppercase tracking-wider">Deals to Follow Up Today</p>
+        </div>
+
+        <div class="bg-white border border-gray-100 shadow-sm rounded-xl px-6 py-3 flex flex-col items-center min-w-[140px]">
+            <span class="text-[10px] uppercase tracking-widest font-bold text-gray-400 mb-1">Daily Offer Goal</span>
+            
+            <div class="flex items-baseline gap-1">
+                <button class="text-3xl font-black text-blue-600 hover:text-blue-700 transition cursor-pointer leading-none" title="Filter by Offers Made">
+                    1
+                </button>
+                <span class="text-xl font-bold text-gray-300">/ 3</span>
+            </div>
+
+            <div class="w-full bg-gray-100 h-1 mt-2 rounded-full overflow-hidden">
+                <div class="bg-blue-500 h-full rounded-full" style="width: 33%"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="grid grid-cols-4 gap-8 text-center">
+        
+        <div class="flex flex-col items-center group">
+            <div class="relative w-20 h-20 mb-3 transition transform group-hover:scale-105">
+                <svg class="w-full h-full transform -rotate-90">
+                    <circle cx="40" cy="40" r="36" stroke="#f3f4f6" stroke-width="4" fill="transparent" />
+                    <circle cx="40" cy="40" r="36" stroke="#ef4444" stroke-width="4" fill="transparent" stroke-dasharray="226" stroke-dashoffset="226" />
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center text-xl font-bold text-gray-900">0<span class="text-sm text-gray-400 font-medium">/1</span></div>
+            </div>
+            <button class="w-full border border-red-200 text-red-600 bg-white hover:bg-red-50 hover:border-red-300 text-xs font-bold py-2 px-4 rounded-lg btn-transition">
+                View Hot Deals
+            </button>
+        </div>
+
+        <div class="flex flex-col items-center group">
+            <div class="relative w-20 h-20 mb-3 transition transform group-hover:scale-105">
+                <svg class="w-full h-full transform -rotate-90">
+                    <circle cx="40" cy="40" r="36" stroke="#f3f4f6" stroke-width="4" fill="transparent" />
+                    <circle cx="40" cy="40" r="36" stroke="#f59e0b" stroke-width="4" fill="transparent" stroke-dasharray="226" stroke-dashoffset="226" />
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center text-xl font-bold text-gray-900">0<span class="text-sm text-gray-400 font-medium">/8</span></div>
+            </div>
+            <button class="w-full border border-orange-200 text-orange-600 bg-white hover:bg-orange-50 hover:border-orange-300 text-xs font-bold py-2 px-4 rounded-lg btn-transition">
+                Review Warm Deals
+            </button>
+        </div>
+
+        <div class="flex flex-col items-center group">
+            <div class="relative w-20 h-20 mb-3 transition transform group-hover:scale-105">
+                <svg class="w-full h-full transform -rotate-90">
+                    <circle cx="40" cy="40" r="36" stroke="#f3f4f6" stroke-width="4" fill="transparent" />
+                    <circle cx="40" cy="40" r="36" stroke="#3b82f6" stroke-width="4" fill="transparent" stroke-dasharray="226" stroke-dashoffset="226" />
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center text-xl font-bold text-gray-900">0<span class="text-sm text-gray-400 font-medium">/5</span></div>
+            </div>
+            <button class="w-full border border-blue-200 text-blue-600 bg-white hover:bg-blue-50 hover:border-blue-300 text-xs font-bold py-2 px-4 rounded-lg btn-transition">
+                Open Cold Deals
+            </button>
+        </div>
+
+        <div class="flex flex-col items-center group">
+            <div class="relative w-20 h-20 mb-3 transition transform group-hover:scale-105">
+                <svg class="w-full h-full transform -rotate-90">
+                    <circle cx="40" cy="40" r="36" stroke="#f3f4f6" stroke-width="4" fill="transparent" />
+                    <circle cx="40" cy="40" r="36" stroke="#22c55e" stroke-width="4" fill="transparent" stroke-dasharray="226" stroke-dashoffset="15" />
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center text-xl font-bold text-gray-900">56<span class="text-sm text-gray-400 font-medium">/60</span></div>
+            </div>
+            <button class="w-full border border-gray-200 text-gray-600 bg-white hover:bg-gray-50 hover:border-gray-300 text-xs font-bold py-2 px-4 rounded-lg btn-transition">
+                Process New Deals
+            </button>
+        </div>
+
+    </div>
+</div>
