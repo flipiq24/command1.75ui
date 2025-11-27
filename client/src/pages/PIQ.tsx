@@ -412,7 +412,7 @@ export default function PIQ() {
                     <div>Status: <span className="text-gray-900 font-semibold">Active</span></div>
                     <div>Days on Market: <span className="text-gray-900 font-semibold">45</span></div>
                     <div>Price to Future Value: <span className="text-gray-900 font-semibold">82%</span></div>
-                    <div>Propensity Score: <span className="text-gray-900 font-semibold">6</span></div>
+                    <div>Propensity Score: <span className="text-gray-900 font-semibold">0</span></div>
                     <div>Agent: <span className="text-gray-900 font-semibold">Sarah Johnson</span> (Unassigned)</div>
                     <div>Relationship Status: <span className="text-gray-900 font-semibold">Warm</span></div>
                     <div>Investor Source Count: <a href="#" className="text-blue-600 underline hover:text-blue-800">[View Agent]</a></div>
@@ -450,10 +450,16 @@ export default function PIQ() {
                     </ul>
                   </div>
 
-                  <div className="mb-6">
-                    <span className="text-sm text-gray-700">Let's dive in to the property - </span>
-                    <button className="text-blue-600 underline font-medium hover:text-blue-800 ml-1" data-testid="button-piq-dive-yes">Yes</button>
-                    <button className="text-blue-600 underline font-medium hover:text-blue-800 ml-3" data-testid="button-piq-dive-no">No</button>
+                  <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                    <p className="text-sm text-gray-600">
+                      Would you like me to run a detailed AI report? 
+                      <button 
+                        className="ml-2 bg-[#FF6600] hover:bg-[#e65c00] text-white text-xs font-bold py-1.5 px-4 rounded-lg shadow-sm transition"
+                        data-testid="button-generate-ai-report-piq"
+                      >
+                        Generate AI Report
+                      </button>
+                    </p>
                   </div>
 
                   <div className="border-t border-gray-200 pt-6">

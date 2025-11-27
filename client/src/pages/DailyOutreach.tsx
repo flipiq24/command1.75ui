@@ -672,18 +672,6 @@ export default function DailyOutreach() {
                               </div>
 
                               <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200 animate-in fade-in duration-500" style={{animationDelay: '1200ms'}}>
-                                <p className="text-sm text-gray-700 mb-3">
-                                  Let's dive into the property - 
-                                  <button 
-                                    onClick={() => setLocation(`/piq/${currentDeal.id}?from=new-agent`)}
-                                    className="text-blue-600 underline font-bold hover:text-blue-800 ml-1" 
-                                    data-testid="button-dive-yes"
-                                  >
-                                    Yes
-                                  </button>
-                                  <span className="mx-2 text-gray-400">|</span>
-                                  <button className="text-gray-500 underline font-medium hover:text-gray-700" data-testid="button-dive-no">No</button>
-                                </p>
                                 <p className="text-sm text-gray-600">
                                   Would you like me to run a detailed AI report? 
                                   <button 
