@@ -650,28 +650,66 @@ export default function DailyOutreach() {
                                   </li>
                                 </ul>
                               </div>
+
+                              <div className="mb-6">
+                                <span className="text-sm text-gray-700">Let's dive in to the property - </span>
+                                <button className="text-blue-600 underline font-medium hover:text-blue-800 ml-1" data-testid="button-dive-yes">Yes</button>
+                                <button className="text-blue-600 underline font-medium hover:text-blue-800 ml-3" data-testid="button-dive-no">No</button>
+                              </div>
                             </>
                           ) : (
-                            <div className="mb-6">
-                              <h3 className="text-lg font-bold text-gray-900 mb-4">Why This Property is Worth Pursuing</h3>
-                              {isLoadingStory ? (
-                                <div className="flex items-center gap-3 text-gray-500">
-                                  <div className="animate-spin w-5 h-5 border-2 border-[#FF6600] border-t-transparent rounded-full"></div>
-                                  <span>Generating story...</span>
-                                </div>
-                              ) : (
-                                <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
-                                  {propertyStory || 'Click "Description" to generate an AI-written story about this property.'}
-                                </div>
-                              )}
-                            </div>
-                          )}
+                            <>
+                              <div className="mb-6">
+                                <h3 className="text-lg font-bold text-gray-900 mb-4">Why this Property</h3>
+                                <ul className="space-y-2 text-sm text-gray-700">
+                                  <li className="flex items-start gap-2">
+                                    <span className="text-gray-400">•</span>
+                                    <span>Aged listing (≥70 DOM) with strong discount potential.</span>
+                                  </li>
+                                  <li className="flex items-start gap-2">
+                                    <span className="text-gray-400">•</span>
+                                    <div>
+                                      <span>Keywords detected:</span>
+                                      <div className="flex flex-wrap gap-2 mt-2">
+                                        <span className="px-3 py-1 bg-white text-red-600 text-xs rounded-full border border-red-300 cursor-pointer hover:bg-red-50 hover:border-red-400 transition">repairs</span>
+                                        <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">investors</span>
+                                        <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">Investment</span>
+                                        <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">as-is</span>
+                                        <span className="px-3 py-1 bg-white text-blue-600 text-xs rounded-full border border-blue-300 cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition">investor</span>
+                                        <span className="px-3 py-1 bg-white text-blue-600 text-xs rounded-full border border-blue-300 cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition">estate</span>
+                                        <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">opportunity</span>
+                                        <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">Renovation</span>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li className="flex items-start gap-2">
+                                    <span className="text-gray-400">•</span>
+                                    <span>Currently unassigned and no active offer status — open field opportunity.</span>
+                                  </li>
+                                </ul>
+                              </div>
 
-                          <div className="mb-8">
-                            <span className="text-sm text-gray-700">Let's dive in to the property - </span>
-                            <button className="text-blue-600 underline font-medium hover:text-blue-800 ml-1" data-testid="button-dive-yes">Yes</button>
-                            <button className="text-blue-600 underline font-medium hover:text-blue-800 ml-3" data-testid="button-dive-no">No</button>
-                          </div>
+                              <div className="mb-6">
+                                <span className="text-sm text-gray-700">Let's dive in to the property - </span>
+                                <button className="text-blue-600 underline font-medium hover:text-blue-800 ml-1" data-testid="button-dive-yes-desc">Yes</button>
+                                <button className="text-blue-600 underline font-medium hover:text-blue-800 ml-3" data-testid="button-dive-no-desc">No</button>
+                              </div>
+
+                              <div className="mb-6 border-t border-gray-200 pt-4">
+                                <h3 className="text-lg font-bold text-gray-900 mb-4">AI Property Story</h3>
+                                {isLoadingStory ? (
+                                  <div className="flex items-center gap-3 text-gray-500">
+                                    <div className="animate-spin w-5 h-5 border-2 border-[#FF6600] border-t-transparent rounded-full"></div>
+                                    <span>Generating story...</span>
+                                  </div>
+                                ) : (
+                                  <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
+                                    {propertyStory || 'Loading AI-generated story...'}
+                                  </div>
+                                )}
+                              </div>
+                            </>
+                          )}
 
                           <div className="border-t border-gray-200 pt-6">
                             <div className="flex items-center gap-3 bg-gray-50 rounded-full px-4 py-3 border border-gray-200">
