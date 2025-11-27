@@ -511,9 +511,7 @@ export default function DailyOutreach() {
                     {/* IQ Property Intelligence Section */}
                     <div className="bg-white border border-gray-200 rounded-xl p-6 mt-4 shadow-sm">
                       <div className="flex items-center gap-3 mb-6">
-                        <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center">
-                          <Lightbulb className="w-6 h-6 text-[#FF6600]" />
-                        </div>
+                        <Lightbulb className="w-6 h-6 text-[#FF6600]" />
                         <h2 className="text-xl font-bold text-[#FF6600]">iQ Property Intelligence</h2>
                       </div>
 
