@@ -163,7 +163,7 @@ export default function OutreachActionPlan({
             ) : (
               <>
                 <Phone className="w-4 h-4" />
-                <span>Start Calling</span>
+                <span>Call New Agent Relationships</span>
               </>
             )}
           </button>
@@ -187,7 +187,7 @@ export default function OutreachActionPlan({
               />
               <circle 
                 cx="56" cy="56" r="48" 
-                stroke={isPriorityComplete ? "#22c55e" : "#f97316"}
+                stroke={isPriorityComplete ? "#22c55e" : "#eab308"}
                 strokeWidth="8" 
                 fill="none" 
                 strokeDasharray={`${(priorityCompleted / priorityTotal) * 301.6} 301.6`}
@@ -218,8 +218,8 @@ export default function OutreachActionPlan({
               isPriorityComplete 
                 ? "bg-green-50 text-green-600 border border-green-200"
                 : activeFilter === 'priority'
-                  ? "bg-orange-500 text-white shadow-md"
-                  : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
+                  ? "bg-yellow-500 text-white shadow-md"
+                  : "bg-yellow-50 text-yellow-700 border border-yellow-200 hover:bg-yellow-100"
             )}
             data-testid="button-call-priority"
           >
@@ -255,7 +255,7 @@ export default function OutreachActionPlan({
               />
               <circle 
                 cx="56" cy="56" r="48" 
-                stroke={isTopOfMindComplete ? "#22c55e" : "#6b7280"}
+                stroke={isTopOfMindComplete ? "#22c55e" : "#3b82f6"}
                 strokeWidth="8" 
                 fill="none" 
                 strokeDasharray={`${(topOfMindCompleted / topOfMindTotal) * 301.6} 301.6`}
@@ -286,8 +286,8 @@ export default function OutreachActionPlan({
               isTopOfMindComplete 
                 ? "bg-green-50 text-green-600 border border-green-200"
                 : activeFilter === 'topOfMind'
-                  ? "bg-gray-600 text-white shadow-md"
-                  : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
+                  ? "bg-blue-500 text-white shadow-md"
+                  : "bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100"
             )}
             data-testid="button-send-campaigns"
           >
