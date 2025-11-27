@@ -6,55 +6,55 @@ type DealType = 'hot' | 'warm' | 'cold' | 'new';
 
 interface ActionItem {
   id: DealType;
-  label: string;
   count: number;
   total: number;
-  color: string;
   buttonText: string;
-  tooltipTitle: string;
-  tooltipText: string;
+  buttonClass: string;
+  circleColor: string;
+  circleBg: string;
+  opacityClass?: string;
 }
 
 const ACTION_ITEMS: ActionItem[] = [
   {
     id: 'hot',
-    label: 'Hot Deals',
     count: 0,
     total: 1,
-    color: '#ef4444', // red-500
     buttonText: 'View Hot Deals',
-    tooltipTitle: 'Hot Deals',
-    tooltipText: 'These deals require immediate follow-up. 0 completed out of 1. Total: 1.'
+    buttonClass: 'bg-red-600 border border-red-600 text-white shadow-md hover:bg-red-700 animate-pulse',
+    circleColor: '#ef4444',
+    circleBg: '#fee2e2',
+    opacityClass: ''
   },
   {
     id: 'warm',
-    label: 'Warm Deals',
     count: 0,
     total: 8,
-    color: '#f59e0b', // amber-500
     buttonText: 'Review Warm Deals',
-    tooltipTitle: 'Warm Deals',
-    tooltipText: 'Warm leads showing moderate engagement. 0 completed out of 8. Total: 8.'
+    buttonClass: 'bg-white border border-orange-500 text-orange-600 hover:bg-orange-50',
+    circleColor: '#f59e0b',
+    circleBg: '#f3f4f6',
+    opacityClass: 'opacity-60 hover:opacity-100 transition'
   },
   {
     id: 'cold',
-    label: 'Cold Deals',
     count: 0,
     total: 5,
-    color: '#3b82f6', // blue-500
     buttonText: 'Open Cold Deals',
-    tooltipTitle: 'Cold Deals',
-    tooltipText: 'Cold leads with low recent engagement. 0 completed out of 5. Total: 5.'
+    buttonClass: 'bg-white border border-blue-500 text-blue-600 hover:bg-blue-50',
+    circleColor: '#3b82f6',
+    circleBg: '#f3f4f6',
+    opacityClass: 'opacity-60 hover:opacity-100 transition'
   },
   {
     id: 'new',
-    label: 'New Deals',
     count: 56,
     total: 60,
-    color: '#6b7280', // gray-500
     buttonText: 'Process New Deals',
-    tooltipTitle: 'New Deals',
-    tooltipText: 'These are new incoming deals that do not have a temperature assigned yet (Hot, Warm, Cold) or are offer status "None"  They need to be reviewed and categorized.'
+    buttonClass: 'bg-white border border-gray-400 text-gray-600 hover:bg-gray-50',
+    circleColor: '#22c55e',
+    circleBg: '#f3f4f6',
+    opacityClass: 'opacity-60 hover:opacity-100 transition'
   }
 ];
 
@@ -62,12 +62,14 @@ const CircularProgress = ({
   count, 
   total, 
   color, 
-  size = 120, 
-  strokeWidth = 10 
+  bgColor,
+  size = 80, // w-20 = 80px
+  strokeWidth = 6 
 }: { 
   count: number; 
   total: number; 
   color: string; 
+  bgColor: string;
   size?: number; 
   strokeWidth?: number; 
 }) => {
@@ -77,14 +79,14 @@ const CircularProgress = ({
   const dashOffset = circumference - progress * circumference;
 
   return (
-    <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
+    <div className="relative flex items-center justify-center mb-3" style={{ width: size, height: size }}>
       {/* Background Circle */}
       <svg width={size} height={size} className="transform -rotate-90">
         <circle
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          stroke="#E5E7EB" // gray-200
+          stroke={bgColor}
           strokeWidth={strokeWidth}
           fill="none"
         />
@@ -104,8 +106,8 @@ const CircularProgress = ({
       </svg>
       {/* Inner Text */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-2xl font-bold text-gray-900">
-          {count}<span className="text-gray-400 text-lg">/{total}</span>
+        <span className="text-xl font-bold text-gray-900">
+          {count}<span className="text-sm text-gray-400 font-medium">/{total}</span>
         </span>
       </div>
     </div>
@@ -113,96 +115,44 @@ const CircularProgress = ({
 };
 
 export default function ActionPlan() {
-  const [hoveredId, setHoveredId] = useState<DealType | null>(null);
-  const [statusTooltipId, setStatusTooltipId] = useState<DealType | null>(null);
-
   return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
-      <div className="flex justify-between items-baseline mb-8">
+    <div className="bg-white p-8 rounded-xl border border-gray-200 shadow-sm mb-8">
+      <div className="flex justify-between items-end mb-10">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Nov 27, 2025 — Today's Action Plan!</h2>
-          <p className="text-sm text-gray-500 mt-1 uppercase tracking-wide font-semibold">Deals to Follow Up Today</p>
+          <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Nov 27, 2025 — Today's Action Plan</h2>
+          <p className="text-xs text-gray-500 mt-1 font-medium uppercase tracking-wider">Prioritized Workflow</p>
         </div>
 
-        <div className="text-right">
-          <div className="text-2xl font-bold text-green-600 tracking-tight">Offers Made Today <span className="ml-2">1/3</span></div>
+        <div className="bg-white border border-gray-100 shadow-sm rounded-xl px-6 py-3 flex flex-col items-center min-w-[140px]">
+          <span className="text-[10px] uppercase tracking-widest font-bold text-gray-400 mb-1">Daily Offer Goal</span>
+          <div className="flex items-baseline gap-1">
+            <button className="text-3xl font-black text-blue-600 hover:text-blue-700 transition cursor-pointer leading-none">1</button>
+            <span className="text-xl font-bold text-gray-300">/ 3</span>
+          </div>
+          <div className="w-full bg-gray-100 h-1 mt-2 rounded-full overflow-hidden">
+            <div className="bg-blue-500 h-full rounded-full" style={{ width: '33%' }}></div>
+          </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-4 gap-8 text-center">
         {ACTION_ITEMS.map((item) => (
           <div 
             key={item.id} 
-            className="relative flex flex-col items-center group"
-            onMouseEnter={() => setHoveredId(item.id)}
-            onMouseLeave={() => setHoveredId(null)}
+            className={cn("flex flex-col items-center group", item.opacityClass)}
           >
-            {/* Tooltip */}
-            <div 
-              className={cn(
-                "absolute -top-32 left-1/2 transform -translate-x-1/2 w-80 bg-white p-4 rounded-lg shadow-xl border border-gray-100 z-20 transition-all duration-200 pointer-events-none text-center",
-                hoveredId === item.id ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-              )}
-            >
-              <div className="font-bold text-gray-900 mb-1">{item.tooltipTitle}</div>
-              <p className="text-xs text-gray-600 leading-relaxed">{item.tooltipText}</p>
-              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rotate-45 w-3 h-3 bg-white border-b border-r border-gray-100"></div>
-            </div>
-
-            {/* Circle */}
-            <div className="mb-4 relative">
-               <CircularProgress count={item.count} total={item.total} color={item.color} />
-            </div>
-
-            {/* Labels */}
-            <div className="text-center mb-4 flex flex-col items-center">
-              <div className="relative flex items-center gap-1.5 mb-1">
-                <div className="text-base font-semibold text-gray-700 tracking-tight">
-                  Status: {item.count}/{item.total}/{item.total}
-                </div>
-                
-                <div 
-                  className="text-gray-400 hover:text-gray-600 cursor-help"
-                  onMouseEnter={() => setStatusTooltipId(item.id)}
-                  onMouseLeave={() => setStatusTooltipId(null)}
-                >
-                  <Info className="w-4 h-4" />
-                </div>
-
-                {/* Status Tooltip */}
-                <div 
-                  className={cn(
-                    "absolute bottom-8 left-1/2 transform -translate-x-1/2 w-80 bg-gray-900 text-white p-4 rounded-lg shadow-xl z-30 transition-all duration-200 pointer-events-none text-left text-xs leading-relaxed",
-                    statusTooltipId === item.id ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-                  )}
-                >
-                  <div className="font-bold text-white mb-2 text-sm">Status Breakdown:</div>
-                  <div className="space-y-2">
-                    <div>
-                      <span className="font-bold text-gray-300">• First Number — Not Started:</span><br/>
-                      <span className="text-gray-400">Deals that have NOT been opened yet.</span>
-                    </div>
-                    <div>
-                      <span className="font-bold text-gray-300">• Second Number — In Progress:</span><br/>
-                      <span className="text-gray-400">Deals that HAVE been opened but have NO completed communication.</span>
-                    </div>
-                    <div>
-                      <span className="font-bold text-gray-300">• Third Number — Completed:</span><br/>
-                      <span className="text-gray-400">Deals where communication WAS completed and the status was properly updated.</span>
-                    </div>
-                  </div>
-                  <div className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 rotate-45 w-3 h-3 bg-gray-900"></div>
-                </div>
-              </div>
-            </div>
-
-            {/* CTA Button */}
+            <CircularProgress 
+              count={item.count} 
+              total={item.total} 
+              color={item.circleColor} 
+              bgColor={item.circleBg}
+            />
+            
             <button 
-              className="px-4 py-2 rounded-full text-sm font-bold border-2 bg-white hover:bg-gray-50 transition-colors w-full max-w-[180px]"
-              style={{ 
-                borderColor: item.color, 
-                color: item.color 
-              }}
+              className={cn(
+                "w-full text-xs font-bold py-2 px-4 rounded-lg transition",
+                item.buttonClass
+              )}
             >
               {item.buttonText}
             </button>
