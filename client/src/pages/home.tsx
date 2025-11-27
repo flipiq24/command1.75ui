@@ -57,8 +57,8 @@ export default function Home() {
                       
                       {/* Tooltip */}
                       <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                          <span className="font-bold text-[#FF6600]">Deal Review Progress:</span><br/>
-                          You have reviewed 5 deals out of 56 total pending deals today.
+                          <span className="font-bold text-[#FF6600]">Deal Review:</span><br/>
+                          deals that are assigned to you they need attention today
                       </div>
                   </Link>
 
@@ -68,8 +68,8 @@ export default function Home() {
                       
                       {/* Tooltip */}
                       <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                          <span className="font-bold text-[#FF6600]">Outreach Progress:</span><br/>
-                          You have contacted 3 agents out of your daily goal of 30.
+                          <span className="font-bold text-[#FF6600]">Daily Outreach:</span><br/>
+                          list of Agents to call today focusing on relationship building
                       </div>
                   </Link>
               </div>
@@ -81,23 +81,39 @@ export default function Home() {
                   Find Deals
               </div>
               <div className="space-y-1">
-                  <a href="#" title="Latest MLS deals based on propensity to sell, Key words and percentage off ARV." className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+                  <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
                       <div className="text-gray-500"><Zap className="w-5 h-5" /></div>
                       MLS Hot Deals
+                      <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                          <span className="font-bold text-[#FF6600]">MLS Hot Deals:</span><br/>
+                          Latest MLS deals based on propensity to sell, Key words and percentage off ARV.
+                      </div>
                   </a>
 
-                  <a href="#" title="Use standard MLS filters to find any deal on the MLS." className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+                  <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
                        <div className="text-gray-500"><Search className="w-5 h-5" /></div>
                       MLS Search
+                      <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                          <span className="font-bold text-[#FF6600]">MLS Search:</span><br/>
+                          Use standard MLS filters to find any deal on the MLS.
+                      </div>
                   </a>
 
-                  <a href="#" title="Find investor friendly agents based on how they transact." className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+                  <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
                        <div className="text-gray-500"><Users className="w-5 h-5" /></div>
                       Agent Search
+                      <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                          <span className="font-bold text-[#FF6600]">Agent Search:</span><br/>
+                          Find investor friendly agents based on how they transact.
+                      </div>
                   </a>
 
-                  <a href="#" title="My campaigns sent to my agent target list." className="group relative flex items-center gap-2 pl-8 pr-3 py-1.5 text-xs font-medium text-gray-500 hover:text-gray-900 transition">
+                  <a href="#" className="group relative flex items-center gap-2 pl-8 pr-3 py-1.5 text-xs font-medium text-gray-500 hover:text-gray-900 transition">
                       <span className="text-gray-400">└──</span> Campaigns
+                      <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                          <span className="font-bold text-[#FF6600]">Campaigns:</span><br/>
+                          My campaigns sent to my agent target list.
+                      </div>
                   </a>
               </div>
             </div>
@@ -108,19 +124,31 @@ export default function Home() {
                     Tools
                 </div>
                 <div className="space-y-1">
-                    <a href="#" title="Text, call, email and offer tracking." className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+                    <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
                         <BarChart2 className="w-4 h-4 text-gray-500" />
                         My Stats
+                        <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                            <span className="font-bold text-[#FF6600]">My Stats:</span><br/>
+                            Text, call, email and offer tracking.
+                        </div>
                     </a>
                     
-                    <a href="#" title="Easily market and wholesale your deals to active buyers." className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+                    <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
                         <FileText className="w-4 h-4 text-gray-500" />
                         DispoPro
+                        <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                            <span className="font-bold text-[#FF6600]">DispoPro:</span><br/>
+                            Easily market and wholesale your deals to active buyers.
+                        </div>
                     </a>
 
-                    <a href="#" title="Full detailed dashboard for Pro users." className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+                    <a href="#" className="group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
                         <LayoutDashboard className="w-4 h-4 text-gray-500" />
                         Pro Dashboard
+                        <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                            <span className="font-bold text-[#FF6600]">Pro Dashboard:</span><br/>
+                            Full detailed dashboard for Pro users.
+                        </div>
                     </a>
                 </div>
             </div>
