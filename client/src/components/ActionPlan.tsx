@@ -120,7 +120,7 @@ export default function ActionPlan() {
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
       <div className="flex justify-between items-baseline mb-8">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Nov 27, 2025 — Today's Action Plan!</h2>
+          <h2 className="text-2xl font-bold text-gray-900">Nov 27, 2025 — Today's Action Plan! — 32% of your goal</h2>
           <p className="text-sm text-gray-500 mt-1 uppercase tracking-wide font-semibold">Deals to Follow Up Today</p>
         </div>
 
