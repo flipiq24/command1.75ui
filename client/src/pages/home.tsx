@@ -108,9 +108,11 @@ export default function Home() {
       <div className="flex-1 flex flex-col overflow-hidden relative z-10">
         
         <header className="bg-white border-b border-gray-200 py-4 px-6 flex justify-between items-center">
-          <h1 className="text-xl font-bold text-gray-900">Welcome, Tony!</h1>
+          <div>
+            <div className="text-sm text-gray-500 font-medium mb-1">Wednesday, November 26</div>
+            <h1 className="text-xl font-bold text-gray-900">Welcome, Tony!</h1>
+          </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-500">Nov 26, 2025</span>
             <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm">TF</div>
           </div>
         </header>
