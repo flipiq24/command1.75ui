@@ -99,6 +99,9 @@ const getPropensityColor = (text: string) => {
 export default function DailyOutreach() {
   const [activeFilter, setActiveFilter] = useState<OutreachType | null>('connections');
   const [selectedDealIds, setSelectedDealIds] = useState<number[]>([]);
+  const [iQViewMode, setIQViewMode] = useState<'stats' | 'description'>('stats');
+  const [propertyStory, setPropertyStory] = useState<string>('');
+  const [isLoadingStory, setIsLoadingStory] = useState(false);
   const queryClient = useQueryClient();
 
   const { data: deals = [], isLoading } = useQuery({
@@ -179,6 +182,29 @@ export default function DailyOutreach() {
       setSelectedDealIds(prev => [...prev, id]);
     } else {
       setSelectedDealIds(prev => prev.filter(dealId => dealId !== id));
+    }
+  };
+
+  const handleViewModeChange = async (mode: 'stats' | 'description', dealId?: number) => {
+    setIQViewMode(mode);
+    if (mode === 'description' && dealId) {
+      setIsLoadingStory(true);
+      setPropertyStory('');
+      try {
+        const response = await fetch('/api/ai/property-story', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ dealId })
+        });
+        if (!response.ok) throw new Error('Failed to generate story');
+        const data = await response.json();
+        setPropertyStory(data.story);
+      } catch (error) {
+        console.error('Error generating story:', error);
+        setPropertyStory('Unable to generate property story at the moment. Please try again.');
+      } finally {
+        setIsLoadingStory(false);
+      }
     }
   };
 
@@ -547,55 +573,101 @@ export default function DailyOutreach() {
 
                         {/* iQ Intelligence Content - Right Side */}
                         <div className="w-2/3 p-6">
-                          <div className="flex items-center gap-3 mb-6">
-                            <div className="relative">
-                              <Lightbulb className="w-6 h-6 text-[#FF6600] animate-pulse" />
-                              <div className="absolute inset-0 w-6 h-6 bg-[#FF6600] rounded-full opacity-30 animate-ping"></div>
+                          <div className="flex items-center justify-between mb-6">
+                            <div className="flex items-center gap-3">
+                              <div className="relative">
+                                <Lightbulb className="w-6 h-6 text-[#FF6600] animate-pulse" />
+                                <div className="absolute inset-0 w-6 h-6 bg-[#FF6600] rounded-full opacity-30 animate-ping"></div>
+                              </div>
+                              <h2 className="text-xl font-bold text-[#FF6600]">iQ Property Intelligence</h2>
                             </div>
-                            <h2 className="text-xl font-bold text-[#FF6600]">iQ Property Intelligence</h2>
+                            <div className="flex gap-2">
+                              <button 
+                                onClick={() => handleViewModeChange('stats')}
+                                className={cn(
+                                  "px-4 py-1.5 text-xs font-medium rounded-lg transition",
+                                  iQViewMode === 'stats' 
+                                    ? "bg-[#FF6600] text-white" 
+                                    : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
+                                )}
+                                data-testid="button-iq-stats"
+                              >
+                                Stats
+                              </button>
+                              <button 
+                                onClick={() => handleViewModeChange('description', deal.id)}
+                                className={cn(
+                                  "px-4 py-1.5 text-xs font-medium rounded-lg transition",
+                                  iQViewMode === 'description' 
+                                    ? "bg-[#FF6600] text-white" 
+                                    : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
+                                )}
+                                data-testid="button-iq-description"
+                              >
+                                Description
+                              </button>
+                            </div>
                           </div>
 
-                          <div className="space-y-2 text-sm font-mono mb-8">
-                            <div>Status: <span className="text-[#FF6600] font-bold">[Active/Backup/Pending]</span></div>
-                            <div>Days on Market: <span className="text-[#FF6600] font-bold">[DOM]</span></div>
-                            <div>Price to Future Value: <span className="text-[#FF6600] font-bold">[PTFV%]</span></div>
-                            <div>Propensity Score: <span className="text-[#FF6600] font-bold">[0-8]</span></div>
-                            <div>Agent: <span className="text-[#FF6600] font-bold">[Name]</span> (Unassigned)</div>
-                            <div>Relationship Status: <span className="text-[#FF6600] font-bold">[Cold/Warm/Hot]</span></div>
-                            <div>Investor Source Count: <a href="https://nextjs-flipiq-agent.vercel.app/agents/AaronMills" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline hover:text-blue-800">[View Agent]</a></div>
-                            <div>Last Communication Date: <span className="text-[#FF6600] font-bold">Date or Blank</span></div>
-                            <div>Last Address Discussed: <span className="text-[#FF6600] font-bold">Address or blank</span></div>
-                          </div>
+                          {iQViewMode === 'stats' ? (
+                            <>
+                              <div className="space-y-2 text-sm font-mono mb-8">
+                                <div>Status: <span className="text-[#FF6600] font-bold">[Active/Backup/Pending]</span></div>
+                                <div>Days on Market: <span className="text-[#FF6600] font-bold">[DOM]</span></div>
+                                <div>Price to Future Value: <span className="text-[#FF6600] font-bold">[PTFV%]</span></div>
+                                <div>Propensity Score: <span className="text-[#FF6600] font-bold">[0-8]</span></div>
+                                <div>Agent: <span className="text-[#FF6600] font-bold">[Name]</span> (Unassigned)</div>
+                                <div>Relationship Status: <span className="text-[#FF6600] font-bold">[Cold/Warm/Hot]</span></div>
+                                <div>Investor Source Count: <a href="https://nextjs-flipiq-agent.vercel.app/agents/AaronMills" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline hover:text-blue-800">[View Agent]</a></div>
+                                <div>Last Communication Date: <span className="text-[#FF6600] font-bold">Date or Blank</span></div>
+                                <div>Last Address Discussed: <span className="text-[#FF6600] font-bold">Address or blank</span></div>
+                              </div>
 
-                          <div className="mb-6">
-                            <h3 className="text-lg font-bold text-gray-900 mb-4">Why this Property</h3>
-                            <ul className="space-y-2 text-sm text-gray-700">
-                              <li className="flex items-start gap-2">
-                                <span className="text-gray-400">•</span>
-                                <span>Aged listing (≥70 DOM) with strong discount potential.</span>
-                              </li>
-                              <li className="flex items-start gap-2">
-                                <span className="text-gray-400">•</span>
-                                <div>
-                                  <span>Keywords detected:</span>
-                                  <div className="flex flex-wrap gap-2 mt-2">
-                                    <span className="px-3 py-1 bg-white text-red-600 text-xs rounded-full border border-red-300 cursor-pointer hover:bg-red-50 hover:border-red-400 transition">repairs</span>
-                                    <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">investors</span>
-                                    <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">Investment</span>
-                                    <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">as-is</span>
-                                    <span className="px-3 py-1 bg-white text-blue-600 text-xs rounded-full border border-blue-300 cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition">investor</span>
-                                    <span className="px-3 py-1 bg-white text-blue-600 text-xs rounded-full border border-blue-300 cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition">estate</span>
-                                    <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">opportunity</span>
-                                    <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">Renovation</span>
-                                  </div>
+                              <div className="mb-6">
+                                <h3 className="text-lg font-bold text-gray-900 mb-4">Why this Property</h3>
+                                <ul className="space-y-2 text-sm text-gray-700">
+                                  <li className="flex items-start gap-2">
+                                    <span className="text-gray-400">•</span>
+                                    <span>Aged listing (≥70 DOM) with strong discount potential.</span>
+                                  </li>
+                                  <li className="flex items-start gap-2">
+                                    <span className="text-gray-400">•</span>
+                                    <div>
+                                      <span>Keywords detected:</span>
+                                      <div className="flex flex-wrap gap-2 mt-2">
+                                        <span className="px-3 py-1 bg-white text-red-600 text-xs rounded-full border border-red-300 cursor-pointer hover:bg-red-50 hover:border-red-400 transition">repairs</span>
+                                        <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">investors</span>
+                                        <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">Investment</span>
+                                        <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">as-is</span>
+                                        <span className="px-3 py-1 bg-white text-blue-600 text-xs rounded-full border border-blue-300 cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition">investor</span>
+                                        <span className="px-3 py-1 bg-white text-blue-600 text-xs rounded-full border border-blue-300 cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition">estate</span>
+                                        <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">opportunity</span>
+                                        <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">Renovation</span>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li className="flex items-start gap-2">
+                                    <span className="text-gray-400">•</span>
+                                    <span>Currently unassigned and no active offer status — open field opportunity.</span>
+                                  </li>
+                                </ul>
+                              </div>
+                            </>
+                          ) : (
+                            <div className="mb-6">
+                              <h3 className="text-lg font-bold text-gray-900 mb-4">Why This Property is Worth Pursuing</h3>
+                              {isLoadingStory ? (
+                                <div className="flex items-center gap-3 text-gray-500">
+                                  <div className="animate-spin w-5 h-5 border-2 border-[#FF6600] border-t-transparent rounded-full"></div>
+                                  <span>Generating story...</span>
                                 </div>
-                              </li>
-                              <li className="flex items-start gap-2">
-                                <span className="text-gray-400">•</span>
-                                <span>Currently unassigned and no active offer status — open field opportunity.</span>
-                              </li>
-                            </ul>
-                          </div>
+                              ) : (
+                                <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
+                                  {propertyStory || 'Click "Description" to generate an AI-written story about this property.'}
+                                </div>
+                              )}
+                            </div>
+                          )}
 
                           <div className="mb-8">
                             <span className="text-sm text-gray-700">Let's dive in to the property - </span>

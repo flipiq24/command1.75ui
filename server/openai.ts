@@ -73,3 +73,61 @@ Provide a brief analysis covering:
     throw new Error("Failed to analyze property");
   }
 }
+
+export async function generatePropertyStory(propertyData: {
+  address: string;
+  price: string;
+  specs: string;
+  propensity: string | string[];
+  status: string;
+  mlsStatus?: string;
+  source: string;
+  keywords?: string[];
+  agentName?: string;
+  relationshipStatus?: string;
+  dom?: number;
+}): Promise<string> {
+  try {
+    const keywords = propertyData.keywords || ['repairs', 'investors', 'Investment', 'as-is', 'investor', 'estate', 'opportunity', 'Renovation'];
+    const propensityIndicators = Array.isArray(propertyData.propensity) ? propertyData.propensity.join(', ') : propertyData.propensity;
+    
+    const prompt = `Write a simple, easy-to-understand story (3-4 paragraphs) explaining why this property is worth pursuing for a real estate acquisition associate. Write it in a conversational, friendly tone that clearly explains the opportunity.
+
+Property Details:
+- Address: ${propertyData.address}
+- Price: ${propertyData.price}
+- Specs: ${propertyData.specs}
+- MLS Status: ${propertyData.mlsStatus || 'Active'}
+- Days on Market: ${propertyData.dom || '70+'}
+- Propensity Indicators: ${propensityIndicators}
+- Keywords Found in Listing: ${keywords.join(', ')}
+- Agent: ${propertyData.agentName || 'Unassigned'}
+- Relationship Status: ${propertyData.relationshipStatus || 'Cold'}
+- Source: ${propertyData.source}
+
+Write a compelling but honest story that:
+1. Opens with why this property caught our attention
+2. Explains the opportunity based on the data (days on market, keywords like "as-is", "investors", etc.)
+3. Mentions the agent relationship status and what that means for outreach
+4. Ends with a clear call to action
+
+Keep it simple and readable - this is for an acquisition associate who needs to quickly understand why they should pursue this deal.`;
+
+    const response = await openai.chat.completions.create({
+      model: "gpt-5",
+      messages: [
+        { 
+          role: "system", 
+          content: "You are a helpful real estate investment advisor. Write clear, simple explanations that help acquisition associates understand why a property is worth pursuing. Avoid jargon and keep the tone friendly and actionable." 
+        },
+        { role: "user", content: prompt }
+      ],
+      max_completion_tokens: 1024,
+    });
+
+    return response.choices[0]?.message?.content || "Unable to generate property story at the moment.";
+  } catch (error: any) {
+    console.error("OpenAI API error:", error);
+    throw new Error("Failed to generate property story");
+  }
+}

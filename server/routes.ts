@@ -166,7 +166,7 @@ export async function registerRoutes(
   });
 
   // AI endpoints
-  const { generateAIResponse, analyzeProperty } = await import("./openai");
+  const { generateAIResponse, analyzeProperty, generatePropertyStory } = await import("./openai");
 
   app.post("/api/ai/chat", async (req, res) => {
     try {
@@ -197,6 +197,33 @@ export async function registerRoutes(
     } catch (error) {
       console.error("Error analyzing property:", error);
       res.status(500).json({ message: "Failed to analyze property" });
+    }
+  });
+
+  app.post("/api/ai/property-story", async (req, res) => {
+    try {
+      const { dealId } = req.body;
+      if (!dealId) {
+        return res.status(400).json({ message: "Deal ID is required" });
+      }
+      const deal = await storage.getDeal(dealId);
+      if (!deal) {
+        return res.status(404).json({ message: "Deal not found" });
+      }
+      const story = await generatePropertyStory({
+        address: deal.address,
+        price: deal.price,
+        specs: deal.specs,
+        propensity: deal.propensity,
+        status: deal.status,
+        mlsStatus: deal.mlsStatus || undefined,
+        source: deal.source,
+        keywords: ['repairs', 'investors', 'Investment', 'as-is', 'investor', 'estate', 'opportunity', 'Renovation'],
+      });
+      res.json({ story });
+    } catch (error) {
+      console.error("Error generating property story:", error);
+      res.status(500).json({ message: "Failed to generate property story" });
     }
   });
 
