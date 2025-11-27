@@ -11,14 +11,12 @@ import {
   Mic,
   Bot,
   MapPin,
-  User,
   Building2,
-  Calendar,
-  TrendingUp,
   AlertTriangle,
   Clock,
-  DollarSign,
-  Target
+  TrendingUp,
+  Target,
+  TrendingDown
 } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 
@@ -73,6 +71,14 @@ const getDistressIndicators = (propensity: string | string[]) => {
     p.includes("Bankruptcy") || p.includes("Liens") || p.includes("Vacant")
   );
 };
+
+const mockPriceHistory = [
+  { date: "11/15/25", price: "$75,000", change: "-6.3%" },
+  { date: "10/01/25", price: "$80,000", change: "-5.9%" },
+  { date: "08/20/25", price: "$85,000", change: "-5.6%" },
+  { date: "07/10/25", price: "$90,000", change: "-10.0%" },
+  { date: "06/01/25", price: "$100,000", change: "—" },
+];
 
 export default function DailyOutreach() {
   const [activeFilter, setActiveFilter] = useState<OutreachType | null>(null);
@@ -136,12 +142,13 @@ export default function DailyOutreach() {
     phone: "(909) 555-0123",
     email: "sarah.j@kw.com",
     brokerage: "Keller Williams Realty",
-    relationshipStatus: "Cold",
-    lastCommunication: "N/A"
+    investorDeals: 3
   };
 
   const dom = 94;
   const ptfv = "72%";
+
+  const getAgentFirstName = () => mockAgentData.name.split(' ')[0];
 
   return (
     <div className="bg-gray-50 text-gray-800 h-screen flex overflow-hidden font-sans">
@@ -228,14 +235,14 @@ export default function DailyOutreach() {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-orange-50 to-amber-50 border-b border-orange-200 px-6 py-5">
+              <div className="bg-gradient-to-r from-orange-50 to-amber-50 border-b border-orange-200 px-6 py-4">
                 <div className="flex items-start gap-3">
                   <div className="w-8 h-8 bg-[#FF6600] rounded-lg flex items-center justify-center flex-shrink-0">
                     <AlertTriangle className="w-4 h-4 text-white" />
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900 mb-2">Why Are We Chasing This Property?</h3>
-                    <ul className="space-y-1.5 text-sm text-gray-700">
+                    <ul className="space-y-1 text-sm text-gray-700">
                       <li className="flex items-center gap-2">
                         <Clock className="w-4 h-4 text-[#FF6600]" />
                         <span>Aged listing ({dom} DOM) with strong discount potential (PTFV: {ptfv})</span>
@@ -255,83 +262,183 @@ export default function DailyOutreach() {
                 </div>
               </div>
 
-              <div className="px-6 py-5 border-b border-gray-200">
-                <div className="grid grid-cols-2 gap-8">
+              <div className="flex border-b border-gray-200">
+                
+                <div className="flex-1 p-6 border-r border-gray-200">
+                  <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                    <Building2 className="w-4 h-4" />
+                    Property Details
+                  </h4>
                   
-                  <div>
-                    <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-2">
-                      <Building2 className="w-4 h-4" />
-                      Property Details
-                    </h4>
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-500">List Price</span>
-                        <span className="font-bold text-gray-900">{currentDeal.price}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-500">PTFV %</span>
-                        <span className="font-bold text-green-600">{ptfv}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-500">Propensity Score</span>
-                        <span className={cn(
-                          "font-bold",
-                          getPropensityScore(currentDeal.propensity) >= 6 ? "text-red-600" : 
-                          getPropensityScore(currentDeal.propensity) >= 3 ? "text-green-600" : "text-blue-600"
-                        )}>
-                          {getPropensityScore(currentDeal.propensity)} / 8
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-500">Days on Market</span>
-                        <span className="font-bold text-amber-600">{dom} days</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-500">Source</span>
-                        <span className="font-bold text-gray-900">{currentDeal.source}</span>
-                      </div>
+                  <div className="space-y-3 mb-6">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-500">List Price</span>
+                      <span className="font-bold text-gray-900">{currentDeal.price}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-500">PTFV %</span>
+                      <span className="font-bold text-green-600">{ptfv}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-500">Propensity Score</span>
+                      <span className={cn(
+                        "font-bold",
+                        getPropensityScore(currentDeal.propensity) >= 6 ? "text-red-600" : 
+                        getPropensityScore(currentDeal.propensity) >= 3 ? "text-green-600" : "text-blue-600"
+                      )}>
+                        {getPropensityScore(currentDeal.propensity)} / 8
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-500">Days on Market</span>
+                      <span className="font-bold text-amber-600">{dom} days</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-500">Source</span>
+                      <span className="font-bold text-gray-900">{currentDeal.source} / Active</span>
                     </div>
                   </div>
 
-                  <div>
-                    <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-2">
-                      <User className="w-4 h-4" />
-                      Agent Details
-                    </h4>
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-500">Agent Name</span>
-                        <span className="font-bold text-gray-900">{mockAgentData.name}</span>
+                  <div className="mt-6">
+                    <h5 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                      <TrendingDown className="w-4 h-4" />
+                      Price History (Last 12 Months)
+                    </h5>
+                    <div className="bg-gray-50 rounded-lg border border-gray-200 overflow-hidden">
+                      <table className="w-full text-xs">
+                        <thead>
+                          <tr className="bg-gray-100 text-gray-500 uppercase tracking-wider">
+                            <th className="px-3 py-2 text-left font-bold">Date</th>
+                            <th className="px-3 py-2 text-left font-bold">New Price</th>
+                            <th className="px-3 py-2 text-right font-bold">% Change</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {mockPriceHistory.map((row, idx) => (
+                            <tr key={idx} className="border-t border-gray-200">
+                              <td className="px-3 py-2 text-gray-700">{row.date}</td>
+                              <td className="px-3 py-2 font-bold text-gray-900">{row.price}</td>
+                              <td className={cn(
+                                "px-3 py-2 text-right font-bold",
+                                row.change.startsWith("-") ? "text-red-600" : "text-gray-400"
+                              )}>{row.change}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="w-[400px] p-6 overflow-y-auto">
+                  
+                  <div className="mb-6 border-b border-gray-100 pb-4">
+                    <h3 className="text-xl font-bold text-gray-900">{mockAgentData.name}</h3>
+                    <p className="text-sm text-gray-500">{mockAgentData.brokerage}</p>
+                    <div className="flex items-center gap-2 mt-2 text-lg font-mono font-bold text-gray-800">
+                      <Phone className="w-4 h-4 text-gray-400" />
+                      {mockAgentData.phone}
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-bold text-gray-400 uppercase">Relationship Status</label>
+                        <select className="w-full text-xs p-2 border border-gray-200 rounded bg-gray-50 focus:border-orange-500 outline-none" data-testid="select-relationship-status">
+                          <option>Select...</option>
+                          <option>Priority</option>
+                          <option>Hot</option>
+                          <option>Warm</option>
+                          <option>Cold</option>
+                          <option>Unknown</option>
+                          <option>DO NOT CONTACT</option>
+                          <option>Skip Trace</option>
+                        </select>
                       </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-500">Brokerage</span>
-                        <span className="font-medium text-gray-700">{mockAgentData.brokerage}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-500">Relationship Status</span>
-                        <span className={cn(
-                          "text-xs font-bold px-2 py-0.5 rounded-full",
-                          mockAgentData.relationshipStatus === "Hot" ? "bg-red-100 text-red-700" :
-                          mockAgentData.relationshipStatus === "Warm" ? "bg-amber-100 text-amber-700" :
-                          "bg-blue-100 text-blue-700"
-                        )}>
-                          {mockAgentData.relationshipStatus}
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-500">Last Communication</span>
-                        <span className={cn(
-                          "font-medium",
-                          mockAgentData.lastCommunication === "N/A" ? "text-amber-600 bg-amber-50 px-2 py-0.5 rounded" : "text-gray-900"
-                        )}>
-                          {mockAgentData.lastCommunication}
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-500">Phone</span>
-                        <span className="font-medium text-gray-900">{mockAgentData.phone}</span>
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-bold text-gray-400 uppercase">Agent Rating</label>
+                        <select className="w-full text-xs p-2 border border-gray-200 rounded bg-gray-50 focus:border-orange-500 outline-none" data-testid="select-agent-rating">
+                          <option>Select...</option>
+                          <option>Unresponsive</option>
+                          <option>Average</option>
+                          <option>Cooperative</option>
+                          <option>Investor</option>
+                          <option>Wholesaler</option>
+                          <option>Seller</option>
+                          <option>Lender</option>
+                          <option>DO NOT CONTACT</option>
+                        </select>
                       </div>
                     </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-bold text-gray-400 uppercase">Basket</label>
+                        <select className="w-full text-xs p-2 border border-gray-200 rounded bg-gray-50 focus:border-orange-500 outline-none" data-testid="select-basket">
+                          <option>Select...</option>
+                          <option>Cloud CMA</option>
+                          <option>Clients</option>
+                          <option>Prospects</option>
+                          <option>High Value</option>
+                          <option>Mid Value</option>
+                          <option>Low Value</option>
+                          <option>DO NOT CONTACT</option>
+                        </select>
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-bold text-gray-400 uppercase">Active Last 2 Yrs</label>
+                        <select className="w-full text-xs p-2 border border-gray-200 rounded bg-gray-50 focus:border-orange-500 outline-none" data-testid="select-active-2yrs">
+                          <option>Select...</option>
+                          <option>True</option>
+                          <option>False</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-bold text-gray-400 uppercase">Follow Up Status</label>
+                      <select className="w-full text-xs p-2 border border-gray-200 rounded bg-gray-50 focus:border-orange-500 outline-none" data-testid="select-followup-status">
+                        <option>Select...</option>
+                        <option>Signed Up to Webinar</option>
+                        <option>FlipIQ Marketplace Member</option>
+                        <option>HWC Campaign</option>
+                        <option>Contact Made, Continue to Follow</option>
+                        <option>Did Not attend Webinar</option>
+                        <option>Opened Link</option>
+                        <option>Wrong Agent Data</option>
+                        <option>Not Interested</option>
+                        <option>Do Not Contact</option>
+                      </select>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-bold text-gray-400 uppercase">Status Date</label>
+                        <input type="date" className="w-full text-xs p-2 border border-gray-200 rounded bg-gray-50 focus:border-orange-500 outline-none" data-testid="input-status-date" />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-bold text-gray-400 uppercase">Last Comm Date</label>
+                        <input type="date" defaultValue="2025-03-18" className="w-full text-xs p-2 border border-gray-200 rounded bg-gray-50 focus:border-orange-500 outline-none" data-testid="input-last-comm-date" />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-bold text-gray-400 uppercase">Last Address Discussed</label>
+                      <input type="text" placeholder="123 Main St..." className="w-full text-xs p-2 border border-gray-200 rounded bg-gray-50 focus:border-orange-500 outline-none" data-testid="input-last-address" />
+                    </div>
+                    
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-bold text-gray-400 uppercase">Last Communicated AA</label>
+                      <input type="text" placeholder="Name of AA..." className="w-full text-xs p-2 border border-gray-200 rounded bg-gray-50 focus:border-orange-500 outline-none" data-testid="input-last-aa" />
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-bold text-gray-400 uppercase">Investor Source Count</label>
+                      <input type="number" defaultValue={mockAgentData.investorDeals} className="w-full text-xs p-2 border border-gray-200 rounded bg-gray-50 font-bold text-[#FF6600] focus:border-orange-500 outline-none" data-testid="input-investor-count" />
+                    </div>
+
                   </div>
                 </div>
               </div>
@@ -343,16 +450,16 @@ export default function DailyOutreach() {
                 </h4>
                 <div className="bg-white rounded-lg border border-gray-200 p-4 shadow-sm">
                   <p className="text-gray-700 leading-relaxed">
-                    "Hey <span className="font-bold text-[#FF6600]">{mockAgentData.name}</span>, this is Tony from FlipIQ. 
-                    I noticed <span className="font-bold">{currentDeal.address}</span> has been on the market for 
-                    <span className="font-bold text-amber-600"> {dom} days</span>. I work with investors who are actively 
-                    looking in this area, and I wanted to see if your seller might be open to considering a cash offer. 
-                    We can typically close in 14-21 days. Would that be something worth exploring?"
+                    "Hey <span className="font-bold text-[#FF6600]">{getAgentFirstName()}</span>, this is Tony from (Company). 
+                    I noticed you sourced deals to investors like FairTrade, LLC and others like Investosocal, I believe the deal on 123 Green street was a good one. 
+                    So I know you understand investment grade properties. I'm calling you on <span className="font-bold">{currentDeal.address}</span> which 
+                    has been on the market <span className="font-bold text-amber-600">{dom} days</span>. We are proven investors that move quickly. 
+                    Wanted to see if your seller is open to a cash offer. We can close in 14-21 days. Would that be worth exploring?"
                   </p>
                 </div>
               </div>
 
-              <div className="px-6 py-6 bg-white">
+              <div className="px-6 py-5 bg-white">
                 <div className="flex items-center justify-between">
                   <div>
                     <h4 className="font-bold text-gray-900 mb-1">Ready to reach out?</h4>
