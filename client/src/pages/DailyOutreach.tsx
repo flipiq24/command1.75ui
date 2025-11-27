@@ -142,23 +142,22 @@ export default function DailyOutreach() {
   }, [deals]);
 
   const filteredDeals = useMemo(() => {
-    return sortedDeals.filter(deal => {
-      if (!activeFilter) return false;
-      
-      if (activeFilter === 'connections') {
-        return deal.source === 'MLS' && deal.mlsStatus === 'Active';
-      }
+    if (!activeFilter) return [];
+    
+    if (activeFilter === 'connections') {
+      const mlsActiveDeals = sortedDeals.filter(deal => deal.source === 'MLS' && deal.mlsStatus === 'Active');
+      return mlsActiveDeals.slice(0, 1);
+    }
 
-      if (activeFilter === 'priority') {
-        return deal.type === 'hot';
-      }
+    if (activeFilter === 'priority') {
+      return sortedDeals.filter(deal => deal.type === 'hot');
+    }
 
-      if (activeFilter === 'topOfMind') {
-        return deal.type === 'warm' || deal.type === 'cold';
-      }
+    if (activeFilter === 'topOfMind') {
+      return sortedDeals.filter(deal => deal.type === 'warm' || deal.type === 'cold');
+    }
 
-      return false;
-    });
+    return [];
   }, [sortedDeals, activeFilter]);
 
   const [isBulkActionsOpen, setIsBulkActionsOpen] = useState(false);
