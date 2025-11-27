@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { cn } from "@/lib/utils";
+import { Info } from 'lucide-react';
 
 type DealType = 'hot' | 'warm' | 'cold' | 'new';
 
@@ -113,6 +114,7 @@ const CircularProgress = ({
 
 export default function ActionPlan() {
   const [hoveredId, setHoveredId] = useState<DealType | null>(null);
+  const [statusTooltipId, setStatusTooltipId] = useState<DealType | null>(null);
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
@@ -147,9 +149,47 @@ export default function ActionPlan() {
             </div>
 
             {/* Labels */}
-            <div className="text-center mb-4">
+            <div className="text-center mb-4 flex flex-col items-center">
               <div className="text-lg font-bold text-gray-900 mb-1">{item.label}</div>
-              <div className="text-xs font-medium text-gray-500">Status: {item.count}/{item.total}/{item.total}</div>
+              
+              <div className="relative flex items-center gap-1.5">
+                <div className="text-base font-semibold text-gray-700 tracking-tight">
+                  Status: {item.count}/{item.total}/{item.total}
+                </div>
+                
+                <div 
+                  className="text-gray-400 hover:text-gray-600 cursor-help"
+                  onMouseEnter={() => setStatusTooltipId(item.id)}
+                  onMouseLeave={() => setStatusTooltipId(null)}
+                >
+                  <Info className="w-4 h-4" />
+                </div>
+
+                {/* Status Tooltip */}
+                <div 
+                  className={cn(
+                    "absolute top-8 left-1/2 transform -translate-x-1/2 w-80 bg-gray-900 text-white p-4 rounded-lg shadow-xl z-30 transition-all duration-200 pointer-events-none text-left text-xs leading-relaxed",
+                    statusTooltipId === item.id ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+                  )}
+                >
+                  <div className="font-bold text-white mb-2 text-sm">Status Breakdown:</div>
+                  <div className="space-y-2">
+                    <div>
+                      <span className="font-bold text-gray-300">• First Number — Not Started:</span><br/>
+                      <span className="text-gray-400">Deals that have NOT been opened yet.</span>
+                    </div>
+                    <div>
+                      <span className="font-bold text-gray-300">• Second Number — In Progress:</span><br/>
+                      <span className="text-gray-400">Deals that HAVE been opened but have NO completed communication.</span>
+                    </div>
+                    <div>
+                      <span className="font-bold text-gray-300">• Third Number — Completed:</span><br/>
+                      <span className="text-gray-400">Deals where communication WAS completed and the status was properly updated.</span>
+                    </div>
+                  </div>
+                  <div className="absolute -top-1.5 left-1/2 transform -translate-x-1/2 rotate-45 w-3 h-3 bg-gray-900"></div>
+                </div>
+              </div>
             </div>
 
             {/* CTA Button */}
