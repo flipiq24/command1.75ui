@@ -22,7 +22,10 @@ import {
   LogOut,
   CalendarCheck,
   BarChart2,
-  MoreVertical
+  MoreVertical,
+  Target,
+  HelpCircle,
+  Flame
 } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
@@ -250,120 +253,100 @@ export default function Home() {
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden flex-1 flex flex-col">
                 
                 {/* Table Header */}
-                <div className="flex py-3 px-2 bg-white border-b border-gray-200">
-                    <div className="w-12 shrink-0"></div> 
+                <div className="flex py-4 px-2 bg-white border-b border-gray-200 items-center">
+                    <div className="w-12 shrink-0 flex justify-center">
+                        <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
+                    </div> 
                     <div className="w-1/3 px-4">
-                        <div className="text-[11px] text-gray-500 font-bold uppercase tracking-wider">Property</div>
-                        <div className="text-[10px] text-gray-400 mt-0.5 font-normal">Type / Br / Ba / SqFt / Yr</div>
+                        <div className="flex items-center gap-2">
+                            <div className="text-xs text-gray-600 font-bold">Property</div>
+                            <HelpCircle className="w-3 h-3 text-gray-400" />
+                        </div>
+                        <div className="text-[11px] text-gray-400 mt-1 font-normal">Type / Br / Ba / Garage / Built / Ft² / Lot / Pool</div>
                     </div>
-                    <div className="w-1/6 px-4">
-                        <div className="text-[11px] text-gray-500 font-bold uppercase tracking-wider">List Price</div>
-                        <div className="text-[10px] text-gray-400 mt-0.5 font-normal">Propensity Score</div>
+                    <div className="w-1/5 px-4">
+                        <div className="flex items-center gap-2">
+                            <div className="text-xs text-gray-600 font-bold">List Price</div>
+                            <HelpCircle className="w-3 h-3 text-gray-400" />
+                        </div>
+                        <div className="text-[11px] text-gray-400 mt-1 font-normal">Propensity to sale score</div>
                     </div>
-                    <div className="w-1/6 px-4">
-                        <div className="text-[11px] text-gray-500 font-bold uppercase tracking-wider">Market Info</div>
-                        <div className="text-[10px] text-gray-400 mt-0.5 font-normal">DOM / Created</div>
-                    </div>
-                    <div className="w-1/6 px-4">
-                        <div className="text-[11px] text-gray-500 font-bold uppercase tracking-wider">Evaluation</div>
-                        <div className="text-[10px] text-gray-400 mt-0.5 font-normal">Asking vs ARV / ARV</div>
-                    </div>
-                    <div className="w-1/6 px-4 text-right">
-                        <div className="text-[11px] text-gray-500 font-bold uppercase tracking-wider">Offer Status</div>
-                        <div className="text-[10px] text-gray-400 mt-0.5 font-normal">Next Action / Dates</div>
+                    <div className="flex-1 px-4 text-right">
+                         <div className="flex items-center justify-end gap-2">
+                            <div className="text-xs text-gray-600 font-bold">Offer Status</div>
+                            <HelpCircle className="w-3 h-3 text-gray-400" />
+                        </div>
                     </div>
                 </div>
 
                 {/* Deal Row 1 */}
-                <div className="flex border-b border-gray-100 hover:bg-gray-50 transition group">
-                    <div className="w-12 shrink-0 flex flex-col items-center pt-4 gap-3 border-r border-gray-50 bg-gray-50/30">
-                        <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" title="Mark as Done" />
-                        <Zap className="w-5 h-5 text-gray-400 hover:text-orange-500 cursor-pointer transition-colors" />
-                        <div className="w-5 h-5 flex items-center justify-center text-gray-300 hover:text-gray-600 cursor-pointer">•••</div>
+                <div className="flex border-b border-gray-100 hover:bg-gray-50 transition group py-4">
+                    <div className="w-12 shrink-0 flex flex-col items-center gap-3 pt-1">
+                        <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
+                        <div className="bg-gray-100 rounded-lg p-1 flex flex-col items-center gap-2 w-8">
+                            <Target className="w-4 h-4 text-gray-500 hover:text-gray-800 cursor-pointer" />
+                            <div className="w-4 h-[1px] bg-gray-300"></div>
+                            <MoreVertical className="w-4 h-4 text-gray-500 hover:text-gray-800 cursor-pointer" />
+                        </div>
                     </div>
 
-                    <div className="flex-1 flex py-4">
+                    <div className="flex-1 flex flex-col md:flex-row">
                         
-                        <div className="w-1/3 px-4 flex flex-col justify-center">
-                            <div className="mb-2">
-                                <span className="bg-yellow-50 text-yellow-700 border border-yellow-200 px-2 py-0.5 rounded text-[11px] font-bold uppercase mr-2">In Negotiations</span>
+                        <div className="w-1/3 px-4 flex flex-col justify-start">
+                            <div className="font-bold text-gray-900 text-base mb-1">2842 Rosarita St, San Bernardino, CA 92407</div>
+                            <div className="text-xs text-gray-500">3 Br / 2 Ba / 1 Gar / 1990 / 1,169 ft² / 7,362 ft² / Pool:N/A</div>
+                        </div>
+
+                        <div className="w-1/5 px-4 flex flex-col justify-start">
+                            <div className="font-bold text-gray-900 text-base mb-1">$390,000</div>
+                            <div className="text-xs text-gray-400">Propensity Score: N/A</div>
+                        </div>
+
+                        <div className="flex-1 px-4 flex flex-col justify-start">
+                            <div className="flex items-center gap-4 mb-2">
+                                <div className="bg-red-50 rounded-full p-1 border border-red-100">
+                                    <Flame className="w-4 h-4 text-red-500" />
+                                </div>
+                                <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
+                                <div className="relative">
+                                    <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium py-1 px-3 rounded flex items-center gap-1">
+                                        To do: Not set <ChevronDown className="w-3 h-3" />
+                                    </button>
+                                </div>
+                                <div className="text-xs text-gray-400">• 0 Critical • 0 Reminders</div>
                             </div>
-                            <div className="font-bold text-gray-900 text-base">2011 Windsor Cir</div>
-                            <div className="text-sm text-gray-500">Duarte, CA 91010</div>
-                            <div className="text-xs text-gray-400 mt-1">SFR • 3bd / 0ba • 1,654 sqft • 1981</div>
-                        </div>
-
-                        <div className="w-1/6 px-4 flex flex-col justify-center">
-                            <div className="font-bold text-gray-900 text-lg">$500,000</div>
-                        </div>
-
-                        <div className="w-1/6 px-4 flex flex-col justify-center">
-                            <div className="font-bold text-gray-700 text-sm">7 Days</div>
-                            <div className="text-[10px] text-gray-400 mt-1">Created: 11/26/25</div>
-                        </div>
-
-                        <div className="w-1/6 px-4 flex flex-col justify-center">
-                            <div className="font-bold text-gray-900 text-sm">0.00% Spread</div>
-                            <div className="text-xs text-gray-500 mt-1">ARV: $0</div>
-                        </div>
-
-                        <div className="w-1/6 px-4 flex flex-col justify-center items-end text-right">
-                            <button className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-1.5 px-3 rounded shadow-sm mb-2 transition cursor-pointer">
-                                Call Agent
-                            </button>
-                            <div className="text-[10px] text-gray-400">
+                            <div className="text-[10px] text-gray-400 pl-12">
                                 LOD: 11/26/25<br/>
-                                LCD: 11/26/25
+                                LCD: 11/21/25
                             </div>
+                        </div>
+
+                        <div className="w-1/4 px-4 flex flex-col items-end text-right">
+                            <div className="text-sm text-gray-600 font-medium mb-2">Source: <span className="font-bold text-gray-900">Off Market</span></div>
+                            <button className="flex items-center gap-2 text-xs font-medium text-blue-600 hover:text-blue-800">
+                                <span className="font-bold">30%</span> Offer Terms Sent <ChevronDown className="w-3 h-3" />
+                            </button>
                         </div>
 
                     </div>
                 </div>
 
-                {/* Deal Row 2 */}
-                <div className="flex border-b border-gray-100 hover:bg-gray-50 transition group">
-                    <div className="w-12 shrink-0 flex flex-col items-center pt-4 gap-3 border-r border-gray-50 bg-gray-50/30">
-                        <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
-                        <Zap className="w-5 h-5 text-gray-400 hover:text-orange-500 cursor-pointer transition-colors" />
-                        <div className="w-5 h-5 flex items-center justify-center text-gray-300 hover:text-gray-600 cursor-pointer">•••</div>
-                    </div>
-
-                    <div className="flex-1 flex py-4">
-                        
-                        <div className="w-1/3 px-4 flex flex-col justify-center">
-                            <div className="mb-2">
-                                <span className="bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded text-[11px] font-bold uppercase mr-2">New</span>
-                            </div>
-                            <div className="font-bold text-gray-900 text-base">420 Robinson</div>
-                            <div className="text-sm text-gray-500">Bakersfield, CA 93305</div>
-                            <div className="text-xs text-gray-400 mt-1">SFR • 3bd / 1ba • 1,013 sqft • 1959</div>
-                        </div>
-
-                        <div className="w-1/6 px-4 flex flex-col justify-center">
-                            <div className="font-bold text-gray-900 text-lg">$75,000</div>
-                            <div className="text-[10px] text-green-600 font-bold mt-1">Active</div>
-                        </div>
-
-                        <div className="w-1/6 px-4 flex flex-col justify-center">
-                            <div className="font-bold text-gray-700 text-sm">3 Days</div>
-                            <div className="text-[10px] text-gray-400 mt-1">Created: 11/24/25</div>
-                        </div>
-
-                        <div className="w-1/6 px-4 flex flex-col justify-center">
-                            <div className="font-bold text-green-700 text-sm">33.05% Spread</div>
-                            <div className="text-xs text-gray-500 mt-1">ARV: $226,931</div>
-                        </div>
-
-                        <div className="w-1/6 px-4 flex flex-col justify-center items-end text-right">
-                            <button className="bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 text-xs font-bold py-1.5 px-3 rounded shadow-sm mb-2 transition cursor-pointer">
-                                Analyze
-                            </button>
-                            <div className="text-[10px] text-gray-400">
-                                LOD: 11/26/25<br/>
-                                LCD: N/A
-                            </div>
-                        </div>
-
+                 {/* Footer Pagination */}
+                <div className="bg-white px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+                    <div className="text-sm text-gray-500">Showing 1 to 1 of 1 entries</div>
+                    <div className="flex items-center gap-2">
+                        <button className="px-3 py-1 border border-gray-300 rounded text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2">
+                            5 / page <ChevronDown className="w-3 h-3" />
+                        </button>
+                        <button className="px-3 py-1 border border-gray-300 rounded text-sm text-gray-600 hover:bg-gray-50 disabled:opacity-50">
+                            Previous
+                        </button>
+                        <button className="px-3 py-1 bg-blue-600 text-white rounded text-sm font-medium hover:bg-blue-700">
+                            1
+                        </button>
+                        <button className="px-3 py-1 border border-gray-300 rounded text-sm text-gray-600 hover:bg-gray-50 disabled:opacity-50">
+                            Next
+                        </button>
                     </div>
                 </div>
 
