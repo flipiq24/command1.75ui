@@ -514,7 +514,7 @@ export default function DailyOutreach() {
                         <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center">
                           <Lightbulb className="w-6 h-6 text-[#FF6600]" />
                         </div>
-                        <h2 className="text-xl font-bold text-green-600">iQ Property Intelligence</h2>
+                        <h2 className="text-xl font-bold text-[#FF6600]">iQ Property Intelligence</h2>
                       </div>
 
                       <div className="space-y-2 text-sm font-mono mb-8">
