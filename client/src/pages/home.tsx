@@ -291,11 +291,11 @@ export default function Home() {
                                 <div className="text-[11px] text-gray-400 space-y-1 text-left w-full max-w-[140px]">
                                     <div className="flex flex-col">
                                         <span className="font-medium text-gray-500">Last Open Date:</span>
-                                        <span className="text-gray-800">{deal.lastOpen}</span>
+                                        <span className="text-gray-900 bg-yellow-100 px-1.5 py-0.5 rounded font-bold w-fit">{deal.lastOpen}</span>
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="font-medium text-gray-500">Last Called Date:</span>
-                                        <span className="text-gray-800">{deal.lastCalled}</span>
+                                        <span className="text-gray-900 bg-yellow-100 px-1.5 py-0.5 rounded font-bold w-fit">{deal.lastCalled}</span>
                                     </div>
                                 </div>
                             </div>
