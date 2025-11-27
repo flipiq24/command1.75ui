@@ -380,50 +380,108 @@ export default function DailyOutreach() {
                             />
                             <div className="bg-gray-100 rounded-lg p-1 flex flex-col items-center gap-2 w-8">
                                 <Target className="w-4 h-4 text-gray-500 hover:text-gray-800 cursor-pointer" />
-                                {deal.isHot && <Flame className="w-4 h-4 text-[#FF6600]" />}
+                                <div className="w-4 h-[1px] bg-gray-300"></div>
+                                <MoreVertical className="w-4 h-4 text-gray-500 hover:text-gray-800 cursor-pointer" />
                             </div>
                         </div>
+
                         <div className="flex-1 flex flex-col md:flex-row">
                             
                             <div className="w-5/12 px-4 flex flex-col justify-start gap-2">
-                                <div className="flex items-start gap-2">
-                                    <span className={cn("text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider shrink-0", 
-                                      deal.type === 'hot' ? 'bg-red-100 text-red-700' : 
-                                      deal.type === 'warm' ? 'bg-amber-100 text-amber-700' : 
-                                      deal.type === 'cold' ? 'bg-blue-100 text-blue-700' : 
-                                      'bg-gray-100 text-gray-600'
-                                    )}>
-                                      {deal.type}
-                                    </span>
-                                    <div>
-                                        <Link href={`/property/${deal.id}`} className="font-semibold text-gray-900 hover:text-[#FF6600] transition cursor-pointer text-sm" data-testid={`link-deal-${deal.id}`}>
-                                            {deal.address}
-                                        </Link>
-                                        <div className="text-xs text-gray-500">{deal.specs}</div>
+                                <div className="flex items-center gap-2 mt-1">
+                                    {deal.isHot && (
+                                      <div className="bg-red-500 rounded-full px-2 py-0.5 border border-red-500 flex items-center gap-1 shadow-sm">
+                                          <Flame className="w-3 h-3 text-white" />
+                                          <span className="text-[10px] font-bold text-white uppercase">Hot</span>
+                                      </div>
+                                    )}
+                                    {deal.isHot && <div className="w-1 h-1 rounded-full bg-gray-300"></div>}
+                                    
+                                    <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
+                                    <div className="relative">
+                                        <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium py-1 px-2 rounded flex items-center gap-1 whitespace-nowrap">
+                                            To do: Not set <ChevronDown className="w-3 h-3" />
+                                        </button>
+                                    </div>
+                                    <div className="text-xs text-gray-400 whitespace-nowrap">• 0 Critical • 0 Reminders</div>
+                                </div>
+                                
+                                <div>
+                                    <div className="font-bold text-gray-900 text-base mb-1">{deal.address}</div>
+                                    <div className="text-xs text-gray-500">{deal.specs}</div>
+                                </div>
+                            </div>
+
+                            <div className="w-2/12 px-4 flex flex-col items-center text-center">
+                                <div className="font-bold text-gray-900 text-base mb-1">{deal.price}</div>
+                                {Array.isArray(deal.propensity) ? (
+                                  <>
+                                    <div className="flex items-center gap-1 mb-0.5">
+                                      <span className="text-[10px] text-gray-400">Propensity Score:</span>
+                                      <span className={cn(
+                                        "text-[11px] font-medium",
+                                        getPropensityScore(deal.propensity) >= 6 ? "text-red-600" : 
+                                        getPropensityScore(deal.propensity) >= 3 ? "text-green-600" : "text-blue-600"
+                                      )}>
+                                        {getPropensityScore(deal.propensity)}
+                                      </span>
+                                    </div>
+                                    <div className="flex flex-wrap justify-center gap-x-1 gap-y-0.5 mb-1">
+                                      {deal.propensity.map((item: string, idx: number) => (
+                                        <div key={idx} className="group/item relative cursor-help leading-none hover:z-50">
+                                          <span className={cn("text-[10px] font-normal inline-block", getPropensityColor(item))}>
+                                            {item}
+                                          </span>
+                                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover/item:opacity-100 pointer-events-none z-50 text-center hidden group-hover/item:block">
+                                            {item}
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </>
+                                ) : (
+                                  <div className="text-xs text-gray-400 mb-1">Propensity Score: {deal.propensity === 'N/A' ? '0' : deal.propensity}</div>
+                                )}
+                            </div>
+
+                            <div className="w-2/12 px-4 flex flex-col items-center">
+                                <div className="text-[11px] text-gray-400 space-y-1 text-left w-full max-w-[140px]">
+                                    <div className="flex flex-col group relative cursor-help">
+                                        <span className="font-medium text-gray-500">Last Open Date:</span>
+                                        <span className={cn(
+                                          "text-gray-900 font-medium", 
+                                          deal.lastOpen === 'N/A' && "bg-yellow-100 px-1.5 py-0.5 rounded font-bold w-fit"
+                                        )}>
+                                          {deal.lastOpen}
+                                        </span>
+                                        {deal.lastOpen === 'N/A' && (
+                                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
+                                            Needs attention: This deal hasn't been opened recently.
+                                          </div>
+                                        )}
+                                    </div>
+                                    <div className="flex flex-col group relative cursor-help">
+                                        <span className="font-medium text-gray-500">Last Called Date:</span>
+                                        <span className={cn(
+                                          "text-gray-900 font-medium", 
+                                          deal.lastCalled === 'N/A' && "bg-yellow-100 px-1.5 py-0.5 rounded font-bold w-fit"
+                                        )}>
+                                          {deal.lastCalled}
+                                        </span>
+                                        {deal.lastCalled === 'N/A' && (
+                                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
+                                            Needs attention: No recent call recorded.
+                                          </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div className="w-2/12 px-4 flex flex-col justify-center gap-1">
-                                <div className="font-bold text-gray-800 text-sm">{deal.price}</div>
-                                <div className="flex flex-wrap gap-1">
-                                    {Array.isArray(deal.propensity) ? deal.propensity.slice(0, 2).map((p, i) => (
-                                        <span key={i} className={cn("text-[10px] font-medium", getPropensityColor(p))}>
-                                            {p.split(' ')[0]}
-                                        </span>
-                                    )) : null}
-                                </div>
-                            </div>
-                            
-                            <div className="w-2/12 px-4 flex flex-col justify-center gap-0.5">
-                                <div className="text-xs text-gray-700">{deal.lastOpen}</div>
-                                <div className="text-xs text-gray-500">{deal.lastCalled}</div>
-                            </div>
-                            
-                            <div className="w-3/12 px-4 flex flex-col justify-center gap-1">
+
+                            <div className="w-3/12 px-4 flex flex-col items-center justify-center gap-2">
+                                <div className="text-xs text-gray-500 font-medium">Source: <span className="font-bold text-gray-900">{deal.source}</span></div>
                                 <DropdownMenu>
                                   <DropdownMenuTrigger asChild>
-                                    <button className="flex items-center gap-1.5 text-xs text-gray-700 hover:text-gray-900 transition cursor-pointer w-full text-left" data-testid={`button-status-${deal.id}`}>
+                                    <button className="flex items-center gap-2 text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 py-1.5 px-3 rounded-md transition-colors w-full justify-between max-w-[180px] whitespace-nowrap border border-transparent hover:border-gray-200" data-testid={`button-status-${deal.id}`}>
                                         <span className="font-bold text-[#4A90E2]">{deal.statusPercent}</span> 
                                         <span className="truncate">{deal.status}</span>
                                         <ChevronDown className="w-3 h-3 flex-shrink-0 text-gray-400" />
@@ -442,7 +500,6 @@ export default function DailyOutreach() {
                                     ))}
                                   </DropdownMenuContent>
                                 </DropdownMenu>
-                                <div className="text-[10px] text-gray-400 uppercase tracking-wider">{deal.source}</div>
                             </div>
 
                         </div>
