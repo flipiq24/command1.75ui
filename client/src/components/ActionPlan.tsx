@@ -118,9 +118,22 @@ export default function ActionPlan() {
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Nov 26, 2025 — Today's Action Plan!</h2>
-        <p className="text-gray-500 text-sm mt-1 font-medium uppercase tracking-wide">Deals to Follow Up Today:</p>
+      <div className="flex justify-between items-start mb-8">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900">Nov 27, 2025 — Today's Action Plan!</h2>
+          <p className="text-sm text-gray-500 mt-1 uppercase tracking-wide font-semibold">Deals to Follow Up Today</p>
+        </div>
+
+        <div className="bg-blue-50 border-2 border-blue-100 rounded-xl px-6 py-3 flex flex-col items-center shadow-sm">
+          <div className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-1">Daily Offer Goal</div>
+          <div className="flex items-baseline gap-1">
+            <span className="text-4xl font-black text-blue-600">1</span>
+            <span className="text-xl font-bold text-gray-300">/ 3</span>
+          </div>
+          <div className="w-full bg-blue-200 h-1.5 rounded-full mt-2 overflow-hidden">
+            <div className="bg-blue-600 h-full" style={{ width: '33%' }}></div>
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
