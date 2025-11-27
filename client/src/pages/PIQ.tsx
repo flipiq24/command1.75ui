@@ -387,7 +387,7 @@ export default function PIQ() {
 
               {showIQPanel && (
                 <div className="mt-6 bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-                  <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-6 mb-6">
                     <div className="flex items-center gap-3">
                       <div className="relative">
                         <Lightbulb className="w-6 h-6 text-[#FF6600] animate-pulse" />
@@ -399,10 +399,10 @@ export default function PIQ() {
                       <button 
                         onClick={() => setIQViewMode('stats')}
                         className={cn(
-                          "px-4 py-1.5 text-xs font-medium rounded-lg transition",
+                          "px-4 py-1.5 text-xs font-medium rounded-lg border transition",
                           iQViewMode === 'stats' 
-                            ? "bg-[#FF6600] text-white" 
-                            : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
+                            ? "bg-[#FF6600] text-white border-[#FF6600]" 
+                            : "bg-white text-[#FF6600] border-gray-200 hover:bg-orange-50"
                         )}
                         data-testid="button-piq-stats"
                       >
@@ -411,10 +411,10 @@ export default function PIQ() {
                       <button 
                         onClick={() => setIQViewMode('description')}
                         className={cn(
-                          "px-4 py-1.5 text-xs font-medium rounded-lg transition",
+                          "px-4 py-1.5 text-xs font-medium rounded-lg border transition",
                           iQViewMode === 'description' 
-                            ? "bg-[#FF6600] text-white" 
-                            : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
+                            ? "bg-[#FF6600] text-white border-[#FF6600]" 
+                            : "bg-white text-[#FF6600] border-gray-200 hover:bg-orange-50"
                         )}
                         data-testid="button-piq-description"
                       >
