@@ -541,6 +541,34 @@ export default function DailyOutreach() {
 
                     {/* IQ Property Intelligence Section */}
                     <div className="bg-white border border-gray-200 rounded-xl mt-4 shadow-sm">
+                        {/* Property Header with Image and Tags */}
+                        <div className="flex items-start gap-4 p-4 border-b border-gray-100">
+                          <div className="w-24 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-gray-200">
+                            <div className="w-full h-full bg-gradient-to-br from-blue-200 to-blue-300 flex items-center justify-center text-gray-500 text-xs">
+                              Photo
+                            </div>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <h3 className="font-semibold text-gray-900">{deal.address}</h3>
+                              <Globe className="w-4 h-4 text-gray-400" />
+                            </div>
+                            <div className="text-xs text-gray-500 mb-3">
+                              Single Family / {deal.beds} Br / {deal.baths} Ba / Gar / 1947 / 1,412 ft² / 4,964 ft² / Pool:None
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                              <span className="px-3 py-1 bg-white text-red-600 text-xs rounded-full border border-red-300">repairs</span>
+                              <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300">investors</span>
+                              <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300">Investment</span>
+                              <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300">as-is</span>
+                              <span className="px-3 py-1 bg-white text-blue-600 text-xs rounded-full border border-blue-300">investor</span>
+                              <span className="px-3 py-1 bg-white text-blue-600 text-xs rounded-full border border-blue-300">estate</span>
+                              <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300">opportunity</span>
+                              <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300">Renovation</span>
+                            </div>
+                          </div>
+                        </div>
+
                         {/* iQ Intelligence Content */}
                         <div className="p-6">
                           <div className="flex items-center gap-6 mb-6">
@@ -599,22 +627,6 @@ export default function DailyOutreach() {
                                   <li className="flex items-start gap-2">
                                     <span className="text-gray-400">•</span>
                                     <span>Aged listing (≥70 DOM) with strong discount potential.</span>
-                                  </li>
-                                  <li className="flex items-start gap-2">
-                                    <span className="text-gray-400">•</span>
-                                    <div>
-                                      <span>Keywords detected:</span>
-                                      <div className="flex flex-wrap gap-2 mt-2">
-                                        <span className="px-3 py-1 bg-white text-red-600 text-xs rounded-full border border-red-300 cursor-pointer hover:bg-red-50 hover:border-red-400 transition">repairs</span>
-                                        <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">investors</span>
-                                        <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">Investment</span>
-                                        <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">as-is</span>
-                                        <span className="px-3 py-1 bg-white text-blue-600 text-xs rounded-full border border-blue-300 cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition">investor</span>
-                                        <span className="px-3 py-1 bg-white text-blue-600 text-xs rounded-full border border-blue-300 cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition">estate</span>
-                                        <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">opportunity</span>
-                                        <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">Renovation</span>
-                                      </div>
-                                    </div>
                                   </li>
                                   <li className="flex items-start gap-2">
                                     <span className="text-gray-400">•</span>
