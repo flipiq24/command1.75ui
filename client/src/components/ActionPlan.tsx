@@ -53,7 +53,7 @@ const ACTION_ITEMS: ActionItem[] = [
     color: '#43A047',
     buttonText: 'Process New Deals',
     tooltipTitle: 'New Deals',
-    tooltipText: 'New incoming deals for review. 56 completed out of 60. Total: 60.'
+    tooltipText: 'These are new incoming deals that do not have a temperature assigned yet (Hot, Warm, Cold) or are offer status "None"  They need to be reviewed and categorized.'
   }
 ];
 
