@@ -97,7 +97,7 @@ const getPropensityColor = (text: string) => {
 };
 
 export default function DailyOutreach() {
-  const [activeFilter, setActiveFilter] = useState<OutreachType | null>(null);
+  const [activeFilter, setActiveFilter] = useState<OutreachType | null>('connections');
   const [selectedDealIds, setSelectedDealIds] = useState<number[]>([]);
   const queryClient = useQueryClient();
 
