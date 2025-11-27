@@ -124,15 +124,8 @@ export default function ActionPlan() {
           <p className="text-sm text-gray-500 mt-1 uppercase tracking-wide font-semibold">Deals to Follow Up Today</p>
         </div>
 
-        <div className="bg-blue-50 border-2 border-blue-100 rounded-xl px-6 py-3 flex flex-col items-center shadow-sm">
-          <div className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-1">Offers Made Today</div>
-          <div className="flex items-baseline gap-1">
-            <span className="text-4xl font-black text-blue-600">0</span>
-            <span className="text-xl font-bold text-gray-300">/ 3</span>
-          </div>
-          <div className="w-full bg-blue-200 h-1.5 rounded-full mt-2 overflow-hidden">
-            <div className="bg-blue-600 h-full" style={{ width: '0%' }}></div>
-          </div>
+        <div className="text-right self-center">
+          <div className="text-2xl font-bold text-green-600 tracking-tight">Offers Made Today <span className="ml-2">1/3</span></div>
         </div>
       </div>
 
