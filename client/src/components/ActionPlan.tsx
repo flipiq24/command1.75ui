@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { cn } from "@/lib/utils";
 import { Info } from 'lucide-react';
 
-type DealType = 'hot' | 'warm' | 'cold' | 'new';
+export type DealType = 'hot' | 'warm' | 'cold' | 'new';
 
 interface ActionItem {
   id: DealType;
@@ -20,7 +20,7 @@ const ACTION_ITEMS: ActionItem[] = [
     id: 'hot',
     label: 'Hot Deals',
     count: 0,
-    total: 1,
+    total: 2,
     color: '#ef4444', // red-500
     buttonText: 'View Hot Deals',
     tooltipTitle: 'Hot Deals',
@@ -30,7 +30,7 @@ const ACTION_ITEMS: ActionItem[] = [
     id: 'warm',
     label: 'Warm Deals',
     count: 0,
-    total: 8,
+    total: 1,
     color: '#f59e0b', // amber-500
     buttonText: 'Review Warm Deals',
     tooltipTitle: 'Warm Deals',
@@ -40,7 +40,7 @@ const ACTION_ITEMS: ActionItem[] = [
     id: 'cold',
     label: 'Cold Deals',
     count: 0,
-    total: 5,
+    total: 1,
     color: '#3b82f6', // blue-500
     buttonText: 'Open Cold Deals',
     tooltipTitle: 'Cold Deals',
@@ -50,7 +50,7 @@ const ACTION_ITEMS: ActionItem[] = [
     id: 'new',
     label: 'New Deals',
     count: 56,
-    total: 60,
+    total: 3,
     color: '#6b7280', // gray-500
     buttonText: 'Process New Deals',
     tooltipTitle: 'New Deals',
@@ -112,10 +112,26 @@ const CircularProgress = ({
   );
 };
 
-export default function ActionPlan() {
+interface ActionPlanProps {
+  onFilterChange?: (filter: DealType | 'goal' | null) => void;
+  activeFilter?: DealType | 'goal' | null;
+}
+
+export default function ActionPlan({ onFilterChange, activeFilter }: ActionPlanProps) {
   const [hoveredId, setHoveredId] = useState<DealType | null>(null);
   const [statusTooltipId, setStatusTooltipId] = useState<DealType | null>(null);
   const [goalTooltipOpen, setGoalTooltipOpen] = useState(false);
+
+  const handleFilterClick = (filter: DealType | 'goal') => {
+    if (onFilterChange) {
+      // Toggle off if already active
+      if (activeFilter === filter) {
+        onFilterChange(null);
+      } else {
+        onFilterChange(filter);
+      }
+    }
+  };
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
@@ -182,7 +198,13 @@ export default function ActionPlan() {
               </div>
             </div>
 
-            <div className="flex items-baseline justify-end gap-1">
+            <div 
+                className={cn(
+                    "flex items-baseline justify-end gap-1 cursor-pointer transition-opacity hover:opacity-80",
+                    activeFilter === 'goal' && "ring-2 ring-[#FF6600] ring-offset-2 rounded px-2 bg-orange-50"
+                )}
+                onClick={() => handleFilterClick('goal')}
+            >
                 <span className="text-4xl font-black text-[#FF6600]">1</span>
                 <span className="text-2xl font-bold text-[#FF6600]">/ 3</span>
             </div>
@@ -212,7 +234,16 @@ export default function ActionPlan() {
             </div>
 
             {/* Circle */}
-            <div className="mb-4 relative">
+            <div 
+                className={cn(
+                    "mb-4 relative cursor-pointer transition-transform hover:scale-105",
+                    activeFilter === item.id && "ring-4 ring-offset-2 rounded-full"
+                )}
+                style={{ 
+                    '--tw-ring-color': item.color 
+                } as React.CSSProperties}
+                onClick={() => handleFilterClick(item.id)}
+            >
                <CircularProgress count={item.count} total={item.total} color={item.color} />
             </div>
 
@@ -264,13 +295,15 @@ export default function ActionPlan() {
                 "px-4 py-2 rounded-full text-sm font-bold border-2 transition-all w-full max-w-[180px]",
                 item.id === 'hot' 
                   ? "text-white animate-red-glow hover:scale-105" 
-                  : "bg-white hover:bg-gray-50"
+                  : "bg-white hover:bg-gray-50",
+                activeFilter === item.id && "ring-2 ring-offset-2"
               )}
               style={{ 
                 borderColor: item.color, 
                 backgroundColor: item.id === 'hot' ? item.color : 'white',
                 color: item.id === 'hot' ? 'white' : item.color
               }}
+              onClick={() => handleFilterClick(item.id)}
             >
               {item.buttonText}
             </button>

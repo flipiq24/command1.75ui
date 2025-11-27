@@ -1,0 +1,205 @@
+	
+
+New
+•
+
+
+To do: Not set
+•
+0 Critical
+•
+0 Reminders
+2011 Windsor Cir, Duarte, CA 91010
+Single Family Residential / 3 Br / 0 Ba / 0 Gar / 1981 / 1,654 ft² / 2,396 ft² / Pool:N/A
+$500,000
+Propensity Score: N/A
+2 Days /
+DOM: 0 / CDOM: 0
+Created: 11/26/25
+Asking vs ARV: 0.00%
+ARV: $0
+Comp Data: 0
+Source:
+Off Market
+
+0%
+None
+LOD: 11/26/25
+LCD: 11/26/25
+
+
+
+New
+•
+
+
+To do: Not set
+•
+0 Critical
+•
+0 Reminders
+420 Robinson, Bakersfield, CA 93305
+Single Family / 3 Br / 1 Ba / 0 Gar / 1959 / 1,013 ft² / 4,621 ft² / Pool:None
+$75,000
+Active
+Propensity Score: N/A
+3 Days / Active
+DOM: 3 / CDOM: 3
+Created: 11/24/25
+Asking vs ARV: 33.05%
+ARV: $226,931
+Comp Data: 5S, 0P, 0B, 0A
+Source:
+MLS
+
+0%
+None
+LOD: 11/26/25
+LCD: N/A
+
+
+
+Cold
+•
+
+
+To do: Not set
+•
+0 Critical
+•
+0 Reminders
+10573 Larch, Bloomington, CA 92316
+Single Family / 2 Br / 1 Ba / 4 Gar / 1940 / 1,951 ft² / 36,600 ft² / Pool:None
+$975,000
+Active
+Propensity Score: N/A
+4 Days / Active
+DOM: 4 / CDOM: 4
+Created: 11/23/25
+Asking vs ARV: 151.59%
+ARV: $643,184
+Comp Data: 1S, 0P, 0B, 0A
+Source:
+MLS
+
+10%
+Initial Contact Started
+LOD: 11/25/25
+LCD: 11/24/25
+
+
+
+Hot
+•
+
+
+To do: Not set
+•
+0 Critical
+•
+0 Reminders
+2842 Rosarita St, San Bernardino, CA 92407
+Single Family Residential / 3 Br / 2 Ba / 1 Gar / 1990 / 1,169 ft² / 7,362 ft² / Pool:N/A
+$390,000
+Propensity Score: N/A
+7 Days /
+DOM: 0 / CDOM: 0
+Created: 11/21/25
+Asking vs ARV: 0.00%
+ARV: $0
+Comp Data: 0
+Source:
+Off Market
+
+30%
+Offer Terms Sent
+LOD: 11/26/25
+LCD: 11/21/25
+
+
+
+Warm
+•
+
+
+To do: Not set
+•
+0 Critical
+•
+0 Reminders
+40591 Chantemar Way, Temecula, CA 92591
+Single Family Residential / 5 Br / 3 Ba / 1 Gar / 2000 / 2,558 ft² / 6,098 ft² / Pool:N/A
+$580,000
+Propensity Score: N/A
+10 Days /
+DOM: 0 / CDOM: 0
+Created: 11/18/25
+Asking vs ARV: 0.00%
+ARV: $0
+Comp Data: 0
+Source:
+Off Market
+
+30%
+Offer Terms Sent
+LOD: 11/26/25
+LCD: 11/18/25
+
+
+
+New
+•
+
+
+To do: Not set
+•
+0 Critical
+•
+0 Reminders
+230 W Knepp Avenue, Fullerton, CA 92832
+Other (L) / 8 Br / 4 Ba / 4 Gar / 1958 / 3,752 ft² / 6,534 ft² / Pool:None
+$1,599,000
+Active
+Propensity Score: N/A
+30 Days / Active
+DOM: 30 / CDOM: 30
+Created: 10/28/25
+Asking vs ARV: 93.23%
+ARV: $1,715,203
+Comp Data: 1S, 0P, 0B, 1A
+Source:
+MLS
+
+0%
+None
+LOD: 11/27/25
+LCD: N/A
+
+
+
+Hot
+•
+
+
+To do: Not set
+•
+0 Critical
+•
+0 Reminders
+15620 Ramona Rd, Apple Valley, CA 92307
+Single Family Residential / 4 Br / 3 Ba / 2 Gar / 1980 / 2,134 ft² / 43,473 ft² / Pool:N/A
+$375,000
+Propensity Score: N/A
+77 Days /
+DOM: 0 / CDOM: 0
+Created: 09/12/25
+Asking vs ARV: 0.00%
+ARV: $0
+Comp Data: 0
+Source:
+Off Market
+
+100%
+Acquired
+LOD: 11/24/25
+LCD: 10/27/25 - Tony Fletcher

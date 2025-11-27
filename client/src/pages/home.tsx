@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
-import ActionPlan from "@/components/ActionPlan";
+import ActionPlan, { DealType } from "@/components/ActionPlan";
 import Sidebar from "@/components/Sidebar";
 import { 
   ChevronDown,
@@ -10,7 +10,133 @@ import {
   Flame
 } from 'lucide-react';
 
+interface Deal {
+  id: number;
+  address: string;
+  specs: string;
+  price: string;
+  propensity: string;
+  source: string;
+  type: 'hot' | 'warm' | 'cold' | 'new';
+  status: string;
+  statusPercent: string;
+  lastOpen: string;
+  lastCalled: string;
+  isHot?: boolean;
+}
+
+const SAMPLE_DEALS: Deal[] = [
+  {
+    id: 1,
+    address: "2011 Windsor Cir, Duarte, CA 91010",
+    specs: "Single Family Residential / 3 Br / 0 Ba / 0 Gar / 1981 / 1,654 ft² / 2,396 ft² / Pool:N/A",
+    price: "$500,000",
+    propensity: "N/A",
+    source: "Off Market",
+    type: "new",
+    statusPercent: "0%",
+    status: "None",
+    lastOpen: "11/26/25",
+    lastCalled: "11/26/25"
+  },
+  {
+    id: 2,
+    address: "420 Robinson, Bakersfield, CA 93305",
+    specs: "Single Family / 3 Br / 1 Ba / 0 Gar / 1959 / 1,013 ft² / 4,621 ft² / Pool:None",
+    price: "$75,000",
+    propensity: "N/A",
+    source: "MLS",
+    type: "new",
+    statusPercent: "0%",
+    status: "None",
+    lastOpen: "11/26/25",
+    lastCalled: "N/A"
+  },
+  {
+    id: 3,
+    address: "10573 Larch, Bloomington, CA 92316",
+    specs: "Single Family / 2 Br / 1 Ba / 4 Gar / 1940 / 1,951 ft² / 36,600 ft² / Pool:None",
+    price: "$975,000",
+    propensity: "N/A",
+    source: "MLS",
+    type: "cold",
+    statusPercent: "10%",
+    status: "Initial Contact Started",
+    lastOpen: "11/25/25",
+    lastCalled: "11/24/25"
+  },
+  {
+    id: 4,
+    address: "2842 Rosarita St, San Bernardino, CA 92407",
+    specs: "Single Family Residential / 3 Br / 2 Ba / 1 Gar / 1990 / 1,169 ft² / 7,362 ft² / Pool:N/A",
+    price: "$390,000",
+    propensity: "N/A",
+    source: "Off Market",
+    type: "hot",
+    statusPercent: "30%",
+    status: "Offer Terms Sent",
+    lastOpen: "11/26/25",
+    lastCalled: "11/21/25",
+    isHot: true
+  },
+  {
+    id: 5,
+    address: "40591 Chantemar Way, Temecula, CA 92591",
+    specs: "Single Family Residential / 5 Br / 3 Ba / 1 Gar / 2000 / 2,558 ft² / 6,098 ft² / Pool:N/A",
+    price: "$580,000",
+    propensity: "N/A",
+    source: "Off Market",
+    type: "warm",
+    statusPercent: "30%",
+    status: "Offer Terms Sent",
+    lastOpen: "11/26/25",
+    lastCalled: "11/18/25"
+  },
+  {
+    id: 6,
+    address: "230 W Knepp Avenue, Fullerton, CA 92832",
+    specs: "Other (L) / 8 Br / 4 Ba / 4 Gar / 1958 / 3,752 ft² / 6,534 ft² / Pool:None",
+    price: "$1,599,000",
+    propensity: "N/A",
+    source: "MLS",
+    type: "new",
+    statusPercent: "0%",
+    status: "None",
+    lastOpen: "11/27/25",
+    lastCalled: "N/A"
+  },
+  {
+    id: 7,
+    address: "15620 Ramona Rd, Apple Valley, CA 92307",
+    specs: "Single Family Residential / 4 Br / 3 Ba / 2 Gar / 1980 / 2,134 ft² / 43,473 ft² / Pool:N/A",
+    price: "$375,000",
+    propensity: "N/A",
+    source: "Off Market",
+    type: "hot",
+    statusPercent: "100%",
+    status: "Acquired",
+    lastOpen: "11/24/25",
+    lastCalled: "10/27/25 - Tony Fletcher",
+    isHot: true
+  }
+];
+
 export default function Home() {
+  const [activeFilter, setActiveFilter] = useState<DealType | 'goal' | null>(null);
+
+  // Filter Logic
+  const filteredDeals = SAMPLE_DEALS.filter(deal => {
+    if (!activeFilter) return true;
+    
+    if (activeFilter === 'goal') {
+      // Filter for "Offer Terms Sent" or "Contract Submitted" status and LOD being today (11/27/25)
+      // Or specifically "1/3" goal logic - which implies we look for deals that contribute to the goal
+      return (deal.status === "Offer Terms Sent" || deal.status === "Contract Submitted");
+    }
+
+    return deal.type === activeFilter;
+  });
+
   return (
     <div className="bg-gray-50 text-gray-800 h-screen flex overflow-hidden font-sans">
       {/* Sidebar */}
@@ -31,53 +157,11 @@ export default function Home() {
 
         <main className="flex-1 overflow-y-auto p-6">
             
-          {/* Stats Grid */}
-          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold text-gray-500 uppercase">Calls Today</span>
-                <Phone className="w-4 h-4 text-gray-400" />
-              </div>
-              <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold text-gray-900">4</span>
-                <span className="text-xs text-red-500 font-medium">↓ Low Activity</span>
-              </div>
-            </div>
-
-            <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold text-gray-500 uppercase">Texts</span>
-                <MessageSquare className="w-4 h-4 text-gray-400" />
-              </div>
-              <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold text-gray-900">11</span>
-              </div>
-            </div>
-
-            <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm ring-1 ring-green-100 bg-green-50/30">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold text-green-700 uppercase">Offers Made</span>
-                <CheckCircle className="w-4 h-4 text-green-600" />
-              </div>
-              <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold text-gray-900">7</span>
-                <span className="text-xs text-green-600 font-medium">↑ On Track</span>
-              </div>
-            </div>
-
-            <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold text-gray-500 uppercase">Relationships</span>
-                <Users className="w-4 h-4 text-gray-400" />
-              </div>
-              <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold text-gray-900">3</span>
-              </div>
-            </div>
-          </div> */}
-
           {/* Action Plan Component */}
-          <ActionPlan />
+          <ActionPlan 
+            activeFilter={activeFilter} 
+            onFilterChange={setActiveFilter} 
+          />
 
             {/* Current Task List - Reorganized Layout */}
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm flex-1 flex flex-col">
@@ -153,74 +237,85 @@ export default function Home() {
                     </div>
                 </div>
 
-                {/* Deal Row 1 */}
-                <div className="flex border-b border-gray-100 hover:bg-gray-50 transition group py-4">
-                    <div className="w-12 shrink-0 flex flex-col items-center gap-3 pt-1">
-                        <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
-                        <div className="bg-gray-100 rounded-lg p-1 flex flex-col items-center gap-2 w-8">
-                            <Target className="w-4 h-4 text-gray-500 hover:text-gray-800 cursor-pointer" />
-                            <div className="w-4 h-[1px] bg-gray-300"></div>
-                            <MoreVertical className="w-4 h-4 text-gray-500 hover:text-gray-800 cursor-pointer" />
-                        </div>
-                    </div>
-
-                    <div className="flex-1 flex flex-col md:flex-row">
-                        
-                        <div className="w-5/12 px-4 flex flex-col justify-start gap-2">
-                            <div>
-                                <div className="font-bold text-gray-900 text-base mb-1">2842 Rosarita St, San Bernardino, CA 92407</div>
-                                <div className="text-xs text-gray-500">3 Br / 2 Ba / 1 Gar / 1990 / 1,169 ft² / 7,362 ft² / Pool:N/A</div>
+                {/* Deal Rows */}
+                {filteredDeals.length === 0 ? (
+                  <div className="p-8 text-center text-gray-500 text-sm">
+                    No deals found matching the selected filter.
+                  </div>
+                ) : (
+                  filteredDeals.map((deal) => (
+                    <div key={deal.id} className="flex border-b border-gray-100 hover:bg-gray-50 transition group py-4">
+                        <div className="w-12 shrink-0 flex flex-col items-center gap-3 pt-1">
+                            <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
+                            <div className="bg-gray-100 rounded-lg p-1 flex flex-col items-center gap-2 w-8">
+                                <Target className="w-4 h-4 text-gray-500 hover:text-gray-800 cursor-pointer" />
+                                <div className="w-4 h-[1px] bg-gray-300"></div>
+                                <MoreVertical className="w-4 h-4 text-gray-500 hover:text-gray-800 cursor-pointer" />
                             </div>
+                        </div>
+
+                        <div className="flex-1 flex flex-col md:flex-row">
                             
-                            <div className="flex items-center gap-2 mt-1">
-                                <div className="bg-red-50 rounded-full px-2 py-0.5 border border-red-100 flex items-center gap-1">
-                                    <Flame className="w-3 h-3 text-red-500" />
-                                    <span className="text-[10px] font-bold text-red-500 uppercase">Hot</span>
+                            <div className="w-5/12 px-4 flex flex-col justify-start gap-2">
+                                <div>
+                                    <div className="font-bold text-gray-900 text-base mb-1">{deal.address}</div>
+                                    <div className="text-xs text-gray-500">{deal.specs}</div>
                                 </div>
-                                <div className="w-1 h-1 rounded-full bg-gray-300"></div>
-                                <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
-                                <div className="relative">
-                                    <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium py-1 px-2 rounded flex items-center gap-1 whitespace-nowrap">
-                                        To do: Not set <ChevronDown className="w-3 h-3" />
-                                    </button>
-                                </div>
-                                <div className="text-xs text-gray-400 whitespace-nowrap">• 0 Critical • 0 Reminders</div>
-                            </div>
-                        </div>
-
-                        <div className="w-2/12 px-4 flex flex-col items-center text-center">
-                            <div className="font-bold text-gray-900 text-base mb-1">$390,000</div>
-                            <div className="text-xs text-gray-400 mb-1">Propensity Score: N/A</div>
-                            <div className="text-xs text-gray-500 font-medium">Source: <span className="font-bold text-gray-900">Off Market</span></div>
-                        </div>
-
-                        <div className="w-2/12 px-4 flex flex-col items-center">
-                            <div className="text-[11px] text-gray-400 space-y-1 text-left w-full max-w-[140px]">
-                                <div className="flex flex-col">
-                                    <span className="font-medium text-gray-500">Last Open Date:</span>
-                                    <span className="text-gray-800">11/26/25</span>
-                                </div>
-                                <div className="flex flex-col">
-                                    <span className="font-medium text-gray-500">Last Called Date:</span>
-                                    <span className="text-gray-800">11/21/25</span>
+                                
+                                <div className="flex items-center gap-2 mt-1">
+                                    {deal.isHot && (
+                                      <div className="bg-red-50 rounded-full px-2 py-0.5 border border-red-100 flex items-center gap-1">
+                                          <Flame className="w-3 h-3 text-red-500" />
+                                          <span className="text-[10px] font-bold text-red-500 uppercase">Hot</span>
+                                      </div>
+                                    )}
+                                    {deal.isHot && <div className="w-1 h-1 rounded-full bg-gray-300"></div>}
+                                    
+                                    <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
+                                    <div className="relative">
+                                        <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium py-1 px-2 rounded flex items-center gap-1 whitespace-nowrap">
+                                            To do: Not set <ChevronDown className="w-3 h-3" />
+                                        </button>
+                                    </div>
+                                    <div className="text-xs text-gray-400 whitespace-nowrap">• 0 Critical • 0 Reminders</div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="w-3/12 px-4 flex flex-col items-center justify-center">
-                            <button className="flex items-center gap-2 text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 py-1.5 px-3 rounded-md transition-colors w-full justify-between max-w-[180px] whitespace-nowrap">
-                                <span className="font-bold text-slate-600">10%</span> 
-                                <span>Initial Contact Started</span>
-                                <ChevronDown className="w-3 h-3 flex-shrink-0 text-gray-400" />
-                            </button>
-                        </div>
+                            <div className="w-2/12 px-4 flex flex-col items-center text-center">
+                                <div className="font-bold text-gray-900 text-base mb-1">{deal.price}</div>
+                                <div className="text-xs text-gray-400 mb-1">Propensity Score: {deal.propensity}</div>
+                                <div className="text-xs text-gray-500 font-medium">Source: <span className="font-bold text-gray-900">{deal.source}</span></div>
+                            </div>
 
+                            <div className="w-2/12 px-4 flex flex-col items-center">
+                                <div className="text-[11px] text-gray-400 space-y-1 text-left w-full max-w-[140px]">
+                                    <div className="flex flex-col">
+                                        <span className="font-medium text-gray-500">Last Open Date:</span>
+                                        <span className="text-gray-800">{deal.lastOpen}</span>
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <span className="font-medium text-gray-500">Last Called Date:</span>
+                                        <span className="text-gray-800">{deal.lastCalled}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="w-3/12 px-4 flex flex-col items-center justify-center">
+                                <button className="flex items-center gap-2 text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 py-1.5 px-3 rounded-md transition-colors w-full justify-between max-w-[180px] whitespace-nowrap">
+                                    <span className="font-bold text-slate-600">{deal.statusPercent}</span> 
+                                    <span className="truncate">{deal.status}</span>
+                                    <ChevronDown className="w-3 h-3 flex-shrink-0 text-gray-400" />
+                                </button>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
+                  ))
+                )}
 
                  {/* Footer Pagination */}
                 <div className="bg-white px-6 py-4 border-t border-gray-200 flex items-center justify-between">
-                    <div className="text-sm text-gray-500">Showing 1 to 1 of 1 entries</div>
+                    <div className="text-sm text-gray-500">Showing {filteredDeals.length} of {SAMPLE_DEALS.length} entries</div>
                     <div className="flex items-center gap-2">
                         <button className="px-3 py-1 border border-gray-300 rounded text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2">
                             25 / page <ChevronDown className="w-3 h-3" />
