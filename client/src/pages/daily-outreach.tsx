@@ -55,7 +55,7 @@ export default function DailyOutreach() {
                   Today's Plan
               </div>
               <div className="space-y-1">
-                  <Link href="/" className="group relative flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg transition">
+                  <Link href="/" className="group relative flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg transition animate-orange-glow border border-[#FF6600]/30">
                       <span className="flex items-center gap-3">Deal Review</span>
                       <span className="bg-gray-100 text-gray-600 py-0.5 px-2 rounded border border-gray-200 text-xs font-bold shadow-sm">5 / 56</span>
                   </Link>
