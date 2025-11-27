@@ -223,7 +223,7 @@ export default function Home() {
                     <div className="text-sm text-gray-500">Showing 1 to 1 of 1 entries</div>
                     <div className="flex items-center gap-2">
                         <button className="px-3 py-1 border border-gray-300 rounded text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2">
-                            5 / page <ChevronDown className="w-3 h-3" />
+                            25 / page <ChevronDown className="w-3 h-3" />
                         </button>
                         <button className="px-3 py-1 border border-gray-300 rounded text-sm text-gray-600 hover:bg-gray-50 disabled:opacity-50">
                             Previous
