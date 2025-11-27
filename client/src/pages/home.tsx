@@ -208,7 +208,7 @@ export default function Home() {
           {/* Action Plan (Gamified) */}
           <div className="mb-8">
             <div className="flex justify-between items-baseline mb-4">
-                <h2 className="text-lg font-bold text-gray-900">Today's Missions</h2>
+                <h2 className="text-lg font-bold text-gray-900">Today's Action Plan</h2>
                 <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">Complete these 4 categories to win the day</span>
             </div>
             
@@ -259,7 +259,7 @@ export default function Home() {
                         <span className="text-xs font-bold text-gray-500 uppercase">New Deals</span>
                         <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
-                    <div className="text-2xl font-bold text-gray-900 mb-1">56 <span class="text-sm text-gray-400 font-medium">/ 60 Done</span></div>
+                    <div className="text-2xl font-bold text-gray-900 mb-1">56 <span className="text-sm text-gray-400 font-medium">/ 60 Done</span></div>
                     <div className="w-full bg-gray-100 rounded-full h-2">
                         <div className="bg-green-500 h-2 rounded-full" style={{width: '93%'}}></div>
                     </div>
