@@ -48,9 +48,8 @@ export default function Home() {
       <div className="w-64 bg-white border-r border-gray-200 flex flex-col justify-between hidden md:flex shrink-0 z-20">
         <div className="flex flex-col h-full">
           {/* Logo Area */}
-          <div className="p-6 flex items-center gap-2">
-             <img src={logoUrl} alt="FlipIQ" className="h-8 object-contain" />
-             {/* <span className="text-2xl font-bold text-gray-900 tracking-tight">FlipIQ</span> */}
+          <div className="p-6 flex justify-center">
+             <img src={logoUrl} alt="FlipIQ" className="w-40 object-contain" />
           </div>
 
           {/* Scrollable Nav Area */}
