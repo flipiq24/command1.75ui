@@ -52,13 +52,13 @@ export default function Home() {
               </div>
               <div className="space-y-1">
                   <Link href="/" className="group relative flex items-center justify-between px-3 py-2 text-sm font-medium bg-gray-100 text-gray-900 rounded-lg border border-gray-200 hover:bg-gray-200 transition">
-                      <span className="flex items-center gap-3">Deal Review</span>
-                      <span className="bg-white text-gray-700 py-0.5 px-2 rounded border border-gray-300 text-xs font-bold shadow-sm">5 / 56</span>
+                      <span className="flex items-center gap-3"><ListTodo className="w-4 h-4" /> Deal Review</span>
+                      <span className="text-gray-600 text-xs font-bold">5 / 56</span>
                   </Link>
 
                   <Link href="/daily-outreach" className="group relative flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg transition">
-                      <span className="flex items-center gap-3">Daily Outreach</span>
-                      <span className="bg-gray-100 text-gray-600 py-0.5 px-2 rounded border border-gray-200 text-xs font-bold">3 / 30</span>
+                      <span className="flex items-center gap-3"><Phone className="w-4 h-4" /> Daily Outreach</span>
+                      <span className="text-gray-600 text-xs font-bold">3 / 30</span>
                   </Link>
               </div>
             </div>
@@ -199,7 +199,7 @@ export default function Home() {
           <ActionPlan />
 
             {/* Current Task List - Reorganized Layout */}
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden flex-1 flex flex-col">
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm flex-1 flex flex-col">
                 
                 {/* Table Header */}
                 <div className="flex py-3 bg-white border-b border-gray-200 text-[11px] uppercase tracking-wider font-bold text-gray-400 select-none">
