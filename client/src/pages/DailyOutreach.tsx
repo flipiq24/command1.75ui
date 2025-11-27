@@ -478,7 +478,7 @@ export default function DailyOutreach() {
                             </div>
 
                             <div className="w-3/12 px-4 flex flex-col items-center justify-center gap-2">
-                                <div className="text-xs text-gray-500 font-medium">Source: <span className="font-bold text-gray-900">{deal.source}</span></div>
+                                <div className="text-xs text-gray-500 font-medium">Source: <span className="font-bold text-gray-900">{deal.source}{deal.mlsStatus ? ` - ${deal.mlsStatus}` : ''}</span></div>
                                 <DropdownMenu>
                                   <DropdownMenuTrigger asChild>
                                     <button className="flex items-center gap-2 text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 py-1.5 px-3 rounded-md transition-colors w-full justify-between max-w-[180px] whitespace-nowrap border border-transparent hover:border-gray-200" data-testid={`button-status-${deal.id}`}>

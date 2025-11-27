@@ -24,6 +24,7 @@ export const deals = pgTable("deals", {
   price: text("price").notNull(),
   propensity: text("propensity").array().notNull().default(sql`ARRAY[]::text[]`),
   source: text("source").notNull(),
+  mlsStatus: text("mls_status"),
   type: text("type").notNull(),
   status: text("status").notNull(),
   statusPercent: text("status_percent").notNull(),
