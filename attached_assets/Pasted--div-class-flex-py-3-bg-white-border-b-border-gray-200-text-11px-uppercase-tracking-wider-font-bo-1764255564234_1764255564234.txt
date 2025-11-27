@@ -1,0 +1,38 @@
+<div class="flex py-3 bg-white border-b border-gray-200 text-[11px] uppercase tracking-wider font-bold text-gray-400 select-none">
+    
+    <div class="w-[48px] shrink-0"></div> 
+    
+    <div class="w-5/12 px-4 flex items-center gap-1 group relative cursor-help">
+        <span>Property</span>
+        <svg class="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        
+        <div class="absolute bottom-full left-0 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+            Details include Address, Specs, Deal Tag (Hot/Warm/Cold), Next Actions (To-Do), and Notifications.
+        </div>
+    </div>
+    
+    <div class="w-2/12 px-4 flex items-center gap-1 group relative cursor-help">
+        <span>List Price</span>
+        <svg class="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        
+        <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+            <span class="font-bold text-[#FF6600]">Propensity Score:</span> Higher score = Higher likelihood to sell.<br><br>Also shows current Asking Price and Lead Source.
+        </div>
+    </div>
+    
+    <div class="w-2/12 px-4 flex items-center gap-1 group relative cursor-help">
+        <span>Last Open / Called</span>
+        <svg class="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        
+        <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+            Tracks the last time you manually opened this file or communicated (Call/Text/Email).<br><br><span class="italic text-gray-400">Excludes Auto-Trackers.</span>
+        </div>
+    </div>
+    
+    <div class="w-3/12 px-4 flex items-center gap-1 group relative cursor-help">
+        <span>Offer Status</span>
+        <svg class="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        
+        </div>
+
+</div>

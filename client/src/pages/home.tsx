@@ -202,36 +202,42 @@ export default function Home() {
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden flex-1 flex flex-col">
                 
                 {/* Table Header */}
-                <div className="flex py-4 px-2 bg-white border-b border-gray-200 items-center">
-                    <div className="w-12 shrink-0 flex justify-center">
-                        <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
-                    </div> 
+                <div className="flex py-3 bg-white border-b border-gray-200 text-[11px] uppercase tracking-wider font-bold text-gray-400 select-none">
+                    <div className="w-[48px] shrink-0"></div> 
                     <div className="flex-1 flex items-center">
-                        <div className="w-[40%] px-4">
-                            <div className="flex items-center gap-2">
-                                <div className="text-xs text-gray-600 font-bold">Property</div>
-                                <HelpCircle className="w-3 h-3 text-gray-400" />
-                            </div>
-                            <div className="text-[11px] text-gray-400 mt-1 font-normal truncate">Type / Br / Ba / Garage / Built / Ft² / Lot / Pool</div>
-                        </div>
-                        <div className="w-[20%] px-4 flex flex-col items-center">
-                            <div className="flex items-center gap-2">
-                                <div className="text-xs text-gray-600 font-bold">List Price</div>
-                                <HelpCircle className="w-3 h-3 text-gray-400" />
-                            </div>
-                            <div className="text-[11px] text-gray-400 mt-1 font-normal whitespace-nowrap">Propensity to sale score</div>
-                        </div>
-                        <div className="w-[20%] px-4 flex flex-col items-center">
-                            <div className="flex items-center gap-2">
-                                <div className="text-xs text-gray-600 font-bold">Last Open / Last Called</div>
+                    
+                        <div className="w-5/12 px-4 flex items-center gap-1 group relative cursor-help">
+                            <span>Property</span>
+                            <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            
+                            <div className="absolute bottom-full left-0 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                                Details include Address, Specs, Deal Tag (Hot/Warm/Cold), Next Actions (To-Do), and Notifications.
                             </div>
                         </div>
-                        <div className="w-[20%] px-4 flex flex-col items-center">
-                            <div className="flex items-center justify-center gap-2">
-                                <div className="text-xs text-gray-600 font-bold">Offer Status</div>
-                                <HelpCircle className="w-3 h-3 text-gray-400" />
+                        
+                        <div className="w-2/12 px-4 flex items-center gap-1 group relative cursor-help">
+                            <span>List Price</span>
+                            <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            
+                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                                <span className="font-bold text-[#FF6600]">Propensity Score:</span> Higher score = Higher likelihood to sell.<br/><br/>Also shows current Asking Price and Lead Source.
                             </div>
                         </div>
+                        
+                        <div className="w-2/12 px-4 flex items-center gap-1 group relative cursor-help">
+                            <span>Last Open / Called</span>
+                            <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            
+                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                                Tracks the last time you manually opened this file or communicated (Call/Text/Email).<br/><br/><span className="italic text-gray-400">Excludes Auto-Trackers.</span>
+                            </div>
+                        </div>
+                        
+                        <div className="w-3/12 px-4 flex items-center gap-1 group relative cursor-help">
+                            <span>Offer Status</span>
+                            <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+
                     </div>
                 </div>
 
@@ -248,7 +254,7 @@ export default function Home() {
 
                     <div className="flex-1 flex flex-col md:flex-row">
                         
-                        <div className="w-[40%] px-4 flex flex-col justify-start gap-2">
+                        <div className="w-5/12 px-4 flex flex-col justify-start gap-2">
                             <div>
                                 <div className="font-bold text-gray-900 text-base mb-1">2842 Rosarita St, San Bernardino, CA 92407</div>
                                 <div className="text-xs text-gray-500">3 Br / 2 Ba / 1 Gar / 1990 / 1,169 ft² / 7,362 ft² / Pool:N/A</div>
@@ -270,13 +276,13 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div className="w-[20%] px-4 flex flex-col items-center text-center">
+                        <div className="w-2/12 px-4 flex flex-col items-center text-center">
                             <div className="font-bold text-gray-900 text-base mb-1">$390,000</div>
                             <div className="text-xs text-gray-400 mb-1">Propensity Score: N/A</div>
                             <div className="text-xs text-gray-500 font-medium">Source: <span className="font-bold text-gray-900">Off Market</span></div>
                         </div>
 
-                        <div className="w-[20%] px-4 flex flex-col items-center">
+                        <div className="w-2/12 px-4 flex flex-col items-center">
                             <div className="text-[11px] text-gray-400 space-y-1 text-left w-full max-w-[140px]">
                                 <div className="flex flex-col">
                                     <span className="font-medium text-gray-500">Last Open Date:</span>
@@ -289,7 +295,7 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div className="w-[20%] px-4 flex flex-col items-center justify-center">
+                        <div className="w-3/12 px-4 flex flex-col items-center justify-center">
                             <button className="flex items-center gap-2 text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 py-1.5 px-3 rounded-md transition-colors w-full justify-between max-w-[180px] whitespace-nowrap">
                                 <span className="font-bold text-slate-600">10%</span> 
                                 <span>Initial Contact Started</span>
