@@ -51,6 +51,25 @@ export default function Sidebar() {
                 {isCollapsed ? "Plan" : "Today's Plan"}
             </div>
             <div className="space-y-1">
+                <Link href="/iq" className={cn(
+                  "group relative flex items-center px-3 py-2 text-sm font-medium rounded-lg border transition",
+                  location === '/iq'
+                    ? "bg-gray-100 text-gray-900 border-gray-200 hover:bg-gray-200"
+                    : "text-gray-600 hover:bg-gray-50 border-transparent hover:border-gray-100",
+                  isCollapsed ? "justify-center" : "justify-between"
+                )}>
+                    <span className="flex items-center gap-3">
+                      <Lightbulb className="w-4 h-4 flex-shrink-0" /> 
+                      {!isCollapsed && <span>IQ</span>}
+                    </span>
+                    
+                    {/* Tooltip */}
+                    <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                        <span className="font-bold text-[#FF6600]">IQ:</span><br/>
+                        AI-powered step-by-step process.
+                    </div>
+                </Link>
+
                 <Link href="/" className={cn(
                   "group relative flex items-center px-3 py-2 text-sm font-medium rounded-lg border transition",
                   location === '/' 
@@ -88,25 +107,6 @@ export default function Sidebar() {
                     <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
                         <span className="font-bold text-[#FF6600]">Daily Outreach:</span><br/>
                         list of Agents to call today focusing on relationship building
-                    </div>
-                </Link>
-
-                <Link href="/iq" className={cn(
-                  "group relative flex items-center px-3 py-2 text-sm font-medium rounded-lg border transition",
-                  location === '/iq'
-                    ? "bg-gray-100 text-gray-900 border-gray-200 hover:bg-gray-200"
-                    : "text-gray-600 hover:bg-gray-50 border-transparent hover:border-gray-100",
-                  isCollapsed ? "justify-center" : "justify-between"
-                )}>
-                    <span className="flex items-center gap-3">
-                      <Lightbulb className="w-4 h-4 flex-shrink-0" /> 
-                      {!isCollapsed && <span>IQ</span>}
-                    </span>
-                    
-                    {/* Tooltip */}
-                    <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                        <span className="font-bold text-[#FF6600]">IQ:</span><br/>
-                        AI-powered step-by-step process.
                     </div>
                 </Link>
             </div>
