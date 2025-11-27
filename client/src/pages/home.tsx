@@ -43,7 +43,7 @@ export default function Home() {
           </div>
 
           {/* Scrollable Nav Area */}
-          <div className="flex-1 overflow-y-auto px-3 py-2 space-y-6">
+          <div className="flex-1 px-3 py-2 space-y-6 overflow-visible">
             
             {/* Today's Plan Section */}
             <div>
@@ -54,11 +54,23 @@ export default function Home() {
                   <Link href="/" className="group relative flex items-center justify-between px-3 py-2 text-sm font-medium bg-gray-100 text-gray-900 rounded-lg border border-gray-200 hover:bg-gray-200 transition">
                       <span className="flex items-center gap-3"><ListTodo className="w-4 h-4" /> Deal Review</span>
                       <span className="text-gray-600 text-xs font-bold">5 / 56</span>
+                      
+                      {/* Tooltip */}
+                      <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                          <span className="font-bold text-[#FF6600]">Deal Review Progress:</span><br/>
+                          You have reviewed 5 deals out of 56 total pending deals today.
+                      </div>
                   </Link>
 
                   <Link href="/daily-outreach" className="group relative flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg transition">
                       <span className="flex items-center gap-3"><Phone className="w-4 h-4" /> Daily Outreach</span>
                       <span className="text-gray-600 text-xs font-bold">3 / 30</span>
+                      
+                      {/* Tooltip */}
+                      <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                          <span className="font-bold text-[#FF6600]">Outreach Progress:</span><br/>
+                          You have contacted 3 agents out of your daily goal of 30.
+                      </div>
                   </Link>
               </div>
             </div>
