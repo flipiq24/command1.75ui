@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
-import ActionPlan, { DealType } from "@/components/ActionPlan";
+import OutreachActionPlan, { OutreachType } from "@/components/OutreachActionPlan";
 import Sidebar from "@/components/Sidebar";
 import { 
   ChevronDown,
@@ -94,7 +94,7 @@ const getPropensityColor = (text: string) => {
 };
 
 export default function DailyOutreach() {
-  const [activeFilter, setActiveFilter] = useState<DealType | 'goal' | 'completed' | null>(null);
+  const [activeFilter, setActiveFilter] = useState<OutreachType | null>(null);
   const [selectedDealIds, setSelectedDealIds] = useState<number[]>([]);
   const queryClient = useQueryClient();
 
@@ -144,15 +144,19 @@ export default function DailyOutreach() {
     return sortedDeals.filter(deal => {
       if (!activeFilter) return true;
       
-      if (activeFilter === 'goal') {
-        return (deal.status === "Offer Terms Sent" || deal.status === "Contract Submitted");
+      if (activeFilter === 'connections') {
+        return deal.type === 'hot' || deal.type === 'warm';
       }
 
-      if (activeFilter === 'completed') {
-        return (deal.type === 'hot' || deal.type === 'warm' || deal.type === 'cold') && deal.status !== 'None';
+      if (activeFilter === 'priority') {
+        return deal.type === 'hot';
       }
 
-      return deal.type === activeFilter;
+      if (activeFilter === 'topOfMind') {
+        return deal.type === 'warm' || deal.type === 'cold';
+      }
+
+      return true;
     });
   }, [sortedDeals, activeFilter]);
 
@@ -205,7 +209,7 @@ export default function DailyOutreach() {
 
         <main className="flex-1 overflow-y-auto p-6">
             
-          <ActionPlan 
+          <OutreachActionPlan 
             activeFilter={activeFilter} 
             onFilterChange={setActiveFilter} 
           />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { cn } from "@/lib/utils";
 import { 
   HelpCircle,
@@ -8,30 +8,40 @@ import {
   MessageSquare
 } from 'lucide-react';
 
-export type OutreachType = 'connections' | 'priority' | 'topOfMind';
+// ============================================
+// TYPE DEFINITIONS
+// ============================================
+
+type OutreachType = 'connections' | 'priority' | 'topOfMind';
 
 interface OutreachActionPlanProps {
   activeFilter?: OutreachType | null;
   onFilterChange?: (filter: OutreachType | null) => void;
 }
 
+// ============================================
+// MAIN COMPONENT
+// ============================================
+
 export default function OutreachActionPlan({ 
   activeFilter = null, 
   onFilterChange 
 }: OutreachActionPlanProps) {
   
-  const connectionsCompleted = 10;
-  const connectionsTotal = 30;
+  // Progress tracking - these would come from props/context in production
+  const [connectionsCompleted] = useState(3);
+  const [connectionsTotal] = useState(30);
   
-  const priorityCompleted = 2;
-  const priorityTotal = 5;
+  const [priorityCompleted] = useState(1);
+  const [priorityTotal] = useState(5);
   
-  const topOfMindCompleted = 2;
-  const topOfMindTotal = 10;
+  const [topOfMindCompleted] = useState(2);
+  const [topOfMindTotal] = useState(10);
   
-  const newRelationships = 1;
-  const newRelationshipsGoal = 5;
+  const [newRelationships] = useState(1);
+  const [newRelationshipsGoal] = useState(5);
 
+  // Calculate overall progress percentage
   const totalTasks = connectionsTotal + priorityTotal + topOfMindTotal;
   const completedTasks = connectionsCompleted + priorityCompleted + topOfMindCompleted;
   const progressPercent = Math.round((completedTasks / totalTasks) * 100);
@@ -42,6 +52,7 @@ export default function OutreachActionPlan({
     }
   };
 
+  // Check if section is complete
   const isConnectionsComplete = connectionsCompleted >= connectionsTotal;
   const isPriorityComplete = priorityCompleted >= priorityTotal;
   const isTopOfMindComplete = topOfMindCompleted >= topOfMindTotal;
@@ -49,24 +60,22 @@ export default function OutreachActionPlan({
   return (
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-6">
       
+      {/* Header Row */}
       <div className="flex items-start justify-between mb-2">
         
+        {/* Left: Title and Progress */}
         <div className="flex-1">
           <h2 className="text-xl font-bold text-gray-900 mb-1">
-            Nov 27, 2025 — Today's Outreach Plan!
+            Nov 27, 2025 — Today's Action Plan!
           </h2>
           <div className="flex items-center gap-2 text-sm text-gray-500">
             <span>You have completed</span>
             <span className="font-bold text-orange-500">{progressPercent}%</span>
-            <span>of today's Outreach.</span>
-            <div className="group relative">
-              <HelpCircle className="w-4 h-4 text-gray-300 cursor-help" />
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
-                Your daily outreach progress based on agent connections, priority calls, and top of mind campaigns completed.
-              </div>
-            </div>
+            <span>of today's follow-ups.</span>
+            <HelpCircle className="w-4 h-4 text-gray-300 cursor-help" />
           </div>
           
+          {/* Progress Bar */}
           <div className="mt-3 w-full max-w-md h-1.5 bg-gray-100 rounded-full overflow-hidden">
             <div 
               className="h-full bg-gradient-to-r from-orange-400 to-orange-500 rounded-full transition-all duration-500"
@@ -75,7 +84,8 @@ export default function OutreachActionPlan({
           </div>
         </div>
 
-        <div className="text-right ml-8 group relative cursor-help">
+        {/* Right: New Agent Relationships Goal (styled like Daily Offer Goal) */}
+        <div className="text-right ml-8">
           <div className="flex items-center justify-end gap-1 text-[11px] text-gray-400 uppercase tracking-wider font-medium mb-1">
             <span>New Agent Relationships</span>
             <HelpCircle className="w-3 h-3" />
@@ -85,38 +95,33 @@ export default function OutreachActionPlan({
             <span className="text-gray-300">/{newRelationshipsGoal}</span>
           </div>
           <div className="text-xs text-gray-400 mt-0.5">Relationships Built</div>
-          
-          <div className="absolute top-full right-0 mt-2 w-72 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-left">
-            <div className="font-bold text-[#FF6600] mb-2">New Agent Relationships</div>
-            <div className="mb-2">Goal: 5 per day (100+ relationships/year)</div>
-            <div className="text-gray-300">
-              Increments when an agent's relationship status changes from "Cold" or "Unassigned" to "Warm" or "Hot".
-            </div>
-            <div className="mt-2 text-gray-400 italic">
-              Click to filter and see relationships built today.
-            </div>
-          </div>
         </div>
       </div>
 
+      {/* 3 Activity Circles */}
       <div className="grid grid-cols-3 gap-8 mt-8">
         
+        {/* Circle 1: 30 Agent Connections */}
         <div 
-          className="flex flex-col items-center cursor-pointer transition-all group"
+          className={cn(
+            "flex flex-col items-center cursor-pointer transition-all group"
+          )}
           onClick={() => handleCircleClick('connections')}
-          data-testid="circle-connections"
         >
+          {/* Circle */}
           <div className={cn(
             "relative w-28 h-28 mb-4 transition-transform group-hover:scale-105",
             activeFilter === 'connections' && "scale-105"
           )}>
             <svg className="w-28 h-28 transform -rotate-90">
+              {/* Background circle */}
               <circle 
                 cx="56" cy="56" r="48" 
                 stroke="#f3f4f6" 
                 strokeWidth="8" 
                 fill="none" 
               />
+              {/* Progress circle */}
               <circle 
                 cx="56" cy="56" r="48" 
                 stroke={isConnectionsComplete ? "#22c55e" : "#f97316"}
@@ -134,16 +139,13 @@ export default function OutreachActionPlan({
             </div>
           </div>
 
+          {/* Status Text */}
           <div className="flex items-center gap-1 text-xs text-gray-400 mb-2">
             <span>Status: {connectionsCompleted}/{connectionsTotal}/{connectionsTotal}</span>
-            <div className="group/tip relative">
-              <HelpCircle className="w-3 h-3 cursor-help" />
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-56 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover/tip:opacity-100 transition pointer-events-none z-50">
-                Increments ONLY when Dialpad confirms a connected conversation (not attempts, not voicemails).
-              </div>
-            </div>
+            <HelpCircle className="w-3 h-3" />
           </div>
 
+          {/* Button */}
           <button 
             className={cn(
               "px-6 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2",
@@ -153,7 +155,6 @@ export default function OutreachActionPlan({
                   ? "bg-orange-500 text-white shadow-md"
                   : "bg-orange-50 text-orange-600 border border-orange-200 hover:bg-orange-100"
             )}
-            data-testid="button-start-calling"
           >
             {isConnectionsComplete ? (
               <>
@@ -169,22 +170,27 @@ export default function OutreachActionPlan({
           </button>
         </div>
 
+        {/* Circle 2: Priority Calls */}
         <div 
-          className="flex flex-col items-center cursor-pointer transition-all group"
+          className={cn(
+            "flex flex-col items-center cursor-pointer transition-all group"
+          )}
           onClick={() => handleCircleClick('priority')}
-          data-testid="circle-priority"
         >
+          {/* Circle */}
           <div className={cn(
             "relative w-28 h-28 mb-4 transition-transform group-hover:scale-105",
             activeFilter === 'priority' && "scale-105"
           )}>
             <svg className="w-28 h-28 transform -rotate-90">
+              {/* Background circle */}
               <circle 
                 cx="56" cy="56" r="48" 
                 stroke="#f3f4f6" 
                 strokeWidth="8" 
                 fill="none" 
               />
+              {/* Progress circle */}
               <circle 
                 cx="56" cy="56" r="48" 
                 stroke={isPriorityComplete ? "#22c55e" : "#f97316"}
@@ -202,16 +208,13 @@ export default function OutreachActionPlan({
             </div>
           </div>
 
+          {/* Status Text */}
           <div className="flex items-center gap-1 text-xs text-gray-400 mb-2">
             <span>Status: {priorityCompleted}/{priorityTotal}/{priorityTotal}</span>
-            <div className="group/tip relative">
-              <HelpCircle className="w-3 h-3 cursor-help" />
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-56 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover/tip:opacity-100 transition pointer-events-none z-50">
-                Connected calls only to Priority-status agents (not attempts, not voicemails).
-              </div>
-            </div>
+            <HelpCircle className="w-3 h-3" />
           </div>
 
+          {/* Button */}
           <button 
             className={cn(
               "px-6 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2",
@@ -221,7 +224,6 @@ export default function OutreachActionPlan({
                   ? "bg-orange-500 text-white shadow-md"
                   : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
             )}
-            data-testid="button-call-priority"
           >
             {isPriorityComplete ? (
               <>
@@ -237,22 +239,27 @@ export default function OutreachActionPlan({
           </button>
         </div>
 
+        {/* Circle 3: Top of Mind Campaigns */}
         <div 
-          className="flex flex-col items-center cursor-pointer transition-all group"
+          className={cn(
+            "flex flex-col items-center cursor-pointer transition-all group"
+          )}
           onClick={() => handleCircleClick('topOfMind')}
-          data-testid="circle-top-of-mind"
         >
+          {/* Circle */}
           <div className={cn(
             "relative w-28 h-28 mb-4 transition-transform group-hover:scale-105",
             activeFilter === 'topOfMind' && "scale-105"
           )}>
             <svg className="w-28 h-28 transform -rotate-90">
+              {/* Background circle */}
               <circle 
                 cx="56" cy="56" r="48" 
                 stroke="#f3f4f6" 
                 strokeWidth="8" 
                 fill="none" 
               />
+              {/* Progress circle */}
               <circle 
                 cx="56" cy="56" r="48" 
                 stroke={isTopOfMindComplete ? "#22c55e" : "#6b7280"}
@@ -270,16 +277,13 @@ export default function OutreachActionPlan({
             </div>
           </div>
 
+          {/* Status Text */}
           <div className="flex items-center gap-1 text-xs text-gray-400 mb-2">
             <span>Status: {topOfMindCompleted}/{topOfMindTotal}/{topOfMindTotal}</span>
-            <div className="group/tip relative">
-              <HelpCircle className="w-3 h-3 cursor-help" />
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-56 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover/tip:opacity-100 transition pointer-events-none z-50">
-                Increments when text/email/voicemail is sent to Hot/Warm/Cold agents.
-              </div>
-            </div>
+            <HelpCircle className="w-3 h-3" />
           </div>
 
+          {/* Button */}
           <button 
             className={cn(
               "px-6 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2",
@@ -289,7 +293,6 @@ export default function OutreachActionPlan({
                   ? "bg-gray-600 text-white shadow-md"
                   : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
             )}
-            data-testid="button-send-campaigns"
           >
             {isTopOfMindComplete ? (
               <>

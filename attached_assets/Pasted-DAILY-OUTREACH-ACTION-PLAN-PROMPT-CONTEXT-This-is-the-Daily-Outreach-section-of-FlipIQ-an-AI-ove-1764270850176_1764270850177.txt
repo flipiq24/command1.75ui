@@ -1,0 +1,68 @@
+DAILY OUTREACH ACTION PLAN — PROMPT
+CONTEXT:
+This is the Daily Outreach section of FlipIQ, an AI overlay for real estate acquisition. It sits inside the Acquisition Associate (AA) dashboard and guides daily agent contact activities.
+LAYOUT:
+Header Row (flex, space-between):
+
+LEFT SIDE:
+
+Title: "Nov 27, 2025 — Today's Action Plan!"
+Subtext: "You have completed 32% of today's follow-ups." + help icon
+Progress bar below (orange gradient, shows overall % complete)
+
+
+RIGHT SIDE (styled like "Daily Offer Goal" widget):
+
+Label: "NEW AGENT RELATIONSHIPS" (uppercase, small, gray)
+Large number: 1/5 (orange number, gray denominator)
+Subtext: "Relationships Built"
+
+
+
+3 Activity Circles (grid, 3 columns, equal spacing):
+Circle 1Circle 2Circle 330 Agent ConnectionsPriority CallsTop of Mind CampaignsOrange progress ringOrange progress ringGray progress ringCounter: 3/30Counter: 1/5Counter: 2/10Status: 3/30/30Status: 1/5/5Status: 2/10/10Button: "Start Calling" (orange)Button: "Call Priority" (outline)Button: "Send Campaigns" (outline)
+CIRCLE BEHAVIOR:
+
+Clicking a circle filters the property/agent list below
+Progress ring fills clockwise based on completion
+When complete: ring turns green, button shows checkmark + "Complete"
+Hover: slight scale-up effect
+
+COUNTER LOGIC:
+
+30 Agent Connections: Increments ONLY when Dialpad confirms a connected conversation (not attempts, not voicemails)
+Priority Calls: Same — connected calls only to Priority-status agents
+Top of Mind Campaigns: Increments when text/email/voicemail is sent to Hot/Warm/Cold agents
+
+NEW AGENT RELATIONSHIPS (top-right widget):
+
+Increments when an agent's relationship status changes from "Cold" or "Unassigned" to "Warm" or "Hot"
+Goal: 5 per day (2 per week × 50 weeks = 100 relationships/year)
+
+STYLING:
+
+Background: white, rounded-xl, border gray-200, shadow-sm, padding 6
+Circles: 112px × 112px (w-28 h-28), stroke-width 8
+Orange color: #f97316 (Tailwind orange-500)
+Gray color: #6b7280 (Tailwind gray-500)
+Green complete color: #22c55e (Tailwind green-500)
+Font: System sans-serif, bold numbers, medium buttons
+
+COMPONENT PROPS:
+typescriptinterface OutreachActionPlanProps {
+  connectionsCompleted: number;  // 0-30
+  connectionsTotal: number;      // 30
+  priorityCompleted: number;     // 0-5
+  priorityTotal: number;         // 5
+  topOfMindCompleted: number;    // 0-10
+  topOfMindTotal: number;        // 10
+  newRelationships: number;      // 0-5
+  activeFilter: 'connections' | 'priority' | 'topOfMind' | null;
+  onFilterChange: (filter) => void;
+}
+DATA SOURCES:
+
+Dialpad API: Call connection status
+PIQ Database: Agent relationship status, communication logs
+Command Platform: Property assignments, offer status
+
