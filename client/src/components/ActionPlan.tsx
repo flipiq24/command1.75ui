@@ -115,6 +115,7 @@ const CircularProgress = ({
 export default function ActionPlan() {
   const [hoveredId, setHoveredId] = useState<DealType | null>(null);
   const [statusTooltipId, setStatusTooltipId] = useState<DealType | null>(null);
+  const [goalTooltipOpen, setGoalTooltipOpen] = useState(false);
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
@@ -133,8 +134,40 @@ export default function ActionPlan() {
             </div>
         </div>
 
-        <div className="text-right">
-            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Daily Offer Goal</span>
+        <div className="text-right relative">
+            <div 
+              className="inline-flex items-center gap-1.5 cursor-help"
+              onMouseEnter={() => setGoalTooltipOpen(true)}
+              onMouseLeave={() => setGoalTooltipOpen(false)}
+            >
+              <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Daily Offer Goal</span>
+              <Info className="w-3 h-3 text-gray-400" />
+            </div>
+            
+            {/* Daily Goal Tooltip */}
+            <div 
+              className={cn(
+                "absolute top-full right-0 mt-2 w-80 bg-gray-900 text-white p-4 rounded-lg shadow-xl z-30 transition-all duration-200 pointer-events-none text-left text-xs leading-relaxed",
+                goalTooltipOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
+              )}
+            >
+              <div className="font-bold text-white mb-2 text-sm">Monthly Goal: 100+ Offers</div>
+              <p className="text-gray-300 mb-4">Submit a combination of Offer Terms and Contracts to hit your target of 2 closed deals per month.</p>
+              
+              <div className="space-y-2 mb-4">
+                <div>
+                  <span className="font-bold text-gray-300">• 1st Number:</span> <span className="text-gray-400">Offers made today.</span>
+                </div>
+                <div>
+                  <span className="font-bold text-gray-300">• 2nd Number:</span> <span className="text-gray-400">Your daily goal.</span>
+                </div>
+              </div>
+              
+              <div className="text-gray-400 italic border-t border-gray-700 pt-2 mt-2">
+                Click to filter and see the offers you made today.
+              </div>
+            </div>
+
             <div className="flex items-baseline justify-end gap-1">
                 <span className="text-4xl font-black text-[#FF6600]">1</span>
                 <span className="text-2xl font-bold text-[#FF6600]">/ 3</span>
