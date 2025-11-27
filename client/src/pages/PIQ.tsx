@@ -386,8 +386,8 @@ export default function PIQ() {
                         className={cn(
                           "px-4 py-1.5 text-xs font-medium rounded-lg border transition",
                           iQViewMode === 'stats' 
-                            ? "bg-[#FF6600] text-white border-[#FF6600]" 
-                            : "bg-white text-[#FF6600] border-gray-200 hover:bg-orange-50"
+                            ? "bg-white text-[#FF6600] border-[#FF6600]" 
+                            : "bg-white text-[#FF6600] border-gray-200 hover:border-[#FF6600]"
                         )}
                         data-testid="button-piq-stats"
                       >
@@ -398,8 +398,8 @@ export default function PIQ() {
                         className={cn(
                           "px-4 py-1.5 text-xs font-medium rounded-lg border transition",
                           iQViewMode === 'description' 
-                            ? "bg-[#FF6600] text-white border-[#FF6600]" 
-                            : "bg-white text-[#FF6600] border-gray-200 hover:bg-orange-50"
+                            ? "bg-white text-[#FF6600] border-[#FF6600]" 
+                            : "bg-white text-[#FF6600] border-gray-200 hover:border-[#FF6600]"
                         )}
                         data-testid="button-piq-description"
                       >
@@ -408,16 +408,16 @@ export default function PIQ() {
                     </div>
                   </div>
 
-                  <div className="space-y-2 text-sm font-mono mb-8">
-                    <div>Status: <span className="text-[#FF6600] font-bold">[Active/Backup/Pending]</span></div>
-                    <div>Days on Market: <span className="text-[#FF6600] font-bold">[DOM]</span></div>
-                    <div>Price to Future Value: <span className="text-[#FF6600] font-bold">[PTFV%]</span></div>
-                    <div>Propensity Score: <span className="text-[#FF6600] font-bold">[0-8]</span></div>
-                    <div>Agent: <span className="text-[#FF6600] font-bold">[Name]</span> (Unassigned)</div>
-                    <div>Relationship Status: <span className="text-[#FF6600] font-bold">[Cold/Warm/Hot]</span></div>
+                  <div className="space-y-2 text-sm mb-8">
+                    <div>Status: <span className="text-gray-900 font-semibold">Active</span></div>
+                    <div>Days on Market: <span className="text-gray-900 font-semibold">45</span></div>
+                    <div>Price to Future Value: <span className="text-gray-900 font-semibold">82%</span></div>
+                    <div>Propensity Score: <span className="text-gray-900 font-semibold">6</span></div>
+                    <div>Agent: <span className="text-gray-900 font-semibold">Sarah Johnson</span> (Unassigned)</div>
+                    <div>Relationship Status: <span className="text-gray-900 font-semibold">Warm</span></div>
                     <div>Investor Source Count: <a href="#" className="text-blue-600 underline hover:text-blue-800">[View Agent]</a></div>
-                    <div>Last Communication Date: <span className="text-[#FF6600] font-bold">Date or Blank</span></div>
-                    <div>Last Address Discussed: <span className="text-[#FF6600] font-bold">Address or blank</span></div>
+                    <div>Last Communication Date: <span className="text-gray-900 font-semibold">11/15/2025</span></div>
+                    <div>Last Address Discussed: <span className="text-gray-900 font-semibold">1234 Oak Street, Phoenix AZ</span></div>
                   </div>
 
                   <div className="mb-6">
