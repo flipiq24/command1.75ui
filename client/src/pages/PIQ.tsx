@@ -15,7 +15,14 @@ import {
   MessageSquare,
   Lightbulb,
   Plus,
-  Mic
+  Mic,
+  Map,
+  LayoutGrid,
+  List,
+  Filter,
+  MapPin,
+  Pencil,
+  Hand
 } from 'lucide-react';
 
 export default function PIQ() {
@@ -27,6 +34,11 @@ export default function PIQ() {
   const [activeRightTab, setActiveRightTab] = useState(fromNewAgent ? 'iq' : 'notes');
   const [showIQPanel, setShowIQPanel] = useState(fromNewAgent);
   const [iQViewMode, setIQViewMode] = useState<'stats' | 'description'>('stats');
+  
+  const [compsMapView, setCompsMapView] = useState<'map' | 'matrix' | 'list'>('map');
+  const [compsMapType, setCompsMapType] = useState<'map' | 'street' | 'aerial' | 'draw' | 'freehand'>('map');
+  const [showCompsIQReport, setShowCompsIQReport] = useState(false);
+  const [isCompsIQLoading, setIsCompsIQLoading] = useState(false);
 
   useEffect(() => {
     if (fromNewAgent) {
@@ -38,6 +50,14 @@ export default function PIQ() {
   const handleIQClick = () => {
     setActiveRightTab('iq');
     setShowIQPanel(true);
+  };
+
+  const handleCompsIQClick = () => {
+    setIsCompsIQLoading(true);
+    setShowCompsIQReport(true);
+    setTimeout(() => {
+      setIsCompsIQLoading(false);
+    }, 1500);
   };
 
   const leftTabs = [
@@ -218,6 +238,8 @@ export default function PIQ() {
                 </div>
               </div>
 
+              {activeTab === 'piq' && (
+              <>
               <div className="flex gap-6">
                 <div className="flex-1">
                   
@@ -479,6 +501,246 @@ export default function PIQ() {
                   </div>
                 </div>
               )}
+              </>
+              )}
+
+            {activeTab === 'comps' && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <button className="px-3 py-1.5 text-xs font-medium bg-gray-100 text-gray-700 rounded-lg border border-gray-200 hover:bg-gray-200">
+                        1551-2201 sqft
+                      </button>
+                      <button className="px-3 py-1.5 text-xs font-medium bg-gray-100 text-gray-700 rounded-lg border border-gray-200 hover:bg-gray-200">
+                        Built 941-1955
+                      </button>
+                      <div className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-white text-gray-700 rounded-lg border border-gray-200">
+                        <span>1 mile radius</span>
+                        <ChevronDown className="w-3 h-3" />
+                      </div>
+                      <div className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-white text-gray-700 rounded-lg border border-gray-200">
+                        <span>↕</span>
+                        <span>List Price</span>
+                        <ChevronDown className="w-3 h-3" />
+                      </div>
+                      <button className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium bg-white text-gray-700 rounded-lg border border-gray-200 hover:bg-gray-50">
+                        <Filter className="w-3 h-3" />
+                        <span>More Filters</span>
+                        <span className="bg-green-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">1</span>
+                      </button>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <button 
+                        onClick={handleCompsIQClick}
+                        className="flex items-center gap-1.5 px-4 py-1.5 bg-[#FF6600] hover:bg-[#e55c00] text-white text-xs font-bold rounded-lg transition shadow-sm"
+                        data-testid="button-comps-iq"
+                      >
+                        <Lightbulb className="w-4 h-4" />
+                        IQ
+                      </button>
+                      <div className="flex bg-gray-100 rounded-lg p-0.5">
+                        <button 
+                          onClick={() => setCompsMapView('map')}
+                          className={cn(
+                            "px-4 py-1.5 text-xs font-medium rounded-md transition",
+                            compsMapView === 'map' ? "bg-blue-600 text-white" : "text-gray-600 hover:bg-gray-200"
+                          )}
+                        >
+                          Map
+                        </button>
+                        <button 
+                          onClick={() => setCompsMapView('matrix')}
+                          className={cn(
+                            "px-4 py-1.5 text-xs font-medium rounded-md transition",
+                            compsMapView === 'matrix' ? "bg-blue-600 text-white" : "text-gray-600 hover:bg-gray-200"
+                          )}
+                        >
+                          Matrix
+                        </button>
+                        <button 
+                          onClick={() => setCompsMapView('list')}
+                          className={cn(
+                            "px-4 py-1.5 text-xs font-medium rounded-md transition",
+                            compsMapView === 'list' ? "bg-blue-600 text-white" : "text-gray-600 hover:bg-gray-200"
+                          )}
+                        >
+                          List
+                        </button>
+                      </div>
+                      <span className="text-xs text-gray-500">3 of 3 comps</span>
+                      <button className="px-4 py-1.5 bg-green-500 hover:bg-green-600 text-white text-xs font-bold rounded-lg transition">
+                        ✓ Finalize
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 border-b border-gray-200 pb-2">
+                    <button 
+                      onClick={() => setCompsMapType('map')}
+                      className={cn(
+                        "flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition",
+                        compsMapType === 'map' ? "bg-blue-50 text-blue-600 border border-blue-200" : "text-gray-600 hover:bg-gray-100"
+                      )}
+                    >
+                      <Map className="w-3.5 h-3.5" />
+                      Map
+                    </button>
+                    <button 
+                      onClick={() => setCompsMapType('street')}
+                      className={cn(
+                        "flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition",
+                        compsMapType === 'street' ? "bg-blue-50 text-blue-600 border border-blue-200" : "text-gray-600 hover:bg-gray-100"
+                      )}
+                    >
+                      <Globe className="w-3.5 h-3.5" />
+                      Street View
+                    </button>
+                    <button 
+                      onClick={() => setCompsMapType('aerial')}
+                      className={cn(
+                        "flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition",
+                        compsMapType === 'aerial' ? "bg-blue-50 text-blue-600 border border-blue-200" : "text-gray-600 hover:bg-gray-100"
+                      )}
+                    >
+                      <LayoutGrid className="w-3.5 h-3.5" />
+                      Aerial
+                    </button>
+                    <button 
+                      onClick={() => setCompsMapType('draw')}
+                      className={cn(
+                        "flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition",
+                        compsMapType === 'draw' ? "bg-blue-50 text-blue-600 border border-blue-200" : "text-gray-600 hover:bg-gray-100"
+                      )}
+                    >
+                      <Pencil className="w-3.5 h-3.5" />
+                      Draw Area
+                    </button>
+                    <button 
+                      onClick={() => setCompsMapType('freehand')}
+                      className={cn(
+                        "flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition",
+                        compsMapType === 'freehand' ? "bg-blue-50 text-blue-600 border border-blue-200" : "text-gray-600 hover:bg-gray-100"
+                      )}
+                    >
+                      <Hand className="w-3.5 h-3.5" />
+                      Freehand
+                    </button>
+                  </div>
+
+                  <div className="relative w-full h-[450px] bg-gray-200 rounded-xl overflow-hidden border border-gray-300">
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-100 via-blue-50 to-green-50">
+                      <div className="absolute inset-0 opacity-30" style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%23e8f4f8' width='400' height='400'/%3E%3Cpath d='M0 200 Q100 150 200 200 T400 200' stroke='%23a0c4d0' fill='none' stroke-width='2'/%3E%3Cpath d='M0 300 Q150 250 300 300 T400 280' stroke='%23b0d4e0' fill='none' stroke-width='1.5'/%3E%3C/svg%3E")`,
+                        backgroundSize: 'cover'
+                      }}></div>
+                      
+                      <div className="absolute top-1/4 left-1/4 transform -translate-x-1/2">
+                        <div className="bg-green-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg">$450K</div>
+                      </div>
+                      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        <div className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg border-2 border-white">$650K</div>
+                        <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-blue-600"></div>
+                      </div>
+                      <div className="absolute bottom-1/3 right-1/4">
+                        <div className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg">$800K</div>
+                      </div>
+                      <div className="absolute top-2/3 left-1/3">
+                        <div className="w-6 h-6 bg-gray-800 rounded-full flex items-center justify-center text-white text-[10px] font-bold shadow-lg">S</div>
+                      </div>
+
+                      <div className="absolute top-4 left-4 text-xs text-gray-600 font-medium">Bloomington</div>
+                      <div className="absolute top-1/3 right-1/4 text-xs text-gray-500">Rialto</div>
+                      <div className="absolute bottom-1/4 left-1/5 text-xs text-gray-500">Empire Center</div>
+                      <div className="absolute bottom-1/4 right-1/3 text-xs text-gray-500">West Colton</div>
+                    </div>
+
+                    <div className="absolute bottom-4 left-4 text-[10px] text-gray-500">
+                      Google
+                    </div>
+                    <div className="absolute bottom-4 right-4 flex flex-col gap-1">
+                      <button className="w-8 h-8 bg-white rounded shadow flex items-center justify-center text-gray-600 hover:bg-gray-50">+</button>
+                      <button className="w-8 h-8 bg-white rounded shadow flex items-center justify-center text-gray-600 hover:bg-gray-50">−</button>
+                    </div>
+                  </div>
+
+                  {showCompsIQReport && (
+                    <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm animate-in slide-in-from-top-4 fade-in duration-500">
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="relative">
+                          <Lightbulb className="w-6 h-6 text-[#FF6600] animate-pulse" />
+                          <div className="absolute inset-0 w-6 h-6 bg-[#FF6600] rounded-full opacity-30 animate-ping"></div>
+                        </div>
+                        <h2 className="text-xl font-bold text-[#FF6600]">iQ Comps Analysis</h2>
+                      </div>
+
+                      {isCompsIQLoading ? (
+                        <div className="space-y-3 animate-pulse">
+                          <div className="flex items-center gap-2 text-sm text-gray-500">
+                            <div className="w-2 h-2 bg-[#FF6600] rounded-full animate-bounce"></div>
+                            <span>Analyzing comparable properties...</span>
+                          </div>
+                          <div className="h-3 bg-gray-200 rounded w-3/4"></div>
+                          <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                          <div className="h-3 bg-gray-200 rounded w-2/3"></div>
+                        </div>
+                      ) : (
+                        <div className="space-y-4">
+                          <div className="grid grid-cols-3 gap-4 mb-6">
+                            <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                              <div className="text-xs text-gray-500 mb-1">Avg Comp Price</div>
+                              <div className="text-lg font-bold text-gray-900">$633,333</div>
+                            </div>
+                            <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                              <div className="text-xs text-gray-500 mb-1">Price per Sq Ft</div>
+                              <div className="text-lg font-bold text-gray-900">$324</div>
+                            </div>
+                            <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                              <div className="text-xs text-gray-500 mb-1">Subject vs Comps</div>
+                              <div className="text-lg font-bold text-red-600">+54%</div>
+                            </div>
+                          </div>
+
+                          <div className="space-y-2 text-sm">
+                            <h3 className="font-bold text-gray-900">Key Insights:</h3>
+                            <ul className="space-y-2 text-gray-700">
+                              <li className="flex items-start gap-2">
+                                <span className="text-[#FF6600]">•</span>
+                                <span>Subject property is priced <span className="font-semibold text-red-600">54% above</span> comparable sales average.</span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <span className="text-[#FF6600]">•</span>
+                                <span>Lot size (36,600 sqft) is significantly larger than comps avg (8,200 sqft) - potential ADU opportunity.</span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <span className="text-[#FF6600]">•</span>
+                                <span>Recommend offer at <span className="font-semibold text-green-600">$650,000-$700,000</span> based on comp analysis.</span>
+                              </li>
+                            </ul>
+                          </div>
+
+                          <div className="border-t border-gray-200 pt-4 mt-4">
+                            <div className="flex items-center gap-3 bg-gray-50 rounded-full px-4 py-3 border border-gray-200">
+                              <Plus className="w-5 h-5 text-gray-400" />
+                              <input 
+                                type="text" 
+                                placeholder="Ask about these comps..." 
+                                className="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none"
+                                data-testid="input-comps-ask"
+                              />
+                              <Mic className="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-600" />
+                              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center cursor-pointer hover:bg-blue-700">
+                                <MessageSquare className="w-4 h-4 text-white" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+
             </div>
           </div>
         </main>
