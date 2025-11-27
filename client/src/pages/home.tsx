@@ -237,7 +237,7 @@ export default function Home() {
                     </div>
                     <div className="w-64 px-4">
                         <div className="flex items-center gap-2">
-                             <div className="text-xs text-gray-600 font-bold">Last Open / Last Communication</div>
+                             <div className="text-xs text-gray-600 font-bold">Last Open / Last Called</div>
                         </div>
                     </div>
                     <div className="w-56 px-4 text-right">
@@ -290,9 +290,15 @@ export default function Home() {
                         </div>
 
                         <div className="w-64 px-4 flex flex-col justify-start">
-                            <div className="text-[11px] text-gray-400">
-                                LOD: 11/26/25<br/>
-                                LCD: 11/21/25
+                            <div className="text-[11px] text-gray-400 space-y-1">
+                                <div className="flex flex-col">
+                                    <span className="font-medium text-gray-500">Last Open Date:</span>
+                                    <span className="text-gray-800">11/26/25</span>
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="font-medium text-gray-500">Last Called Date:</span>
+                                    <span className="text-gray-800">11/21/25</span>
+                                </div>
                             </div>
                         </div>
 
