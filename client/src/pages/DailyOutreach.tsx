@@ -232,8 +232,7 @@ export default function DailyOutreach() {
             onFilterChange={setActiveFilter} 
           />
 
-            <div className="flex items-center justify-between px-4 py-3 mb-4">
-              <div></div>
+            <div className="flex items-center justify-start px-4 py-3 mb-4">
               <div className="flex items-center gap-4">
                 <span className="text-sm font-bold text-gray-500">Property 1 of 30</span>
                 
