@@ -439,20 +439,20 @@ export default function Home() {
                                 <div className="font-bold text-gray-900 text-base mb-1">{deal.price}</div>
                                 {Array.isArray(deal.propensity) ? (
                                   <>
-                                    <div className="flex items-center gap-1 mb-1.5">
-                                      <span className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Score:</span>
+                                    <div className="flex items-center gap-1 mb-0.5">
+                                      <span className="text-[10px] text-gray-400">Score:</span>
                                       <span className={cn(
-                                        "text-sm font-bold",
+                                        "text-[11px] font-medium",
                                         getPropensityScore(deal.propensity) >= 6 ? "text-red-600" : 
                                         getPropensityScore(deal.propensity) >= 3 ? "text-green-600" : "text-blue-600"
                                       )}>
                                         {getPropensityScore(deal.propensity)}
                                       </span>
                                     </div>
-                                    <div className="flex flex-wrap justify-center gap-1 mb-1">
+                                    <div className="flex flex-wrap justify-center gap-x-1 gap-y-0 mb-1">
                                       {deal.propensity.map((item, idx) => (
-                                        <div key={idx} className="group relative cursor-help">
-                                          <span className={cn("text-[10px] font-bold px-1 py-0.5 inline-block", getPropensityColor(item))}>
+                                        <div key={idx} className="group relative cursor-help leading-none">
+                                          <span className={cn("text-[10px] font-normal inline-block", getPropensityColor(item))}>
                                             {item}
                                           </span>
                                           <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-center">
