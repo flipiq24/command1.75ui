@@ -21,7 +21,7 @@ interface Deal {
   address: string;
   specs: string;
   price: string;
-  propensity: string;
+  propensity: string | string[];
   source: string;
   type: 'hot' | 'warm' | 'cold' | 'new';
   status: string;
@@ -76,7 +76,7 @@ const SAMPLE_DEALS: Deal[] = [
     address: "2842 Rosarita St, San Bernardino, CA 92407",
     specs: "Single Family Residential / 3 Br / 2 Ba / 1 Gar / 1990 / 1,169 ft² / 7,362 ft² / Pool:N/A",
     price: "$390,000",
-    propensity: "N/A",
+    propensity: ["Owned over 15 years", "Trust owned"],
     source: "Off Market",
     type: "hot",
     statusPercent: "30%",
@@ -322,7 +322,23 @@ export default function Home() {
 
                             <div className="w-2/12 px-4 flex flex-col items-center text-center">
                                 <div className="font-bold text-gray-900 text-base mb-1">{deal.price}</div>
-                                <div className="text-xs text-gray-400 mb-1">Propensity Score: {deal.propensity}</div>
+                                {Array.isArray(deal.propensity) ? (
+                                  <div className="flex flex-wrap justify-center gap-1 mb-1">
+                                    <div className="text-xs text-gray-400 mb-0.5 w-full">Propensity Score:</div>
+                                    {deal.propensity.map((item, idx) => (
+                                      <div key={idx} className="group relative cursor-help">
+                                        <span className="bg-blue-50 text-blue-600 text-[10px] font-bold px-2 py-0.5 rounded-full border border-blue-100 inline-block">
+                                          {item}
+                                        </span>
+                                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-center">
+                                          High motivation factor
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                ) : (
+                                  <div className="text-xs text-gray-400 mb-1">Propensity Score: {deal.propensity}</div>
+                                )}
                             </div>
 
                             <div className="w-2/12 px-4 flex flex-col items-center">
