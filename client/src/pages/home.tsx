@@ -427,7 +427,7 @@ export default function Home() {
                                       </span>
                                     </div>
                                     <div className="flex flex-wrap justify-center gap-x-1 gap-y-0.5 mb-1">
-                                      {deal.propensity.map((item, idx) => (
+                                      {deal.propensity.map((item: string, idx: number) => (
                                         <div key={idx} className="group/item relative cursor-help leading-none hover:z-50">
                                           <span className={cn("text-[10px] font-normal inline-block", getPropensityColor(item))}>
                                             {item}
