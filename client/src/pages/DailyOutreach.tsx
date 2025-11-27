@@ -29,6 +29,7 @@ interface Deal {
   price: string;
   propensity: string | string[];
   source: string;
+  mlsStatus?: string;
   type: 'hot' | 'warm' | 'cold' | 'new';
   status: string;
   statusPercent: string;
@@ -145,7 +146,7 @@ export default function DailyOutreach() {
       if (!activeFilter) return true;
       
       if (activeFilter === 'connections') {
-        return deal.type === 'hot' || deal.type === 'warm';
+        return deal.source === 'MLS' && deal.mlsStatus === 'Active';
       }
 
       if (activeFilter === 'priority') {
