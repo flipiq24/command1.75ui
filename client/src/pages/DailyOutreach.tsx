@@ -335,10 +335,18 @@ export default function DailyOutreach() {
                   <div className="mb-6 border-b border-gray-100 pb-4">
                     <h3 className="text-xl font-bold text-gray-900">{mockAgentData.name}</h3>
                     <p className="text-sm text-gray-500">{mockAgentData.brokerage}</p>
-                    <div className="flex items-center gap-2 mt-2 text-lg font-mono font-bold text-gray-800">
-                      <Phone className="w-4 h-4 text-gray-400" />
-                      {mockAgentData.phone}
-                    </div>
+                    <a 
+                      href={`https://data.flipiq.com/agents/${mockAgentData.name.replace(/\s+/g, '').toUpperCase()}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 mt-2 text-sm font-bold text-[#FF6600] hover:text-[#e55b00] transition-colors"
+                      data-testid="link-investor-source"
+                    >
+                      <span>Investor Source Count: {mockAgentData.investorDeals}</span>
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
                   </div>
 
                   <div className="space-y-4">
@@ -432,11 +440,6 @@ export default function DailyOutreach() {
                     <div className="space-y-1">
                       <label className="text-[10px] font-bold text-gray-400 uppercase">Last Communicated AA</label>
                       <input type="text" placeholder="Name of AA..." className="w-full text-xs p-2 border border-gray-200 rounded bg-gray-50 focus:border-orange-500 outline-none" data-testid="input-last-aa" />
-                    </div>
-
-                    <div className="space-y-1">
-                      <label className="text-[10px] font-bold text-gray-400 uppercase">Investor Source Count</label>
-                      <input type="number" defaultValue={mockAgentData.investorDeals} className="w-full text-xs p-2 border border-gray-200 rounded bg-gray-50 font-bold text-[#FF6600] focus:border-orange-500 outline-none" data-testid="input-investor-count" />
                     </div>
 
                   </div>
