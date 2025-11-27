@@ -18,7 +18,8 @@ import {
   Bug,
   Zap,
   ChevronLeft,
-  LogOut
+  LogOut,
+  CalendarCheck
 } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
@@ -78,6 +79,7 @@ export default function Home() {
                 <ChevronDown className="w-3 h-3 group-hover:text-gray-600" />
               </div>
               <nav className="space-y-0.5 mt-1">
+                <NavItem icon={CalendarCheck} label="Today's Plan" />
                 <NavItem icon={HomeIcon} label="Dashboard" active />
                 <NavItem icon={Briefcase} label="Deals" />
                 <NavItem icon={Database} label="MLS" />
