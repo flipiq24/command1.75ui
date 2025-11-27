@@ -122,8 +122,7 @@ export default function Home() {
         <main className="flex-1 overflow-y-auto p-6">
             
           {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {/* Calls Card */}
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-semibold text-gray-500 uppercase">Calls Today</span>
@@ -135,7 +134,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Texts Card */}
             <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-semibold text-gray-500 uppercase">Texts</span>
@@ -146,7 +144,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Offers Made Card */}
             <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm ring-1 ring-green-100 bg-green-50/30">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-bold text-green-700 uppercase">Offers Made</span>
@@ -158,7 +155,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Relationships Card */}
             <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-semibold text-gray-500 uppercase">Relationships</span>
@@ -168,7 +164,7 @@ export default function Home() {
                 <span className="text-2xl font-bold text-gray-900">3</span>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Action Plan */}
           <div className="mb-8">
