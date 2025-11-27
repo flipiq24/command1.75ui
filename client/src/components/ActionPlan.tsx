@@ -118,13 +118,13 @@ export default function ActionPlan() {
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
-      <div className="flex justify-between items-start mb-8">
+      <div className="flex justify-between items-baseline mb-8">
         <div>
           <h2 className="text-2xl font-bold text-gray-900">Nov 27, 2025 — Today's Action Plan!</h2>
           <p className="text-sm text-gray-500 mt-1 uppercase tracking-wide font-semibold">Deals to Follow Up Today</p>
         </div>
 
-        <div className="text-right self-center">
+        <div className="text-right">
           <div className="text-2xl font-bold text-green-600 tracking-tight">Offers Made Today <span className="ml-2">1/3</span></div>
         </div>
       </div>
