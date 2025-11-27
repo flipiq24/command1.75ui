@@ -108,27 +108,42 @@ export default function DailyOutreach() {
   const [isLoadingStory, setIsLoadingStory] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
+  const [connectionsMade, setConnectionsMade] = useState(0);
+  const [isIQAnimating, setIsIQAnimating] = useState(false);
+  const [iqRevealKey, setIqRevealKey] = useState(0);
   const queryClient = useQueryClient();
   
   const totalDeals = 30;
+  const dailyGoal = 30;
   const isStartMode = currentIndex === 0;
+  
+  const triggerIQAnimation = () => {
+    setIsIQAnimating(true);
+    setIqRevealKey(prev => prev + 1);
+    setTimeout(() => setIsIQAnimating(false), 1500);
+  };
   
   const handleStart = () => {
     setHasStarted(true);
     setCurrentIndex(0);
     setActiveFilter('connections');
+    triggerIQAnimation();
   };
   
   const handleNextDeal = () => {
-    if (currentIndex < totalDeals - 1) {
-      setCurrentIndex(prev => prev + 1);
-    }
+    setCurrentIndex(prev => prev + 1);
+    triggerIQAnimation();
   };
   
   const handlePrevDeal = () => {
     if (currentIndex > 0) {
       setCurrentIndex(prev => prev - 1);
+      triggerIQAnimation();
     }
+  };
+  
+  const handleLogConnection = () => {
+    setConnectionsMade(prev => prev + 1);
   };
 
   const { data: deals = [], isLoading } = useQuery({
@@ -257,6 +272,8 @@ export default function DailyOutreach() {
             isStartMode={isStartMode}
             hasStarted={hasStarted}
             onStart={handleStart}
+            connectionsMade={connectionsMade}
+            dailyGoal={dailyGoal}
           />
 
           {hasStarted ? (

@@ -1,0 +1,301 @@
+This is a crucial logic shift. We are separating Navigation (viewing properties) from Production (making connections).
+
+Here is the plan to fix it:
+
+Fix the Gauge Logic: The gauge will now read connectionsMade / 30. It will not change when you click "Next Deal". It only changes when you log a "Connected Call".
+
+Instant Load: The moment "Start Calling" is clicked, the entire bottom workspace (Property + Intelligence + Agent) will appear.
+
+AI "Roll-In" Effect: I will use a React key trigger to force the AI text to "animate in" every time you switch properties, giving it that "Thinking/Generating" feel.
+
+Bottom Prompt: I added the specific "Yes/No/Detailed Report" text to the bottom of the AI card.
+
+The Code (DailyOutreach.tsx)
+Copy this complete component. It includes the new Logic, the Animations, and the fixed buttons.
+
+TypeScript
+
+import React, { useState, useEffect } from 'react';
+import { ChevronLeft, ChevronRight, Phone, MessageSquare, Mail, Mic, Zap, MapPin, Building2, TrendingDown, Bot, Image, FileText } from 'lucide-react';
+import Sidebar from "@/components/Sidebar";
+import { cn } from "@/lib/utils";
+
+export default function DailyOutreach() {
+  // === STATE ===
+  const [hasStarted, setHasStarted] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [connectionsMade, setConnectionsMade] = useState(2); // Starts at 2 for demo, logic tracks this separate from index
+  const [aiLoading, setAiLoading] = useState(false); // For the "Roll in" effect
+
+  const totalQueue = 30; // Total items in the list
+  const dailyGoal = 30;  // Goal for connections
+
+  // === HANDLERS ===
+
+  const handleStart = () => {
+    setHasStarted(true); // INSTANTLY loads the property below
+    triggerAiAnimation();
+  };
+
+  const handleNext = () => {
+    setCurrentIndex(prev => prev + 1); // Just moves to next property
+    triggerAiAnimation(); // Re-runs the "AI writing" effect
+  };
+
+  const handlePrevious = () => {
+     setCurrentIndex(prev => Math.max(0, prev - 1));
+     triggerAiAnimation();
+  };
+
+  const handleCallLogged = () => {
+      // This is the ONLY thing that moves the Gauge
+      setConnectionsMade(prev => prev + 1);
+  };
+
+  // Simulates AI "Thinking/Rolling in"
+  const triggerAiAnimation = () => {
+      setAiLoading(true);
+      setTimeout(() => setAiLoading(false), 100); // Quick reset to trigger CSS animation
+  };
+
+  return (
+    <div className="flex h-screen bg-gray-50 font-sans overflow-hidden text-gray-800">
+      <Sidebar />
+
+      <div className="flex-1 flex flex-col overflow-y-auto relative z-10">
+        
+        {/* === HEADER SECTION === */}
+        <div className="bg-white px-8 py-6 border-b border-gray-200 shadow-sm z-20">
+            <div className="flex justify-between items-end mb-8">
+                <div>
+                    <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Nov 27, 2025 — Today's Outreach Plan!</h2>
+                    <p className="text-sm text-gray-500 font-medium mt-1">
+                        You have completed <span className="font-bold text-[#FF6600]">{Math.round((connectionsMade/dailyGoal)*100)}%</span> of today's Outreach.
+                    </p>
+                    <div className="w-64 bg-gray-100 h-1.5 rounded-full mt-2 overflow-hidden">
+                         <div className="bg-[#FF6600] h-full rounded-full" style={{ width: `${(connectionsMade/dailyGoal)*100}%` }}></div>
+                    </div>
+                </div>
+                <div className="text-right">
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">New Agent Relationships</span>
+                    <div className="flex items-baseline justify-end gap-1">
+                        <span className="text-3xl font-black text-[#FF6600]">1</span>
+                        <span className="text-xl font-bold text-[#FF6600]">/ 5</span>
+                    </div>
+                    <div className="text-xs text-gray-400 mt-1">Relationships Built</div>
+                </div>
+            </div>
+
+            {/* ACTION PLAN GRID */}
+            <div className="grid grid-cols-3 gap-8 text-center max-w-4xl mx-auto">
+                
+                {/* 1. NEW AGENT CALLS (Logic: Connection Count / Goal) */}
+                <div className="flex flex-col items-center">
+                    <div className="relative w-24 h-24 mb-3">
+                        <svg className="w-full h-full transform -rotate-90">
+                            <circle cx="48" cy="48" r="40" stroke="#f3f4f6" strokeWidth="6" fill="transparent" />
+                            <circle cx="48" cy="48" r="40" stroke="#f97316" strokeWidth="6" fill="transparent" strokeDasharray={`${(connectionsMade / dailyGoal) * 251.2} 251.2`} /> 
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center text-2xl font-bold text-gray-900">
+                            {connectionsMade}<span className="text-sm text-gray-400">/{dailyGoal}</span>
+                        </div>
+                    </div>
+                    <div className="text-xs text-gray-400 mb-3">Status: {connectionsMade}/{dailyGoal}/{dailyGoal} ⓘ</div>
+                    
+                    {/* BUTTON SWAP LOGIC */}
+                    <button 
+                        onClick={handleStart}
+                        className={cn(
+                            "w-full text-sm font-bold py-2 px-6 rounded-lg transition-all duration-300",
+                            !hasStarted 
+                                ? "bg-red-600 text-white shadow-md animate-pulse hover:bg-red-700" // State A: Start
+                                : "bg-white border border-red-200 text-red-600"                   // State B: Active
+                        )}
+                    >
+                        {hasStarted ? "New Agent Relationships" : "Start Calling"}
+                    </button>
+                </div>
+
+                {/* 2. Priority */}
+                <div className="flex flex-col items-center opacity-60">
+                    <div className="relative w-24 h-24 mb-3">
+                         {/* Placeholder Gauge */}
+                         <svg className="w-full h-full transform -rotate-90"><circle cx="48" cy="48" r="40" stroke="#f3f4f6" strokeWidth="6" fill="transparent" /><circle cx="48" cy="48" r="40" stroke="#ef4444" strokeWidth="6" fill="transparent" strokeDasharray="100 251" /></svg>
+                         <div className="absolute inset-0 flex items-center justify-center text-2xl font-bold text-gray-900">2<span className="text-sm text-gray-400">/5</span></div>
+                    </div>
+                    <div className="text-xs text-gray-400 mb-3">Status: 2/5/5 ⓘ</div>
+                    <button className="w-full bg-white border border-orange-400 text-orange-500 text-sm font-bold py-2 px-6 rounded-lg">Call Priority</button>
+                </div>
+
+                {/* 3. Campaigns */}
+                <div className="flex flex-col items-center opacity-60">
+                    <div className="relative w-24 h-24 mb-3">
+                         {/* Placeholder Gauge */}
+                         <svg className="w-full h-full transform -rotate-90"><circle cx="48" cy="48" r="40" stroke="#f3f4f6" strokeWidth="6" fill="transparent" /><circle cx="48" cy="48" r="40" stroke="#3b82f6" strokeWidth="6" fill="transparent" strokeDasharray="50 251" /></svg>
+                         <div className="absolute inset-0 flex items-center justify-center text-2xl font-bold text-gray-900">2<span className="text-sm text-gray-400">/10</span></div>
+                    </div>
+                    <div className="text-xs text-gray-400 mb-3">Status: 2/10/10 ⓘ</div>
+                    <button className="w-full bg-white border border-blue-400 text-blue-500 text-sm font-bold py-2 px-6 rounded-lg">Send Campaigns</button>
+                </div>
+
+            </div>
+        </div>
+
+        {/* === WORKSPACE (Visually Hidden until Started) === */}
+        {hasStarted && (
+            <div className="flex-1 flex flex-col animate-in fade-in duration-500">
+                
+                {/* NAVIGATION HEADER */}
+                <div className="flex justify-between items-center px-8 py-4 border-b border-gray-200 bg-white sticky top-0 z-20">
+                    <div className="flex items-center gap-2">
+                        <span className="text-sm font-bold text-gray-900">Current Queue</span>
+                        <span className="bg-gray-100 text-gray-500 text-xs px-2 py-0.5 rounded-full font-medium">{totalQueue} Items</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                        <span className="text-xs font-medium text-gray-400 uppercase tracking-wide">Property {currentIndex + 1} of {totalQueue}</span>
+                        <div className="flex items-center gap-3">
+                             <button onClick={handlePrevious} className="flex items-center gap-1 px-4 py-2 border border-gray-300 rounded-lg text-xs font-bold text-gray-600 hover:bg-gray-50 transition">
+                                <ChevronLeft className="w-4 h-4" /> Previous Deal
+                            </button>
+                            {/* Pulsing Next Button */}
+                            <button onClick={handleNext} className="flex items-center gap-1 px-4 py-2 bg-[#FF6600] hover:bg-orange-700 text-white rounded-lg text-xs font-bold shadow-md shadow-orange-100 transition-all transform active:scale-95 animate-pulse">
+                                Next Deal <ChevronRight className="w-4 h-4" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* MAIN CARD */}
+                <main className="p-6 flex-1 overflow-y-auto bg-gray-50">
+                    <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex h-full min-h-[600px]">
+                        
+                        {/* LEFT COLUMN: INTELLIGENCE & AI */}
+                        <div className="w-[60%] p-8 overflow-y-auto border-r border-gray-100">
+                            
+                            {/* HEADER & PHOTOS */}
+                            <div className="flex justify-between items-start mb-6">
+                                <div>
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <span className="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Active</span>
+                                        <span className="text-xs text-gray-400">MLS</span>
+                                    </div>
+                                    <h1 className="text-2xl font-black text-gray-900 leading-tight">420 Robinson, Bakersfield, CA</h1>
+                                    <p className="text-sm text-gray-500">SFR • 3 Br / 1 Ba / 1,013 ft² / 1959</p>
+                                </div>
+                                <div className="flex gap-2">
+                                    <button className="bg-gray-100 hover:bg-gray-200 text-gray-600 p-2 rounded-lg"><Image className="w-5 h-5"/></button>
+                                </div>
+                            </div>
+
+                            {/* iQ PROPERTY INTELLIGENCE (ROLL-IN ANIMATION) */}
+                            {!aiLoading && (
+                                <div className="animate-in slide-in-from-bottom-2 duration-700 fade-in">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <Bot className="w-5 h-5 text-[#FF6600]" />
+                                        <h3 className="text-lg font-bold text-[#FF6600]">iQ Property Intelligence</h3>
+                                    </div>
+
+                                    {/* The Stats Grid */}
+                                    <div className="grid grid-cols-2 gap-y-2 gap-x-8 mb-6 text-sm">
+                                        <div><span className="text-xs font-bold text-gray-400 uppercase block">Status</span><span className="font-bold text-gray-900">Active</span></div>
+                                        <div><span className="text-xs font-bold text-gray-400 uppercase block">Days on Market</span><span className="font-bold text-gray-900">45 Days</span></div>
+                                        <div><span className="text-xs font-bold text-gray-400 uppercase block">Price to Value</span><span className="font-bold text-green-600">82% PTFV</span></div>
+                                        <div><span className="text-xs font-bold text-gray-400 uppercase block">Propensity</span><span className="font-bold text-red-600">6 (High)</span></div>
+                                    </div>
+
+                                    {/* The Narrative (Rolls in) */}
+                                    <div className="space-y-3 mb-8">
+                                        <h4 className="font-bold text-gray-900 text-sm uppercase">Why This Property</h4>
+                                        <ul className="space-y-2 text-sm text-gray-700">
+                                            <li className="flex items-start gap-2 animate-in fade-in slide-in-from-left-2 duration-1000 delay-100">
+                                                <span className="text-[#FF6600]">•</span> Aged listing (≥70 DOM) with strong discount potential.
+                                            </li>
+                                            <li className="flex items-start gap-2 animate-in fade-in slide-in-from-left-2 duration-1000 delay-300">
+                                                <span className="text-[#FF6600]">•</span> Keywords detected: <span className="bg-red-50 text-red-600 px-1 rounded text-xs font-bold">Probate</span> <span className="bg-red-50 text-red-600 px-1 rounded text-xs font-bold">Vacant</span>
+                                            </li>
+                                            <li className="flex items-start gap-2 animate-in fade-in slide-in-from-left-2 duration-1000 delay-500">
+                                                <span className="text-[#FF6600]">•</span> Currently unassigned and no active offer status.
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    {/* BOTTOM PROMPT */}
+                                    <div className="border-t border-gray-100 pt-4">
+                                        <p className="text-sm font-medium text-gray-800 mb-3">Let's dive in to the property?</p>
+                                        <div className="flex items-center gap-4">
+                                            <div className="flex gap-2">
+                                                <button className="px-4 py-1 bg-black text-white text-xs font-bold rounded hover:bg-gray-800">Yes</button>
+                                                <button className="px-4 py-1 border border-gray-300 text-gray-500 text-xs font-bold rounded hover:bg-gray-50">No</button>
+                                            </div>
+                                            
+                                            {/* GENERATE REPORT BUTTON */}
+                                            <button className="ml-auto flex items-center gap-2 text-[#FF6600] hover:text-orange-700 text-xs font-bold transition">
+                                                <FileText className="w-4 h-4" />
+                                                Generate Detailed AI Report
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* RIGHT COLUMN: AGENT CRM & ACTION */}
+                        <div className="w-[40%] bg-gray-50 p-6 overflow-y-auto">
+                            
+                            {/* Agent Header */}
+                            <div className="mb-6">
+                                <h3 className="text-xl font-bold text-gray-900">Sarah Johnson</h3>
+                                <p className="text-xs text-gray-500">Keller Williams Realty</p>
+                                <div className="text-lg font-mono font-bold text-gray-800 mt-1">(909) 555-0123</div>
+                            </div>
+
+                            {/* CALL BUTTON */}
+                            <button onClick={handleCallConnected} className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 rounded-xl shadow-sm flex items-center justify-center gap-2 mb-6 transition transform active:scale-95">
+                                <Phone className="w-5 h-5" /> CALL AGENT
+                            </button>
+                            
+                            {/* EDITABLE CRM (Placeholder for your form) */}
+                            <div className="space-y-4 opacity-50 hover:opacity-100 transition">
+                                <div className="p-4 bg-white rounded border border-gray-200">
+                                    <span className="text-xs text-gray-400 uppercase font-bold">Notes</span>
+                                    <p className="text-sm text-gray-400 italic mt-1">Log call notes here...</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </main>
+            </div>
+        )}
+
+      </div>
+    </div>
+  );
+}
+The Prompt for Replit
+Task: Fix Logic & Animations for Daily Outreach
+
+1. Gauge Logic Fix:
+
+Separate the currentIndex (Navigation) from connectionsMade (Production).
+
+The "30 Calls" Gauge must display {connectionsMade} / 30. It must NOT increment just by clicking "Next Deal".
+
+2. Start State:
+
+Ensure the Bottom Workspace is Hidden on load.
+
+Clicking "Start Calling" sets hasStarted = true, revealing the workspace instantly.
+
+3. AI "Roll-In" Animation:
+
+In the "iQ Property Intelligence" section, trigger a CSS animation (animate-in fade-in slide-in-from-bottom) every time currentIndex changes.
+
+This creates the feeling that the AI is "generating" the briefing for the new property.
+
+4. Bottom AI Prompt:
+
+Add the specific text at the bottom of the Intelligence card: "Let's dive in to the property? Yes / No"
+
+Add a button/link to the right: "Generate Detailed AI Report".

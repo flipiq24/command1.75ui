@@ -18,6 +18,8 @@ interface OutreachActionPlanProps {
   isStartMode?: boolean;
   hasStarted?: boolean;
   onStart?: () => void;
+  connectionsMade?: number;
+  dailyGoal?: number;
 }
 
 export default function OutreachActionPlan({ 
@@ -26,11 +28,13 @@ export default function OutreachActionPlan({
   currentIndex = 0,
   isStartMode = true,
   hasStarted = false,
-  onStart
+  onStart,
+  connectionsMade = 0,
+  dailyGoal = 30
 }: OutreachActionPlanProps) {
   
-  const connectionsCompleted = hasStarted ? currentIndex + 1 : 0;
-  const connectionsTotal = 30;
+  const connectionsCompleted = connectionsMade;
+  const connectionsTotal = dailyGoal;
   
   const priorityCompleted = 2;
   const priorityTotal = 5;
