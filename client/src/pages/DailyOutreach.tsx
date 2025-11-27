@@ -116,6 +116,7 @@ export default function DailyOutreach() {
   const handleStart = () => {
     setHasStarted(true);
     setCurrentIndex(0);
+    setActiveFilter('connections');
   };
   
   const handleNextDeal = () => {
