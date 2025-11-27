@@ -491,12 +491,12 @@ export default function DailyOutreach() {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-200 px-6 py-5">
-                <h4 className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-3 flex items-center gap-2">
+              <div className="bg-gradient-to-r from-orange-50 to-amber-50 border-b border-orange-200 px-6 py-5">
+                <h4 className="text-xs font-bold text-[#FF6600] uppercase tracking-wider mb-3 flex items-center gap-2">
                   <Bot className="w-4 h-4" />
                   iQ Property Intelligence
                 </h4>
-                <div className="bg-white rounded-lg border border-blue-200 p-4 shadow-sm">
+                <div className="bg-white rounded-lg border border-orange-200 p-4 shadow-sm">
                   <div className="grid grid-cols-3 gap-4 text-sm">
                     <div>
                       <span className="text-gray-500">Est. ARV:</span>
