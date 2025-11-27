@@ -264,7 +264,7 @@ export default function DailyOutreach() {
 
               <div className="flex border-b border-gray-200">
                 
-                <div className="flex-1 p-6 border-r border-gray-200">
+                <div className="w-[60%] p-6 border-r border-gray-200">
                   <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2">
                     <Building2 className="w-4 h-4" />
                     Property Details
@@ -299,6 +299,34 @@ export default function DailyOutreach() {
                     </div>
                   </div>
 
+                  <div className="mb-6">
+                    <h5 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                      <Target className="w-4 h-4" />
+                      Propensity to Sell Keywords
+                    </h5>
+                    <div className="flex flex-wrap gap-2">
+                      {Array.isArray(currentDeal.propensity) && currentDeal.propensity.length > 0 ? (
+                        currentDeal.propensity.map((keyword: string, idx: number) => (
+                          <span 
+                            key={idx} 
+                            className={cn(
+                              "px-2 py-1 rounded-full text-xs font-medium",
+                              keyword.includes("Trustee") || keyword.includes("Default") || keyword.includes("Tax") || keyword.includes("Death") || keyword.includes("Bankruptcy")
+                                ? "bg-red-100 text-red-700 border border-red-200"
+                                : keyword.includes("Lien") || keyword.includes("Expired") || keyword.includes("Vacant") || keyword.includes("Equity") || keyword.includes("Owner")
+                                  ? "bg-green-100 text-green-700 border border-green-200"
+                                  : "bg-blue-100 text-blue-700 border border-blue-200"
+                            )}
+                          >
+                            {keyword}
+                          </span>
+                        ))
+                      ) : (
+                        <span className="text-sm text-gray-400 italic">No propensity indicators detected</span>
+                      )}
+                    </div>
+                  </div>
+
                   <div className="mt-6">
                     <h5 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-2">
                       <TrendingDown className="w-4 h-4" />
@@ -330,7 +358,7 @@ export default function DailyOutreach() {
                   </div>
                 </div>
 
-                <div className="w-[400px] p-6 overflow-y-auto">
+                <div className="w-[40%] p-6 overflow-y-auto">
                   
                   <div className="mb-6 border-b border-gray-100 pb-4">
                     <h3 className="text-xl font-bold text-gray-900">{mockAgentData.name}</h3>
@@ -446,6 +474,41 @@ export default function DailyOutreach() {
                 </div>
               </div>
 
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-200 px-6 py-5">
+                <h4 className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-3 flex items-center gap-2">
+                  <Bot className="w-4 h-4" />
+                  iQ Property Intelligence
+                </h4>
+                <div className="bg-white rounded-lg border border-blue-200 p-4 shadow-sm">
+                  <div className="grid grid-cols-3 gap-4 text-sm">
+                    <div>
+                      <span className="text-gray-500">Est. ARV:</span>
+                      <span className="ml-2 font-bold text-gray-900">$125,000</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-500">Repair Est:</span>
+                      <span className="ml-2 font-bold text-gray-900">$15,000</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-500">Max Offer:</span>
+                      <span className="ml-2 font-bold text-[#FF6600]">$68,500</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-500">Comp Count:</span>
+                      <span className="ml-2 font-bold text-gray-900">8</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-500">Avg $/SqFt:</span>
+                      <span className="ml-2 font-bold text-gray-900">$142</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-500">Market Trend:</span>
+                      <span className="ml-2 font-bold text-green-600">↑ 3.2%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div className="bg-gradient-to-r from-slate-50 to-gray-50 border-b border-gray-200 px-6 py-5">
                 <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-2">
                   <MessageSquare className="w-4 h-4" />
@@ -453,11 +516,11 @@ export default function DailyOutreach() {
                 </h4>
                 <div className="bg-white rounded-lg border border-gray-200 p-4 shadow-sm">
                   <p className="text-gray-700 leading-relaxed">
-                    "Hey <span className="font-bold text-[#FF6600]">{getAgentFirstName()}</span>, this is Tony from (Company). 
-                    I noticed you sourced deals to investors like FairTrade, LLC and others like Investosocal, I believe the deal on 123 Green street was a good one. 
-                    So I know you understand investment grade properties. I'm calling you on <span className="font-bold">{currentDeal.address}</span> which 
-                    has been on the market <span className="font-bold text-amber-600">{dom} days</span>. We are proven investors that move quickly. 
-                    Wanted to see if your seller is open to a cash offer. We can close in 14-21 days. Would that be worth exploring?"
+                    "Hey <span className="font-bold text-[#FF6600]">{getAgentFirstName()}</span>, this is <span className="font-bold text-[#FF6600]">Tony</span> from <span className="font-bold text-[#FF6600]">(Company)</span>. 
+                    I noticed you sourced deals to investors like <span className="font-bold text-[#FF6600]">FairTrade, LLC</span> and others like <span className="font-bold text-[#FF6600]">Investosocal</span>, I believe the deal on <span className="font-bold text-[#FF6600]">123 Green street</span> was a good one. 
+                    So I know you understand investment grade properties. I'm calling you on <span className="font-bold text-[#FF6600]">{currentDeal.address}</span> which 
+                    has been on the market <span className="font-bold text-[#FF6600]">{dom} days</span>. We are proven investors that move quickly. 
+                    Wanted to see if your seller is open to a cash offer. We can close in <span className="font-bold text-[#FF6600]">14-21 days</span>. Would that be worth exploring?"
                   </p>
                 </div>
               </div>
