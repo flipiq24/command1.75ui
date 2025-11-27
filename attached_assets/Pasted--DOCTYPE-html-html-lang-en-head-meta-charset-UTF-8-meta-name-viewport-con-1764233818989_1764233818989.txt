@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlipIQ Gamified Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f9fafb; color: #111827; }
+        
+        /* 1. THE PULSE ANIMATION (For the Active Item) */
+        @keyframes subtle-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .animate-priority {
+            animation: subtle-pulse 2s infinite;
+        }
+
+        /* 2. THE COMPLETED STATE */
+        .completed-circle {
+            border-color: #d1d5db; /* Gray border */
+            background-color: #f9fafb; /* Gray background */
+        }
+    </style>
+</head>
+<body class="p-8">
+
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        
+        <div class="p-8 border-b border-gray-100">
+            <div class="flex justify-between items-start mb-10">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Nov 27, 2025 — Today's Action Plan</h2>
+                    <p class="text-xs text-gray-500 mt-2 font-medium uppercase tracking-wider">Deals to Follow Up Today</p>
+                </div>
+
+                <div class="bg-white border border-gray-100 rounded-xl px-6 py-4 shadow-sm flex flex-col items-center min-w-[140px]">
+                    <div class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Daily Offer Goal</div>
+                    <div class="flex items-baseline gap-1 mb-2">
+                        <button class="text-4xl font-black text-blue-600 hover:text-blue-700 transition cursor-pointer leading-none">1</button>
+                        <span class="text-lg font-bold text-gray-300">/ 3</span>
+                    </div>
+                    <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+                        <div class="bg-blue-500 h-full rounded-full" style="width: 33%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-4 gap-8 text-center">
+                
+                <div class="flex flex-col items-center group z-10 scale-105 transform transition">
+                    <div class="relative w-24 h-24 mb-4">
+                        <svg class="w-full h-full transform -rotate-90">
+                            <circle cx="48" cy="48" r="44" stroke="#f3f4f6" stroke-width="4" fill="transparent" />
+                            <circle cx="48" cy="48" r="44" stroke="#ef4444" stroke-width="4" fill="transparent" stroke-dasharray="276" stroke-dashoffset="200" />
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <span class="text-2xl font-bold text-gray-900 leading-none">1</span>
+                            <span class="text-[10px] text-gray-400 font-bold uppercase mt-1">Pending</span>
+                        </div>
+                    </div>
+                    
+                    <button class="animate-priority w-full bg-red-600 text-white border border-red-600 text-sm font-bold py-2.5 px-4 rounded-lg shadow-md hover:bg-red-700 transition">
+                        Start Here &rarr;
+                    </button>
+                </div>
+
+                <div class="flex flex-col items-center opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300">
+                    <div class="relative w-20 h-20 mb-4 completed-circle rounded-full border-4 border-gray-100 flex items-center justify-center">
+                        <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <button class="w-full border border-gray-200 text-green-600 bg-gray-50 text-xs font-bold py-2 px-4 rounded-lg cursor-default">
+                        All Done!
+                    </button>
+                </div>
+
+                <div class="flex flex-col items-center opacity-80 hover:opacity-100 transition">
+                    <div class="relative w-20 h-20 mb-4">
+                        <svg class="w-full h-full transform -rotate-90">
+                            <circle cx="40" cy="40" r="36" stroke="#f3f4f6" stroke-width="4" fill="transparent" />
+                            <circle cx="40" cy="40" r="36" stroke="#3b82f6" stroke-width="4" fill="transparent" stroke-dasharray="226" stroke-dashoffset="226" />
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center text-xl font-bold text-gray-900">0<span class="text-sm text-gray-400 font-medium">/5</span></div>
+                    </div>
+                    <button class="w-full border border-blue-200 text-blue-600 bg-white hover:bg-blue-50 hover:border-blue-300 text-xs font-bold py-2 px-4 rounded-lg transition">
+                        Open Cold Deals
+                    </button>
+                </div>
+
+                <div class="flex flex-col items-center opacity-80 hover:opacity-100 transition">
+                    <div class="relative w-20 h-20 mb-4">
+                        <svg class="w-full h-full transform -rotate-90">
+                            <circle cx="40" cy="40" r="36" stroke="#f3f4f6" stroke-width="4" fill="transparent" />
+                            <circle cx="40" cy="40" r="36" stroke="#9ca3af" stroke-width="4" fill="transparent" stroke-dasharray="226" stroke-dashoffset="15" />
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center text-xl font-bold text-gray-900">56<span class="text-sm text-gray-400 font-medium">/60</span></div>
+                    </div>
+                    <button class="w-full border border-gray-200 text-gray-600 bg-white hover:bg-gray-50 hover:border-gray-300 text-xs font-bold py-2 px-4 rounded-lg transition">
+                        Process New Deals
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
