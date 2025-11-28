@@ -327,19 +327,82 @@ export default function DailyOutreach() {
   const [showAgentIQModal, setShowAgentIQModal] = useState(false);
   const [agentIQReport, setAgentIQReport] = useState<string>('');
   const [isLoadingAgentIQ, setIsLoadingAgentIQ] = useState(false);
+  const [showAgentValidationModal, setShowAgentValidationModal] = useState(false);
+  const [agentFormFields, setAgentFormFields] = useState<Record<number, {
+    notes: string;
+    relationshipStatus: string;
+    followUpStatus: string;
+  }>>({});
   
   const priorityAgents = PRIORITY_AGENTS;
   const currentAgent = priorityAgents[currentAgentIndex];
   
+  const getCurrentAgentFields = () => {
+    const agentId = currentAgent?.id;
+    if (!agentId) return null;
+    return agentFormFields[agentId] || {
+      notes: '',
+      relationshipStatus: currentAgent?.relationshipStatus || 'Unknown',
+      followUpStatus: ''
+    };
+  };
+  
+  const updateAgentFormField = (field: string, value: string) => {
+    const agentId = currentAgent?.id;
+    if (!agentId) return;
+    setAgentFormFields(prev => ({
+      ...prev,
+      [agentId]: {
+        ...prev[agentId] || { notes: '', relationshipStatus: currentAgent?.relationshipStatus || 'Unknown', followUpStatus: '' },
+        [field]: value
+      }
+    }));
+  };
+  
+  const validateAgentFields = () => {
+    const fields = getCurrentAgentFields();
+    if (!fields) return { isValid: true, missing: [], completed: [] };
+    
+    const requiredFields = [
+      { key: 'notes', label: 'Notes', value: fields.notes },
+      { key: 'relationshipStatus', label: 'Relationship Status', value: fields.relationshipStatus },
+      { key: 'followUpStatus', label: 'Follow Up Status', value: fields.followUpStatus },
+    ];
+    
+    const missing = requiredFields.filter(f => !f.value || f.value === '' || f.value === 'Unknown');
+    const completed = requiredFields.filter(f => f.value && f.value !== '' && f.value !== 'Unknown');
+    
+    return {
+      isValid: missing.length === 0,
+      missing,
+      completed
+    };
+  };
+  
   const handlePrevAgent = () => {
     if (currentAgentIndex > 0) {
       setCurrentAgentIndex(prev => prev - 1);
+      setShowAgentIQModal(false);
     }
   };
   
   const handleNextAgent = () => {
     if (currentAgentIndex < priorityAgents.length - 1) {
+      const validation = validateAgentFields();
+      if (!validation.isValid) {
+        setShowAgentValidationModal(true);
+        return;
+      }
       setCurrentAgentIndex(prev => prev + 1);
+      setShowAgentIQModal(false);
+    }
+  };
+  
+  const handleSkipAgentAnyway = () => {
+    setShowAgentValidationModal(false);
+    if (currentAgentIndex < priorityAgents.length - 1) {
+      setCurrentAgentIndex(prev => prev + 1);
+      setShowAgentIQModal(false);
     }
   };
   
@@ -794,9 +857,20 @@ export default function DailyOutreach() {
                           <h4 className="text-sm font-bold text-gray-900 mb-4">Agent Status</h4>
                           <div className="space-y-4">
                             <div>
-                              <label className="text-xs text-gray-500 block mb-1">Relationship Status</label>
-                              <select className="w-full text-sm text-gray-900 bg-white border border-gray-200 rounded-md px-3 py-2">
-                                <option>{currentAgent.relationshipStatus}</option>
+                              <label className="text-xs text-gray-500 block mb-1">Relationship Status <span className="text-red-500">*</span></label>
+                              <select 
+                                value={getCurrentAgentFields()?.relationshipStatus || currentAgent.relationshipStatus}
+                                onChange={(e) => updateAgentFormField('relationshipStatus', e.target.value)}
+                                className="w-full text-sm text-gray-900 bg-white border border-gray-200 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent"
+                                data-testid="select-relationship-status"
+                              >
+                                <option value="Unknown">Unknown</option>
+                                <option value="Cold">Cold</option>
+                                <option value="Warm">Warm</option>
+                                <option value="Hot">Hot</option>
+                                <option value="Priority">Priority</option>
+                                <option value="Connected">Connected</option>
+                                <option value="No Contact">No Contact</option>
                               </select>
                             </div>
                             <div>
@@ -836,9 +910,21 @@ export default function DailyOutreach() {
                           <h4 className="text-sm font-bold text-gray-900 mb-4">Follow Up</h4>
                           <div className="space-y-4">
                             <div>
-                              <label className="text-xs text-gray-500 block mb-1">Follow Up Status</label>
-                              <select className="w-full text-sm text-gray-900 bg-white border border-gray-200 rounded-md px-3 py-2">
-                                <option>{currentAgent.followUpStatus}</option>
+                              <label className="text-xs text-gray-500 block mb-1">Follow Up Status <span className="text-red-500">*</span></label>
+                              <select 
+                                value={getCurrentAgentFields()?.followUpStatus || ''}
+                                onChange={(e) => updateAgentFormField('followUpStatus', e.target.value)}
+                                className="w-full text-sm text-gray-900 bg-white border border-gray-200 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent"
+                                data-testid="select-follow-up-status"
+                              >
+                                <option value="">Select Status...</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Scheduled">Scheduled</option>
+                                <option value="Completed">Completed</option>
+                                <option value="No Answer">No Answer</option>
+                                <option value="Left Voicemail">Left Voicemail</option>
+                                <option value="Callback Requested">Callback Requested</option>
+                                <option value="Not Interested">Not Interested</option>
                               </select>
                             </div>
                             <div>
@@ -874,25 +960,21 @@ export default function DailyOutreach() {
                       <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-100">
                         <div className="bg-gray-50 rounded-lg p-4">
                           <div className="flex items-center justify-between mb-2">
-                            <h5 className="text-sm font-medium text-gray-900">Notes</h5>
-                            <button className="text-gray-400 hover:text-gray-600">
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                              </svg>
-                            </button>
+                            <h5 className="text-sm font-medium text-gray-900">Notes <span className="text-red-500">*</span></h5>
                           </div>
-                          <p className="text-sm text-gray-500">—</p>
+                          <textarea 
+                            value={getCurrentAgentFields()?.notes || ''}
+                            onChange={(e) => updateAgentFormField('notes', e.target.value)}
+                            placeholder="Add notes about this call..."
+                            className="w-full text-sm text-gray-700 bg-white border border-gray-200 rounded-md px-3 py-2 min-h-[80px] resize-none focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent"
+                            data-testid="input-agent-notes"
+                          />
                         </div>
                         <div className="bg-gray-50 rounded-lg p-4">
                           <div className="flex items-center justify-between mb-2">
                             <h5 className="text-sm font-medium text-gray-900">Note Dates</h5>
-                            <button className="text-gray-400 hover:text-gray-600">
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                              </svg>
-                            </button>
                           </div>
-                          <p className="text-sm text-gray-500">—</p>
+                          <p className="text-sm text-gray-500">{new Date().toLocaleDateString()}</p>
                         </div>
                       </div>
                     </div>
@@ -1571,6 +1653,65 @@ export default function DailyOutreach() {
                   onClick={handleSkipAnyway}
                   className="px-4 py-2.5 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition"
                   data-testid="button-skip-anyway"
+                >
+                  Skip Anyway
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Agent Validation Modal */}
+      {showAgentValidationModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/50" />
+          <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 animate-in fade-in zoom-in-95 duration-200">
+            <div className="p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
+                  <AlertTriangle className="w-5 h-5 text-[#FF6600]" />
+                </div>
+                <h2 className="text-lg font-bold text-gray-900">Complete Required Fields</h2>
+              </div>
+              
+              <p className="text-sm text-gray-600 mb-4">
+                Please update the following fields before moving to the next agent:
+              </p>
+
+              <div className="space-y-2 mb-6">
+                {validateAgentFields().missing.map((field) => (
+                  <div key={field.key} className="flex items-center gap-2 text-sm">
+                    <X className="w-4 h-4 text-red-500" />
+                    <span className="text-gray-700">{field.label}</span>
+                  </div>
+                ))}
+                {validateAgentFields().completed.map((field) => (
+                  <div key={field.key} className="flex items-center gap-2 text-sm">
+                    <Check className="w-4 h-4 text-green-500" />
+                    <span className="text-gray-500">{field.label}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-6">
+                <p className="text-xs text-amber-800">
+                  <strong>Tip:</strong> If contact was made via dial pad, always update the Relationship Status from "Unknown" and add notes about the conversation.
+                </p>
+              </div>
+
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowAgentValidationModal(false)}
+                  className="flex-1 px-4 py-2.5 bg-[#FF6600] hover:bg-[#e65c00] text-white text-sm font-bold rounded-lg transition"
+                  data-testid="button-go-back-complete-agent"
+                >
+                  Go Back & Complete
+                </button>
+                <button
+                  onClick={handleSkipAgentAnyway}
+                  className="px-4 py-2.5 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition"
+                  data-testid="button-skip-agent-anyway"
                 >
                   Skip Anyway
                 </button>
