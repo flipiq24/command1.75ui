@@ -39,8 +39,8 @@ export default function OutreachActionPlan({
   const priorityCompleted = 2;
   const priorityTotal = 5;
   
-  const topOfMindCompleted = 2;
-  const topOfMindTotal = 10;
+  const topOfMindCompleted = 0;
+  const topOfMindTotal = 3;
   
   const newRelationships = 1;
   const newRelationshipsGoal = 5;
