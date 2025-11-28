@@ -116,7 +116,7 @@ const useTypingEffect = (lines: StreamingLine[], triggerKey: number) => {
       return () => clearTimeout(timeout);
     }
 
-    const randomDelay = Math.floor(Math.random() * 25) + 15;
+    const randomDelay = Math.floor(Math.random() * 12) + 8;
     const timeout = setTimeout(() => {
       setDisplayedLines(prev => {
         const newMap = new Map(prev);
@@ -617,7 +617,9 @@ export default function DailyOutreach() {
                                     </div>
                                     <div className="flex-1">
                                         <div className="font-bold text-gray-900 text-base mb-0.5 flex items-center gap-1">
-                                            {currentDeal.address}
+                                            <Link href={`/piq/${currentDeal.id}`} className="hover:text-orange-600 hover:underline cursor-pointer transition-colors">
+                                                {currentDeal.address}
+                                            </Link>
                                             <Globe className="w-3 h-3 text-gray-400" />
                                         </div>
                                         <div className="text-xs text-gray-500 mb-2">{currentDeal.specs}</div>
