@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect, useCallback, useLayoutEffect } fro
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import OutreachActionPlan, { OutreachType } from "@/components/OutreachActionPlan";
-import Sidebar from "@/components/Sidebar";
+import Layout from "@/components/Layout";
 import { 
   ChevronDown,
   ChevronLeft,
@@ -860,10 +860,8 @@ export default function DailyOutreach() {
   };
 
   return (
-    <div className="bg-gray-50 text-gray-800 h-screen flex overflow-hidden font-sans">
-      <Sidebar />
-
-      <div className="flex-1 flex flex-col overflow-hidden relative z-10">
+    <Layout>
+      <div className="flex-1 flex flex-col overflow-hidden relative z-10 bg-gray-50">
         
         <div className="bg-white px-8 py-4 border-b border-gray-200 flex justify-between items-center sticky top-0 z-20">
           <div>
@@ -2275,6 +2273,6 @@ export default function DailyOutreach() {
         </div>
       )}
 
-    </div>
+    </Layout>
   );
 }

@@ -10,19 +10,15 @@ import {
 } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import OutreachActionPlan from "@/components/OutreachActionPlan";
-import Sidebar from "@/components/Sidebar";
+import Layout from "@/components/Layout";
 import { useLocation } from "wouter";
 
 export default function DailyOutreach() {
   const [location] = useLocation();
 
   return (
-    <div className="bg-gray-50 text-gray-800 h-screen flex overflow-hidden font-sans">
-      {/* Sidebar */}
-      <Sidebar />
-
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden relative z-10">
+    <Layout>
+      <div className="flex-1 flex flex-col overflow-hidden relative z-10 bg-gray-50">
         
         <header className="bg-white border-b border-gray-200 py-4 px-6 flex justify-between items-center">
           <div>
@@ -227,6 +223,6 @@ export default function DailyOutreach() {
 
         </main>
       </div>
-    </div>
+    </Layout>
   );
 }

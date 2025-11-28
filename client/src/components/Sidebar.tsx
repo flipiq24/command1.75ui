@@ -17,7 +17,12 @@ import { Link, useLocation } from "wouter";
 import logoUrl from '@assets/flipiQlogo_1764227557148.JPG';
 import { cn } from "@/lib/utils";
 
-export default function Sidebar() {
+interface SidebarProps {
+  onIQClick?: () => void;
+  isIQActive?: boolean;
+}
+
+export default function Sidebar({ onIQClick, isIQActive = false }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [location] = useLocation();
 
@@ -51,24 +56,28 @@ export default function Sidebar() {
                 {isCollapsed ? "Plan" : "Today's Plan"}
             </div>
             <div className="space-y-1">
-                <Link href="/iq" className={cn(
-                  "group relative flex items-center px-3 py-2 text-sm font-medium rounded-lg border transition",
-                  location === '/iq'
-                    ? "bg-gray-100 text-gray-900 border-gray-200 hover:bg-gray-200"
-                    : "text-gray-600 hover:bg-gray-50 border-transparent hover:border-gray-100",
-                  isCollapsed ? "justify-center" : "justify-between"
-                )}>
+                <button 
+                  onClick={onIQClick}
+                  className={cn(
+                    "group relative flex items-center px-3 py-2 text-sm font-medium rounded-lg border transition w-full",
+                    isIQActive
+                      ? "bg-gradient-to-r from-[#FF6600] to-[#FF8533] text-white border-[#FF6600] hover:from-[#e65c00] hover:to-[#FF6600]"
+                      : "text-gray-600 hover:bg-gray-50 border-transparent hover:border-gray-100",
+                    isCollapsed ? "justify-center" : "justify-between"
+                  )}
+                  data-testid="button-iq-overlay"
+                >
                     <span className="flex items-center gap-3">
-                      <Lightbulb className="w-4 h-4 flex-shrink-0" /> 
-                      {!isCollapsed && <span>IQ</span>}
+                      <Lightbulb className={cn("w-4 h-4 flex-shrink-0", isIQActive && "animate-pulse")} /> 
+                      {!isCollapsed && <span>iQ</span>}
                     </span>
                     
                     {/* Tooltip */}
                     <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                        <span className="font-bold text-[#FF6600]">IQ:</span><br/>
-                        AI-powered step-by-step process.
+                        <span className="font-bold text-[#FF6600]">iQ:</span><br/>
+                        AI-powered daily check-in and deal review assistant.
                     </div>
-                </Link>
+                </button>
 
                 <Link href="/" className={cn(
                   "group relative flex items-center px-3 py-2 text-sm font-medium rounded-lg border transition",

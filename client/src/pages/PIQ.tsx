@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useLayoutEffect } from 'react';
 import { useLocation, useSearch } from 'wouter';
 import { cn } from "@/lib/utils";
-import Sidebar from '@/components/Sidebar';
+import Layout from '@/components/Layout';
 import { 
   ArrowLeft,
   Snowflake,
@@ -214,10 +214,8 @@ export default function PIQ() {
   }, [piqIsTypingComplete]);
 
   return (
-    <div className="bg-gray-50 text-gray-800 h-screen flex overflow-hidden font-sans">
-      <Sidebar />
-
-      <div className="flex-1 flex flex-col overflow-hidden">
+    <Layout>
+      <div className="flex-1 flex flex-col overflow-hidden bg-gray-50">
         
         <header className="bg-white border-b border-gray-200 py-3 px-6 flex justify-between items-center">
           <div>
@@ -844,6 +842,6 @@ export default function PIQ() {
           </button>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 }
