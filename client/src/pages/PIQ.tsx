@@ -336,37 +336,6 @@ export default function PIQ() {
                 </div>
 
                 <div className="flex gap-1 items-center">
-                  <button
-                    onClick={handleIQClick}
-                    disabled={isIQAnalyzed || isIQAnalyzing}
-                    className={cn(
-                      "flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg transition",
-                      isIQAnalyzed
-                        ? "bg-green-100 text-green-700 border border-green-200 cursor-default"
-                        : isIQAnalyzing
-                          ? "bg-[#FF6600] text-white animate-pulse cursor-wait"
-                          : "bg-[#FF6600] hover:bg-[#e55c00] text-white shadow-sm"
-                    )}
-                    title={isIQAnalyzed ? "Analysis Complete" : isIQAnalyzing ? "Analyzing..." : "Run IQ Analysis"}
-                    data-testid="button-piq-iq"
-                  >
-                    {isIQAnalyzed ? (
-                      <>
-                        <Check className="w-3.5 h-3.5" />
-                        <span>Analyzed</span>
-                      </>
-                    ) : isIQAnalyzing ? (
-                      <>
-                        <Lightbulb className="w-3.5 h-3.5" />
-                        <span>Analyzing...</span>
-                      </>
-                    ) : (
-                      <>
-                        <Lightbulb className="w-3.5 h-3.5" />
-                        <span>IQ</span>
-                      </>
-                    )}
-                  </button>
                   {rightTabs.map((tab) => (
                     <button
                       key={tab.id}
