@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useMemo, useLayoutEffect } from 'react';
 import { useLocation, useSearch } from 'wouter';
 import { cn } from "@/lib/utils";
-import Layout, { useLayout } from '@/components/Layout';
-import FlipIQCelebration from '@/components/FlipIQCelebration';
+import Layout from '@/components/Layout';
 import { 
   ArrowLeft,
   Snowflake,
@@ -50,18 +49,6 @@ function PIQContent() {
   const [isMapValueIQLoading, setIsMapValueIQLoading] = useState(false);
   const [mapValueIQRevealKey, setMapValueIQRevealKey] = useState(0);
   const [showMapValueIQCompletion, setShowMapValueIQCompletion] = useState(false);
-  const [showCelebration, setShowCelebration] = useState(false);
-  
-  const { openIQWithSummary } = useLayout();
-
-  const handleCelebrationComplete = () => {
-    setShowCelebration(false);
-    openIQWithSummary();
-  };
-
-  const handleCelebrationTrigger = () => {
-    setShowCelebration(true);
-  };
 
   useEffect(() => {
     if (fromNewAgent) {
@@ -227,12 +214,6 @@ function PIQContent() {
   }, [piqIsTypingComplete]);
 
   return (
-      <>
-      <FlipIQCelebration 
-        isOpen={showCelebration} 
-        userName="Tony"
-        onComplete={handleCelebrationComplete}
-      />
       <div className="flex-1 flex flex-col overflow-hidden bg-gray-50">
         
         <header className="bg-white border-b border-gray-200 py-3 px-6 flex justify-between items-center">
@@ -958,7 +939,6 @@ function PIQContent() {
           </button>
         </div>
       </div>
-      </>
   );
 }
 

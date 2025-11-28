@@ -3,6 +3,7 @@ import { Link, useSearch } from "wouter";
 import { cn } from "@/lib/utils";
 import ActionPlan, { DealType } from "@/components/ActionPlan";
 import Layout, { useLayout } from "@/components/Layout";
+import FlipIQCelebration from "@/components/FlipIQCelebration";
 import { 
   ChevronDown,
   MoreVertical,
@@ -98,10 +99,16 @@ function HomeContent() {
   const [activeFilter, setActiveFilter] = useState<DealType | 'goal' | 'completed' | null>(null);
   const [selectedDealIds, setSelectedDealIds] = useState<number[]>([]);
   const [completionPercent, setCompletionPercent] = useState(100);
+  const [showCelebration, setShowCelebration] = useState(false);
   const queryClient = useQueryClient();
   const { openIQWithSummary } = useLayout();
 
   const handleMilestoneComplete = () => {
+    setShowCelebration(true);
+  };
+
+  const handleCelebrationComplete = () => {
+    setShowCelebration(false);
     openIQWithSummary();
   };
 
@@ -192,6 +199,12 @@ function HomeContent() {
   };
 
   return (
+      <>
+      <FlipIQCelebration 
+        isOpen={showCelebration} 
+        userName="Tony"
+        onComplete={handleCelebrationComplete}
+      />
       <div className="flex-1 flex flex-col overflow-hidden relative z-10 bg-gray-50">
         
         <header className="bg-white border-b border-gray-200 py-4 px-6 flex justify-between items-center">
@@ -558,6 +571,7 @@ function HomeContent() {
 
         </main>
       </div>
+      </>
   );
 }
 
