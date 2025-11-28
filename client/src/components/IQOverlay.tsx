@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { X, Send, Lightbulb, Flame, Clock, Phone, Home, ChevronRight, ExternalLink } from 'lucide-react';
+import { X, Send, Lightbulb, Flame, Clock, Phone, Home, ChevronRight, ExternalLink, Plus, Mic, AudioLines } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation } from 'wouter';
@@ -92,6 +92,7 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
   const [isTyping, setIsTyping] = useState(false);
   const [streamingText, setStreamingText] = useState('');
   const [checkinStep, setCheckinStep] = useState(0);
+  const [isVoiceActive, setIsVoiceActive] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -101,6 +102,23 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
   const goToDealReview = () => {
     onClose();
     setLocation('/?filter=hot');
+  };
+
+  const toggleVoice = () => {
+    setIsVoiceActive(!isVoiceActive);
+    if (!isVoiceActive) {
+      setMessages(prev => [...prev, {
+        id: Date.now().toString(),
+        role: 'ai',
+        content: '🎙️ Voice mode activated. I\'m listening...'
+      }]);
+    } else {
+      setMessages(prev => [...prev, {
+        id: Date.now().toString(),
+        role: 'ai',
+        content: 'Voice mode deactivated. You can type your message.'
+      }]);
+    }
   };
 
   const getCurrentTime = () => {
@@ -461,34 +479,59 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
             </div>
           </div>
 
-          {/* Input Bar */}
-          <div className="px-6 py-4 bg-white border-t border-gray-200">
-            <div className="max-w-3xl mx-auto flex items-center gap-3">
-              <div className="flex-1 flex items-center bg-gray-100 rounded-full px-4 py-3">
+          {/* Input Bar - Floating Style */}
+          <div className="px-6 py-6 bg-gradient-to-t from-gray-100 to-transparent">
+            <div className="max-w-3xl mx-auto">
+              <div className="flex items-center gap-3 bg-white rounded-full px-4 py-3 shadow-lg border border-gray-200">
+                <button
+                  className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition"
+                  data-testid="button-add-attachment"
+                >
+                  <Plus className="w-5 h-5" />
+                </button>
+                
                 <input
                   ref={inputRef}
                   type="text"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder={currentPhase === 'dealreview' ? "Ask me anything about this property or type 'next'..." : "Type your response..."}
+                  placeholder="Ask anything"
                   className="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none"
                   data-testid="input-iq-chat"
                 />
-              </div>
-              <button
-                onClick={handleSend}
-                disabled={!inputValue.trim() || isTyping}
-                className={cn(
-                  "w-10 h-10 rounded-full flex items-center justify-center transition",
-                  inputValue.trim() && !isTyping
-                    ? "bg-[#FF6600] hover:bg-[#e65c00] text-white"
-                    : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                
+                <button
+                  className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition"
+                  data-testid="button-mic"
+                >
+                  <Mic className="w-5 h-5" />
+                </button>
+                
+                {inputValue.trim() ? (
+                  <button
+                    onClick={handleSend}
+                    disabled={isTyping}
+                    className="w-10 h-10 rounded-full bg-gray-900 hover:bg-gray-800 text-white flex items-center justify-center transition"
+                    data-testid="button-send-iq"
+                  >
+                    <Send className="w-4 h-4" />
+                  </button>
+                ) : (
+                  <button
+                    onClick={toggleVoice}
+                    className={cn(
+                      "w-10 h-10 rounded-full flex items-center justify-center transition",
+                      isVoiceActive
+                        ? "bg-[#FF6600] text-white animate-pulse"
+                        : "bg-gray-900 hover:bg-gray-800 text-white"
+                    )}
+                    data-testid="button-voice-activate"
+                  >
+                    <AudioLines className="w-5 h-5" />
+                  </button>
                 )}
-                data-testid="button-send-iq"
-              >
-                <Send className="w-4 h-4" />
-              </button>
+              </div>
             </div>
           </div>
         </motion.div>
