@@ -431,9 +431,8 @@ export default function Home() {
                                         const indicatorData = PROPENSITY_LEGEND.find(l => l.indicator === item);
                                         return (
                                           <div key={idx} className="group/item relative cursor-help leading-none hover:z-50">
-                                            <span className={cn("text-[10px] font-bold inline-block px-2 py-1 rounded", 
-                                              indicatorData?.color || getPropensityColor(item),
-                                              indicatorData?.bgColor || "bg-gray-100"
+                                            <span className={cn("text-[10px] font-bold inline-block opacity-80", 
+                                              indicatorData?.color || getPropensityColor(item)
                                             )}>
                                               {item}
                                             </span>
