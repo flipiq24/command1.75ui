@@ -1,0 +1,165 @@
+Got it. You want the AI to give a complete tactical briefing after check-in — not just "here's your day" but a full breakdown of the pipeline with clear goals and a confidence boost. Let me update the prompt:
+
+Updated Replit Prompt: FlipIQ iQ Overlay — Check-In + Deal Review Chat Interface
+What We're Building
+A full-screen ChatGPT-style overlay that launches when the user clicks the iQ button in the sidebar. The overlay covers the entire main content area while keeping the left sidebar navigation visible.
+
+Core Behavior
+Trigger: User clicks the iQ lightbulb button (highlighted in sidebar)
+Overlay Layout:
+
+Full width/height of main content area (everything right of sidebar)
+Clean white/light gray background
+Chat messages stream from top, input fixed at bottom
+No other UI elements visible except sidebar nav
+
+
+Flow Sequence
+Phase 1: Check-In (AA1 Bot)
+When overlay launches, the AI initiates conversation with streaming text:
+Good morning, [User Name].
+Checking you in at [Current Time].
+
+You've got a strong day ahead — let me make sure you're ready.
+Are you able to work a full day today?
+User responds (yes/no via buttons or typed).
+If YES → AI responds:
+Perfect. Before we dive in, anything you already know you'll need help with today?
+If help needed → AI captures it, confirms, says it will notify AM.
+If blockers → AI captures and routes to AM.
+
+Phase 2: Daily Briefing (AI Reviews All Tasks)
+After check-in, AI presents the full tactical overview with streaming animation:
+Alright [Name], let me pull up your pipeline...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 TODAY'S DEAL REVIEW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔥 Hot Deals:     2
+🌡️ Warm Deals:    1  ✓ Complete
+❄️ Cold Deals:    1
+🆕 New Deals:    56
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 TODAY'S GOALS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 Offers Out:           0 / 5
+📞 Agent Conversations:  3 / 30
+⭐ Priority Agent Calls: 0 / 5
+📣 Campaigns Sent:       0 / 3
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The goal today is simple:
+→ Get 5 offers out the door
+→ Have 30 solid conversations with high-value agents
+→ Build relationships while chasing high-propensity deals
+→ Connect with your 5 Priority agents
+→ Send 3 targeted campaigns
+
+With my help and our tools, we can move through this quickly — 
+while still giving you time to evaluate new deals as they come in.
+
+Ready to start?
+[Start Deal Review] ← Primary CTA button
+
+Phase 3: Deal Review (AA2 Bot)
+When user clicks "Start Deal Review," AI transitions:
+Loading your Deal Review...
+
+Starting with your Hot deals first, then we'll work through Warm, Cold, and New.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔥 HOT — Property 1 of 2
+
+2842 Rosarita St, San Bernardino, CA 92407
+
+Price: $390,000 | Propensity Score: 11
+SFR / 3 BR / 2 BA / 1,169 sqft / Built 1990
+
+⚠️ Flags: Notice of Default (NOD), Tax Delinquency
+
+Last Opened: 11/26/25
+Last Called: 11/21/25
+Offer Status: 30% — Offer Terms Sent
+Source: Off Market
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHY THIS IS PRIORITY:
+NOD + Tax Delinquency on a high-propensity property. 
+It's been 5 days since last call — agent may have a seller update.
+
+RECOMMENDED ACTION:
+Call the agent now. Check seller temperature and push for signed terms.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Type 'next' to continue or ask me anything about this property.
+
+Input Bar (Fixed at Bottom)
+Persistent input field:
+Ask me anything or type 'next'...
+User can:
+
+Type "next" → advances to next property
+Ask questions → AI responds with context from that property's data
+Ask anything → AI answers using Deal Review + pipeline data
+
+
+Technical Requirements
+Frontend:
+
+React overlay component with framer-motion for slide-in animation
+CSS: position: fixed, covers main content, z-index above everything except sidebar
+Streaming text animation (character-by-character like ChatGPT)
+Auto-scroll chat container as new messages appear
+
+State Management:
+
+isOverlayOpen — boolean toggle
+currentPhase — 'checkin' | 'briefing' | 'dealreview'
+currentPropertyIndex — tracks position in sorted deal list
+chatHistory — array of message objects
+
+Data Integration (Pull from existing Command/FlipIQ data):
+
+User name, current time
+Deal counts by status: Hot, Warm, Cold, New
+Today's goal progress: Offers, Conversations, Priority Calls, Campaigns
+Deal Review list sorted by: Hot → Warm → Cold → New
+Each property: address, price, propensity, flags, dates, offer status, source, notes
+
+Styling:
+
+Clean, minimal — white background, dark text
+AI messages: left-aligned, subtle gray bubble or no bubble (clean stream)
+User messages: right-aligned, blue bubble
+Property cards: bordered container with structured layout
+Progress indicators: colored icons/emojis for quick scanning
+CTA buttons: branded orange/coral color (#FF6B35 or similar)
+
+
+Component Structure
+<Sidebar /> (stays visible)
+<MainContent>
+  {isOverlayOpen ? (
+    <IQOverlay>
+      <ChatContainer>
+        {messages.map(msg => <ChatMessage />)}
+      </ChatContainer>
+      <InputBar placeholder="Ask me anything or type 'next'..." />
+    </IQOverlay>
+  ) : (
+    <DashboardContent />
+  )}
+</MainContent>
+
+Exit Behavior
+
+X button in top-right corner of overlay
+Clicking sidebar nav items closes overlay and navigates
+State persists if user returns to iQ within same session

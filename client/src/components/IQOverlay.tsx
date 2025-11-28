@@ -87,7 +87,7 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
   const [, setLocation] = useLocation();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
-  const [currentPhase, setCurrentPhase] = useState<'checkin' | 'dealreview'>('checkin');
+  const [currentPhase, setCurrentPhase] = useState<'checkin' | 'briefing' | 'dealreview'>('checkin');
   const [currentPropertyIndex, setCurrentPropertyIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const [streamingText, setStreamingText] = useState('');
@@ -98,6 +98,22 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
 
   const properties = SAMPLE_PROPERTIES;
   const currentProperty = properties[currentPropertyIndex];
+
+  const pipelineStats = {
+    hot: 2,
+    warm: 1,
+    warmComplete: true,
+    cold: 1,
+    new: 56,
+    offersOut: 0,
+    offersGoal: 5,
+    conversations: 3,
+    conversationsGoal: 30,
+    priorityCalls: 0,
+    priorityCallsGoal: 5,
+    campaignsSent: 0,
+    campaignsGoal: 3
+  };
 
   const goToDealReview = () => {
     onClose();
@@ -236,7 +252,7 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
-      const greeting = `Good morning, ${userName}.\n\nI'll check you in for this beautiful ${getCurrentDate()} at ${getCurrentTime()}.\n\nYou've got a solid lineup today, so I want to make sure you're ready.\n\nAre you able to work a full day today?`;
+      const greeting = `Good morning, ${userName}.\n\nChecking you in at ${getCurrentTime()}.\n\nYou've got a strong day ahead — let me make sure you're ready.\n\nAre you able to work a full day today?`;
       
       setTimeout(() => {
         streamMessage(greeting);
@@ -244,6 +260,97 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
       }, 500);
     }
   }, [isOpen, messages.length, userName, streamMessage]);
+
+  const showDailyBriefing = async () => {
+    setCurrentPhase('briefing');
+    
+    await streamMessage(`Alright ${userName}, let me pull up your pipeline...`);
+    
+    setTimeout(() => {
+      setMessages(prev => [...prev, {
+        id: 'briefing-stats',
+        role: 'ai',
+        content: '',
+        component: (
+          <div className="my-4 font-mono text-sm">
+            <div className="border-2 border-gray-300 rounded-xl p-5 bg-white">
+              <div className="text-center font-bold text-gray-700 mb-4">📊 TODAY'S DEAL REVIEW</div>
+              <div className="border-t border-gray-200 pt-3 space-y-2">
+                <div className="flex justify-between items-center">
+                  <span>🔥 Hot Deals:</span>
+                  <span className="font-bold text-orange-600">{pipelineStats.hot}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>🌡️ Warm Deals:</span>
+                  <span className="font-bold text-amber-600">{pipelineStats.warm} {pipelineStats.warmComplete && <span className="text-green-600">✓ Complete</span>}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>❄️ Cold Deals:</span>
+                  <span className="font-bold text-blue-600">{pipelineStats.cold}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>🆕 New Deals:</span>
+                  <span className="font-bold text-gray-600">{pipelineStats.new}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="border-2 border-gray-300 rounded-xl p-5 bg-white mt-4">
+              <div className="text-center font-bold text-gray-700 mb-4">🎯 TODAY'S GOALS</div>
+              <div className="border-t border-gray-200 pt-3 space-y-2">
+                <div className="flex justify-between items-center">
+                  <span>📝 Offers Out:</span>
+                  <span className={pipelineStats.offersOut >= pipelineStats.offersGoal ? "font-bold text-green-600" : "font-bold text-gray-600"}>
+                    {pipelineStats.offersOut} / {pipelineStats.offersGoal}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>📞 Agent Conversations:</span>
+                  <span className={pipelineStats.conversations >= pipelineStats.conversationsGoal ? "font-bold text-green-600" : "font-bold text-gray-600"}>
+                    {pipelineStats.conversations} / {pipelineStats.conversationsGoal}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>⭐ Priority Agent Calls:</span>
+                  <span className={pipelineStats.priorityCalls >= pipelineStats.priorityCallsGoal ? "font-bold text-green-600" : "font-bold text-gray-600"}>
+                    {pipelineStats.priorityCalls} / {pipelineStats.priorityCallsGoal}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>📣 Campaigns Sent:</span>
+                  <span className={pipelineStats.campaignsSent >= pipelineStats.campaignsGoal ? "font-bold text-green-600" : "font-bold text-gray-600"}>
+                    {pipelineStats.campaignsSent} / {pipelineStats.campaignsGoal}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+      }]);
+      
+      setTimeout(async () => {
+        await streamMessage(`The goal today is simple:\n\n→ Get ${pipelineStats.offersGoal} offers out the door\n→ Have ${pipelineStats.conversationsGoal} solid conversations with high-value agents\n→ Build relationships while chasing high-propensity deals\n→ Connect with your ${pipelineStats.priorityCallsGoal} Priority agents\n→ Send ${pipelineStats.campaignsGoal} targeted campaigns\n\nWith my help and our tools, we can move through this quickly — while still giving you time to evaluate new deals as they come in.\n\nReady to start?`);
+        
+        setTimeout(() => {
+          setMessages(prev => [...prev, {
+            id: 'start-review-button',
+            role: 'ai',
+            content: '',
+            component: (
+              <button
+                onClick={startDealReview}
+                className="mt-4 px-6 py-3 bg-[#FF6600] hover:bg-[#e65c00] text-white font-bold rounded-xl shadow-lg transition flex items-center gap-2"
+                data-testid="button-start-deal-review"
+              >
+                <ChevronRight className="w-5 h-5" />
+                Start Deal Review
+              </button>
+            )
+          }]);
+        }, 300);
+      }, 500);
+    }, 300);
+  };
 
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -266,7 +373,7 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
       if (checkinStep === 1) {
         if (userMessage === 'yes' || userMessage === 'y' || userMessage.includes('yes')) {
           setTimeout(async () => {
-            await streamMessage("Great — let's get moving.\n\nBefore we jump in, is there anything you already know you'll need help with today?");
+            await streamMessage("Perfect. Before we dive in, anything you already know you'll need help with today?");
             setCheckinStep(2);
           }, 300);
         } else {
@@ -275,42 +382,35 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
           }, 300);
         }
       } else if (checkinStep === 2) {
-        if (userMessage === 'no' || userMessage === 'n' || userMessage.includes('no') || userMessage.includes('nothing') || userMessage.includes("i'm good")) {
+        if (userMessage === 'no' || userMessage === 'n' || userMessage.includes('no') || userMessage.includes('nothing') || userMessage.includes("i'm good") || userMessage.includes("nope")) {
           setTimeout(async () => {
-            await streamMessage(`Alright ${userName}, today we're going to:\n\n• Review 56 properties in Deal Review\n• Make about 30 calls to high-propensity agents\n\nIs there anything that might prevent you from getting those calls done today?`);
+            await streamMessage("Great! Is there anything that might prevent you from completing your goals today?");
             setCheckinStep(3);
           }, 300);
         } else {
           setTimeout(async () => {
-            await streamMessage(`Got it — I've noted that down and will notify your AM about your request.\n\nAlright ${userName}, today we're going to:\n\n• Review 56 properties in Deal Review\n• Make about 30 calls to high-propensity agents\n\nIs there anything that might prevent you from getting those calls done today?`);
+            await streamMessage(`Got it — I've noted that down and will notify your AM about your request.\n\nIs there anything that might prevent you from completing your goals today?`);
             setCheckinStep(3);
           }, 300);
         }
       } else if (checkinStep === 3) {
         setTimeout(async () => {
-          if (userMessage === 'no' || userMessage === 'n' || userMessage.includes('no') || userMessage.includes('nothing')) {
-            await streamMessage("Perfect! You're all set. Click the button below to start reviewing your priority properties.");
+          if (userMessage === 'no' || userMessage === 'n' || userMessage.includes('no') || userMessage.includes('nothing') || userMessage.includes('nope')) {
+            await streamMessage("Perfect! Let's see what you've got on the docket today...");
           } else {
-            await streamMessage(`Understood — I've logged that potential blocker. Your AM will be notified.\n\nClick the button below when you're ready to start reviewing your priority properties.`);
+            await streamMessage(`Understood — I've logged that potential blocker. Your AM will be notified.\n\nLet's see what you've got on the docket today...`);
           }
           setCheckinStep(4);
           
-          setMessages(prev => [...prev, {
-            id: 'start-button',
-            role: 'ai',
-            content: '',
-            component: (
-              <button
-                onClick={startDealReview}
-                className="mt-4 px-6 py-3 bg-[#FF6600] hover:bg-[#e65c00] text-white font-bold rounded-xl shadow-lg transition flex items-center gap-2"
-              >
-                <ChevronRight className="w-5 h-5" />
-                Start Deal Review
-              </button>
-            )
-          }]);
+          setTimeout(() => {
+            showDailyBriefing();
+          }, 500);
         }, 300);
       }
+    } else if (currentPhase === 'briefing') {
+      setTimeout(async () => {
+        await streamMessage("Click the 'Start Deal Review' button above when you're ready to begin!");
+      }, 300);
     } else if (currentPhase === 'dealreview') {
       if (userMessage === 'next' || userMessage === 'n') {
         goToNextProperty();
@@ -324,9 +424,9 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
 
   const startDealReview = async () => {
     setCurrentPhase('dealreview');
-    setMessages(prev => prev.filter(m => m.id !== 'start-button'));
+    setMessages(prev => prev.filter(m => m.id !== 'start-review-button'));
     
-    await streamMessage("Great! I've prepared your Deal Review with Hot Deals ready to go.\n\nYou have 2 hot properties that need immediate attention today. Click the link below to start reviewing them.");
+    await streamMessage(`Loading your Deal Review...\n\nStarting with your Hot deals first, then we'll work through Warm, Cold, and New.\n\nYou have ${pipelineStats.hot} hot properties that need immediate attention today. Click the link below to start reviewing them.`);
     
     setTimeout(() => {
       setMessages(prev => [...prev, {
