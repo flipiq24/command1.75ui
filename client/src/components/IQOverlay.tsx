@@ -462,14 +462,27 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
 
     if (currentPhase === 'checkin') {
       if (checkinStep === 1) {
-        if (userMessage === 'yes' || userMessage === 'y' || userMessage.includes('yes')) {
+        // Accept any positive response or time commitment as moving forward
+        const isPositive = userMessage === 'yes' || userMessage === 'y' || userMessage.includes('yes') || 
+                          userMessage.includes('ready') || userMessage.includes('full day') ||
+                          userMessage.includes('hour') || userMessage.includes('minute') ||
+                          userMessage.includes('half') || userMessage.includes('few') ||
+                          /\d+/.test(userMessage); // Any number indicates time commitment
+        
+        if (isPositive) {
           setTimeout(async () => {
             await streamMessage("Perfect. Before we dive in, anything you already know you'll need help with today?");
             setCheckinStep(2);
           }, 300);
-        } else {
+        } else if (userMessage === 'no' || userMessage === 'n' || userMessage.includes("can't") || userMessage.includes('not today')) {
           setTimeout(async () => {
-            await streamMessage("No worries! Let me know when you're ready to start. Just type 'ready' when you want to begin.");
+            await streamMessage("No problem! Let me know when you're ready to start. Just say 'ready' when you want to begin.");
+          }, 300);
+        } else {
+          // Default to moving forward with any response
+          setTimeout(async () => {
+            await streamMessage("Got it! Before we dive in, anything you already know you'll need help with today?");
+            setCheckinStep(2);
           }, 300);
         }
       } else if (checkinStep === 2) {
