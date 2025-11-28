@@ -47,6 +47,118 @@ interface Deal {
   isHot?: boolean;
 }
 
+interface Agent {
+  id: number;
+  agentName: string;
+  officeName: string;
+  phone: string;
+  email: string;
+  assignedUser: string;
+  relationshipStatus: 'Priority' | 'Hot' | 'Warm' | 'Cold' | 'Unknown';
+  basket: 'Clients' | 'High Value' | 'Low Value';
+  requiredAction: number;
+  followUpStatus: 'Priority' | 'Hot' | 'Warm' | 'Cold' | 'Unknown';
+  followUpDate: string;
+  investorSourceCount: number | null;
+  activeInLastTwoYears: boolean;
+  pending: number;
+  backup: number;
+  sold: number;
+}
+
+const PRIORITY_AGENTS: Agent[] = [
+  {
+    id: 1,
+    agentName: "1213 Property Corp",
+    officeName: "Flipiq",
+    phone: "7145817805",
+    email: "tony@flipiq.com",
+    assignedUser: "Josh Santos",
+    relationshipStatus: "Priority",
+    basket: "Clients",
+    requiredAction: 0,
+    followUpStatus: "Priority",
+    followUpDate: "11/27/2025",
+    investorSourceCount: 2,
+    activeInLastTwoYears: false,
+    pending: 0,
+    backup: 0,
+    sold: 0
+  },
+  {
+    id: 2,
+    agentName: "Brian Tran",
+    officeName: "HPT Realty",
+    phone: "714-501-1770",
+    email: "briantran3154@gmail.com",
+    assignedUser: "Josh Santos",
+    relationshipStatus: "Priority",
+    basket: "High Value",
+    requiredAction: 0,
+    followUpStatus: "Priority",
+    followUpDate: "11/23/2025",
+    investorSourceCount: 2,
+    activeInLastTwoYears: true,
+    pending: 1,
+    backup: 0,
+    sold: 0
+  },
+  {
+    id: 3,
+    agentName: "Brian Meuse",
+    officeName: "Desert Sky Real Estate Inc",
+    phone: "760-329-7892",
+    email: "desertproperty4u@msn.com",
+    assignedUser: "Josh Santos",
+    relationshipStatus: "Priority",
+    basket: "Low Value",
+    requiredAction: 0,
+    followUpStatus: "Priority",
+    followUpDate: "N/A",
+    investorSourceCount: 3,
+    activeInLastTwoYears: true,
+    pending: 3,
+    backup: 1,
+    sold: 3
+  },
+  {
+    id: 4,
+    agentName: "Jihe Xu",
+    officeName: "Carefree Realty & Management",
+    phone: "858-699-1693",
+    email: "xujihe@gmail.com",
+    assignedUser: "Josh Santos",
+    relationshipStatus: "Priority",
+    basket: "Low Value",
+    requiredAction: 0,
+    followUpStatus: "Priority",
+    followUpDate: "N/A",
+    investorSourceCount: null,
+    activeInLastTwoYears: false,
+    pending: 0,
+    backup: 0,
+    sold: 0
+  },
+  {
+    id: 5,
+    agentName: "Salvador Armijo",
+    officeName: "CARNAVAL REALTY",
+    phone: "626-290-0373",
+    email: "salvadorarmijo007@gmail.com",
+    assignedUser: "Josh Santos",
+    relationshipStatus: "Priority",
+    basket: "High Value",
+    requiredAction: 0,
+    followUpStatus: "Priority",
+    followUpDate: "N/A",
+    investorSourceCount: null,
+    activeInLastTwoYears: true,
+    pending: 3,
+    backup: 0,
+    sold: 1
+  }
+];
+
 const getPropensityScore = (propensity: string | string[]) => {
   if (!Array.isArray(propensity)) return 0;
   
