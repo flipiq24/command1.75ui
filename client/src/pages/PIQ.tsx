@@ -648,14 +648,6 @@ function PIQContent() {
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <button 
-                        onClick={handleCelebrationTrigger}
-                        className="flex items-center gap-1.5 px-4 py-1.5 bg-[#FF6600] hover:bg-[#e55c00] text-white text-xs font-bold rounded-lg transition shadow-sm"
-                        data-testid="button-comps-iq"
-                      >
-                        <Lightbulb className="w-4 h-4" />
-                        iQ
-                      </button>
                       <div className="flex bg-gray-100 rounded-lg p-0.5">
                         <button 
                           onClick={() => setCompsMapView('map')}
