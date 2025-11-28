@@ -33,6 +33,7 @@ interface IQOverlayProps {
   onClose: () => void;
   userName?: string;
   deals?: any[];
+  sidebarCollapsed?: boolean;
 }
 
 const SAMPLE_PROPERTIES: PropertyCard[] = [
@@ -83,7 +84,7 @@ const SAMPLE_PROPERTIES: PropertyCard[] = [
   }
 ];
 
-export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = [] }: IQOverlayProps) {
+export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = [], sidebarCollapsed = false }: IQOverlayProps) {
   const [, setLocation] = useLocation();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
@@ -487,7 +488,7 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         className="fixed inset-0 z-40 flex"
-        style={{ left: '16rem' }}
+        style={{ left: sidebarCollapsed ? '5rem' : '16rem' }}
       >
         <motion.div
           initial={{ x: 50, opacity: 0 }}

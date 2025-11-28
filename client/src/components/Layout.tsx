@@ -22,6 +22,7 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const [isIQOpen, setIsIQOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   const openIQ = () => setIsIQOpen(true);
   const closeIQ = () => setIsIQOpen(false);
@@ -29,7 +30,11 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <LayoutContext.Provider value={{ isIQOpen, openIQ, closeIQ }}>
       <div className="min-h-screen flex bg-gray-100">
-        <Sidebar onIQClick={openIQ} isIQActive={isIQOpen} />
+        <Sidebar 
+          onIQClick={openIQ} 
+          isIQActive={isIQOpen} 
+          onCollapseChange={setIsSidebarCollapsed}
+        />
         
         <main className="flex-1 relative">
           {children}
@@ -39,6 +44,7 @@ export default function Layout({ children }: LayoutProps) {
           isOpen={isIQOpen} 
           onClose={closeIQ}
           userName="Josh"
+          sidebarCollapsed={isSidebarCollapsed}
         />
       </div>
     </LayoutContext.Provider>

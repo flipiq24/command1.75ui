@@ -21,14 +21,17 @@ import { cn } from "@/lib/utils";
 interface SidebarProps {
   onIQClick?: () => void;
   isIQActive?: boolean;
+  onCollapseChange?: (collapsed: boolean) => void;
 }
 
-export default function Sidebar({ onIQClick, isIQActive = false }: SidebarProps) {
+export default function Sidebar({ onIQClick, isIQActive = false, onCollapseChange }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [location] = useLocation();
 
   const toggleSidebar = () => {
-    setIsCollapsed(!isCollapsed);
+    const newState = !isCollapsed;
+    setIsCollapsed(newState);
+    onCollapseChange?.(newState);
   };
 
   return (
