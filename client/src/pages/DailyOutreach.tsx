@@ -24,7 +24,10 @@ import {
   X,
   Users,
   Building2,
-  Calendar
+  Calendar,
+  Play,
+  Square,
+  Send
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -381,8 +384,25 @@ export default function DailyOutreach() {
     followUpStatus: string;
   }>>({});
   const [selectedCampaignSegment, setSelectedCampaignSegment] = useState<'hot' | 'warm' | 'cold'>('hot');
-  const [selectedCampaignType, setSelectedCampaignType] = useState<'text' | 'email' | 'voicemail' | null>(null);
-  const [selectedTemplate, setSelectedTemplate] = useState<string>('');
+  const [campaignChannels, setCampaignChannels] = useState({
+    sms: true,
+    email: false,
+    voicemail: false
+  });
+  const [smsTemplate, setSmsTemplate] = useState('Market Update Q4 (Default)');
+  const [emailTemplate, setEmailTemplate] = useState('Monthly Market Report');
+  const [voicemailTemplate, setVoicemailTemplate] = useState('Quick Hello');
+  const [isRecording, setIsRecording] = useState(false);
+
+  const toggleCampaignChannel = (key: 'sms' | 'email' | 'voicemail') => {
+    setCampaignChannels(prev => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const campaignSegmentStyles = {
+    hot: { label: 'Hot', color: 'bg-red-50 border-red-200 text-red-700', ring: 'ring-red-500' },
+    warm: { label: 'Warm', color: 'bg-yellow-50 border-yellow-200 text-yellow-700', ring: 'ring-yellow-500' },
+    cold: { label: 'Cold', color: 'bg-blue-50 border-blue-200 text-blue-700', ring: 'ring-blue-500' }
+  };
   
   const priorityAgents = PRIORITY_AGENTS;
   const currentAgent = priorityAgents[currentAgentIndex];
@@ -1139,168 +1159,200 @@ export default function DailyOutreach() {
               </>
             ) : activeFilter === 'topOfMind' ? (
               <>
-                {/* Campaign Dashboard */}
-                <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-6">
-                  <h3 className="text-lg font-bold text-gray-900 mb-4">Agent Relationship Campaign Report</h3>
+                {/* Campaign Configuration */}
+                <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                  <div className="px-6 py-4 border-b border-gray-100 bg-gray-50">
+                    <h3 className="font-bold text-gray-900">Campaign Configuration</h3>
+                  </div>
                   
-                  {/* Summary Table */}
-                  <div className="overflow-x-auto mb-6">
-                    <table className="w-full text-sm">
-                      <thead>
-                        <tr className="border-b border-gray-200">
-                          <th className="text-left py-3 px-4 font-semibold text-gray-600">Segment</th>
-                          <th className="text-center py-3 px-4 font-semibold text-gray-600">Total Agents</th>
-                          <th className="text-center py-3 px-4 font-semibold text-gray-600">Today's Campaign (10%)</th>
-                          <th className="text-center py-3 px-4 font-semibold text-gray-600">Last Communication</th>
-                          <th className="text-left py-3 px-4 font-semibold text-gray-600">Last Template Used</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr className="border-b border-gray-100 hover:bg-gray-50 cursor-pointer" onClick={() => setSelectedCampaignSegment('hot')}>
-                          <td className="py-3 px-4"><span className="inline-flex items-center gap-2"><Flame className="w-4 h-4 text-red-500" /> Hot</span></td>
-                          <td className="text-center py-3 px-4">{CAMPAIGN_SEGMENTS.hot.total}</td>
-                          <td className="text-center py-3 px-4 font-semibold text-[#FF6600]">{CAMPAIGN_SEGMENTS.hot.todaysCampaign}</td>
-                          <td className="text-center py-3 px-4 text-gray-500">{CAMPAIGN_SEGMENTS.hot.lastCommunication}</td>
-                          <td className="py-3 px-4 text-gray-500">{CAMPAIGN_SEGMENTS.hot.lastTemplate}</td>
-                        </tr>
-                        <tr className="border-b border-gray-100 hover:bg-gray-50 cursor-pointer" onClick={() => setSelectedCampaignSegment('warm')}>
-                          <td className="py-3 px-4"><span className="inline-flex items-center gap-2"><span className="w-3 h-3 bg-amber-400 rounded-full"></span> Warm</span></td>
-                          <td className="text-center py-3 px-4">{CAMPAIGN_SEGMENTS.warm.total}</td>
-                          <td className="text-center py-3 px-4 font-semibold text-[#FF6600]">{CAMPAIGN_SEGMENTS.warm.todaysCampaign}</td>
-                          <td className="text-center py-3 px-4 text-gray-500">{CAMPAIGN_SEGMENTS.warm.lastCommunication}</td>
-                          <td className="py-3 px-4 text-gray-500">{CAMPAIGN_SEGMENTS.warm.lastTemplate}</td>
-                        </tr>
-                        <tr className="border-b border-gray-100 hover:bg-gray-50 cursor-pointer" onClick={() => setSelectedCampaignSegment('cold')}>
-                          <td className="py-3 px-4"><span className="inline-flex items-center gap-2"><span className="w-3 h-3 bg-blue-400 rounded-full"></span> Cold</span></td>
-                          <td className="text-center py-3 px-4">{CAMPAIGN_SEGMENTS.cold.total}</td>
-                          <td className="text-center py-3 px-4 font-semibold text-[#FF6600]">{CAMPAIGN_SEGMENTS.cold.todaysCampaign}</td>
-                          <td className="text-center py-3 px-4 text-gray-500">{CAMPAIGN_SEGMENTS.cold.lastCommunication}</td>
-                          <td className="py-3 px-4 text-gray-500">{CAMPAIGN_SEGMENTS.cold.lastTemplate}</td>
-                        </tr>
-                        <tr className="bg-gray-50 font-semibold">
-                          <td className="py-3 px-4">Total</td>
-                          <td className="text-center py-3 px-4">{CAMPAIGN_SEGMENTS.hot.total + CAMPAIGN_SEGMENTS.warm.total + CAMPAIGN_SEGMENTS.cold.total}</td>
-                          <td className="text-center py-3 px-4 text-[#FF6600]">{CAMPAIGN_SEGMENTS.hot.todaysCampaign + CAMPAIGN_SEGMENTS.warm.todaysCampaign + CAMPAIGN_SEGMENTS.cold.todaysCampaign}</td>
-                          <td className="text-center py-3 px-4">—</td>
-                          <td className="py-3 px-4">—</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-
-                  {/* Segment Selector Tabs */}
-                  <div className="flex gap-2 mb-6">
-                    <button
-                      onClick={() => setSelectedCampaignSegment('hot')}
-                      className={cn(
-                        "px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2",
-                        selectedCampaignSegment === 'hot' 
-                          ? "bg-red-100 text-red-700 border-2 border-red-300" 
-                          : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                      )}
-                    >
-                      <Flame className="w-4 h-4" /> Hot ({CAMPAIGN_SEGMENTS.hot.todaysCampaign})
-                    </button>
-                    <button
-                      onClick={() => setSelectedCampaignSegment('warm')}
-                      className={cn(
-                        "px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2",
-                        selectedCampaignSegment === 'warm' 
-                          ? "bg-amber-100 text-amber-700 border-2 border-amber-300" 
-                          : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                      )}
-                    >
-                      <span className="w-3 h-3 bg-amber-400 rounded-full"></span> Warm ({CAMPAIGN_SEGMENTS.warm.todaysCampaign})
-                    </button>
-                    <button
-                      onClick={() => setSelectedCampaignSegment('cold')}
-                      className={cn(
-                        "px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2",
-                        selectedCampaignSegment === 'cold' 
-                          ? "bg-blue-100 text-blue-700 border-2 border-blue-300" 
-                          : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                      )}
-                    >
-                      <span className="w-3 h-3 bg-blue-400 rounded-full"></span> Cold ({CAMPAIGN_SEGMENTS.cold.todaysCampaign})
-                    </button>
-                  </div>
-
-                  {/* Select Campaign Type */}
-                  <div className="mb-6">
-                    <h4 className="text-sm font-semibold text-gray-700 mb-3">Select Campaign Type</h4>
-                    <div className="flex gap-3">
-                      <button
-                        onClick={() => { setSelectedCampaignType('text'); setSelectedTemplate(''); }}
-                        className={cn(
-                          "flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition border-2",
-                          selectedCampaignType === 'text'
-                            ? "bg-blue-50 text-blue-700 border-blue-400"
-                            : "bg-white text-gray-600 border-gray-200 hover:border-blue-300"
-                        )}
-                      >
-                        <MessageSquare className="w-4 h-4" /> Text
-                      </button>
-                      <button
-                        onClick={() => { setSelectedCampaignType('email'); setSelectedTemplate(''); }}
-                        className={cn(
-                          "flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition border-2",
-                          selectedCampaignType === 'email'
-                            ? "bg-blue-50 text-blue-700 border-blue-400"
-                            : "bg-white text-gray-600 border-gray-200 hover:border-blue-300"
-                        )}
-                      >
-                        <Mail className="w-4 h-4" /> Email
-                      </button>
-                      <button
-                        onClick={() => { setSelectedCampaignType('voicemail'); setSelectedTemplate(''); }}
-                        className={cn(
-                          "flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition border-2",
-                          selectedCampaignType === 'voicemail'
-                            ? "bg-blue-50 text-blue-700 border-blue-400"
-                            : "bg-white text-gray-600 border-gray-200 hover:border-blue-300"
-                        )}
-                      >
-                        <Mic className="w-4 h-4" /> Direct to Voicemail
-                      </button>
-                    </div>
-
-                    {selectedCampaignType && (
-                      <div className="mt-4">
-                        <label className="text-xs text-gray-500 block mb-2">Select Template</label>
-                        <select
-                          value={selectedTemplate}
-                          onChange={(e) => setSelectedTemplate(e.target.value)}
-                          className="w-full max-w-xs text-sm text-gray-900 bg-white border border-gray-200 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent"
-                        >
-                          <option value="">Choose a template...</option>
-                          {CAMPAIGN_TEMPLATES[selectedCampaignType].map((template) => (
-                            <option key={template} value={template}>{template}</option>
-                          ))}
-                        </select>
+                  <div className="p-6">
+                    
+                    {/* STEP 1: SELECT AUDIENCE */}
+                    <div className="mb-8">
+                      <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">1. Select Audience</h4>
+                      <div className="flex gap-4">
+                        {(['hot', 'warm', 'cold'] as const).map((key) => {
+                          const data = CAMPAIGN_SEGMENTS[key];
+                          const styles = campaignSegmentStyles[key];
+                          return (
+                            <button
+                              key={key}
+                              onClick={() => setSelectedCampaignSegment(key)}
+                              className={cn(
+                                "flex-1 p-4 rounded-xl border-2 transition-all text-left relative overflow-hidden",
+                                selectedCampaignSegment === key 
+                                  ? `border-transparent ${styles.ring} ring-2 bg-white shadow-md` 
+                                  : "border-gray-100 bg-gray-50 hover:bg-gray-100"
+                              )}
+                            >
+                              <div className="flex justify-between items-center mb-1">
+                                <span className={cn("text-sm font-bold px-2 py-0.5 rounded uppercase", styles.color)}>
+                                  {styles.label}
+                                </span>
+                                {selectedCampaignSegment === key && <Check className="w-5 h-5 text-gray-900" />}
+                              </div>
+                              <div className="mt-2">
+                                <div className="text-2xl font-black text-gray-900">{data.todaysCampaign}</div>
+                                <div className="text-xs text-gray-500">Agents Pending Today</div>
+                              </div>
+                            </button>
+                          );
+                        })}
                       </div>
-                    )}
-                  </div>
-
-                  {/* Action Buttons */}
-                  {selectedTemplate && (
-                    <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
-                      <button className="px-6 py-2.5 bg-[#FF6600] hover:bg-[#e65c00] text-white text-sm font-bold rounded-lg transition">
-                        Send to All {CAMPAIGN_SEGMENTS[selectedCampaignSegment].todaysCampaign} Agents
-                      </button>
-                      <button className="px-6 py-2.5 bg-white text-gray-700 text-sm font-medium rounded-lg border border-gray-300 hover:bg-gray-50 transition">
-                        Send to Selected
-                      </button>
-                      <button className="text-sm text-blue-600 hover:underline">
-                        Preview Message
-                      </button>
                     </div>
-                  )}
+
+                    {/* STEP 2: SELECT CHANNELS */}
+                    <div className="mb-8">
+                      <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">2. Select Channels & Content</h4>
+                      <div className="grid grid-cols-3 gap-6">
+                        
+                        {/* SMS CONFIG */}
+                        <div className={cn(
+                          "border rounded-xl p-4 transition-all",
+                          campaignChannels.sms ? "border-gray-400 bg-white shadow-sm" : "border-gray-100 bg-gray-50 opacity-60"
+                        )}>
+                          <div className="flex items-center justify-between mb-4 cursor-pointer" onClick={() => toggleCampaignChannel('sms')}>
+                            <div className="flex items-center gap-2">
+                              <div className={cn("w-5 h-5 rounded border flex items-center justify-center transition-colors", campaignChannels.sms ? "bg-black border-black" : "border-gray-400 bg-white")}>
+                                {campaignChannels.sms && <Check className="w-3.5 h-3.5 text-white" />}
+                              </div>
+                              <span className="font-bold text-gray-900 flex items-center gap-2"><MessageSquare className="w-4 h-4"/> SMS Text</span>
+                            </div>
+                          </div>
+                          
+                          {campaignChannels.sms && (
+                            <div className="space-y-3">
+                              <div>
+                                <label className="text-[10px] font-bold text-gray-400 uppercase">Select Template</label>
+                                <select 
+                                  value={smsTemplate}
+                                  onChange={(e) => setSmsTemplate(e.target.value)}
+                                  className="w-full mt-1 text-sm p-2 border border-gray-200 rounded bg-gray-50"
+                                >
+                                  <option>Market Update Q4 (Default)</option>
+                                  <option>Just Sold in Area</option>
+                                  <option>Touching Base</option>
+                                  <option>New Listing Alert</option>
+                                  <option>Quick Check-In</option>
+                                </select>
+                              </div>
+                              <div className="p-3 bg-gray-50 rounded border border-gray-100 text-xs text-gray-600 italic">
+                                "Hey [First Name], Tony here. Just closed a deal in [City]..."
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* EMAIL CONFIG */}
+                        <div className={cn(
+                          "border rounded-xl p-4 transition-all",
+                          campaignChannels.email ? "border-gray-400 bg-white shadow-sm" : "border-gray-100 bg-gray-50 opacity-60"
+                        )}>
+                          <div className="flex items-center justify-between mb-4 cursor-pointer" onClick={() => toggleCampaignChannel('email')}>
+                            <div className="flex items-center gap-2">
+                              <div className={cn("w-5 h-5 rounded border flex items-center justify-center transition-colors", campaignChannels.email ? "bg-black border-black" : "border-gray-400 bg-white")}>
+                                {campaignChannels.email && <Check className="w-3.5 h-3.5 text-white" />}
+                              </div>
+                              <span className="font-bold text-gray-900 flex items-center gap-2"><Mail className="w-4 h-4"/> Email</span>
+                            </div>
+                          </div>
+                          
+                          {campaignChannels.email && (
+                            <div className="space-y-3">
+                              <div>
+                                <label className="text-[10px] font-bold text-gray-400 uppercase">Select Template</label>
+                                <select 
+                                  value={emailTemplate}
+                                  onChange={(e) => setEmailTemplate(e.target.value)}
+                                  className="w-full mt-1 text-sm p-2 border border-gray-200 rounded bg-gray-50"
+                                >
+                                  <option>Monthly Market Report</option>
+                                  <option>New Listings in Your Area</option>
+                                  <option>Investment Opportunity</option>
+                                  <option>Re-engagement - Miss You</option>
+                                  <option>Quarterly Newsletter</option>
+                                </select>
+                              </div>
+                              <div className="p-3 bg-gray-50 rounded border border-gray-100 text-xs text-gray-600 italic">
+                                "Subject: Market Update for [City] - Q4 2025..."
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* VOICEMAIL CONFIG */}
+                        <div className={cn(
+                          "border rounded-xl p-4 transition-all",
+                          campaignChannels.voicemail ? "border-gray-400 bg-white shadow-sm" : "border-gray-100 bg-gray-50 opacity-60"
+                        )}>
+                          <div className="flex items-center justify-between mb-4 cursor-pointer" onClick={() => toggleCampaignChannel('voicemail')}>
+                            <div className="flex items-center gap-2">
+                              <div className={cn("w-5 h-5 rounded border flex items-center justify-center transition-colors", campaignChannels.voicemail ? "bg-black border-black" : "border-gray-400 bg-white")}>
+                                {campaignChannels.voicemail && <Check className="w-3.5 h-3.5 text-white" />}
+                              </div>
+                              <span className="font-bold text-gray-900 flex items-center gap-2"><Mic className="w-4 h-4"/> Voicemail</span>
+                            </div>
+                          </div>
+                          
+                          {campaignChannels.voicemail && (
+                            <div className="space-y-3">
+                              <div>
+                                <label className="text-[10px] font-bold text-gray-400 uppercase">Select Template</label>
+                                <select 
+                                  value={voicemailTemplate}
+                                  onChange={(e) => setVoicemailTemplate(e.target.value)}
+                                  className="w-full mt-1 text-sm p-2 border border-gray-200 rounded bg-gray-50"
+                                >
+                                  <option>Quick Hello</option>
+                                  <option>Checking In</option>
+                                  <option>New Opportunity</option>
+                                  <option>Following Up</option>
+                                </select>
+                              </div>
+                              <div className="flex items-center gap-2 mt-2">
+                                <button 
+                                  onClick={() => setIsRecording(!isRecording)}
+                                  className={cn(
+                                    "flex items-center gap-2 px-3 py-2 rounded text-xs font-medium transition",
+                                    isRecording ? "bg-red-100 text-red-700" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                                  )}
+                                >
+                                  {isRecording ? <Square className="w-3 h-3" /> : <Play className="w-3 h-3" />}
+                                  {isRecording ? 'Stop Recording' : 'Record Custom'}
+                                </button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* STEP 3: SEND CAMPAIGN */}
+                    <div className="pt-6 border-t border-gray-100">
+                      <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">3. Send Campaign</h4>
+                      <div className="flex items-center gap-4">
+                        <button 
+                          className="px-6 py-3 bg-[#FF6600] hover:bg-[#e65c00] text-white text-sm font-bold rounded-lg transition flex items-center gap-2"
+                          disabled={!campaignChannels.sms && !campaignChannels.email && !campaignChannels.voicemail}
+                        >
+                          <Send className="w-4 h-4" />
+                          Send to {CAMPAIGN_SEGMENTS[selectedCampaignSegment].todaysCampaign} {campaignSegmentStyles[selectedCampaignSegment].label} Agents
+                        </button>
+                        <button className="px-4 py-3 text-sm font-medium text-gray-600 hover:text-gray-900 transition">
+                          Preview Campaign
+                        </button>
+                      </div>
+                      <p className="text-xs text-gray-400 mt-2">
+                        {Object.entries(campaignChannels).filter(([_, v]) => v).length} channel(s) selected
+                      </p>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Agent List for Selected Segment */}
-                <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
+                <div className="bg-white rounded-xl border border-gray-200 shadow-sm mt-6">
                   <div className="p-4 border-b border-gray-200">
-                    <h4 className="text-sm font-bold text-gray-900 capitalize">{selectedCampaignSegment} Agents - Today's Campaign</h4>
+                    <h4 className="text-sm font-bold text-gray-900 capitalize">{selectedCampaignSegment} Agents - Today's Campaign ({CAMPAIGN_SEGMENTS[selectedCampaignSegment].todaysCampaign})</h4>
                   </div>
                   <div className="divide-y divide-gray-100">
                     {CAMPAIGN_SEGMENTS[selectedCampaignSegment].agents.map((agent) => (
@@ -1335,19 +1387,6 @@ export default function DailyOutreach() {
                         </div>
                       </div>
                     ))}
-                  </div>
-                  <div className="p-4 border-t border-gray-200 flex items-center justify-between text-sm text-gray-500">
-                    <span>Showing 1 to {CAMPAIGN_SEGMENTS[selectedCampaignSegment].agents.length} of {CAMPAIGN_SEGMENTS[selectedCampaignSegment].agents.length} agents</span>
-                    <div className="flex items-center gap-2">
-                      <select className="text-xs border border-gray-200 rounded px-2 py-1">
-                        <option>25/page</option>
-                        <option>50/page</option>
-                        <option>100/page</option>
-                      </select>
-                      <button className="px-3 py-1 border border-gray-200 rounded text-xs hover:bg-gray-50">Previous</button>
-                      <button className="px-3 py-1 bg-[#FF6600] text-white rounded text-xs">1</button>
-                      <button className="px-3 py-1 border border-gray-200 rounded text-xs hover:bg-gray-50">Next</button>
-                    </div>
                   </div>
                 </div>
               </>
