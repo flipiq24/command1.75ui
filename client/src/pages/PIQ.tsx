@@ -537,48 +537,26 @@ export default function PIQ() {
 
               {showIQPanel && (
                 <div className="mt-6 bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-                  <div className="flex items-center gap-6 mb-6">
-                    <div className="flex items-center gap-3">
-                      <div className="relative">
-                        <Lightbulb className="w-6 h-6 text-[#FF6600] animate-pulse" />
-                        <div className="absolute inset-0 w-6 h-6 bg-[#FF6600] rounded-full opacity-30 animate-ping"></div>
-                      </div>
-                      <h2 className="text-xl font-bold text-[#FF6600]">iQ Property Intelligence</h2>
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="relative">
+                      <Lightbulb className="w-6 h-6 text-[#FF6600] animate-pulse" />
+                      <div className="absolute inset-0 w-6 h-6 bg-[#FF6600] rounded-full opacity-30 animate-ping"></div>
                     </div>
-                    <div className="flex gap-2">
-                      <button 
-                        onClick={() => setIQViewMode('stats')}
-                        className={cn(
-                          "px-4 py-1.5 text-xs font-medium rounded-lg border transition",
-                          iQViewMode === 'stats' 
-                            ? "bg-white text-[#FF6600] border-[#FF6600]" 
-                            : "bg-white text-[#FF6600] border-gray-200 hover:border-[#FF6600]"
-                        )}
-                        data-testid="button-piq-stats"
-                      >
-                        Stats
-                      </button>
-                      <button 
-                        onClick={() => setIQViewMode('description')}
-                        className={cn(
-                          "px-4 py-1.5 text-xs font-medium rounded-lg border transition",
-                          iQViewMode === 'description' 
-                            ? "bg-white text-[#FF6600] border-[#FF6600]" 
-                            : "bg-white text-[#FF6600] border-gray-200 hover:border-[#FF6600]"
-                        )}
-                        data-testid="button-piq-description"
-                      >
-                        Description
-                      </button>
+                    <div>
+                      <h2 className="text-lg font-bold text-[#FF6600]">iQ Property Intelligence</h2>
+                      <div className="flex items-center gap-1.5 text-xs text-green-600 mt-0.5">
+                        <Check className="w-3 h-3" />
+                        <span>Analysis complete</span>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="space-y-2 text-sm mb-8">
+                  <div className="space-y-2 text-sm mb-6">
                     <div>Status: <span className="text-gray-900 font-semibold">Active</span></div>
                     <div>Days on Market: <span className="text-gray-900 font-semibold">45</span></div>
                     <div>Price to Future Value: <span className="text-gray-900 font-semibold">82%</span></div>
-                    <div>Propensity Score: <span className="text-gray-900 font-semibold">0</span></div>
-                    <div>Agent: <span className="text-gray-900 font-semibold">Sarah Johnson</span> (Unassigned)</div>
+                    <div>Propensity Score: <span className="text-gray-900 font-semibold">11 / 8</span></div>
+                    <div>Agent: <span className="text-gray-900 font-semibold">Sarah Johnson (Unassigned)</span></div>
                     <div>Relationship Status: <span className="text-gray-900 font-semibold">Warm</span></div>
                     <div>Investor Source Count: <a href="#" className="text-blue-600 underline hover:text-blue-800">[View Agent]</a></div>
                     <div>Last Communication Date: <span className="text-gray-900 font-semibold">11/15/2025</span></div>
@@ -586,31 +564,30 @@ export default function PIQ() {
                   </div>
 
                   <div className="mb-6">
-                    <h3 className="text-lg font-bold text-gray-900 mb-4">Why this Property</h3>
+                    <div className="flex items-center gap-2 mb-4">
+                      <span className="text-lg font-bold text-gray-900">🔥</span>
+                      <h3 className="text-lg font-bold text-gray-900">Why this Property</h3>
+                    </div>
                     <ul className="space-y-2 text-sm text-gray-700">
+                      <li className="flex items-start gap-2">
+                        <span className="text-red-600 font-bold">•</span>
+                        <span><span className="font-semibold text-red-600">Bankruptcy / Judgment</span> (+4 pts)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-green-600 font-bold">•</span>
+                        <span><span className="font-semibold text-green-600">High Mortgage / Debt</span> (+2 pts)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-red-600 font-bold">•</span>
+                        <span><span className="font-semibold text-red-600">Affidavit of Death</span> (+5 pts)</span>
+                      </li>
                       <li className="flex items-start gap-2">
                         <span className="text-gray-400">•</span>
                         <span>Aged listing (≥70 DOM) with strong discount potential.</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-gray-400">•</span>
-                        <div>
-                          <span>Keywords detected:</span>
-                          <div className="flex flex-wrap gap-2 mt-2">
-                            <span className="px-3 py-1 bg-white text-red-600 text-xs rounded-full border border-red-300 cursor-pointer hover:bg-red-50 hover:border-red-400 transition">repairs</span>
-                            <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">investors</span>
-                            <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">Investment</span>
-                            <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">as-is</span>
-                            <span className="px-3 py-1 bg-white text-blue-600 text-xs rounded-full border border-blue-300 cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition">investor</span>
-                            <span className="px-3 py-1 bg-white text-blue-600 text-xs rounded-full border border-blue-300 cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition">estate</span>
-                            <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">opportunity</span>
-                            <span className="px-3 py-1 bg-white text-green-600 text-xs rounded-full border border-green-300 cursor-pointer hover:bg-green-50 hover:border-green-400 transition">Renovation</span>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-gray-400">•</span>
-                        <span>Currently unassigned and no active offer status — open field opportunity.</span>
+                        <span>Price-to-value ratio suggests room for negotiation.</span>
                       </li>
                     </ul>
                   </div>
