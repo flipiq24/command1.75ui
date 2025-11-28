@@ -303,10 +303,6 @@ export default function ActionPlan({
             {/* Labels */}
             <div className="text-center mb-4 flex flex-col items-center">
               <div className="relative flex items-center gap-1.5 mb-1">
-                <div className="text-base font-semibold text-gray-700 tracking-tight">
-                  Status: {item.count}/{item.total}/{item.total}
-                </div>
-
                 <div
                   className="text-gray-400 hover:text-gray-600 cursor-help"
                   onMouseEnter={() => setStatusTooltipId(item.id)}
