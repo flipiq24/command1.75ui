@@ -3,7 +3,6 @@ import { Link, useSearch } from "wouter";
 import { cn } from "@/lib/utils";
 import ActionPlan, { DealType } from "@/components/ActionPlan";
 import Layout, { useLayout } from "@/components/Layout";
-import FlipIQCelebration from "@/components/FlipIQCelebration";
 import { 
   ChevronDown,
   MoreVertical,
@@ -13,8 +12,7 @@ import {
   MessageSquare,
   Mail,
   Mic,
-  Bot,
-  Lightbulb
+  Bot
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -100,31 +98,10 @@ function HomeContent() {
   const [activeFilter, setActiveFilter] = useState<DealType | 'goal' | 'completed' | null>(null);
   const [selectedDealIds, setSelectedDealIds] = useState<number[]>([]);
   const [completionPercent, setCompletionPercent] = useState(100);
-  const [showCelebration, setShowCelebration] = useState(false);
-  const [showRequiredFieldsModal, setShowRequiredFieldsModal] = useState(false);
-  const [didNotAnswer, setDidNotAnswer] = useState(true);
   const queryClient = useQueryClient();
   const { openIQWithSummary } = useLayout();
 
   const handleMilestoneComplete = () => {
-    if (didNotAnswer) {
-      setShowRequiredFieldsModal(true);
-    } else {
-      setShowCelebration(true);
-    }
-  };
-
-  const handleGoBackComplete = () => {
-    setShowRequiredFieldsModal(false);
-  };
-
-  const handleSkipAnyway = () => {
-    setShowRequiredFieldsModal(false);
-    setShowCelebration(true);
-  };
-
-  const handleCelebrationComplete = () => {
-    setShowCelebration(false);
     openIQWithSummary();
   };
 
@@ -215,82 +192,6 @@ function HomeContent() {
   };
 
   return (
-      <>
-      {/* AI Connect - Complete Required Fields Modal */}
-      {showRequiredFieldsModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-start justify-center pt-20 z-50">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 overflow-hidden animate-in slide-in-from-top-4 fade-in duration-300">
-            <div className="bg-gradient-to-r from-[#FF6600] to-[#FF8533] px-6 py-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                  <Lightbulb className="w-5 h-5 text-white" />
-                </div>
-                <h2 className="text-lg font-bold text-white">Complete Required Fields</h2>
-              </div>
-            </div>
-            
-            <div className="p-6">
-              <p className="text-gray-700 mb-6">
-                Please update the following fields before moving to the next property:
-              </p>
-              
-              <div className="space-y-3 mb-6">
-                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                  <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                  <span className="text-sm font-medium text-gray-700">Offer Status</span>
-                </div>
-                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                  <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                  <span className="text-sm font-medium text-gray-700">ToDo</span>
-                </div>
-                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                  <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                  <span className="text-sm font-medium text-gray-700">Notes - If call connected</span>
-                </div>
-                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                  <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                  <span className="text-sm font-medium text-gray-700">Assign Users</span>
-                </div>
-                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                  <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                  <span className="text-sm font-medium text-gray-700">Relationship Status</span>
-                </div>
-                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                  <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                  <span className="text-sm font-medium text-gray-700">Follow Up Status</span>
-                </div>
-                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                  <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                  <span className="text-sm font-medium text-gray-700">Follow Up Status Date</span>
-                </div>
-              </div>
-              
-              <div className="flex gap-3">
-                <button
-                  onClick={handleGoBackComplete}
-                  className="flex-1 bg-[#FF6600] hover:bg-[#e65c00] text-white font-semibold py-3 px-4 rounded-lg transition-colors"
-                  data-testid="button-go-back-complete"
-                >
-                  Go Back & Complete
-                </button>
-                <button
-                  onClick={handleSkipAnyway}
-                  className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-3 px-4 rounded-lg transition-colors"
-                  data-testid="button-skip-anyway"
-                >
-                  Skip Anyway
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <FlipIQCelebration 
-        isOpen={showCelebration} 
-        userName="Tony"
-        onComplete={handleCelebrationComplete}
-      />
       <div className="flex-1 flex flex-col overflow-hidden relative z-10 bg-gray-50">
         
         <header className="bg-white border-b border-gray-200 py-4 px-6 flex justify-between items-center">
@@ -657,7 +558,6 @@ function HomeContent() {
 
         </main>
       </div>
-      </>
   );
 }
 
