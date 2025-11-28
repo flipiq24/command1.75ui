@@ -97,7 +97,7 @@ function HomeContent() {
   const searchString = useSearch();
   const [activeFilter, setActiveFilter] = useState<DealType | 'goal' | 'completed' | null>(null);
   const [selectedDealIds, setSelectedDealIds] = useState<number[]>([]);
-  const [completionPercent, setCompletionPercent] = useState(32);
+  const [completionPercent, setCompletionPercent] = useState(100);
   const queryClient = useQueryClient();
   const { openIQWithSummary } = useLayout();
 
