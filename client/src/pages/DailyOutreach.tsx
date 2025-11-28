@@ -21,7 +21,10 @@ import {
   Sparkles,
   Check,
   AlertTriangle,
-  X
+  X,
+  Users,
+  Building2,
+  Calendar
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -57,7 +60,7 @@ interface Agent {
   relationshipStatus: 'Priority' | 'Hot' | 'Warm' | 'Cold' | 'Unknown';
   basket: 'Clients' | 'High Value' | 'Low Value';
   requiredAction: number;
-  followUpStatus: 'Priority' | 'Hot' | 'Warm' | 'Cold' | 'Unknown';
+  followUpStatus: 'Priority' | 'Hot' | 'Warm' | 'Cold' | 'Unknown' | 'Attempt 5';
   followUpDate: string;
   investorSourceCount: number | null;
   activeInLastTwoYears: boolean;
@@ -69,7 +72,7 @@ interface Agent {
 const PRIORITY_AGENTS: Agent[] = [
   {
     id: 1,
-    agentName: "1213 Property Corp",
+    agentName: "1213 Property Corp -",
     officeName: "Flipiq",
     phone: "7145817805",
     email: "tony@flipiq.com",
@@ -77,7 +80,7 @@ const PRIORITY_AGENTS: Agent[] = [
     relationshipStatus: "Priority",
     basket: "Clients",
     requiredAction: 0,
-    followUpStatus: "Priority",
+    followUpStatus: "Attempt 5",
     followUpDate: "11/27/2025",
     investorSourceCount: 2,
     activeInLastTwoYears: false,
@@ -703,103 +706,150 @@ export default function DailyOutreach() {
                 </div>
 
                 <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
-                  <div className="flex py-3 bg-white border-b border-gray-200 text-[11px] uppercase tracking-wider font-bold text-gray-400 select-none rounded-t-xl">
-                    <div className="w-[48px] shrink-0 flex items-center justify-center">
-                      <input
-                        type="checkbox"
-                        checked={selectedAgentIds.includes(currentAgent?.id || 0)}
-                        onChange={(e) => handleSelectAgent(currentAgent?.id || 0, e.target.checked)}
-                        className="w-4 h-4 rounded border-gray-300 text-[#FF6600] focus:ring-[#FF6600]"
-                        data-testid="checkbox-select-agent"
-                      />
-                    </div>
-                    <div className="w-3/12 px-4">Agent Info</div>
-                    <div className="w-3/12 px-4">Relationship</div>
-                    <div className="w-3/12 px-4">Follow-Up</div>
-                    <div className="w-3/12 px-4">Activity & Status</div>
-                  </div>
-
                   {currentAgent && (
-                    <div className="flex items-start py-4 border-b border-gray-100 hover:bg-gray-50 transition-colors group">
-                      <div className="w-[48px] shrink-0 flex flex-col items-center justify-start pt-1 gap-2">
-                        <input
-                          type="checkbox"
-                          checked={selectedAgentIds.includes(currentAgent.id)}
-                          onChange={(e) => handleSelectAgent(currentAgent.id, e.target.checked)}
-                          className="w-4 h-4 rounded border-gray-300 text-[#FF6600] focus:ring-[#FF6600]"
-                          data-testid={`checkbox-agent-${currentAgent.id}`}
-                        />
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <button className="p-1 hover:bg-gray-100 rounded" data-testid={`menu-agent-${currentAgent.id}`}>
-                              <MoreVertical className="w-4 h-4 text-gray-400" />
+                    <div className="p-6">
+                      <div className="flex items-start justify-between mb-6 pb-6 border-b border-gray-100">
+                        <div className="flex items-start gap-4">
+                          <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
+                            <Users className="w-6 h-6 text-gray-400" />
+                          </div>
+                          <div>
+                            <h3 className="text-xl font-bold text-gray-900" data-testid={`text-agent-name-${currentAgent.id}`}>
+                              {currentAgent.agentName}
+                            </h3>
+                            <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
+                              <Phone className="w-4 h-4 text-gray-400" />
+                              <a href={`tel:${currentAgent.phone}`} className="hover:text-blue-600" data-testid={`link-phone-${currentAgent.id}`}>{currentAgent.phone}</a>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
+                              <Mail className="w-4 h-4 text-gray-400" />
+                              <a href={`mailto:${currentAgent.email}`} className="hover:text-blue-600" data-testid={`link-email-${currentAgent.id}`}>{currentAgent.email}</a>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
+                              <Building2 className="w-4 h-4 text-gray-400" />
+                              <span>{currentAgent.officeName}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="text-right">
+                          <div className="text-xs text-gray-500 mb-1">Assigned User</div>
+                          <select className="text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-md px-3 py-1.5 cursor-pointer">
+                            <option>{currentAgent.assignedUser}</option>
+                          </select>
+                          <div className="flex items-center justify-end gap-2 mt-3">
+                            <div className="w-10 h-5 bg-gray-200 rounded-full relative cursor-pointer">
+                              <div className="w-4 h-4 bg-white rounded-full absolute left-0.5 top-0.5 shadow-sm"></div>
+                            </div>
+                            <span className="text-sm text-gray-600">Do Not Call</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-3 gap-8 mb-6">
+                        <div>
+                          <h4 className="text-sm font-bold text-gray-900 mb-4">Agent Status</h4>
+                          <div className="space-y-4">
+                            <div>
+                              <label className="text-xs text-gray-500 block mb-1">Relationship Status</label>
+                              <select className="w-full text-sm text-gray-900 bg-white border border-gray-200 rounded-md px-3 py-2">
+                                <option>{currentAgent.relationshipStatus}</option>
+                              </select>
+                            </div>
+                            <div>
+                              <label className="text-xs text-gray-500 block mb-1">Agent Rating</label>
+                              <select className="w-full text-sm text-gray-900 bg-white border border-gray-200 rounded-md px-3 py-2">
+                                <option>Unknown</option>
+                              </select>
+                            </div>
+                            <div>
+                              <label className="text-xs text-gray-500 block mb-1">Basket</label>
+                              <select className="w-full text-sm text-gray-900 bg-white border border-gray-200 rounded-md px-3 py-2">
+                                <option>{currentAgent.basket}</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <h4 className="text-sm font-bold text-gray-900 mb-4">Agent Profile</h4>
+                          <div className="space-y-4">
+                            <div>
+                              <label className="text-xs text-gray-500 block mb-1">Active In Last 2 Years</label>
+                              <select className="w-full text-sm text-gray-900 bg-white border border-gray-200 rounded-md px-3 py-2">
+                                <option>{currentAgent.activeInLastTwoYears ? 'True' : 'False'}</option>
+                              </select>
+                            </div>
+                            <div>
+                              <label className="text-xs text-gray-500 block mb-1">Investor Source Count</label>
+                              <div className="w-full text-sm text-gray-900 bg-gray-50 border border-gray-200 rounded-md px-3 py-2">
+                                {currentAgent.investorSourceCount !== null ? `${currentAgent.investorSourceCount} Match` : 'N/A'}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <h4 className="text-sm font-bold text-gray-900 mb-4">Follow Up</h4>
+                          <div className="space-y-4">
+                            <div>
+                              <label className="text-xs text-gray-500 block mb-1">Follow Up Status</label>
+                              <select className="w-full text-sm text-gray-900 bg-white border border-gray-200 rounded-md px-3 py-2">
+                                <option>{currentAgent.followUpStatus}</option>
+                              </select>
+                            </div>
+                            <div>
+                              <label className="text-xs text-gray-500 block mb-1">Follow Up Status Date</label>
+                              <div className="w-full text-sm text-gray-900 bg-gray-50 border border-gray-200 rounded-md px-3 py-2 flex items-center gap-2">
+                                <Calendar className="w-4 h-4 text-gray-400" />
+                                {currentAgent.followUpDate}
+                              </div>
+                            </div>
+                            <div>
+                              <label className="text-xs text-gray-500 block mb-1">Last Communication Date</label>
+                              <div className="w-full text-sm text-gray-900 bg-gray-50 border border-gray-200 rounded-md px-3 py-2 flex items-center gap-2">
+                                <Calendar className="w-4 h-4 text-gray-400" />
+                                {currentAgent.followUpDate}
+                              </div>
+                            </div>
+                            <div>
+                              <label className="text-xs text-gray-500 block mb-1">Last Address Discussed</label>
+                              <div className="w-full text-sm text-gray-900 bg-gray-50 border border-gray-200 rounded-md px-3 py-2">
+                                7138 Lurline Ave, Winnetka, CA, 91306
+                              </div>
+                            </div>
+                            <div>
+                              <label className="text-xs text-gray-500 block mb-1">Last Communicated AA</label>
+                              <div className="w-full text-sm text-gray-900 bg-gray-50 border border-gray-200 rounded-md px-3 py-2">
+                                {currentAgent.assignedUser}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-100">
+                        <div className="bg-gray-50 rounded-lg p-4">
+                          <div className="flex items-center justify-between mb-2">
+                            <h5 className="text-sm font-medium text-gray-900">Notes</h5>
+                            <button className="text-gray-400 hover:text-gray-600">
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                              </svg>
                             </button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="start" className="w-48 bg-white z-50 border-none shadow-xl">
-                            <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
-                              <Phone className="w-4 h-4" />
-                              <span>Call</span>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
-                              <MessageSquare className="w-4 h-4" />
-                              <span>Text</span>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
-                              <Mail className="w-4 h-4" />
-                              <span>Email</span>
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </div>
-
-                      <div className="w-3/12 px-4">
-                        <div className="font-bold text-gray-900 hover:text-blue-600 cursor-pointer" data-testid={`text-agent-name-${currentAgent.id}`}>
-                          {currentAgent.agentName}
+                          </div>
+                          <p className="text-sm text-gray-500">—</p>
                         </div>
-                        <div className="text-sm text-gray-600 mt-1">
-                          Office Name: {currentAgent.officeName}
-                        </div>
-                        <div className="text-sm mt-1">
-                          Best Cell phone: <a href={`tel:${currentAgent.phone}`} className="text-blue-600 hover:underline" data-testid={`link-phone-${currentAgent.id}`}>{currentAgent.phone}</a>
-                        </div>
-                        <div className="text-sm mt-1">
-                          Best Email: <a href={`mailto:${currentAgent.email}`} className="text-blue-600 hover:underline" data-testid={`link-email-${currentAgent.id}`}>{currentAgent.email}</a>
-                        </div>
-                      </div>
-
-                      <div className="w-3/12 px-4">
-                        <div className="text-sm text-gray-600">
-                          Assigned User: {currentAgent.assignedUser}
-                        </div>
-                        <div className="text-sm text-gray-600 mt-1">
-                          Relationship Status: <span className="font-bold text-gray-900">{currentAgent.relationshipStatus}</span>
-                        </div>
-                        <div className="text-sm text-gray-600 mt-1">
-                          Basket: {currentAgent.basket}
-                        </div>
-                      </div>
-
-                      <div className="w-3/12 px-4">
-                        <div className="text-sm text-gray-600">
-                          Required Action: {currentAgent.requiredAction}
-                        </div>
-                        <div className="text-sm text-gray-600 mt-1">
-                          Follow-Up Status: <span className="font-bold text-gray-900">{currentAgent.followUpStatus}</span>
-                        </div>
-                        <div className="text-sm text-gray-600 mt-1">
-                          Follow-Up Date: {currentAgent.followUpDate}
-                        </div>
-                      </div>
-
-                      <div className="w-3/12 px-4">
-                        <div className="text-sm text-gray-600">
-                          Investor Source Count: {currentAgent.investorSourceCount !== null ? <span className="font-bold text-gray-900">{currentAgent.investorSourceCount} Match</span> : <span className="font-bold text-gray-900">N/A</span>}
-                        </div>
-                        <div className="text-sm text-gray-600 mt-1">
-                          Active in Last 2 Years: {currentAgent.activeInLastTwoYears ? 'TRUE' : 'FALSE'}
-                        </div>
-                        <div className="text-sm text-gray-600 mt-1">
-                          Pending, Backup, Sold: ({currentAgent.pending + currentAgent.backup + currentAgent.sold}) {currentAgent.pending}P, {currentAgent.backup}B, {currentAgent.sold}S
+                        <div className="bg-gray-50 rounded-lg p-4">
+                          <div className="flex items-center justify-between mb-2">
+                            <h5 className="text-sm font-medium text-gray-900">Note Dates</h5>
+                            <button className="text-gray-400 hover:text-gray-600">
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                              </svg>
+                            </button>
+                          </div>
+                          <p className="text-sm text-gray-500">—</p>
                         </div>
                       </div>
                     </div>
@@ -833,10 +883,10 @@ export default function DailyOutreach() {
                   </button>
                   <button
                     className="px-6 py-2.5 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-lg border border-gray-300 shadow-sm transition flex items-center gap-2"
-                    data-testid="button-log-activity"
+                    data-testid="button-agent-iq-report"
                   >
-                    <Plus className="w-4 h-4" />
-                    Log Activity
+                    <Lightbulb className="w-4 h-4" />
+                    Agent iQ Report
                   </button>
                 </div>
               </>
