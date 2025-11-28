@@ -1001,30 +1001,6 @@ export default function DailyOutreach() {
                         </div>
                     </div>
 
-                    {/* Let's dive into the property — Yes | No (OUTSIDE the IQ component) */}
-                    {showCompletionState && (
-                      <div className="mt-6 p-4 bg-white rounded-xl border border-gray-200 shadow-sm animate-in fade-in slide-in-from-bottom-2 duration-500">
-                        <div className="flex items-center justify-between">
-                          <p className="text-sm text-gray-700 font-medium">Let's dive into the property —</p>
-                          <div className="flex items-center gap-3">
-                            <button 
-                              onClick={() => setLocation(`/piq/${currentDeal.id}`)}
-                              className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-bold rounded-lg shadow-sm transition"
-                              data-testid="button-yes-dive-in"
-                            >
-                              Yes
-                            </button>
-                            <button 
-                              onClick={handleNextDeal}
-                              className="px-6 py-2 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-lg border border-gray-300 shadow-sm transition"
-                              data-testid="button-no-skip"
-                            >
-                              No
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    )}
                     </>
                 )}
 
