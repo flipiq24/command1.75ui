@@ -13,7 +13,8 @@ import {
   MessageSquare,
   Mail,
   Mic,
-  Bot
+  Bot,
+  Lightbulb
 } from 'lucide-react';
 import {
   DropdownMenu,
