@@ -1,0 +1,41 @@
+The Prompt for Replit
+Task: Restore Propensity Scoring Logic to Daily Outreach
+
+Objective: Re-integrate the weighted "Propensity to Sell" logic into the "iQ Property Intelligence" section of the Daily Outreach page.
+
+1. Add the Logic Constants (Top of File): Insert this data structure to define the points and colors:
+
+JavaScript
+
+const PROPENSITY_LEGEND = [
+  { color: "text-red-600", label: "🔴 RED", indicator: "Notice of Trustee Sale (NTS)", points: 8 },
+  { color: "text-red-600", label: "🔴 RED", indicator: "Notice of Default (NOD)", points: 6 },
+  { color: "text-red-600", label: "🔴 RED", indicator: "Tax Delinquency", points: 5 },
+  { color: "text-red-600", label: "🔴 RED", indicator: "Affidavit of Death", points: 5 },
+  { color: "text-red-600", label: "🔴 RED", indicator: "Bankruptcy / Judgment", points: 4 },
+  { color: "text-green-600", label: "🟢 GREEN", indicator: "Involuntary Liens", points: 3 },
+  { color: "text-green-600", label: "🟢 GREEN", indicator: "Expired Listing", points: 3 },
+  { color: "text-green-600", label: "🟢 GREEN", indicator: "Vacant Property", points: 2 },
+  { color: "text-green-600", label: "🟢 GREEN", indicator: "High Mortgage / Debt", points: 2 },
+  { color: "text-green-600", label: "🟢 GREEN", indicator: "Non-Owner Occupied", points: 2 },
+  { color: "text-blue-600", label: "🔵 BLUE", indicator: "Corporate / Trust Owned", points: 1 },
+  { color: "text-blue-600", label: "🔵 BLUE", indicator: "Free & Clear", points: 1 }
+];
+const getPropensityTotal = (indicators) => { return indicators.reduce((sum, item) => { const match = PROPENSITY_LEGEND.find(p => p.indicator === item); return sum + (match ? match.points : 0); }, 0); };
+
+
+**2. Update the "iQ Property Intelligence" Card:**
+In the Grid Section where we show "Status", "Days on Market", etc., update the **Propensity** block to use this logic:
+Calculate Score: Use getPropensityTotal(currentDeal.propensityIndicators).
+
+Dynamic Color:
+
+Score >= 6: Red Text (text-red-600)
+
+Score 3-5: Green Text (text-green-600)
+
+Score 0-2: Blue Text (text-blue-600)
+
+Display: Show the numeric score (e.g., "7 / 8") in the large font.
+
+3. Add the Indicators List (The "Why"): Below the grid, inside the narrative or a dedicated list, render the specific reasons (e.g., "Notice of Default") using their assigned colors from the Legend.

@@ -64,6 +64,7 @@ interface StreamingLine {
   value?: string;
   isLink?: boolean;
   linkUrl?: string;
+  color?: string;
 }
 
 const useTypingEffect = (lines: StreamingLine[], triggerKey: number) => {
@@ -380,23 +381,58 @@ export default function DailyOutreach() {
   
   const currentDeal = filteredDeals[currentIndex] || filteredDeals[0];
 
-  const streamingLines: StreamingLine[] = useMemo(() => [
-    { type: 'stat', label: 'Status', value: currentDeal?.mlsStatus || 'Active' },
-    { type: 'stat', label: 'Days on Market', value: '45' },
-    { type: 'stat', label: 'Price to Future Value', value: '82%' },
-    { type: 'stat', label: 'Propensity Score', value: '0' },
-    { type: 'stat', label: 'Agent', value: 'Sarah Johnson (Unassigned)' },
-    { type: 'stat', label: 'Relationship Status', value: 'Warm' },
-    { type: 'stat', label: 'Investor Source Count', value: '[View Agent]', isLink: true, linkUrl: 'https://nextjs-flipiq-agent.vercel.app/agents/AaronMills' },
-    { type: 'stat', label: 'Last Communication Date', value: '11/15/2025' },
-    { type: 'stat', label: 'Last Address Discussed', value: '1234 Oak Street, Phoenix AZ' },
-    { type: 'header', value: 'Why this Property' },
-    { type: 'bullet', value: 'Aged listing (≥70 DOM) with strong discount potential.' },
-    { type: 'bullet', value: 'Currently unassigned and no active offer status — open field opportunity.' },
-    { type: 'bullet', value: 'Agent has history of investor-friendly transactions.' },
-    { type: 'bullet', value: 'Price-to-value ratio suggests room for negotiation.' },
-    { type: 'action', value: 'Would you like me to run a detailed AI report?' },
-  ], [currentDeal, iqRevealKey]);
+  const propensityScore = useMemo(() => {
+    if (!currentDeal?.propensity) return 0;
+    return getPropensityScore(currentDeal.propensity);
+  }, [currentDeal]);
+
+  const maxPropensityScore = 8;
+
+  const getPropensityScoreColor = (score: number) => {
+    if (score >= 6) return 'text-red-600';
+    if (score >= 3) return 'text-green-600';
+    return 'text-blue-600';
+  };
+
+  const getActiveIndicators = (): { indicator: string; color: string; points: number }[] => {
+    if (!currentDeal?.propensity || !Array.isArray(currentDeal.propensity)) return [];
+    const result: { indicator: string; color: string; points: number }[] = [];
+    currentDeal.propensity.forEach((indicator: string) => {
+      const match = PROPENSITY_LEGEND.find(p => p.indicator === indicator);
+      if (match) {
+        result.push({ indicator, color: match.color, points: match.points });
+      }
+    });
+    return result;
+  };
+
+  const streamingLines: StreamingLine[] = useMemo(() => {
+    const activeIndicators = getActiveIndicators();
+    const indicatorBullets: StreamingLine[] = activeIndicators.map(ind => ({
+      type: 'bullet' as const,
+      value: `${ind.indicator} (+${ind.points} pts)`,
+      color: ind.color
+    }));
+
+    return [
+      { type: 'stat', label: 'Status', value: currentDeal?.mlsStatus || 'Active' },
+      { type: 'stat', label: 'Days on Market', value: '45' },
+      { type: 'stat', label: 'Price to Future Value', value: '82%' },
+      { type: 'stat', label: 'Propensity Score', value: `${propensityScore} / ${maxPropensityScore}`, color: getPropensityScoreColor(propensityScore) },
+      { type: 'stat', label: 'Agent', value: 'Sarah Johnson (Unassigned)' },
+      { type: 'stat', label: 'Relationship Status', value: 'Warm' },
+      { type: 'stat', label: 'Investor Source Count', value: '[View Agent]', isLink: true, linkUrl: 'https://nextjs-flipiq-agent.vercel.app/agents/AaronMills' },
+      { type: 'stat', label: 'Last Communication Date', value: '11/15/2025' },
+      { type: 'stat', label: 'Last Address Discussed', value: '1234 Oak Street, Phoenix AZ' },
+      { type: 'header', value: 'Why this Property' },
+      ...(indicatorBullets.length > 0 ? indicatorBullets : [
+        { type: 'bullet' as const, value: 'No propensity indicators detected for this property.' }
+      ]),
+      { type: 'bullet', value: 'Aged listing (≥70 DOM) with strong discount potential.' },
+      { type: 'bullet', value: 'Price-to-value ratio suggests room for negotiation.' },
+      { type: 'action', value: 'Would you like me to run a detailed AI report?' },
+    ];
+  }, [currentDeal, iqRevealKey, propensityScore]);
 
   const { displayedLines, currentLineIndex, isComplete: isTypingComplete, showCursor } = useTypingEffect(streamingLines, iqRevealKey);
 
@@ -865,6 +901,7 @@ export default function DailyOutreach() {
                                 const colonIndex = fullText.indexOf(':');
                                 const displayedLabel = displayedText.slice(0, Math.min(displayedText.length, colonIndex + 1));
                                 const displayedValue = displayedText.length > colonIndex + 1 ? displayedText.slice(colonIndex + 1) : '';
+                                const valueColorClass = line.color || 'text-gray-900';
                                 
                                 return (
                                   <div key={index} className="flex items-center">
@@ -879,7 +916,7 @@ export default function DailyOutreach() {
                                         {displayedValue}
                                       </a>
                                     ) : (
-                                      <span className="text-gray-900 font-semibold">{displayedValue}</span>
+                                      <span className={cn(valueColorClass, "font-semibold")}>{displayedValue}</span>
                                     )}
                                     {isCurrentLine && showCursor && (
                                       <span className="inline-block w-0.5 h-4 bg-[#FF6600] ml-0.5 animate-pulse"></span>
@@ -903,10 +940,12 @@ export default function DailyOutreach() {
                               }
 
                               if (line.type === 'bullet') {
+                                const bulletColor = line.color || 'text-gray-700';
+                                const dotColor = line.color ? line.color.replace('text-', 'text-') : 'text-[#FF6600]';
                                 return (
                                   <div key={index} className="flex items-start gap-2 pl-2">
-                                    <span className="text-[#FF6600] mt-0.5">•</span>
-                                    <span className="text-gray-700">
+                                    <span className={cn(dotColor, "mt-0.5")}>•</span>
+                                    <span className={bulletColor}>
                                       {displayedText}
                                       {isCurrentLine && showCursor && (
                                         <span className="inline-block w-0.5 h-4 bg-[#FF6600] ml-0.5 animate-pulse"></span>
