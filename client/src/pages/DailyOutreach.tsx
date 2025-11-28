@@ -318,6 +318,38 @@ export default function DailyOutreach() {
   }>>({});
   const queryClient = useQueryClient();
   
+  const [currentAgentIndex, setCurrentAgentIndex] = useState(0);
+  const [priorityCallsMade, setPriorityCallsMade] = useState(0);
+  const [selectedAgentIds, setSelectedAgentIds] = useState<number[]>([]);
+  
+  const priorityAgents = PRIORITY_AGENTS;
+  const currentAgent = priorityAgents[currentAgentIndex];
+  
+  const handlePrevAgent = () => {
+    if (currentAgentIndex > 0) {
+      setCurrentAgentIndex(prev => prev - 1);
+    }
+  };
+  
+  const handleNextAgent = () => {
+    if (currentAgentIndex < priorityAgents.length - 1) {
+      setCurrentAgentIndex(prev => prev + 1);
+    }
+  };
+  
+  const handleCallNow = () => {
+    setPriorityCallsMade(prev => prev + 1);
+    window.open(`tel:${currentAgent?.phone}`, '_self');
+  };
+  
+  const handleSelectAgent = (id: number, checked: boolean) => {
+    if (checked) {
+      setSelectedAgentIds(prev => [...prev, id]);
+    } else {
+      setSelectedAgentIds(prev => prev.filter(agentId => agentId !== id));
+    }
+  };
+  
   const totalDeals = 30;
   const dailyGoal = 30;
   const isStartMode = currentIndex === 0;
