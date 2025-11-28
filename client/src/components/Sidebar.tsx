@@ -20,11 +20,12 @@ import { cn } from "@/lib/utils";
 
 interface SidebarProps {
   onIQClick?: () => void;
+  onCloseIQ?: () => void;
   isIQActive?: boolean;
   onCollapseChange?: (collapsed: boolean) => void;
 }
 
-export default function Sidebar({ onIQClick, isIQActive = false, onCollapseChange }: SidebarProps) {
+export default function Sidebar({ onIQClick, onCloseIQ, isIQActive = false, onCollapseChange }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [location] = useLocation();
 
@@ -83,13 +84,18 @@ export default function Sidebar({ onIQClick, isIQActive = false, onCollapseChang
                     </div>
                 </button>
 
-                <Link href="/" className={cn(
-                  "group relative flex items-center px-3 py-2 text-sm font-medium rounded-lg border transition",
-                  location === '/' && !isIQActive
-                    ? "bg-gray-100 text-gray-900 border-gray-200 hover:bg-gray-200" 
-                    : "text-gray-600 hover:bg-gray-50 border-transparent hover:border-gray-100",
-                  isCollapsed ? "justify-center" : "justify-between"
-                )}>
+                <Link 
+                  href="/" 
+                  onClick={() => onCloseIQ?.()}
+                  className={cn(
+                    "group relative flex items-center px-3 py-2 text-sm font-medium rounded-lg border transition",
+                    location === '/' && !isIQActive
+                      ? "bg-gray-100 text-gray-900 border-gray-200 hover:bg-gray-200" 
+                      : "text-gray-600 hover:bg-gray-50 border-transparent hover:border-gray-100",
+                    isCollapsed ? "justify-center" : "justify-between"
+                  )}
+                  data-testid="link-deal-review"
+                >
                     <span className="flex items-center gap-3">
                       <ListTodo className="w-4 h-4 flex-shrink-0" /> 
                       {!isCollapsed && <span>Deal Review</span>}
@@ -103,13 +109,18 @@ export default function Sidebar({ onIQClick, isIQActive = false, onCollapseChang
                     </div>
                 </Link>
 
-                <Link href="/daily-outreach" className={cn(
-                  "group relative flex items-center px-3 py-2 text-sm font-medium rounded-lg border transition",
-                  location === '/daily-outreach'
-                    ? "bg-gray-100 text-gray-900 border-gray-200 hover:bg-gray-200"
-                    : "text-gray-600 hover:bg-gray-50 border-transparent hover:border-gray-100",
-                  isCollapsed ? "justify-center" : "justify-between"
-                )}>
+                <Link 
+                  href="/daily-outreach" 
+                  onClick={() => onCloseIQ?.()}
+                  className={cn(
+                    "group relative flex items-center px-3 py-2 text-sm font-medium rounded-lg border transition",
+                    location === '/daily-outreach'
+                      ? "bg-gray-100 text-gray-900 border-gray-200 hover:bg-gray-200"
+                      : "text-gray-600 hover:bg-gray-50 border-transparent hover:border-gray-100",
+                    isCollapsed ? "justify-center" : "justify-between"
+                  )}
+                  data-testid="link-daily-outreach"
+                >
                     <span className="flex items-center gap-3">
                       <Phone className="w-4 h-4 flex-shrink-0" /> 
                       {!isCollapsed && <span>Daily Outreach</span>}

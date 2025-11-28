@@ -32,6 +32,7 @@ export default function Layout({ children }: LayoutProps) {
       <div className="min-h-screen flex bg-gray-100">
         <Sidebar 
           onIQClick={openIQ} 
+          onCloseIQ={closeIQ}
           isIQActive={isIQOpen} 
           onCollapseChange={setIsSidebarCollapsed}
         />
