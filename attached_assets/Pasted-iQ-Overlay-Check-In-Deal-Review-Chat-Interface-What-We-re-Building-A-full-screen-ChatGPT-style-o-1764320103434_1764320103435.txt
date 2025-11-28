@@ -1,0 +1,119 @@
+iQ Overlay — Check-In + Deal Review Chat Interface
+What We're Building
+A full-screen ChatGPT-style overlay that launches when the user clicks the iQ button in the sidebar. The overlay covers the entire main content area while keeping the left sidebar navigation visible.
+Core Behavior
+Trigger: User clicks the iQ lightbulb button (highlighted in sidebar)
+Overlay Layout:
+
+Full width/height of main content area (everything right of sidebar)
+Clean white/light gray background
+Chat messages stream from top, input fixed at bottom
+No other UI elements visible except sidebar nav
+
+Flow Sequence
+Phase 1: Check-In (AA1 Bot)
+When overlay launches, the AI initiates conversation:
+Good morning, [User Name].
+I'll check you in for this beautiful day at [Current Time].
+
+You've got a solid lineup today, so I want to make sure you're ready.
+Are you able to work a full day today?
+User responds (yes/no via buttons or typed response).
+If YES → AI responds:
+Great — let's get moving.
+Before we jump in, is there anything you already know you'll need help with today?
+If help needed → AI captures it, confirms, says it will notify AM.
+Then AI presents the daily summary:
+Alright [Name], today we're going to:
+- Review 56 properties in Deal Review
+- Make about 30 calls to high-propensity agents
+
+Is there anything that might prevent you from getting those calls done today?
+Captures any blockers, then displays:
+[Start Deal Review] ← Primary CTA button in chat
+
+Phase 2: Deal Review (AA2 Bot)
+When user clicks "Start Deal Review," AI transitions:
+Loading your Deal Review...
+
+Here's your first priority property:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔥 HOT — 2842 Rosarita St, San Bernardino, CA 92407
+
+Price: $390,000 | Propensity: 11
+Property: SFR / 3 BR / 2 BA / 1,169 sqft / Built 1990
+Flags: Notice of Default (NOD), Tax Delinquency
+
+Last Opened: 11/26/25
+Last Called: 11/21/25
+Offer Status: 30% — Offer Terms Sent
+
+Why this is priority: HOD flag + high propensity + 5 days since last call. 
+Agent may have seller update.
+
+Recommended action: Call agent to check seller temperature and push for signed terms.
+
+Ready to proceed? Type 'next' or ask me anything about this property.
+
+Input Bar (Fixed at Bottom)
+Persistent input field with placeholder text:
+Ask me anything about this property or type 'next'...
+User can:
+
+Type "next" → advances to next property
+Ask questions → AI responds with context from that property's data
+Type any query → AI answers using Deal Review data
+
+
+Technical Requirements
+Frontend:
+
+React overlay component with framer-motion for slide-in animation
+CSS: position: fixed, covers main content, z-index above everything except sidebar
+Streaming text animation (character-by-character like ChatGPT)
+Auto-scroll chat container as new messages appear
+
+State Management:
+
+isOverlayOpen — boolean toggle
+currentPhase — 'checkin' | 'dealreview'
+currentPropertyIndex — tracks position in sorted deal list
+chatHistory — array of message objects
+
+Data Integration:
+
+Pull user name and current time for check-in
+Pull Deal Review data (sorted by: Hot → Warm → Cold → New)
+Each property object includes: address, price, propensity, flags, dates, offer status, notes
+
+Styling:
+
+Clean, minimal — white background, dark text
+AI messages: left-aligned, subtle gray bubble
+User messages: right-aligned, blue bubble
+Property cards: bordered container with structured layout
+CTA buttons: branded orange/coral color
+
+
+Component Structure
+<Sidebar /> (stays visible)
+<MainContent>
+  {isOverlayOpen ? (
+    <IQOverlay>
+      <ChatContainer>
+        {messages.map(msg => <ChatMessage />)}
+      </ChatContainer>
+      <InputBar placeholder="Ask me anything..." />
+    </IQOverlay>
+  ) : (
+    <DashboardContent />
+  )}
+</MainContent>
+
+Exit Behavior
+
+X button in top-right corner of overlay
+Clicking sidebar nav items closes overlay and navigates
+State persists if user returns to iQ within same session
+
