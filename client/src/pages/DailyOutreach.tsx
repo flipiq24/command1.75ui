@@ -19,7 +19,9 @@ import {
   Plus,
   Globe,
   Sparkles,
-  Check
+  Check,
+  AlertTriangle,
+  X
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -190,6 +192,16 @@ export default function DailyOutreach() {
   const [hasStarted, setHasStarted] = useState(false);
   const [connectionsMade, setConnectionsMade] = useState(0);
   const [iqRevealKey, setIqRevealKey] = useState(0);
+  const [showValidationModal, setShowValidationModal] = useState(false);
+  const [formFields, setFormFields] = useState<Record<number, {
+    offerStatus: string;
+    todo: string;
+    notes: string;
+    assignedUser: string;
+    relationshipStatus: string;
+    followUpStatus: string;
+    followUpDate: string;
+  }>>({});
   const queryClient = useQueryClient();
   
   const totalDeals = 30;
@@ -207,7 +219,82 @@ export default function DailyOutreach() {
     triggerIQAnimation();
   };
   
+  const getCurrentDealFields = () => {
+    const dealId = filteredDeals[currentIndex]?.id;
+    if (!dealId) return null;
+    return formFields[dealId] || {
+      offerStatus: '',
+      todo: '',
+      notes: '',
+      assignedUser: '',
+      relationshipStatus: '',
+      followUpStatus: '',
+      followUpDate: ''
+    };
+  };
+
+  const updateFormField = (field: string, value: string) => {
+    const dealId = filteredDeals[currentIndex]?.id;
+    if (!dealId) return;
+    setFormFields(prev => ({
+      ...prev,
+      [dealId]: {
+        ...prev[dealId] || {
+          offerStatus: '',
+          todo: '',
+          notes: '',
+          assignedUser: '',
+          relationshipStatus: '',
+          followUpStatus: '',
+          followUpDate: ''
+        },
+        [field]: value
+      }
+    }));
+  };
+
+  const validateFields = () => {
+    const fields = getCurrentDealFields();
+    if (!fields) return { isValid: true, missing: [], completed: [] };
+    
+    const validationRules = [
+      { key: 'offerStatus', label: 'Offer Status', isComplete: !!fields.offerStatus },
+      { key: 'todo', label: 'ToDo', isComplete: !!fields.todo },
+      { key: 'notes', label: 'Notes - If call connected', isComplete: !!fields.notes },
+      { key: 'assignedUser', label: 'Assign Users', isComplete: !!fields.assignedUser },
+      { key: 'relationshipStatus', label: 'Relationship Status', isComplete: !!fields.relationshipStatus },
+      { key: 'followUpStatus', label: 'Follow Up Status', isComplete: !!fields.followUpStatus },
+      { key: 'followUpDate', label: 'Follow Up Status Date', isComplete: !!fields.followUpDate }
+    ];
+
+    const missing = validationRules.filter(r => !r.isComplete);
+    const completed = validationRules.filter(r => r.isComplete);
+    
+    return { 
+      isValid: missing.length === 0, 
+      missing, 
+      completed 
+    };
+  };
+
   const handleNextDeal = () => {
+    const validation = validateFields();
+    if (!validation.isValid) {
+      setShowValidationModal(true);
+      return;
+    }
+    
+    if (filteredDeals.length > 0 && currentIndex < filteredDeals.length - 1) {
+      setCurrentIndex(prev => prev + 1);
+      triggerIQAnimation();
+    } else if (filteredDeals.length > 0) {
+      setCurrentIndex(0);
+      triggerIQAnimation();
+    }
+  };
+
+  const handleSkipAnyway = () => {
+    setShowValidationModal(false);
     if (filteredDeals.length > 0 && currentIndex < filteredDeals.length - 1) {
       setCurrentIndex(prev => prev + 1);
       triggerIQAnimation();
@@ -917,6 +1004,59 @@ export default function DailyOutreach() {
 
         </main>
       </div>
+
+      {/* Validation Modal */}
+      {showValidationModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/50" />
+          <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 animate-in fade-in zoom-in-95 duration-200">
+            <div className="p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
+                  <AlertTriangle className="w-5 h-5 text-[#FF6600]" />
+                </div>
+                <h2 className="text-lg font-bold text-gray-900">Complete Required Fields</h2>
+              </div>
+              
+              <p className="text-sm text-gray-600 mb-4">
+                Please update the following fields before moving to the next property:
+              </p>
+
+              <div className="space-y-2 mb-6">
+                {validateFields().missing.map((field) => (
+                  <div key={field.key} className="flex items-center gap-2 text-sm">
+                    <X className="w-4 h-4 text-red-500" />
+                    <span className="text-gray-700">{field.label}</span>
+                  </div>
+                ))}
+                {validateFields().completed.map((field) => (
+                  <div key={field.key} className="flex items-center gap-2 text-sm">
+                    <Check className="w-4 h-4 text-green-500" />
+                    <span className="text-gray-500">{field.label}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowValidationModal(false)}
+                  className="flex-1 px-4 py-2.5 bg-[#FF6600] hover:bg-[#e65c00] text-white text-sm font-bold rounded-lg transition"
+                  data-testid="button-go-back-complete"
+                >
+                  Go Back & Complete
+                </button>
+                <button
+                  onClick={handleSkipAnyway}
+                  className="px-4 py-2.5 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition"
+                  data-testid="button-skip-anyway"
+                >
+                  Skip Anyway
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
