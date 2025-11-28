@@ -21,7 +21,7 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const [isIQOpen, setIsIQOpen] = useState(false);
+  const [isIQOpen, setIsIQOpen] = useState(true);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   const openIQ = () => setIsIQOpen(true);

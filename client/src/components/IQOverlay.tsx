@@ -146,6 +146,82 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
     return new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
   };
 
+  const getTimeOfDay = () => {
+    const hour = new Date().getHours();
+    if (hour >= 5 && hour < 12) return 'morning';
+    if (hour >= 12 && hour < 14) return 'lunch';
+    if (hour >= 14 && hour < 17) return 'afternoon';
+    return 'evening';
+  };
+
+  const getSessionState = () => {
+    const lastSession = localStorage.getItem('flipiq_last_session');
+    const morningCheckin = localStorage.getItem('flipiq_morning_checkin');
+    const today = new Date().toDateString();
+    
+    if (!lastSession) {
+      return 'first';
+    }
+    
+    const lastSessionDate = new Date(parseInt(lastSession));
+    const timeSinceLastSession = Date.now() - parseInt(lastSession);
+    const hoursSinceLastSession = timeSinceLastSession / (1000 * 60 * 60);
+    
+    if (lastSessionDate.toDateString() !== today) {
+      return 'new_day';
+    }
+    
+    if (morningCheckin === today && hoursSinceLastSession > 0.5) {
+      const timeOfDay = getTimeOfDay();
+      if (timeOfDay === 'lunch' || timeOfDay === 'afternoon') {
+        return 'returning_after_lunch';
+      }
+      return 'returning';
+    }
+    
+    if (morningCheckin === today) {
+      return 'continuing';
+    }
+    
+    return 'new_day';
+  };
+
+  const progressStats = {
+    dealsReviewedAM: 12,
+    offersOutAM: 2,
+    callsMadeAM: 8,
+    dealsLeft: 44,
+    offersLeft: 3,
+    callsLeft: 22
+  };
+
+  const getContextualGreeting = () => {
+    const sessionState = getSessionState();
+    const timeOfDay = getTimeOfDay();
+    
+    if (sessionState === 'returning_after_lunch') {
+      return `Welcome back, ${userName}!\n\nHope you had a good lunch.\n\nThis morning you:\n• Reviewed ${progressStats.dealsReviewedAM} deals\n• Sent ${progressStats.offersOutAM} offers\n• Made ${progressStats.callsMadeAM} calls\n\nYou've got ${progressStats.dealsLeft} deals, ${progressStats.offersLeft} offers, and ${progressStats.callsLeft} calls left for today.\n\nReady to finish strong?`;
+    }
+    
+    if (sessionState === 'returning') {
+      return `Welcome back, ${userName}!\n\nLooks like you stepped away for a bit. No worries.\n\nSo far today you've:\n• Reviewed ${progressStats.dealsReviewedAM} deals\n• Sent ${progressStats.offersOutAM} offers\n• Made ${progressStats.callsMadeAM} calls\n\nYou've got ${progressStats.dealsLeft} deals, ${progressStats.offersLeft} offers, and ${progressStats.callsLeft} calls remaining.\n\nReady to pick up where you left off?`;
+    }
+    
+    if (sessionState === 'continuing') {
+      return `Hey ${userName}, still going strong!\n\nQuick check-in: Is everything going smoothly, or do you need any help?`;
+    }
+    
+    if (timeOfDay === 'afternoon') {
+      return `Good afternoon, ${userName}.\n\nChecking you in at ${getCurrentTime()}.\n\nYou've got a productive afternoon ahead — let me make sure you're set.\n\nAre you able to work the rest of the day?`;
+    }
+    
+    if (timeOfDay === 'evening') {
+      return `Good evening, ${userName}.\n\nChecking you in at ${getCurrentTime()}.\n\nLate session? Let's make it count.\n\nHow much time do you have to work tonight?`;
+    }
+    
+    return `Good morning, ${userName}.\n\nChecking you in at ${getCurrentTime()}.\n\nYou've got a strong day ahead — let me make sure you're ready.\n\nAre you able to work a full day today?`;
+  };
+
   const streamMessage = useCallback(async (text: string, callback?: () => void) => {
     setIsTyping(true);
     setStreamingText('');
@@ -253,11 +329,25 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
-      const greeting = `Good morning, ${userName}.\n\nChecking you in at ${getCurrentTime()}.\n\nYou've got a strong day ahead — let me make sure you're ready.\n\nAre you able to work a full day today?`;
+      const sessionState = getSessionState();
+      const greeting = getContextualGreeting();
+      
+      localStorage.setItem('flipiq_last_session', Date.now().toString());
+      
+      if (sessionState === 'new_day' || sessionState === 'first') {
+        localStorage.setItem('flipiq_morning_checkin', new Date().toDateString());
+      }
       
       setTimeout(() => {
         streamMessage(greeting);
-        setCheckinStep(1);
+        
+        if (sessionState === 'returning_after_lunch' || sessionState === 'returning') {
+          setCheckinStep(3);
+        } else if (sessionState === 'continuing') {
+          setCheckinStep(4);
+        } else {
+          setCheckinStep(1);
+        }
       }, 500);
     }
   }, [isOpen, messages.length, userName, streamMessage]);
