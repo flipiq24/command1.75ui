@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext } from 'react';
+import React, { useState, createContext, useContext, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import IQOverlay from './IQOverlay';
 
@@ -20,8 +20,17 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
+const getInitialIQState = () => {
+  const sessionStarted = sessionStorage.getItem('flipiq_session_started');
+  if (!sessionStarted) {
+    sessionStorage.setItem('flipiq_session_started', 'true');
+    return true;
+  }
+  return false;
+};
+
 export default function Layout({ children }: LayoutProps) {
-  const [isIQOpen, setIsIQOpen] = useState(true);
+  const [isIQOpen, setIsIQOpen] = useState(getInitialIQState);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   const openIQ = () => setIsIQOpen(true);
