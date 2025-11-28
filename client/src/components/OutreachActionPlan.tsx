@@ -238,7 +238,7 @@ export default function OutreachActionPlan({
             ) : (
               <>
                 <Phone className="w-4 h-4" />
-                <span>Call Priority</span>
+                <span>Call Priority Agents</span>
               </>
             )}
           </button>
