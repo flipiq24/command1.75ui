@@ -1,0 +1,266 @@
+import React, { useState } from 'react';
+import { MessageSquare, Mail, Mic, Play, Square, CheckCircle2, Send, ChevronDown, Users } from 'lucide-react';
+
+export default function CampaignBuilder() {
+  const [selectedSegments, setSelectedSegments] = useState({ hot: true, warm: false, cold: false });
+  const [channels, setChannels] = useState({
+    hot: { text: true, email: false, voicemail: false },
+    warm: { text: false, email: false, voicemail: false },
+    cold: { text: false, email: false, voicemail: false }
+  });
+  const [templates, setTemplates] = useState({
+    hot: { text: '', email: '', voicemail: '' },
+    warm: { text: '', email: '', voicemail: '' },
+    cold: { text: '', email: '', voicemail: '' }
+  });
+  const [recording, setRecording] = useState(null);
+  const [recordings, setRecordings] = useState({});
+  const [recordTime, setRecordTime] = useState(0);
+
+  const segments = [
+    { id: 'hot', label: 'Hot', color: 'text-orange-600', bg: 'bg-orange-50', dot: 'bg-orange-500', total: 35, campaign: 4, lastComm: '11/15/2025', lastTemplate: 'Market Update Q4' },
+    { id: 'warm', label: 'Warm', color: 'text-yellow-600', bg: 'bg-yellow-50', dot: 'bg-yellow-500', total: 51, campaign: 5, lastComm: '11/10/2025', lastTemplate: 'New Listings Alert' },
+    { id: 'cold', label: 'Cold', color: 'text-blue-600', bg: 'bg-blue-50', dot: 'bg-blue-500', total: 50, campaign: 5, lastComm: '11/01/2025', lastTemplate: 'Re-engagement' }
+  ];
+
+  const templateOptions = {
+    text: ['Quick Check-In', 'Market Update', 'Just Sold', 'New Listing Alert'],
+    email: ['Market Update Q4', 'New Listings Alert', 'Monthly Newsletter', 'Re-engagement'],
+    voicemail: ['Friendly Hello', 'Quick Update', 'New Opportunity', 'Follow Up']
+  };
+
+  const toggleSegment = (id) => setSelectedSegments(p => ({ ...p, [id]: !p[id] }));
+  const toggleChannel = (seg, ch) => setChannels(p => ({ ...p, [seg]: { ...p[seg], [ch]: !p[seg][ch] } }));
+  const setTemplate = (seg, ch, val) => setTemplates(p => ({ ...p, [seg]: { ...p[seg], [ch]: val } }));
+
+  const startRecording = (seg) => { setRecording(seg); setRecordTime(0); };
+  const stopRecording = (seg) => { setRecordings(p => ({ ...p, [seg]: recordTime })); setRecording(null); };
+
+  React.useEffect(() => {
+    let i; if (recording) i = setInterval(() => setRecordTime(t => t + 1), 1000);
+    return () => clearInterval(i);
+  }, [recording]);
+
+  const formatTime = (s) => `${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`;
+  const totalAgents = segments.reduce((s, x) => s + x.total, 0);
+  const totalCampaign = segments.filter(s => selectedSegments[s.id]).reduce((s, x) => s + x.campaign, 0);
+
+  return (
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-6xl mx-auto space-y-6">
+
+        {/* HEADER */}
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-2xl font-black text-gray-900">Agent Relationship Campaign</h1>
+            <p className="text-gray-500 text-sm">Nov 27, 2025 — Today's Outreach</p>
+          </div>
+          <div className="flex gap-6 text-right">
+            <div>
+              <div className="text-3xl font-black text-gray-900">{totalAgents}</div>
+              <div className="text-xs text-gray-500 uppercase">Total Agents</div>
+            </div>
+            <div className="border-l pl-6">
+              <div className="text-3xl font-black text-orange-500">{totalCampaign}</div>
+              <div className="text-xs text-gray-500 uppercase">Today's Campaign</div>
+            </div>
+          </div>
+        </div>
+
+        {/* REPORT TABLE */}
+        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+          <div className="px-6 py-4 bg-gray-50 border-b">
+            <h2 className="font-bold text-gray-900 flex items-center gap-2">
+              <Users className="w-5 h-5" /> Segment Report
+            </h2>
+          </div>
+          <table className="w-full">
+            <thead className="bg-gray-50 border-b">
+              <tr className="text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3">Segment</th>
+                <th className="px-4 py-3 text-center">Total Agents</th>
+                <th className="px-4 py-3 text-center">Last Communication</th>
+                <th className="px-4 py-3">Last Template</th>
+                <th className="px-4 py-3 text-center">Today's 10%</th>
+                <th className="px-4 py-3 text-center">Include</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {segments.map(seg => (
+                <tr key={seg.id} className={selectedSegments[seg.id] ? seg.bg : 'bg-white'}>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-2">
+                      <div className={`w-3 h-3 rounded-full ${seg.dot}`}></div>
+                      <span className={`font-bold ${seg.color}`}>{seg.label}</span>
+                    </div>
+                  </td>
+                  <td className="px-4 py-4 text-center font-semibold text-gray-900">{seg.total}</td>
+                  <td className="px-4 py-4 text-center text-gray-600">{seg.lastComm}</td>
+                  <td className="px-4 py-4 text-gray-600">{seg.lastTemplate}</td>
+                  <td className="px-4 py-4 text-center">
+                    <span className={`px-3 py-1 rounded-full text-sm font-bold ${seg.bg} ${seg.color}`}>
+                      {seg.campaign}
+                    </span>
+                  </td>
+                  <td className="px-4 py-4 text-center">
+                    <input
+                      type="checkbox"
+                      checked={selectedSegments[seg.id]}
+                      onChange={() => toggleSegment(seg.id)}
+                      className="w-5 h-5 rounded border-gray-300 text-orange-500 focus:ring-orange-500"
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+            <tfoot className="bg-gray-50 border-t">
+              <tr className="font-bold">
+                <td className="px-6 py-3 text-gray-900">Total</td>
+                <td className="px-4 py-3 text-center text-gray-900">{totalAgents}</td>
+                <td className="px-4 py-3"></td>
+                <td className="px-4 py-3"></td>
+                <td className="px-4 py-3 text-center text-orange-600">{segments.reduce((s,x) => s+x.campaign, 0)}</td>
+                <td className="px-4 py-3"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        {/* CAMPAIGN CONFIGURATION PER SEGMENT */}
+        {segments.filter(s => selectedSegments[s.id]).map(seg => (
+          <div key={seg.id} className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+            <div className={`px-6 py-4 border-b flex items-center justify-between ${seg.bg}`}>
+              <div className="flex items-center gap-3">
+                <div className={`w-4 h-4 rounded-full ${seg.dot}`}></div>
+                <h3 className={`font-bold ${seg.color}`}>{seg.label} Campaign</h3>
+                <span className="text-gray-500 text-sm">— {seg.campaign} agents</span>
+              </div>
+              <div className="text-xs text-gray-500">
+                Last: {seg.lastComm} • "{seg.lastTemplate}"
+              </div>
+            </div>
+            
+            <div className="p-6">
+              <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
+                Select Channels & Templates for This Campaign
+              </div>
+              <div className="grid grid-cols-3 gap-4">
+                
+                {/* TEXT */}
+                <div className={`rounded-xl border-2 overflow-hidden ${channels[seg.id].text ? 'border-green-300 bg-green-50' : 'border-gray-100 bg-gray-50'}`}>
+                  <div onClick={() => toggleChannel(seg.id, 'text')} className="p-4 cursor-pointer flex items-center gap-3">
+                    <div className={`w-5 h-5 rounded border-2 flex items-center justify-center ${channels[seg.id].text ? 'bg-green-500 border-green-500' : 'border-gray-300 bg-white'}`}>
+                      {channels[seg.id].text && <CheckCircle2 className="w-3 h-3 text-white" />}
+                    </div>
+                    <MessageSquare className={`w-4 h-4 ${channels[seg.id].text ? 'text-green-600' : 'text-gray-400'}`} />
+                    <span className={`font-bold text-sm ${channels[seg.id].text ? 'text-green-900' : 'text-gray-500'}`}>Text</span>
+                  </div>
+                  {channels[seg.id].text && (
+                    <div className="px-4 pb-4">
+                      <select
+                        value={templates[seg.id].text}
+                        onChange={(e) => setTemplate(seg.id, 'text', e.target.value)}
+                        className="w-full p-2 text-sm border border-green-200 rounded-lg bg-white"
+                      >
+                        <option value="">Select template...</option>
+                        {templateOptions.text.map(t => <option key={t} value={t}>{t}</option>)}
+                      </select>
+                    </div>
+                  )}
+                </div>
+
+                {/* EMAIL */}
+                <div className={`rounded-xl border-2 overflow-hidden ${channels[seg.id].email ? 'border-blue-300 bg-blue-50' : 'border-gray-100 bg-gray-50'}`}>
+                  <div onClick={() => toggleChannel(seg.id, 'email')} className="p-4 cursor-pointer flex items-center gap-3">
+                    <div className={`w-5 h-5 rounded border-2 flex items-center justify-center ${channels[seg.id].email ? 'bg-blue-500 border-blue-500' : 'border-gray-300 bg-white'}`}>
+                      {channels[seg.id].email && <CheckCircle2 className="w-3 h-3 text-white" />}
+                    </div>
+                    <Mail className={`w-4 h-4 ${channels[seg.id].email ? 'text-blue-600' : 'text-gray-400'}`} />
+                    <span className={`font-bold text-sm ${channels[seg.id].email ? 'text-blue-900' : 'text-gray-500'}`}>Email</span>
+                  </div>
+                  {channels[seg.id].email && (
+                    <div className="px-4 pb-4">
+                      <select
+                        value={templates[seg.id].email}
+                        onChange={(e) => setTemplate(seg.id, 'email', e.target.value)}
+                        className="w-full p-2 text-sm border border-blue-200 rounded-lg bg-white"
+                      >
+                        <option value="">Select template...</option>
+                        {templateOptions.email.map(t => <option key={t} value={t}>{t}</option>)}
+                      </select>
+                    </div>
+                  )}
+                </div>
+
+                {/* VOICEMAIL */}
+                <div className={`rounded-xl border-2 overflow-hidden ${channels[seg.id].voicemail ? 'border-purple-300 bg-purple-50' : 'border-gray-100 bg-gray-50'}`}>
+                  <div onClick={() => toggleChannel(seg.id, 'voicemail')} className="p-4 cursor-pointer flex items-center gap-3">
+                    <div className={`w-5 h-5 rounded border-2 flex items-center justify-center ${channels[seg.id].voicemail ? 'bg-purple-500 border-purple-500' : 'border-gray-300 bg-white'}`}>
+                      {channels[seg.id].voicemail && <CheckCircle2 className="w-3 h-3 text-white" />}
+                    </div>
+                    <Mic className={`w-4 h-4 ${channels[seg.id].voicemail ? 'text-purple-600' : 'text-gray-400'}`} />
+                    <span className={`font-bold text-sm ${channels[seg.id].voicemail ? 'text-purple-900' : 'text-gray-500'}`}>Voicemail</span>
+                  </div>
+                  {channels[seg.id].voicemail && (
+                    <div className="px-4 pb-4 space-y-2">
+                      <select
+                        value={templates[seg.id].voicemail}
+                        onChange={(e) => setTemplate(seg.id, 'voicemail', e.target.value)}
+                        className="w-full p-2 text-sm border border-purple-200 rounded-lg bg-white"
+                      >
+                        <option value="">Select or record...</option>
+                        {templateOptions.voicemail.map(t => <option key={t} value={t}>{t}</option>)}
+                      </select>
+                      {recording === seg.id ? (
+                        <button onClick={() => stopRecording(seg.id)} className="w-full p-2 bg-red-500 text-white rounded-lg text-sm font-medium flex items-center justify-center gap-2">
+                          <Square className="w-3 h-3 fill-current" /> Stop ({formatTime(recordTime)})
+                        </button>
+                      ) : recordings[seg.id] ? (
+                        <div className="flex gap-2">
+                          <button className="flex-1 p-2 bg-green-100 text-green-700 rounded-lg text-xs flex items-center justify-center gap-1">
+                            <Play className="w-3 h-3" /> {formatTime(recordings[seg.id])}
+                          </button>
+                          <button onClick={() => startRecording(seg.id)} className="flex-1 p-2 bg-gray-100 text-gray-600 rounded-lg text-xs">Re-record</button>
+                        </div>
+                      ) : (
+                        <button onClick={() => startRecording(seg.id)} className="w-full p-2 border-2 border-dashed border-purple-300 rounded-lg text-purple-600 text-sm flex items-center justify-center gap-2 hover:bg-purple-100">
+                          <Mic className="w-3 h-3" /> Record Custom
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* SEND FOOTER */}
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-sm text-gray-500 mb-1">Campaign Summary</div>
+              <div className="flex flex-wrap gap-2">
+                {segments.filter(s => selectedSegments[s.id]).map(seg => {
+                  const ch = channels[seg.id];
+                  const active = [ch.text && 'Text', ch.email && 'Email', ch.voicemail && 'VM'].filter(Boolean);
+                  return (
+                    <span key={seg.id} className={`px-3 py-1 rounded-full text-xs font-medium ${seg.bg} ${seg.color}`}>
+                      {seg.label}: {seg.campaign} agents → {active.length > 0 ? active.join(', ') : 'No channel'}
+                    </span>
+                  );
+                })}
+                {segments.filter(s => selectedSegments[s.id]).length === 0 && (
+                  <span className="text-gray-400 italic">No segments selected</span>
+                )}
+              </div>
+            </div>
+            <button className="px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl flex items-center gap-2 shadow-lg">
+              <Send className="w-4 h-4" /> Send Campaign ({totalCampaign})
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
