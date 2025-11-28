@@ -6,12 +6,16 @@ interface LayoutContextType {
   isIQOpen: boolean;
   openIQ: () => void;
   closeIQ: () => void;
+  openIQWithSummary: () => void;
+  showSummary: boolean;
 }
 
 const LayoutContext = createContext<LayoutContextType>({
   isIQOpen: false,
   openIQ: () => {},
-  closeIQ: () => {}
+  closeIQ: () => {},
+  openIQWithSummary: () => {},
+  showSummary: false
 });
 
 export const useLayout = () => useContext(LayoutContext);
@@ -32,12 +36,20 @@ const getInitialIQState = () => {
 export default function Layout({ children }: LayoutProps) {
   const [isIQOpen, setIsIQOpen] = useState(getInitialIQState);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [showSummary, setShowSummary] = useState(false);
 
   const openIQ = () => setIsIQOpen(true);
-  const closeIQ = () => setIsIQOpen(false);
+  const closeIQ = () => {
+    setIsIQOpen(false);
+    setShowSummary(false);
+  };
+  const openIQWithSummary = () => {
+    setShowSummary(true);
+    setIsIQOpen(true);
+  };
 
   return (
-    <LayoutContext.Provider value={{ isIQOpen, openIQ, closeIQ }}>
+    <LayoutContext.Provider value={{ isIQOpen, openIQ, closeIQ, openIQWithSummary, showSummary }}>
       <div className="min-h-screen flex bg-gray-100">
         <Sidebar 
           onIQClick={openIQ} 
@@ -53,8 +65,9 @@ export default function Layout({ children }: LayoutProps) {
         <IQOverlay 
           isOpen={isIQOpen} 
           onClose={closeIQ}
-          userName="Josh"
+          userName="Tony"
           sidebarCollapsed={isSidebarCollapsed}
+          showSummary={showSummary}
         />
       </div>
     </LayoutContext.Provider>

@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Link, useSearch } from "wouter";
 import { cn } from "@/lib/utils";
 import ActionPlan, { DealType } from "@/components/ActionPlan";
-import Layout from "@/components/Layout";
+import Layout, { useLayout } from "@/components/Layout";
 import { 
   ChevronDown,
   MoreVertical,
@@ -93,11 +93,17 @@ const getPropensityColor = (text: string) => {
   return "text-gray-500";
 };
 
-export default function Home() {
+function HomeContent() {
   const searchString = useSearch();
   const [activeFilter, setActiveFilter] = useState<DealType | 'goal' | 'completed' | null>(null);
   const [selectedDealIds, setSelectedDealIds] = useState<number[]>([]);
+  const [completionPercent, setCompletionPercent] = useState(32);
   const queryClient = useQueryClient();
+  const { openIQWithSummary } = useLayout();
+
+  const handleMilestoneComplete = () => {
+    openIQWithSummary();
+  };
 
   useEffect(() => {
     const params = new URLSearchParams(searchString);
@@ -186,7 +192,6 @@ export default function Home() {
   };
 
   return (
-    <Layout>
       <div className="flex-1 flex flex-col overflow-hidden relative z-10 bg-gray-50">
         
         <header className="bg-white border-b border-gray-200 py-4 px-6 flex justify-between items-center">
@@ -215,7 +220,10 @@ export default function Home() {
           {/* Action Plan Component */}
           <ActionPlan 
             activeFilter={activeFilter} 
-            onFilterChange={setActiveFilter} 
+            onFilterChange={setActiveFilter}
+            completionPercent={completionPercent}
+            userName="Tony"
+            onMilestoneComplete={handleMilestoneComplete}
           />
 
             {/* Current Task List - Reorganized Layout */}
@@ -550,6 +558,13 @@ export default function Home() {
 
         </main>
       </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Layout>
+      <HomeContent />
     </Layout>
   );
 }

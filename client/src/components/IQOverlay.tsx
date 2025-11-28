@@ -34,6 +34,7 @@ interface IQOverlayProps {
   userName?: string;
   deals?: any[];
   sidebarCollapsed?: boolean;
+  showSummary?: boolean;
 }
 
 const SAMPLE_PROPERTIES: PropertyCard[] = [
@@ -84,11 +85,11 @@ const SAMPLE_PROPERTIES: PropertyCard[] = [
   }
 ];
 
-export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = [], sidebarCollapsed = false }: IQOverlayProps) {
+export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = [], sidebarCollapsed = false, showSummary = false }: IQOverlayProps) {
   const [, setLocation] = useLocation();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
-  const [currentPhase, setCurrentPhase] = useState<'checkin' | 'briefing' | 'dealreview'>('checkin');
+  const [currentPhase, setCurrentPhase] = useState<'checkin' | 'briefing' | 'dealreview' | 'summary'>('checkin');
   const [currentPropertyIndex, setCurrentPropertyIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const [streamingText, setStreamingText] = useState('');
@@ -96,6 +97,14 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
   const [isVoiceActive, setIsVoiceActive] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (showSummary && isOpen) {
+      setCurrentPhase('summary');
+      setMessages([]);
+      generateDailySummary();
+    }
+  }, [showSummary, isOpen]);
 
   const properties = SAMPLE_PROPERTIES;
   const currentProperty = properties[currentPropertyIndex];
@@ -286,6 +295,57 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
       return "I'm having trouble connecting right now. Let me help you with what I know about this property.";
     }
   };
+
+  const generateDailySummary = useCallback(() => {
+    const summaryStats = {
+      dealsProcessed: 56,
+      hotDeals: 2,
+      warmDeals: 1,
+      coldDeals: 1,
+      newDeals: 52,
+      offersSent: 3,
+      offersGoal: 3,
+      callsMade: 30,
+      callsGoal: 30,
+      conversationsHad: 15,
+      newRelationships: 5,
+      priorityAgentsCalled: 5,
+      campaignsSent: 3
+    };
+
+    const summaryMessage = `🎉 **Daily Summary Complete!**
+
+Great work today, ${userName}! Here's what you accomplished:
+
+📊 **Deal Activity**
+• Processed ${summaryStats.dealsProcessed} total deals
+• Hot Deals: ${summaryStats.hotDeals} reviewed
+• Warm Deals: ${summaryStats.warmDeals} reviewed  
+• Cold Deals: ${summaryStats.coldDeals} reviewed
+• New Deals: ${summaryStats.newDeals} categorized
+
+📝 **Offers**
+• Offers Sent: ${summaryStats.offersSent}/${summaryStats.offersGoal} ✅
+• Goal Met: ${summaryStats.offersSent >= summaryStats.offersGoal ? 'Yes! 🎯' : 'Not yet'}
+
+📞 **Outreach**
+• Calls Made: ${summaryStats.callsMade}/${summaryStats.callsGoal} ✅
+• Conversations: ${summaryStats.conversationsHad}
+• New Relationships Built: ${summaryStats.newRelationships}
+• Priority Agents Called: ${summaryStats.priorityAgentsCalled}
+• Campaigns Sent: ${summaryStats.campaignsSent}
+
+🏆 **Achievement Unlocked**
+You completed 100% of your Action Plan today!
+
+Keep up the amazing work. See you tomorrow! 💪`;
+
+    setMessages([{
+      id: Date.now().toString(),
+      role: 'ai',
+      content: summaryMessage
+    }]);
+  }, [userName]);
 
   const addPropertyCard = useCallback((property: PropertyCard) => {
     const typeEmoji = property.type === 'hot' ? '🔥 HOT' : property.type === 'warm' ? '🌡️ WARM' : property.type === 'cold' ? '❄️ COLD' : '🆕 NEW';
