@@ -152,17 +152,6 @@ export default function OutreachActionPlan({
             </div>
           </div>
 
-          <div className="flex items-center gap-1 text-xs text-gray-400 mb-2">
-            <span>Status: {connectionsCompleted}/{connectionsTotal}/{connectionsTotal}</span>
-            <div className="group/tip relative">
-              <HelpCircle className="w-3 h-3 cursor-help" />
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-80 bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover/tip:opacity-100 transition pointer-events-none z-50 text-left leading-relaxed">
-                <p className="mb-2">Focuses on High-Value Agents with Aged, Pending, and Backup listings that have a high Propensity to Sell.</p>
-                <p><strong>Goal:</strong> 30 Contacts per day that create 5 new solid relationships per day (25/week or 1,300/year).</p>
-              </div>
-            </div>
-          </div>
-
           <button 
             onClick={onStart}
             className={cn(
@@ -232,17 +221,6 @@ export default function OutreachActionPlan({
             </div>
           </div>
 
-          <div className="flex items-center gap-1 text-xs text-gray-400 mb-2">
-            <span>Status: {priorityCompleted}/{priorityTotal}/{priorityTotal}</span>
-            <div className="group/tip relative">
-              <HelpCircle className="w-3 h-3 cursor-help" />
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-80 bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover/tip:opacity-100 transition pointer-events-none z-50 text-left leading-relaxed">
-                <p className="mb-2">Constant live phone calls to reinforce your 100 Priority Relationships.</p>
-                <p><strong className="text-green-400">This is your long term money maker!</strong></p>
-              </div>
-            </div>
-          </div>
-
           <button 
             className={cn(
               "px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2",
@@ -300,16 +278,6 @@ export default function OutreachActionPlan({
               <span className="text-2xl font-bold text-gray-900">
                 {topOfMindCompleted}<span className="text-gray-300">/{topOfMindTotal}</span>
               </span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-1 text-xs text-gray-400 mb-2">
-            <span>Status: {topOfMindCompleted}/{topOfMindTotal}/{topOfMindTotal}</span>
-            <div className="group/tip relative">
-              <HelpCircle className="w-3 h-3 cursor-help" />
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-72 bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover/tip:opacity-100 transition pointer-events-none z-50 text-left leading-relaxed">
-                <p>Send valuable, relevant content every 2 weeks to Hot, Warm, and Cold agents to stay top of mind.</p>
-              </div>
             </div>
           </div>
 
