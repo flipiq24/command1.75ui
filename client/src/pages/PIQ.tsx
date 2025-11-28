@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo, useLayoutEffect } from 'react';
 import { useLocation, useSearch } from 'wouter';
 import { cn } from "@/lib/utils";
-import Layout from '@/components/Layout';
+import Layout, { useLayout } from '@/components/Layout';
+import MilestoneCompletionModal from '@/components/MilestoneCompletionModal';
 import { 
   ArrowLeft,
   Snowflake,
@@ -27,7 +28,7 @@ import {
   Sparkles
 } from 'lucide-react';
 
-export default function PIQ() {
+function PIQContent() {
   const [, setLocation] = useLocation();
   const searchString = useSearch();
   const fromNewAgent = searchString.includes('from=new-agent');
@@ -49,6 +50,18 @@ export default function PIQ() {
   const [isMapValueIQLoading, setIsMapValueIQLoading] = useState(false);
   const [mapValueIQRevealKey, setMapValueIQRevealKey] = useState(0);
   const [showMapValueIQCompletion, setShowMapValueIQCompletion] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
+  
+  const { openIQWithSummary } = useLayout();
+
+  const handleCelebrationComplete = () => {
+    setShowCelebration(false);
+    openIQWithSummary();
+  };
+
+  const handleCelebrationTrigger = () => {
+    setShowCelebration(true);
+  };
 
   useEffect(() => {
     if (fromNewAgent) {
@@ -214,7 +227,12 @@ export default function PIQ() {
   }, [piqIsTypingComplete]);
 
   return (
-    <Layout>
+      <>
+      <MilestoneCompletionModal 
+        isOpen={showCelebration} 
+        userName="Tony"
+        onComplete={handleCelebrationComplete}
+      />
       <div className="flex-1 flex flex-col overflow-hidden bg-gray-50">
         
         <header className="bg-white border-b border-gray-200 py-3 px-6 flex justify-between items-center">
@@ -349,6 +367,14 @@ export default function PIQ() {
                       {tab.label}
                     </button>
                   ))}
+                  <button
+                    onClick={handleCelebrationTrigger}
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#FF6600] hover:bg-[#e55c00] text-white text-xs font-bold rounded-lg transition shadow-sm ml-2"
+                    data-testid="button-piq-iq-celebration"
+                  >
+                    <Lightbulb className="w-4 h-4" />
+                    iQ
+                  </button>
                 </div>
               </div>
 
@@ -842,6 +868,14 @@ export default function PIQ() {
           </button>
         </div>
       </div>
+      </>
+  );
+}
+
+export default function PIQ() {
+  return (
+    <Layout>
+      <PIQContent />
     </Layout>
   );
 }
