@@ -1509,87 +1509,96 @@ export default function DailyOutreach() {
         </div>
       )}
 
-      {/* Agent iQ Report Modal */}
+      {/* Agent iQ Report Chat Panel */}
       {showAgentIQModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/50" onClick={() => setShowAgentIQModal(false)} />
-          <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-3xl mx-4 max-h-[90vh] overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-            <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gradient-to-r from-[#FF6600] to-[#FF8533]">
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-2xl animate-in slide-in-from-bottom duration-300" style={{ height: '60vh' }}>
+          <div className="flex flex-col h-full">
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-3 border-b border-gray-200 bg-gradient-to-r from-[#FF6600] to-[#FF8533]">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                  <Lightbulb className="w-5 h-5 text-white" />
+                <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+                  <Lightbulb className="w-4 h-4 text-white" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-white">Agent iQ Report</h2>
-                  <p className="text-sm text-white/80">{currentAgent?.agentName}</p>
+                  <h2 className="text-sm font-bold text-white">Agent iQ Report</h2>
+                  <p className="text-xs text-white/80">{currentAgent?.agentName}</p>
                 </div>
               </div>
               <button 
                 onClick={() => setShowAgentIQModal(false)}
-                className="w-8 h-8 flex items-center justify-center text-white/80 hover:text-white hover:bg-white/20 rounded-lg transition"
+                className="w-7 h-7 flex items-center justify-center text-white/80 hover:text-white hover:bg-white/20 rounded-lg transition"
                 data-testid="button-close-agent-iq"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
             
-            <div className="p-6 overflow-y-auto max-h-[calc(90vh-80px)]">
+            {/* Chat Content Area */}
+            <div className="flex-1 overflow-y-auto px-6 py-4 bg-gray-50">
               {isLoadingAgentIQ ? (
-                <div className="flex flex-col items-center justify-center py-12">
-                  <div className="relative w-16 h-16 mb-4">
-                    <div className="absolute inset-0 border-4 border-orange-200 rounded-full"></div>
-                    <div className="absolute inset-0 border-4 border-transparent border-t-[#FF6600] rounded-full animate-spin"></div>
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#FF6600] to-[#FF8533] flex items-center justify-center flex-shrink-0">
+                    <Lightbulb className="w-4 h-4 text-white" />
                   </div>
-                  <p className="text-gray-600 font-medium">Generating AI Analysis...</p>
-                  <p className="text-sm text-gray-400 mt-1">This may take a few moments</p>
+                  <div className="flex-1 bg-white rounded-2xl rounded-tl-sm p-4 shadow-sm border border-gray-100">
+                    <div className="flex items-center gap-2">
+                      <div className="flex gap-1">
+                        <div className="w-2 h-2 bg-[#FF6600] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                        <div className="w-2 h-2 bg-[#FF6600] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                        <div className="w-2 h-2 bg-[#FF6600] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                      </div>
+                      <span className="text-sm text-gray-500">Generating AI analysis...</span>
+                    </div>
+                  </div>
                 </div>
               ) : (
-                <div className="prose prose-sm max-w-none">
-                  <div className="whitespace-pre-wrap text-gray-700 leading-relaxed">
-                    {agentIQReport.split('\n').map((line, idx) => {
-                      if (line.startsWith('# ') || line.startsWith('## ') || line.startsWith('### ')) {
-                        const level = line.match(/^#+/)?.[0].length || 1;
-                        const text = line.replace(/^#+\s*/, '');
-                        if (level === 1) return <h1 key={idx} className="text-2xl font-bold text-gray-900 mt-6 mb-3 first:mt-0">{text}</h1>;
-                        if (level === 2) return <h2 key={idx} className="text-xl font-bold text-[#FF6600] mt-5 mb-2">{text}</h2>;
-                        return <h3 key={idx} className="text-lg font-semibold text-gray-800 mt-4 mb-2">{text}</h3>;
-                      }
-                      if (line.startsWith('**') && line.endsWith('**')) {
-                        return <p key={idx} className="font-bold text-gray-900 mt-3">{line.replace(/\*\*/g, '')}</p>;
-                      }
-                      if (line.startsWith('- ')) {
-                        return <li key={idx} className="ml-4 text-gray-600">{line.substring(2)}</li>;
-                      }
-                      if (line.trim() === '') {
-                        return <div key={idx} className="h-2"></div>;
-                      }
-                      return <p key={idx} className="text-gray-600 mb-2">{line}</p>;
-                    })}
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#FF6600] to-[#FF8533] flex items-center justify-center flex-shrink-0">
+                    <Lightbulb className="w-4 h-4 text-white" />
+                  </div>
+                  <div className="flex-1 bg-white rounded-2xl rounded-tl-sm p-4 shadow-sm border border-gray-100">
+                    <div className="prose prose-sm max-w-none">
+                      <div className="text-gray-700 leading-relaxed">
+                        {agentIQReport.split('\n').map((line, idx) => {
+                          if (line.startsWith('# ') || line.startsWith('## ') || line.startsWith('### ')) {
+                            const level = line.match(/^#+/)?.[0].length || 1;
+                            const text = line.replace(/^#+\s*/, '');
+                            if (level === 1) return <h1 key={idx} className="text-lg font-bold text-gray-900 mt-4 mb-2 first:mt-0">{text}</h1>;
+                            if (level === 2) return <h2 key={idx} className="text-base font-bold text-[#FF6600] mt-3 mb-1">{text}</h2>;
+                            return <h3 key={idx} className="text-sm font-semibold text-gray-800 mt-2 mb-1">{text}</h3>;
+                          }
+                          if (line.startsWith('**') && line.endsWith('**')) {
+                            return <p key={idx} className="font-semibold text-gray-900 mt-2 text-sm">{line.replace(/\*\*/g, '')}</p>;
+                          }
+                          if (line.startsWith('- ')) {
+                            return <li key={idx} className="ml-4 text-gray-600 text-sm">{line.substring(2)}</li>;
+                          }
+                          if (line.trim() === '') {
+                            return <div key={idx} className="h-1"></div>;
+                          }
+                          return <p key={idx} className="text-gray-600 text-sm mb-1">{line}</p>;
+                        })}
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}
             </div>
             
-            <div className="flex items-center justify-end gap-3 p-4 border-t border-gray-200 bg-gray-50">
-              <button
-                onClick={() => setShowAgentIQModal(false)}
-                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition"
-                data-testid="button-close-report"
-              >
-                Close
-              </button>
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText(agentIQReport);
-                }}
-                className="px-4 py-2 text-sm font-medium text-white bg-[#FF6600] hover:bg-[#e65c00] rounded-lg transition flex items-center gap-2"
-                data-testid="button-copy-report"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
-                Copy to Clipboard
-              </button>
+            {/* ChatGPT-style Input Bar */}
+            <div className="px-6 py-4 border-t border-gray-200 bg-white">
+              <div className="flex items-center gap-3 bg-gray-100 rounded-full px-4 py-3">
+                <input 
+                  type="text" 
+                  placeholder="Ask anything about this agent..." 
+                  className="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none"
+                  data-testid="input-agent-iq-chat"
+                />
+                <Mic className="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-600" />
+                <div className="w-8 h-8 bg-[#FF6600] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#e65c00] transition">
+                  <MessageSquare className="w-4 h-4 text-white" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
