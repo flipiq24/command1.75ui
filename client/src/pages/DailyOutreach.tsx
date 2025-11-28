@@ -933,6 +933,77 @@ export default function DailyOutreach() {
                     Agent iQ Report
                   </button>
                 </div>
+
+                {/* Agent iQ Report - Inline Chat Section */}
+                {showAgentIQModal && (
+                  <div className="mt-6 border-t border-gray-200 pt-6">
+                    {/* Chat Content Area */}
+                    <div className="bg-gray-50 rounded-xl p-4 mb-4 max-h-[400px] overflow-y-auto">
+                      {isLoadingAgentIQ ? (
+                        <div className="flex items-start gap-3">
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#FF6600] to-[#FF8533] flex items-center justify-center flex-shrink-0">
+                            <Lightbulb className="w-4 h-4 text-white" />
+                          </div>
+                          <div className="flex-1 bg-white rounded-2xl rounded-tl-sm p-4 shadow-sm border border-gray-100">
+                            <div className="flex items-center gap-2">
+                              <div className="flex gap-1">
+                                <div className="w-2 h-2 bg-[#FF6600] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                                <div className="w-2 h-2 bg-[#FF6600] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                                <div className="w-2 h-2 bg-[#FF6600] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                              </div>
+                              <span className="text-sm text-gray-500">Generating AI analysis...</span>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="flex items-start gap-3">
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#FF6600] to-[#FF8533] flex items-center justify-center flex-shrink-0">
+                            <Lightbulb className="w-4 h-4 text-white" />
+                          </div>
+                          <div className="flex-1 bg-white rounded-2xl rounded-tl-sm p-4 shadow-sm border border-gray-100">
+                            <div className="prose prose-sm max-w-none">
+                              <div className="text-gray-700 leading-relaxed">
+                                {agentIQReport.split('\n').map((line, idx) => {
+                                  if (line.startsWith('# ') || line.startsWith('## ') || line.startsWith('### ')) {
+                                    const level = line.match(/^#+/)?.[0].length || 1;
+                                    const text = line.replace(/^#+\s*/, '');
+                                    if (level === 1) return <h1 key={idx} className="text-lg font-bold text-gray-900 mt-4 mb-2 first:mt-0">{text}</h1>;
+                                    if (level === 2) return <h2 key={idx} className="text-base font-bold text-[#FF6600] mt-3 mb-1">{text}</h2>;
+                                    return <h3 key={idx} className="text-sm font-semibold text-gray-800 mt-2 mb-1">{text}</h3>;
+                                  }
+                                  if (line.startsWith('**') && line.endsWith('**')) {
+                                    return <p key={idx} className="font-semibold text-gray-900 mt-2 text-sm">{line.replace(/\*\*/g, '')}</p>;
+                                  }
+                                  if (line.startsWith('- ')) {
+                                    return <li key={idx} className="ml-4 text-gray-600 text-sm">{line.substring(2)}</li>;
+                                  }
+                                  if (line.trim() === '') {
+                                    return <div key={idx} className="h-1"></div>;
+                                  }
+                                  return <p key={idx} className="text-gray-600 text-sm mb-1">{line}</p>;
+                                })}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* ChatGPT-style Input Bar */}
+                    <div className="flex items-center gap-3 bg-gray-100 rounded-full px-4 py-3">
+                      <input 
+                        type="text" 
+                        placeholder="Ask anything about this agent..." 
+                        className="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none"
+                        data-testid="input-agent-iq-chat"
+                      />
+                      <Mic className="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-600" />
+                      <div className="w-8 h-8 bg-[#FF6600] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#e65c00] transition">
+                        <MessageSquare className="w-4 h-4 text-white" />
+                      </div>
+                    </div>
+                  </div>
+                )}
               </>
             ) : (
               <>
@@ -1509,100 +1580,6 @@ export default function DailyOutreach() {
         </div>
       )}
 
-      {/* Agent iQ Report Chat Panel */}
-      {showAgentIQModal && (
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-2xl animate-in slide-in-from-bottom duration-300" style={{ height: '60vh' }}>
-          <div className="flex flex-col h-full">
-            {/* Header */}
-            <div className="flex items-center justify-between px-6 py-3 border-b border-gray-200 bg-gradient-to-r from-[#FF6600] to-[#FF8533]">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-                  <Lightbulb className="w-4 h-4 text-white" />
-                </div>
-                <div>
-                  <h2 className="text-sm font-bold text-white">Agent iQ Report</h2>
-                  <p className="text-xs text-white/80">{currentAgent?.agentName}</p>
-                </div>
-              </div>
-              <button 
-                onClick={() => setShowAgentIQModal(false)}
-                className="w-7 h-7 flex items-center justify-center text-white/80 hover:text-white hover:bg-white/20 rounded-lg transition"
-                data-testid="button-close-agent-iq"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-            
-            {/* Chat Content Area */}
-            <div className="flex-1 overflow-y-auto px-6 py-4 bg-gray-50">
-              {isLoadingAgentIQ ? (
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#FF6600] to-[#FF8533] flex items-center justify-center flex-shrink-0">
-                    <Lightbulb className="w-4 h-4 text-white" />
-                  </div>
-                  <div className="flex-1 bg-white rounded-2xl rounded-tl-sm p-4 shadow-sm border border-gray-100">
-                    <div className="flex items-center gap-2">
-                      <div className="flex gap-1">
-                        <div className="w-2 h-2 bg-[#FF6600] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                        <div className="w-2 h-2 bg-[#FF6600] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                        <div className="w-2 h-2 bg-[#FF6600] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-                      </div>
-                      <span className="text-sm text-gray-500">Generating AI analysis...</span>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#FF6600] to-[#FF8533] flex items-center justify-center flex-shrink-0">
-                    <Lightbulb className="w-4 h-4 text-white" />
-                  </div>
-                  <div className="flex-1 bg-white rounded-2xl rounded-tl-sm p-4 shadow-sm border border-gray-100">
-                    <div className="prose prose-sm max-w-none">
-                      <div className="text-gray-700 leading-relaxed">
-                        {agentIQReport.split('\n').map((line, idx) => {
-                          if (line.startsWith('# ') || line.startsWith('## ') || line.startsWith('### ')) {
-                            const level = line.match(/^#+/)?.[0].length || 1;
-                            const text = line.replace(/^#+\s*/, '');
-                            if (level === 1) return <h1 key={idx} className="text-lg font-bold text-gray-900 mt-4 mb-2 first:mt-0">{text}</h1>;
-                            if (level === 2) return <h2 key={idx} className="text-base font-bold text-[#FF6600] mt-3 mb-1">{text}</h2>;
-                            return <h3 key={idx} className="text-sm font-semibold text-gray-800 mt-2 mb-1">{text}</h3>;
-                          }
-                          if (line.startsWith('**') && line.endsWith('**')) {
-                            return <p key={idx} className="font-semibold text-gray-900 mt-2 text-sm">{line.replace(/\*\*/g, '')}</p>;
-                          }
-                          if (line.startsWith('- ')) {
-                            return <li key={idx} className="ml-4 text-gray-600 text-sm">{line.substring(2)}</li>;
-                          }
-                          if (line.trim() === '') {
-                            return <div key={idx} className="h-1"></div>;
-                          }
-                          return <p key={idx} className="text-gray-600 text-sm mb-1">{line}</p>;
-                        })}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-            
-            {/* ChatGPT-style Input Bar */}
-            <div className="px-6 py-4 border-t border-gray-200 bg-white">
-              <div className="flex items-center gap-3 bg-gray-100 rounded-full px-4 py-3">
-                <input 
-                  type="text" 
-                  placeholder="Ask anything about this agent..." 
-                  className="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none"
-                  data-testid="input-agent-iq-chat"
-                />
-                <Mic className="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-600" />
-                <div className="w-8 h-8 bg-[#FF6600] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#e65c00] transition">
-                  <MessageSquare className="w-4 h-4 text-white" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
