@@ -395,7 +395,7 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
   const showDailyBriefing = async () => {
     setCurrentPhase('briefing');
     
-    await streamMessage(`Alright ${userName}, let me pull up your pipeline...`);
+    await streamMessage(`Alright ${userName}, here's your action plan for today:`);
     
     setTimeout(() => {
       setMessages(prev => [...prev, {
@@ -405,23 +405,35 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
         component: (
           <div className="my-4 font-mono text-sm">
             <div className="border-2 border-gray-300 rounded-xl p-5 bg-white">
-              <div className="text-center font-bold text-gray-700 mb-4">📊 TODAY'S DEAL REVIEW</div>
+              <div className="text-center font-bold text-gray-700 mb-4">📋 TODAY'S ACTION PLAN</div>
               <div className="border-t border-gray-200 pt-3 space-y-2">
                 <div className="flex justify-between items-center">
-                  <span>🔥 Hot Deals:</span>
+                  <span>🚨 Critical Calls:</span>
+                  <span className="font-bold text-red-600">{pipelineStats.criticals}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>⏰ Reminders:</span>
+                  <span className="font-bold text-amber-600">{pipelineStats.reminders}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>🔥 Hot Properties:</span>
                   <span className="font-bold text-orange-600">{pipelineStats.hot}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span>🌡️ Warm Deals:</span>
-                  <span className="font-bold text-amber-600">{pipelineStats.warm} {pipelineStats.warmComplete && <span className="text-green-600">✓ Complete</span>}</span>
+                  <span>🌡️ Warm Properties:</span>
+                  <span className="font-bold text-amber-500">{pipelineStats.warm}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span>❄️ Cold Deals:</span>
+                  <span>❄️ Cold Properties:</span>
                   <span className="font-bold text-blue-600">{pipelineStats.cold}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span>🆕 New Deals:</span>
+                  <span>🆕 New Follow-ups:</span>
                   <span className="font-bold text-gray-600">{pipelineStats.new}</span>
+                </div>
+                <div className="flex justify-between items-center border-t border-gray-200 pt-2 mt-2">
+                  <span>📝 Offers showing "None":</span>
+                  <span className="font-bold text-purple-600">{pipelineStats.offersNone}</span>
                 </div>
               </div>
             </div>
@@ -436,21 +448,15 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span>📞 Agent Conversations:</span>
+                  <span>📞 Agent Calls:</span>
+                  <span className="font-bold text-gray-600">
+                    0 / {pipelineStats.agentCalls}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span>💬 Conversations:</span>
                   <span className={pipelineStats.conversations >= pipelineStats.conversationsGoal ? "font-bold text-green-600" : "font-bold text-gray-600"}>
                     {pipelineStats.conversations} / {pipelineStats.conversationsGoal}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span>⭐ Priority Agent Calls:</span>
-                  <span className={pipelineStats.priorityCalls >= pipelineStats.priorityCallsGoal ? "font-bold text-green-600" : "font-bold text-gray-600"}>
-                    {pipelineStats.priorityCalls} / {pipelineStats.priorityCallsGoal}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span>📣 Campaigns Sent:</span>
-                  <span className={pipelineStats.campaignsSent >= pipelineStats.campaignsGoal ? "font-bold text-green-600" : "font-bold text-gray-600"}>
-                    {pipelineStats.campaignsSent} / {pipelineStats.campaignsGoal}
                   </span>
                 </div>
               </div>
@@ -460,7 +466,7 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
       }]);
       
       setTimeout(async () => {
-        await streamMessage(`The goal today is simple:\n\n→ Get ${pipelineStats.offersGoal} offers out the door\n→ Have ${pipelineStats.conversationsGoal} solid conversations with high-value agents\n→ Build relationships while chasing high-propensity deals\n→ Connect with your ${pipelineStats.priorityCallsGoal} Priority agents\n→ Send ${pipelineStats.campaignsGoal} targeted campaigns\n\nWith my help and our tools, we can move through this quickly — while still giving you time to evaluate new deals as they come in.\n\nReady to start?`);
+        await streamMessage(`Today we're going to go over all your active properties and call about ${pipelineStats.agentCalls} agents with high-propensity-to-sell listings.\n\nAs we go through the day, I'll help where needed or get your Acquisition Manager involved if anything stalls.\n\nAre you ready to get started?`);
         
         setTimeout(() => {
           setMessages(prev => [...prev, {
@@ -468,14 +474,27 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
             role: 'ai',
             content: '',
             component: (
-              <button
-                onClick={startDealReview}
-                className="mt-4 px-6 py-3 bg-[#FF6600] hover:bg-[#e65c00] text-white font-bold rounded-xl shadow-lg transition flex items-center gap-2"
-                data-testid="button-start-deal-review"
-              >
-                <ChevronRight className="w-5 h-5" />
-                Start Deal Review
-              </button>
+              <div className="flex gap-3 mt-4">
+                <button
+                  onClick={goToDealReview}
+                  className="px-6 py-3 bg-[#FF6600] hover:bg-[#e65c00] text-white font-bold rounded-xl shadow-lg transition flex items-center gap-2"
+                  data-testid="button-go-deal-review"
+                >
+                  <Flame className="w-5 h-5" />
+                  Go to Deal Review
+                </button>
+                <button
+                  onClick={() => {
+                    onClose();
+                    setLocation('/daily-outreach');
+                  }}
+                  className="px-6 py-3 bg-white hover:bg-gray-50 text-gray-700 font-bold rounded-xl shadow-lg border-2 border-gray-200 transition flex items-center gap-2"
+                  data-testid="button-go-daily-outreach"
+                >
+                  <Phone className="w-5 h-5" />
+                  Daily Outreach
+                </button>
+              </div>
             )
           }]);
         }, 300);
@@ -502,16 +521,16 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
 
     if (currentPhase === 'checkin') {
       if (checkinStep === 1) {
-        // Accept any positive response or time commitment as moving forward
+        // Step 1: Are you able to work a full day?
         const isPositive = userMessage === 'yes' || userMessage === 'y' || userMessage.includes('yes') || 
                           userMessage.includes('ready') || userMessage.includes('full day') ||
                           userMessage.includes('hour') || userMessage.includes('minute') ||
                           userMessage.includes('half') || userMessage.includes('few') ||
-                          /\d+/.test(userMessage); // Any number indicates time commitment
+                          /\d+/.test(userMessage);
         
         if (isPositive) {
           setTimeout(async () => {
-            await streamMessage("Perfect. Before we dive in, anything you already know you'll need help with today?");
+            await streamMessage(`Great — let's get moving.\n\nAs we go through the day, I'll help where needed or get your Acquisition Manager involved if anything stalls.\n\nBefore we jump in, is there anything you already know you'll need help with today?`);
             setCheckinStep(2);
           }, 300);
         } else if (userMessage === 'no' || userMessage === 'n' || userMessage.includes("can't") || userMessage.includes('not today')) {
@@ -519,41 +538,45 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
             await streamMessage("No problem! Let me know when you're ready to start. Just say 'ready' when you want to begin.");
           }, 300);
         } else {
-          // Default to moving forward with any response
           setTimeout(async () => {
-            await streamMessage("Got it! Before we dive in, anything you already know you'll need help with today?");
+            await streamMessage(`Great — let's get moving.\n\nAs we go through the day, I'll help where needed or get your Acquisition Manager involved if anything stalls.\n\nBefore we jump in, is there anything you already know you'll need help with today?`);
             setCheckinStep(2);
           }, 300);
         }
       } else if (checkinStep === 2) {
+        // Step 2: Is there anything you'll need help with?
         if (userMessage === 'no' || userMessage === 'n' || userMessage.includes('no') || userMessage.includes('nothing') || userMessage.includes("i'm good") || userMessage.includes("nope")) {
           setTimeout(async () => {
-            await streamMessage("Great! Is there anything that might prevent you from completing your goals today?");
+            await streamMessage(`Alright ${userName}, today we're going to go over all your active properties and call about ${pipelineStats.agentCalls} agents with high-propensity-to-sell listings.\n\nIs there anything that might prevent you from getting those calls done today?`);
             setCheckinStep(3);
           }, 300);
         } else {
           setTimeout(async () => {
-            await streamMessage(`Got it — I've noted that down and will notify your AM about your request.\n\nIs there anything that might prevent you from completing your goals today?`);
+            await streamMessage(`Got it. I'll send a note to your AM right now so they can support you before we start.\n\nAlright ${userName}, today we're going to go over all your active properties and call about ${pipelineStats.agentCalls} agents with high-propensity-to-sell listings.\n\nIs there anything that might prevent you from getting those calls done today?`);
             setCheckinStep(3);
           }, 300);
         }
       } else if (checkinStep === 3) {
+        // Step 3: Any blockers for calls?
         setTimeout(async () => {
           if (userMessage === 'no' || userMessage === 'n' || userMessage.includes('no') || userMessage.includes('nothing') || userMessage.includes('nope')) {
-            await streamMessage("Perfect! Let's see what you've got on the docket today...");
+            await streamMessage(`Perfect. You're locked in for a full day.\n\nI'll mark you as available and load your Action Plan to get started.`);
           } else {
-            await streamMessage(`Understood — I've logged that potential blocker. Your AM will be notified.\n\nLet's see what you've got on the docket today...`);
+            await streamMessage(`Understood — I'll make a note of that and send an update to your AM.\n\nLet's clear what we can now so you can focus on the calls.`);
           }
           setCheckinStep(4);
           
           setTimeout(() => {
             showDailyBriefing();
-          }, 500);
+          }, 800);
         }, 300);
       }
     } else if (currentPhase === 'briefing') {
-      if (userMessage.includes('start') || userMessage.includes('ready') || userMessage.includes('go') || userMessage.includes('begin')) {
-        startDealReview();
+      if (userMessage.includes('start') || userMessage.includes('ready') || userMessage.includes('go') || userMessage.includes('begin') || userMessage.includes('deal')) {
+        goToDealReview();
+      } else if (userMessage.includes('outreach') || userMessage.includes('call') || userMessage.includes('agent')) {
+        onClose();
+        setLocation('/daily-outreach');
       } else {
         // Use AI for free-form questions during briefing
         setIsTyping(true);
