@@ -69,7 +69,6 @@ export default function PIQ() {
   ];
 
   const rightTabs = [
-    { id: 'iq', label: 'IQ', isIQ: true },
     { id: 'notes', label: 'Notes' },
     { id: 'reminders', label: 'Reminders' },
     { id: 'activity', label: 'Activity' },
@@ -219,16 +218,12 @@ export default function PIQ() {
                   {rightTabs.map((tab) => (
                     <button
                       key={tab.id}
-                      onClick={() => tab.id === 'iq' ? handleIQClick() : setActiveRightTab(tab.id)}
+                      onClick={() => setActiveRightTab(tab.id)}
                       className={cn(
                         "px-3 py-1.5 text-xs font-medium rounded-lg border transition",
-                        tab.id === 'iq'
-                          ? activeRightTab === 'iq'
-                            ? "bg-[#FF6600] border-[#FF6600] text-white"
-                            : "bg-[#FF6600] border-[#FF6600] text-white hover:bg-[#e55c00]"
-                          : activeRightTab === tab.id
-                            ? "bg-gray-100 border-gray-300 text-gray-900"
-                            : "bg-white border-gray-200 text-gray-500 hover:bg-gray-50"
+                        activeRightTab === tab.id
+                          ? "bg-white border-gray-300 text-gray-900"
+                          : "bg-white border-gray-200 text-gray-500 hover:bg-gray-50"
                       )}
                       data-testid={`tab-right-${tab.id}`}
                     >
@@ -531,6 +526,14 @@ export default function PIQ() {
                     </div>
 
                     <div className="flex items-center gap-3">
+                      <button 
+                        onClick={handleCompsIQClick}
+                        className="flex items-center gap-1.5 px-4 py-1.5 bg-[#FF6600] hover:bg-[#e55c00] text-white text-xs font-bold rounded-lg transition shadow-sm"
+                        data-testid="button-comps-iq"
+                      >
+                        <Lightbulb className="w-4 h-4" />
+                        IQ
+                      </button>
                       <div className="flex bg-gray-100 rounded-lg p-0.5">
                         <button 
                           onClick={() => setCompsMapView('map')}
