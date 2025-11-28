@@ -324,6 +324,9 @@ export default function DailyOutreach() {
   const [currentAgentIndex, setCurrentAgentIndex] = useState(0);
   const [priorityCallsMade, setPriorityCallsMade] = useState(0);
   const [selectedAgentIds, setSelectedAgentIds] = useState<number[]>([]);
+  const [showAgentIQModal, setShowAgentIQModal] = useState(false);
+  const [agentIQReport, setAgentIQReport] = useState<string>('');
+  const [isLoadingAgentIQ, setIsLoadingAgentIQ] = useState(false);
   
   const priorityAgents = PRIORITY_AGENTS;
   const currentAgent = priorityAgents[currentAgentIndex];
@@ -350,6 +353,46 @@ export default function DailyOutreach() {
       setSelectedAgentIds(prev => [...prev, id]);
     } else {
       setSelectedAgentIds(prev => prev.filter(agentId => agentId !== id));
+    }
+  };
+  
+  const handleGenerateAgentIQReport = async () => {
+    if (!currentAgent) return;
+    
+    setIsLoadingAgentIQ(true);
+    setShowAgentIQModal(true);
+    setAgentIQReport('');
+    
+    try {
+      const response = await fetch('/api/ai/agent-iq-report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          agentData: {
+            agentName: currentAgent.agentName,
+            officeName: currentAgent.officeName,
+            phone: currentAgent.phone,
+            email: currentAgent.email,
+            assignedUser: currentAgent.assignedUser,
+            relationshipStatus: currentAgent.relationshipStatus,
+            basket: currentAgent.basket,
+            followUpStatus: currentAgent.followUpStatus,
+            followUpDate: currentAgent.followUpDate,
+            investorSourceCount: currentAgent.investorSourceCount,
+            activeInLastTwoYears: currentAgent.activeInLastTwoYears,
+          }
+        }),
+      });
+      
+      if (!response.ok) throw new Error('Failed to generate report');
+      
+      const data = await response.json();
+      setAgentIQReport(data.report);
+    } catch (error) {
+      console.error('Error generating Agent iQ Report:', error);
+      setAgentIQReport('Unable to generate report. Please try again.');
+    } finally {
+      setIsLoadingAgentIQ(false);
     }
   };
   
@@ -882,7 +925,8 @@ export default function DailyOutreach() {
                     Send Email
                   </button>
                   <button
-                    className="px-6 py-2.5 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-lg border border-gray-300 shadow-sm transition flex items-center gap-2"
+                    onClick={handleGenerateAgentIQReport}
+                    className="px-6 py-2.5 bg-gradient-to-r from-[#FF6600] to-[#FF8533] hover:from-[#e65c00] hover:to-[#FF6600] text-white text-sm font-medium rounded-lg shadow-sm transition flex items-center gap-2"
                     data-testid="button-agent-iq-report"
                   >
                     <Lightbulb className="w-4 h-4" />
@@ -1460,6 +1504,92 @@ export default function DailyOutreach() {
                   Skip Anyway
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Agent iQ Report Modal */}
+      {showAgentIQModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/50" onClick={() => setShowAgentIQModal(false)} />
+          <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-3xl mx-4 max-h-[90vh] overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gradient-to-r from-[#FF6600] to-[#FF8533]">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                  <Lightbulb className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold text-white">Agent iQ Report</h2>
+                  <p className="text-sm text-white/80">{currentAgent?.agentName}</p>
+                </div>
+              </div>
+              <button 
+                onClick={() => setShowAgentIQModal(false)}
+                className="w-8 h-8 flex items-center justify-center text-white/80 hover:text-white hover:bg-white/20 rounded-lg transition"
+                data-testid="button-close-agent-iq"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <div className="p-6 overflow-y-auto max-h-[calc(90vh-80px)]">
+              {isLoadingAgentIQ ? (
+                <div className="flex flex-col items-center justify-center py-12">
+                  <div className="relative w-16 h-16 mb-4">
+                    <div className="absolute inset-0 border-4 border-orange-200 rounded-full"></div>
+                    <div className="absolute inset-0 border-4 border-transparent border-t-[#FF6600] rounded-full animate-spin"></div>
+                  </div>
+                  <p className="text-gray-600 font-medium">Generating AI Analysis...</p>
+                  <p className="text-sm text-gray-400 mt-1">This may take a few moments</p>
+                </div>
+              ) : (
+                <div className="prose prose-sm max-w-none">
+                  <div className="whitespace-pre-wrap text-gray-700 leading-relaxed">
+                    {agentIQReport.split('\n').map((line, idx) => {
+                      if (line.startsWith('# ') || line.startsWith('## ') || line.startsWith('### ')) {
+                        const level = line.match(/^#+/)?.[0].length || 1;
+                        const text = line.replace(/^#+\s*/, '');
+                        if (level === 1) return <h1 key={idx} className="text-2xl font-bold text-gray-900 mt-6 mb-3 first:mt-0">{text}</h1>;
+                        if (level === 2) return <h2 key={idx} className="text-xl font-bold text-[#FF6600] mt-5 mb-2">{text}</h2>;
+                        return <h3 key={idx} className="text-lg font-semibold text-gray-800 mt-4 mb-2">{text}</h3>;
+                      }
+                      if (line.startsWith('**') && line.endsWith('**')) {
+                        return <p key={idx} className="font-bold text-gray-900 mt-3">{line.replace(/\*\*/g, '')}</p>;
+                      }
+                      if (line.startsWith('- ')) {
+                        return <li key={idx} className="ml-4 text-gray-600">{line.substring(2)}</li>;
+                      }
+                      if (line.trim() === '') {
+                        return <div key={idx} className="h-2"></div>;
+                      }
+                      return <p key={idx} className="text-gray-600 mb-2">{line}</p>;
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            <div className="flex items-center justify-end gap-3 p-4 border-t border-gray-200 bg-gray-50">
+              <button
+                onClick={() => setShowAgentIQModal(false)}
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition"
+                data-testid="button-close-report"
+              >
+                Close
+              </button>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(agentIQReport);
+                }}
+                className="px-4 py-2 text-sm font-medium text-white bg-[#FF6600] hover:bg-[#e65c00] rounded-lg transition flex items-center gap-2"
+                data-testid="button-copy-report"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                Copy to Clipboard
+              </button>
             </div>
           </div>
         </div>

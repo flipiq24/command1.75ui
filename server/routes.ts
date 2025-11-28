@@ -166,7 +166,7 @@ export async function registerRoutes(
   });
 
   // AI endpoints
-  const { generateAIResponse, analyzeProperty, generatePropertyStory } = await import("./openai");
+  const { generateAIResponse, analyzeProperty, generatePropertyStory, generateAgentIQReport } = await import("./openai");
 
   app.post("/api/ai/chat", async (req, res) => {
     try {
@@ -224,6 +224,20 @@ export async function registerRoutes(
     } catch (error) {
       console.error("Error generating property story:", error);
       res.status(500).json({ message: "Failed to generate property story" });
+    }
+  });
+
+  app.post("/api/ai/agent-iq-report", async (req, res) => {
+    try {
+      const { agentData } = req.body;
+      if (!agentData) {
+        return res.status(400).json({ message: "Agent data is required" });
+      }
+      const report = await generateAgentIQReport(agentData);
+      res.json({ report });
+    } catch (error) {
+      console.error("Error generating Agent iQ Report:", error);
+      res.status(500).json({ message: "Failed to generate Agent iQ Report" });
     }
   });
 
