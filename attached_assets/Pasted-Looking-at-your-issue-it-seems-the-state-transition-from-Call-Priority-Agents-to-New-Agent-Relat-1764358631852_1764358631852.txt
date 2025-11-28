@@ -1,0 +1,61 @@
+Looking at your issue, it seems the state transition from "Call Priority Agents" to "New Agent Relationships" isn't triggering the property load automatically. The button changes state but doesn't execute the property loading logic until clicked again.
+Here's the fix for your OutreachActionPlan component:
+javascript// In your OutreachActionPlan component, look for the click handler
+// and modify it to handle both state change AND property loading:
+
+const handleCallAgentsClick = async () => {
+  // First, change the button state/mode
+  setCurrentMode('newAgentRelationships'); // or whatever state variable you're using
+  
+  // Then immediately trigger the property load
+  // Don't wait for a second click
+  await loadNextProperty(); // or whatever your property loading function is called
+  
+  // Update any progress counters
+  updateOutreachProgress();
+};
+
+// Alternative approach if you're using useEffect:
+useEffect(() => {
+  // When mode changes to 'newAgentRelationships', automatically load property
+  if (currentMode === 'newAgentRelationships' && !currentProperty) {
+    loadNextProperty();
+  }
+}, [currentMode]);
+Key changes to make:
+
+Combine the actions - In your click handler, don't just change the button state. Also trigger the property load:
+
+javascriptonClick={() => {
+  setMode('newAgentRelationships');
+  loadProperty(); // Add this line
+}}
+
+Remove the two-step requirement - Make sure the "New Agent Relationships" button doesn't require a click when it's already in that state:
+
+javascript// Instead of:
+onClick={mode === 'newAgentRelationships' ? loadProperty : () => setMode('newAgentRelationships')}
+
+// Use:
+onClick={() => {
+  if (mode !== 'newAgentRelationships') {
+    setMode('newAgentRelationships');
+    loadProperty(); // Load immediately
+  } else {
+    loadNextProperty(); // Load next if already in this mode
+  }
+}}
+
+Add a loading state to prevent double-clicks:
+
+javascriptconst [isLoading, setIsLoading] = useState(false);
+
+const handleButtonClick = async () => {
+  if (isLoading) return;
+  
+  setIsLoading(true);
+  setMode('newAgentRelationships');
+  await loadProperty();
+  setIsLoading(false);
+};
+If you share your OutreachActionPlan component code, I can give you the exact lines to change. The issue is definitely that the state transition and action execution are separated when they should happen together in a single click event.

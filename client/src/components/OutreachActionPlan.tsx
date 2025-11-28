@@ -165,7 +165,10 @@ export default function OutreachActionPlan({
           </div>
 
           <button 
-            onClick={onStart}
+            onClick={() => {
+              if (onStart) onStart();
+              if (onFilterChange) onFilterChange('connections');
+            }}
             className={cn(
               "px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2",
               isConnectionsComplete 
@@ -234,6 +237,7 @@ export default function OutreachActionPlan({
           </div>
 
           <button 
+            onClick={() => onFilterChange?.('priority')}
             className={cn(
               "px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2",
               isPriorityComplete 
@@ -294,6 +298,7 @@ export default function OutreachActionPlan({
           </div>
 
           <button 
+            onClick={() => onFilterChange?.('topOfMind')}
             className={cn(
               "px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2",
               isTopOfMindComplete 
