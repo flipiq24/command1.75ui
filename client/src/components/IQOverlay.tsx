@@ -557,14 +557,28 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
           }, 300);
         }
       } else if (checkinStep === 3) {
-        // Step 3: Any blockers for calls?
+        // Step 3: Any blockers for calls? (Also handles returning users)
         setTimeout(async () => {
-          if (userMessage === 'no' || userMessage === 'n' || userMessage.includes('no') || userMessage.includes('nothing') || userMessage.includes('nope')) {
-            await streamMessage(`Perfect. You're locked in for a full day.\n\nI'll mark you as available and load your Action Plan to get started.`);
+          if (userMessage === 'no' || userMessage === 'n' || userMessage.includes('no') || userMessage.includes('nothing') || userMessage.includes('nope') || userMessage.includes('ready') || userMessage.includes('yes') || userMessage.includes('good')) {
+            await streamMessage(`Perfect. You're locked in.\n\nLet me load your Action Plan to get started.`);
           } else {
             await streamMessage(`Understood — I'll make a note of that and send an update to your AM.\n\nLet's clear what we can now so you can focus on the calls.`);
           }
-          setCheckinStep(4);
+          setCheckinStep(5);
+          
+          setTimeout(() => {
+            showDailyBriefing();
+          }, 800);
+        }, 300);
+      } else if (checkinStep === 4) {
+        // Step 4: Quick check-in for continuing sessions ("Is everything going smoothly?")
+        setTimeout(async () => {
+          if (userMessage.includes('help') || userMessage.includes('stuck') || userMessage.includes('issue') || userMessage.includes('problem')) {
+            await streamMessage(`Got it. I'll send a note to your AM right now so they can support you.\n\nIn the meantime, let me pull up your Action Plan so we can keep moving.`);
+          } else {
+            await streamMessage(`Excellent! Let's keep the momentum going.\n\nHere's where you're at:`);
+          }
+          setCheckinStep(5);
           
           setTimeout(() => {
             showDailyBriefing();
