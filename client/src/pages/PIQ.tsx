@@ -860,6 +860,104 @@ function PIQContent() {
 
             </div>
           </div>
+
+          {/* iQ Property Intelligence Report - Bottom Section */}
+          <div className="border-t border-gray-200 p-6">
+            <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="relative">
+                  <Lightbulb className="w-6 h-6 text-[#FF6600]" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold text-[#FF6600]">iQ Property Intelligence</h2>
+                  <div className="flex items-center gap-1.5 text-xs text-green-600 mt-0.5">
+                    <Check className="w-3 h-3" />
+                    <span>Analysis complete</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm mb-6">
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Status:</span>
+                  <span className="text-gray-900 font-semibold">Active</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Days on Market:</span>
+                  <span className="text-gray-900 font-semibold">45</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Price to Future Value:</span>
+                  <span className="text-gray-900 font-semibold">82%</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Propensity Score:</span>
+                  <span className="text-gray-900 font-semibold">11 / 8</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Agent:</span>
+                  <span className="text-gray-900 font-semibold">Sarah Johnson (Unassigned)</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Relationship Status:</span>
+                  <span className="text-gray-900 font-semibold">Warm</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Investor Source Count:</span>
+                  <a href="#" className="text-blue-600 underline hover:text-blue-800">[View Agent]</a>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Last Communication Date:</span>
+                  <span className="text-gray-900 font-semibold">11/15/2025</span>
+                </div>
+                <div className="flex justify-between col-span-2">
+                  <span className="text-gray-500">Last Address Discussed:</span>
+                  <span className="text-gray-900 font-semibold">1234 Oak Street, Phoenix AZ</span>
+                </div>
+              </div>
+
+              <div className="mb-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-lg font-bold text-gray-900">🔥</span>
+                  <h3 className="text-lg font-bold text-gray-900">Why this Property</h3>
+                </div>
+                <ul className="space-y-2 text-sm text-gray-700">
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-600 font-bold">•</span>
+                    <span><span className="font-semibold text-red-600">Bankruptcy / Judgment</span> (+4 pts)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-600 font-bold">•</span>
+                    <span><span className="font-semibold text-green-600">High Mortgage / Debt</span> (+2 pts)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-600 font-bold">•</span>
+                    <span><span className="font-semibold text-red-600">Affidavit of Death</span> (+5 pts)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-gray-400">•</span>
+                    <span>Aged listing (≥70 DOM) with strong discount potential.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-gray-400">•</span>
+                    <span>Price-to-value ratio suggests room for negotiation.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <p className="text-sm text-gray-600">
+                  Would you like me to run a detailed AI report? 
+                  <button 
+                    className="ml-2 bg-[#FF6600] hover:bg-[#e65c00] text-white text-xs font-bold py-1.5 px-4 rounded-lg shadow-sm transition"
+                    data-testid="button-generate-ai-report"
+                  >
+                    Generate AI Report
+                  </button>
+                </p>
+              </div>
+            </div>
+          </div>
         </main>
 
         <div className="fixed bottom-6 right-6">
