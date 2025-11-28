@@ -666,6 +666,182 @@ export default function DailyOutreach() {
 
           {hasStarted ? (
             <>
+            {activeFilter === 'priority' ? (
+              <>
+                <div className="flex items-center justify-center px-4 py-3 mb-4">
+                  <div className="flex items-center gap-4">
+                    <span className="text-sm font-bold text-gray-500">Priority Agent {currentAgentIndex + 1} of {priorityAgents.length}</span>
+                    
+                    <div className="flex gap-3">
+                      <button 
+                        onClick={handlePrevAgent}
+                        disabled={currentAgentIndex === 0}
+                        className={cn(
+                          "flex items-center gap-1 px-4 py-2 border border-gray-300 rounded-lg text-xs font-bold text-gray-600 hover:bg-gray-50 transition",
+                          currentAgentIndex === 0 && "opacity-50 cursor-not-allowed"
+                        )} 
+                        data-testid="button-prev-agent"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                        Previous Agent
+                      </button>
+                      
+                      <button 
+                        onClick={handleNextAgent}
+                        disabled={currentAgentIndex >= priorityAgents.length - 1}
+                        className={cn(
+                          "flex items-center gap-1 px-4 py-2 bg-[#FF6600] hover:bg-[#e65c00] text-white rounded-lg text-xs font-bold shadow-sm transition",
+                          currentAgentIndex >= priorityAgents.length - 1 ? "opacity-50 cursor-not-allowed" : "animate-pulse shadow-lg ring-2 ring-orange-200"
+                        )}
+                        data-testid="button-next-agent"
+                      >
+                        Next Agent
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
+                  <div className="flex py-3 bg-white border-b border-gray-200 text-[11px] uppercase tracking-wider font-bold text-gray-400 select-none rounded-t-xl">
+                    <div className="w-[48px] shrink-0 flex items-center justify-center">
+                      <input
+                        type="checkbox"
+                        checked={selectedAgentIds.includes(currentAgent?.id || 0)}
+                        onChange={(e) => handleSelectAgent(currentAgent?.id || 0, e.target.checked)}
+                        className="w-4 h-4 rounded border-gray-300 text-[#FF6600] focus:ring-[#FF6600]"
+                        data-testid="checkbox-select-agent"
+                      />
+                    </div>
+                    <div className="w-3/12 px-4">Agent Info</div>
+                    <div className="w-3/12 px-4">Relationship</div>
+                    <div className="w-3/12 px-4">Follow-Up</div>
+                    <div className="w-3/12 px-4">Activity & Status</div>
+                  </div>
+
+                  {currentAgent && (
+                    <div className="flex items-start py-4 border-b border-gray-100 hover:bg-gray-50 transition-colors group">
+                      <div className="w-[48px] shrink-0 flex flex-col items-center justify-start pt-1 gap-2">
+                        <input
+                          type="checkbox"
+                          checked={selectedAgentIds.includes(currentAgent.id)}
+                          onChange={(e) => handleSelectAgent(currentAgent.id, e.target.checked)}
+                          className="w-4 h-4 rounded border-gray-300 text-[#FF6600] focus:ring-[#FF6600]"
+                          data-testid={`checkbox-agent-${currentAgent.id}`}
+                        />
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <button className="p-1 hover:bg-gray-100 rounded" data-testid={`menu-agent-${currentAgent.id}`}>
+                              <MoreVertical className="w-4 h-4 text-gray-400" />
+                            </button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="start" className="w-48 bg-white z-50 border-none shadow-xl">
+                            <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
+                              <Phone className="w-4 h-4" />
+                              <span>Call</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
+                              <MessageSquare className="w-4 h-4" />
+                              <span>Text</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
+                              <Mail className="w-4 h-4" />
+                              <span>Email</span>
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
+
+                      <div className="w-3/12 px-4">
+                        <div className="font-bold text-gray-900 hover:text-blue-600 cursor-pointer" data-testid={`text-agent-name-${currentAgent.id}`}>
+                          {currentAgent.agentName}
+                        </div>
+                        <div className="text-sm text-gray-600 mt-1">
+                          Office Name: {currentAgent.officeName}
+                        </div>
+                        <div className="text-sm mt-1">
+                          Best Cell phone: <a href={`tel:${currentAgent.phone}`} className="text-blue-600 hover:underline" data-testid={`link-phone-${currentAgent.id}`}>{currentAgent.phone}</a>
+                        </div>
+                        <div className="text-sm mt-1">
+                          Best Email: <a href={`mailto:${currentAgent.email}`} className="text-blue-600 hover:underline" data-testid={`link-email-${currentAgent.id}`}>{currentAgent.email}</a>
+                        </div>
+                      </div>
+
+                      <div className="w-3/12 px-4">
+                        <div className="text-sm text-gray-600">
+                          Assigned User: {currentAgent.assignedUser}
+                        </div>
+                        <div className="text-sm text-gray-600 mt-1">
+                          Relationship Status: <span className="font-bold text-gray-900">{currentAgent.relationshipStatus}</span>
+                        </div>
+                        <div className="text-sm text-gray-600 mt-1">
+                          Basket: {currentAgent.basket}
+                        </div>
+                      </div>
+
+                      <div className="w-3/12 px-4">
+                        <div className="text-sm text-gray-600">
+                          Required Action: {currentAgent.requiredAction}
+                        </div>
+                        <div className="text-sm text-gray-600 mt-1">
+                          Follow-Up Status: <span className="font-bold text-gray-900">{currentAgent.followUpStatus}</span>
+                        </div>
+                        <div className="text-sm text-gray-600 mt-1">
+                          Follow-Up Date: {currentAgent.followUpDate}
+                        </div>
+                      </div>
+
+                      <div className="w-3/12 px-4">
+                        <div className="text-sm text-gray-600">
+                          Investor Source Count: {currentAgent.investorSourceCount !== null ? <span className="font-bold text-gray-900">{currentAgent.investorSourceCount} Match</span> : <span className="font-bold text-gray-900">N/A</span>}
+                        </div>
+                        <div className="text-sm text-gray-600 mt-1">
+                          Active in Last 2 Years: {currentAgent.activeInLastTwoYears ? 'TRUE' : 'FALSE'}
+                        </div>
+                        <div className="text-sm text-gray-600 mt-1">
+                          Pending, Backup, Sold: ({currentAgent.pending + currentAgent.backup + currentAgent.sold}) {currentAgent.pending}P, {currentAgent.backup}B, {currentAgent.sold}S
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex items-center justify-center gap-3 mt-6">
+                  <button
+                    onClick={handleCallNow}
+                    className="px-6 py-2.5 bg-[#FF6600] hover:bg-[#e65c00] text-white text-sm font-bold rounded-lg shadow-sm transition flex items-center gap-2"
+                    data-testid="button-call-now"
+                  >
+                    <Phone className="w-4 h-4" />
+                    Call Now
+                  </button>
+                  <button
+                    onClick={() => window.open(`sms:${currentAgent?.phone}`, '_self')}
+                    className="px-6 py-2.5 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-lg border border-gray-300 shadow-sm transition flex items-center gap-2"
+                    data-testid="button-send-text"
+                  >
+                    <MessageSquare className="w-4 h-4" />
+                    Send Text
+                  </button>
+                  <button
+                    onClick={() => window.open(`mailto:${currentAgent?.email}`, '_self')}
+                    className="px-6 py-2.5 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-lg border border-gray-300 shadow-sm transition flex items-center gap-2"
+                    data-testid="button-send-email"
+                  >
+                    <Mail className="w-4 h-4" />
+                    Send Email
+                  </button>
+                  <button
+                    className="px-6 py-2.5 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-lg border border-gray-300 shadow-sm transition flex items-center gap-2"
+                    data-testid="button-log-activity"
+                  >
+                    <Plus className="w-4 h-4" />
+                    Log Activity
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
             <div className="flex items-center justify-start px-4 py-3 mb-4">
               <div className="flex items-center gap-4">
                 <span className="text-sm font-bold text-gray-500">Property {currentIndex + 1} of {filteredDeals.length || totalDeals}</span>
@@ -1170,6 +1346,8 @@ export default function DailyOutreach() {
 
 
             </div>
+            </>
+            )}
             </>
           ) : (
             <div className="flex-1 flex flex-col items-center justify-center bg-gray-50 text-center p-12 rounded-xl border border-gray-200">
