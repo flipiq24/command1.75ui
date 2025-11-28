@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { Info, CheckCircle } from "lucide-react";
+import MilestoneCompletionModal from "./MilestoneCompletionModal";
 
 export type DealType = "hot" | "warm" | "cold" | "new";
 
@@ -123,14 +124,28 @@ const CircularProgress = ({
 interface ActionPlanProps {
   onFilterChange?: (filter: DealType | "goal" | "completed" | null) => void;
   activeFilter?: DealType | "goal" | "completed" | null;
+  completionPercent?: number;
+  userName?: string;
+  onMilestoneComplete?: () => void;
 }
 
 export default function ActionPlan({
   onFilterChange,
   activeFilter,
+  completionPercent = 32,
+  userName = "Tony",
+  onMilestoneComplete,
 }: ActionPlanProps) {
   const [hoveredId, setHoveredId] = useState<DealType | null>(null);
   const [goalTooltipOpen, setGoalTooltipOpen] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
+
+  const handleCelebrationComplete = () => {
+    setShowCelebration(false);
+    if (onMilestoneComplete) {
+      onMilestoneComplete();
+    }
+  };
 
   const handleFilterClick = (filter: DealType | "goal" | "completed") => {
     if (onFilterChange) {
@@ -143,8 +158,22 @@ export default function ActionPlan({
     }
   };
 
+  const handleNewDealsClick = () => {
+    if (completionPercent >= 100) {
+      setShowCelebration(true);
+    } else {
+      handleFilterClick("new");
+    }
+  };
+
   return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
+    <>
+      <MilestoneCompletionModal 
+        isOpen={showCelebration} 
+        userName={userName}
+        onComplete={handleCelebrationComplete}
+      />
+      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
       <div className="flex justify-between items-end mb-8">
         <div className="w-1/2">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
@@ -162,7 +191,7 @@ export default function ActionPlan({
             >
               <p className="text-sm text-gray-500 font-medium">
                 You have completed{" "}
-                <span className="font-bold text-[#FF6600]">32%</span> of today's
+                <span className="font-bold text-[#FF6600]">{completionPercent}%</span> of today's
                 follow-ups.
               </p>
               <Info className="w-3.5 h-3.5 text-gray-400" />
@@ -186,8 +215,8 @@ export default function ActionPlan({
 
             <div className="w-full max-w-md bg-gray-100 h-2 rounded-full overflow-hidden">
               <div
-                className="bg-[#FF6600] h-full rounded-full"
-                style={{ width: "32%" }}
+                className="bg-[#FF6600] h-full rounded-full transition-all duration-500"
+                style={{ width: `${completionPercent}%` }}
               ></div>
             </div>
           </div>
@@ -325,7 +354,7 @@ export default function ActionPlan({
                       color: item.id === "hot" ? "white" : item.color,
                     }
               }
-              onClick={() => handleFilterClick(item.id)}
+              onClick={() => item.id === "new" ? handleNewDealsClick() : handleFilterClick(item.id)}
             >
               {item.count >= item.total && item.id !== "new" ? (
                 <>
@@ -340,5 +369,6 @@ export default function ActionPlan({
         ))}
       </div>
     </div>
+    </>
   );
 }
