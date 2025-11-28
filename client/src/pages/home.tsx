@@ -66,23 +66,23 @@ const STATUS_OPTIONS = [
 ];
 
 const PROPENSITY_LEGEND = [
-  { color: "text-red-500", label: "🔴 RED", indicator: "Notice of Trustee Sale (NTS)", category: "Foreclosure", points: 8, source: "Foreclosure Status / Auction Date" },
-  { color: "text-red-500", label: "🔴 RED", indicator: "Notice of Default (NOD)", category: "Foreclosure", points: 6, source: "Foreclosure Status / Recording Date" },
-  { color: "text-red-500", label: "🔴 RED", indicator: "Tax Delinquency", category: "Financial", points: 5, source: "Tax Status / Total Tax Due" },
-  { color: "text-red-500", label: "🔴 RED", indicator: "Affidavit of Death", category: "Life Event", points: 5, source: "Transfer Document Type / Grantor Name" },
-  { color: "text-red-500", label: "🔴 RED", indicator: "Bankruptcy / Judgment", category: "Financial", points: 4, source: "Involuntary Liens (Bankruptcy Flag)" },
-  { color: "text-green-500", label: "🟢 GREEN", indicator: "Involuntary Liens", category: "Financial", points: 3, source: "Lien Type (HOA, Mechanics, Judgment)" },
-  { color: "text-green-500", label: "🟢 GREEN", indicator: "Expired Listing", category: "Market Status", points: 3, source: "Listing Status (Expired, Withdrawn, Canceled)" },
-  { color: "text-green-500", label: "🟢 GREEN", indicator: "Vacant Property", category: "Occupancy", points: 2, source: "Vacancy Status (USPS Data)" },
-  { color: "text-green-500", label: "🟢 GREEN", indicator: "High Mortgage / Debt", category: "Financial", points: 2, source: "Open Loans / Estimated Equity" },
-  { color: "text-green-500", label: "🟢 GREEN", indicator: "Non-Owner Occupied", category: "Occupancy", points: 2, source: "Absentee Owner (Yes/No)" },
-  { color: "text-green-500", label: "🟢 GREEN", indicator: "High Equity (>50%)", category: "Financial", points: 2, source: "Estimated Equity %" },
-  { color: "text-green-500", label: "🟢 GREEN", indicator: "Long Term Owner (20+ Yrs)", category: "Ownership", points: 2, source: "Last Sale Date" },
-  { color: "text-blue-500", label: "🔵 BLUE", indicator: "Corporate / Trust Owned", category: "Ownership", points: 1, source: "Owner Type (Trust, LLC, Corp)" },
-  { color: "text-blue-500", label: "🔵 BLUE", indicator: "Owns Multiple Properties", category: "Ownership", points: 1, source: "Properties Owned Count" },
-  { color: "text-blue-500", label: "🔵 BLUE", indicator: "Adjustable Rate Mortgage", category: "Financial", points: 1, source: "Loan Rate Type (ARM vs Fixed)" },
-  { color: "text-blue-500", label: "🔵 BLUE", indicator: "Free & Clear", category: "Financial", points: 1, source: "Open Loans = 0" },
-  { color: "text-blue-500", label: "🔵 BLUE", indicator: "Transferred in Last 2 Years", category: "Ownership", points: 0, source: "Last Sale Date" },
+  { color: "text-red-600", bgColor: "bg-red-100", label: "🔴 RED", indicator: "Notice of Trustee Sale (NTS)", category: "Foreclosure", points: 8, source: "Foreclosure Status / Auction Date", explanation: "Property scheduled for foreclosure auction. Highest motivation to sell. Owner has limited time before losing property." },
+  { color: "text-red-600", bgColor: "bg-red-100", label: "🔴 RED", indicator: "Notice of Default (NOD)", category: "Foreclosure", points: 6, source: "Foreclosure Status / Recording Date", explanation: "Foreclosure process has started. Owner missed payments and received formal notice. 90-120 days before auction typically." },
+  { color: "text-red-600", bgColor: "bg-red-100", label: "🔴 RED", indicator: "Tax Delinquency", category: "Financial", points: 5, source: "Tax Status / Total Tax Due", explanation: "Property taxes are past due. Owner may be facing financial hardship or has abandoned property." },
+  { color: "text-red-600", bgColor: "bg-red-100", label: "🔴 RED", indicator: "Affidavit of Death", category: "Life Event", points: 5, source: "Transfer Document Type / Grantor Name", explanation: "Recent death of property owner. Estate may need to liquidate quickly to settle debts or distribute assets." },
+  { color: "text-red-600", bgColor: "bg-red-100", label: "🔴 RED", indicator: "Bankruptcy / Judgment", category: "Financial", points: 4, source: "Involuntary Liens (Bankruptcy Flag)", explanation: "Owner has bankruptcy filing or court judgment. May need to sell to settle debts." },
+  { color: "text-green-600", bgColor: "bg-green-100", label: "🟢 GREEN", indicator: "Involuntary Liens", category: "Financial", points: 3, source: "Lien Type (HOA, Mechanics, Judgment)", explanation: "HOA, mechanics, or judgment liens attached to property. Owner has outstanding debts that must be cleared at sale." },
+  { color: "text-green-600", bgColor: "bg-green-100", label: "🟢 GREEN", indicator: "Expired Listing", category: "Market Status", points: 3, source: "Listing Status (Expired, Withdrawn, Canceled)", explanation: "Property was listed but didn't sell. Owner may be frustrated, more realistic on price, and motivated to try again." },
+  { color: "text-green-600", bgColor: "bg-green-100", label: "🟢 GREEN", indicator: "Vacant Property", category: "Occupancy", points: 2, source: "Vacancy Status (USPS Data)", explanation: "Property is unoccupied per USPS data. Owner carrying costs (taxes, insurance, maintenance) with no income." },
+  { color: "text-green-600", bgColor: "bg-green-100", label: "🟢 GREEN", indicator: "High Mortgage / Debt", category: "Financial", points: 2, source: "Open Loans / Estimated Equity", explanation: "Low equity or high loan balance. Owner may be underwater or have thin margins—motivated by relief." },
+  { color: "text-green-600", bgColor: "bg-green-100", label: "🟢 GREEN", indicator: "Non-Owner Occupied", category: "Occupancy", points: 2, source: "Absentee Owner (Yes/No)", explanation: "Absentee owner / investor property. Often more willing to sell for right price—it's business, not emotional." },
+  { color: "text-green-600", bgColor: "bg-green-100", label: "🟢 GREEN", indicator: "High Equity (>50%)", category: "Financial", points: 2, source: "Estimated Equity %", explanation: "Owner has significant equity built up. More room to negotiate below market and still walk away with profit." },
+  { color: "text-green-600", bgColor: "bg-green-100", label: "🟢 GREEN", indicator: "Long Term Owner (20+ Yrs)", category: "Ownership", points: 2, source: "Last Sale Date", explanation: "Owned 20+ years. Likely has massive equity, may be tired landlord, aging owner, or inherited situation." },
+  { color: "text-blue-600", bgColor: "bg-blue-100", label: "🔵 BLUE", indicator: "Corporate / Trust Owned", category: "Ownership", points: 1, source: "Owner Type (Trust, LLC, Corp)", explanation: "Owned by LLC, trust, or corporation. Often indicates investor who may be liquidating portfolio or settling estate." },
+  { color: "text-blue-600", bgColor: "bg-blue-100", label: "🔵 BLUE", indicator: "Owns Multiple Properties", category: "Ownership", points: 1, source: "Properties Owned Count", explanation: "Owner has multiple properties. May be willing to sell underperformers to focus on better assets." },
+  { color: "text-blue-600", bgColor: "bg-blue-100", label: "🔵 BLUE", indicator: "Adjustable Rate Mortgage", category: "Financial", points: 1, source: "Loan Rate Type (ARM vs Fixed)", explanation: "ARM loan that may adjust upward. Rising payments could create future motivation to sell." },
+  { color: "text-blue-600", bgColor: "bg-blue-100", label: "🔵 BLUE", indicator: "Free & Clear", category: "Financial", points: 1, source: "Open Loans = 0", explanation: "No mortgage on property. Owner has 100% equity and full flexibility—no lender approval needed." },
+  { color: "text-blue-600", bgColor: "bg-blue-100", label: "🔵 BLUE", indicator: "Transferred in Last 2 Years", category: "Ownership", points: 0, source: "Last Sale Date", explanation: "Recent ownership transfer. New owner unlikely to sell quickly—low motivation indicator." },
 ];
 
 const getPropensityColor = (text: string) => {
@@ -431,19 +431,22 @@ export default function Home() {
                                         const indicatorData = PROPENSITY_LEGEND.find(l => l.indicator === item);
                                         return (
                                           <div key={idx} className="group/item relative cursor-help leading-none hover:z-50">
-                                            <span className={cn("text-[10px] font-bold inline-block px-1.5 py-0.5 rounded", 
+                                            <span className={cn("text-[10px] font-bold inline-block px-2 py-1 rounded", 
                                               indicatorData?.color || getPropensityColor(item),
-                                              indicatorData && "bg-opacity-10 bg-current"
+                                              indicatorData?.bgColor || "bg-gray-100"
                                             )}>
                                               {item}
                                             </span>
-                                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover/item:opacity-100 pointer-events-none z-50 hidden group-hover/item:block border border-gray-700">
-                                              <div className="font-bold text-[#FF6600] mb-1.5">{item}</div>
+                                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-72 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover/item:opacity-100 pointer-events-none z-50 hidden group-hover/item:block border border-gray-700">
+                                              <div className="font-bold text-[#FF6600] mb-2">{item}</div>
                                               {indicatorData && (
                                                 <>
-                                                  <div className="text-gray-300 mb-1"><span className="text-gray-400">Category:</span> {indicatorData.category}</div>
-                                                  <div className="text-gray-300 mb-1"><span className="text-gray-400">Points:</span> {indicatorData.points}</div>
-                                                  <div className="text-gray-400 italic text-[10px]">Source: {indicatorData.source}</div>
+                                                  <div className="text-gray-300 mb-2 text-[11px] leading-relaxed">{indicatorData.explanation}</div>
+                                                  <div className="border-t border-gray-700 pt-2 space-y-1">
+                                                    <div className="text-gray-300"><span className="text-gray-400">Category:</span> {indicatorData.category}</div>
+                                                    <div className="text-gray-300"><span className="text-gray-400">Points:</span> {indicatorData.points}</div>
+                                                    <div className="text-gray-400 italic text-[10px]">Source: {indicatorData.source}</div>
+                                                  </div>
                                                 </>
                                               )}
                                             </div>
