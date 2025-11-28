@@ -660,7 +660,9 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
               <div>
                 <h2 className="text-lg font-bold text-gray-900">FlipIQ Assistant</h2>
                 <p className="text-xs text-gray-500">
-                  {currentPhase === 'checkin' ? 'Daily Check-In' : `Deal Review — Property ${currentPropertyIndex + 1}/${properties.length}`}
+                  {currentPhase === 'checkin' && 'AA1 Check-In'}
+                  {currentPhase === 'briefing' && 'Daily Briefing'}
+                  {currentPhase === 'dealreview' && `AA2 Deal Review — Property ${currentPropertyIndex + 1}/${properties.length}`}
                 </p>
               </div>
             </div>
