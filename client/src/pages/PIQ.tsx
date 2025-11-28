@@ -45,6 +45,10 @@ export default function PIQ() {
   const [isIQAnalyzing, setIsIQAnalyzing] = useState(false);
   const [piqIQRevealKey, setPiqIQRevealKey] = useState(0);
   const [showPiqCompletionState, setShowPiqCompletionState] = useState(false);
+  const [showMapValueIQ, setShowMapValueIQ] = useState(false);
+  const [isMapValueIQLoading, setIsMapValueIQLoading] = useState(false);
+  const [mapValueIQRevealKey, setMapValueIQRevealKey] = useState(0);
+  const [showMapValueIQCompletion, setShowMapValueIQCompletion] = useState(false);
 
   useEffect(() => {
     if (fromNewAgent) {

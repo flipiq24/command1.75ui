@@ -1,0 +1,102 @@
+Create the "iQ Map Value Intelligence" panel for the Comps tab. This appears below the map and provides AI-driven location analysis with streaming ChatGPT-style word-by-word output.
+
+LOCATION:
+- Below the interactive map in the Comps tab
+- Replace or add alongside the existing "iQ Comps Analysis" section
+- Same streaming animation style as iQ Property Intelligence
+
+HEADER:
+- Lightbulb icon (orange, pulsing while streaming)
+- Title: "iQ Map Value Intelligence"
+- Subtitle: "AI-powered location & comp analysis"
+- "analyzing..." with bouncing dots while streaming
+- "✓ Analysis complete" badge when done
+
+STREAMING CONTENT (word-by-word typing effect):
+
+SECTION 1 - SUBJECT LOCATION CONTEXT:
+"Subject Property: 10573 Larch, Bloomington CA 92316
+
+Location Profile:
+- City: Bloomington (unincorporated San Bernardino County)
+- School District: Colton Joint Unified
+- Neighborhood Avg $/SF: $285
+- Proximity: 0.8 mi to I-10 freeway, 1.2 mi to commercial corridor
+- Lot Size: 36,600 sqft (significantly above area average of 8,200 sqft)"
+
+SECTION 2 - COMP MAP ANALYSIS:
+Header with flag icon: "🚩 Location Variables Detected"
+
+"Analyzing 3 comparable sales for location-based adjustments..."
+
+COMP FLAGS (stream each one):
+
+"🚩 $450K Comp (Bloomington North)
+Different micro-market. North Bloomington averages $15/SF lower due to proximity to industrial zone. 
+Recommendation: Adjust +$12,000 or consider removal."
+
+"🚩 $800K Comp (West Colton)  
+Located in Colton city limits, not Bloomington. Different tax base and city services. Higher median income area.
+Recommendation: This comp may be inflating your ARV. Consider removing."
+
+"✓ $650K Comp (Rialto Border)
+Similar location profile to subject. Same school district, comparable street type, no major location anomalies.
+Recommendation: Strong comp — keep as primary reference."
+
+SECTION 3 - VALUE CLIFF ANALYSIS:
+Header: "📍 Value Boundaries Identified"
+
+"City Line Impact: Properties in Colton average 8-12% higher than Bloomington due to city services and school ratings.
+
+School District Note: Colton Joint Unified serves this area. No district boundary issues with current comps.
+
+Freeway Proximity: Subject is 0.8 mi from I-10. Comps within 0.5 mi typically see 3-5% discount for noise. Your subject is outside this impact zone."
+
+SECTION 4 - AI RECOMMENDATION:
+Header: "💡 iQ Recommendation"
+
+"Based on map analysis, the $800K Colton comp appears to be in a stronger micro-market and may be skewing your ARV high.
+
+Current ARV: $643,184 (using all 3 comps)
+Adjusted ARV: $595,000-$620,000 (excluding Colton comp)
+
+The subject's 36,600 sqft lot is 4.5x larger than comp average — this creates significant ADU/development potential not reflected in standard $/SF calculations.
+
+Suggested Offer Range: $650,000-$700,000 based on adjusted comps plus lot premium."
+
+SECTION 5 - ACTION BUTTONS (fade in after streaming):
+- "Apply Adjustments" (orange #FF6600 button)
+- "Keep Current Comps" (gray outline button)
+- "Run Full Location Report" (text link)
+
+CHAT INPUT AT BOTTOM:
+- Input field with placeholder: "Ask about these comps..."
+- Plus icon on left
+- Microphone icon and chat bubble icon on right
+- Same styling as existing chat input
+- Allows user to ask follow-up questions about the map analysis
+
+MAP INTEGRATION:
+- When streaming mentions a specific comp, briefly highlight that pin on the map above
+- Color code pins:
+  - Green = validated comp (✓)
+  - Orange = needs adjustment (🚩)
+  - Red = recommend removal
+- Subject property pin = dark blue with "S" label (already exists)
+
+STREAMING BEHAVIOR:
+- Each character types at 15-40ms random delay
+- Blinking orange cursor follows text
+- Pause 200ms between sections
+- Pause 400ms before headers
+- Total animation ~15-20 seconds
+- Resets when user switches to different property
+
+VISUAL STYLE:
+- Match existing iQ Comps Analysis panel styling
+- White/light background with subtle orange gradient
+- Orange accent color (#FF6600)
+- Section headers in bold with icons
+- Bullet points for lists
+- Green text for positive recommendations
+- Orange/red text for warnings or flags
