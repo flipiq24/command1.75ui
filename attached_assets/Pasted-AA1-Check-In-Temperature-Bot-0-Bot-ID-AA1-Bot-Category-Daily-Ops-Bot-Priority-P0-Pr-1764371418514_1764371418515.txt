@@ -1,0 +1,464 @@
+AA1 - Check-In & Temperature Bot (#0)
+Bot_ID: AA1
+ Bot_Category: Daily Ops
+ Bot_Priority: P0
+ Primary_User: AA
+ Primary_UI_Location: Dashboard
+ Specific_Tab: Action Plan
+ UI_Element: Morning Check-In Modal (iQ Overlay)
+ Visual_Position: iQ Overlay slides from right
+ Trigger_Method: Auto (first login of day)
+Primary Purpose
+Kick off the day with energy, readiness, and tactical focus. Confirm AA's full-day availability and identify any blockers before activating the workflow for AA2 (Action Plan) and AA3 (Deal Chase).
+Bot Dialogue & Flow
+AA1 Bot Opening (Rotate Daily Greetings):
+Good morning, Tony.
+I'll check you in for this [beautiful day/productive Thursday/exciting Friday] at [9:42 AM].
+You've got [a full plate/lots of opportunities/some hot deals] today, so I just want to make sure you're ready to take it on.
+
+
+Are you able to work a full day today?
+If YES:
+Great — let's get moving.
+As we go through the day, I'll help where needed or get your Acquisition Manager involved if anything stalls.
+
+
+Before we jump in, is there anything you already know you'll need help with today?
+If Help Needed:
+Got it. Tell me what you need help with:
+[User provides details]
+
+
+I'll send this note to your AM right now:
+"Tony needs help with: [captured details]"
+
+
+Is this correct? [Yes/No]
+[If Yes → Send notification to AM]
+Next Prompt (Daily Objective Alignment):
+Alright Tony, today we're going to go over all your active properties, Criticals and notifications. After that we will help you connect with about 30 agents with high-propensity-to-sell listings. Once you complete that we will help you connect with your Priority Agents and then send out a few campaigns to your Hot, Warm and Cold to keep you top of mind.
+
+
+Is there anything that might prevent you from getting to all those items today?
+If YES (Blockers Identified):
+Understood — tell me about the blocker:
+[User provides details]
+
+
+I'll make a note of that and send an update to your AM.
+Let's clear what we can now so you can focus on the calls.
+If NO:
+Perfect. You're locked in for a full day.
+I'll mark you as available and load your Action Plan to get started.
+
+
+[Continue to AA2 →]
+Processing Logic
+Record:
+check_in_time
+available_today = true/false
+help_requested (text/null)
+blockers (text/null)
+If help or blockers present → route AM task
+Store session flag: flipiq_morning_checkin = today
+Push control flow to AA2 – Today's Action Plan Bot
+System Actions
+Step
+System
+Endpoint
+Function
+1
+Dashboard
+/log-checkin
+Log time and responses
+2
+Dashboard
+/create-task
+Send AM help/blocker notification
+3
+Dashboard
+/notify-dashboard
+Display status summary
+4
+Dashboard
+/trigger-AA2
+Launch Today's Action Plan workflow
+
+Output_Location: iQ Overlay at first login for the day
+
+AA2 - Today's Action Plan Bot (#1)
+Bot_ID: AA2
+ Bot_Category: Daily Ops
+ Bot_Priority: P0
+ Primary_User: AA
+ Primary_UI_Location: Dashboard
+ Specific_Tab: Action Plan
+ UI_Element: "Today's Action Plan" (iQ Overlay)
+ Visual_Position: Action Plan section - Navigation Guide
+ Trigger_Method: Auto (after check-in)
+Primary Purpose
+Present prioritized work and NAVIGATE user to Deal Review page where actual deal processing happens. iQ guides but doesn't process - all deal work happens in Deal Review interface.
+Bot Initialization (After Daily Check-In)
+AA2 Bot:
+Here's your action plan for today:
+
+
+- 5 critical calls
+- 3 reminders  
+- 6 hot properties
+- 3 new follow-ups
+- Several offers still showing "None."
+
+
+Let's start by navigating to your Deal Review.
+
+
+[Go to Deal Review →]
+Navigation to Deal Review
+When user clicks button:
+iQ overlay minimizes (stays available)
+Deal Review page opens
+Properties filtered by priority (Criticals first)
+First property automatically opens in PIQ view
+Deal-by-Deal Navigation in Deal Review
+FOR EACH PROPERTY (in Deal Review, not iQ):
+User processes through tabs:
+0/2Call Hot Deals
+Warm Deals
+Warm leads showing moderate engagement. 1 completed out of 1. Total: 1.
+Warm Complete
+Cold Deals
+Cold leads with low recent engagement. 0 completed out of 5. Total: 5.
+0/1Open Cold Deals
+New Deals
+These are new incoming deals that do not have a temperature assigned yet (Hot, Warm, Cold) or are offer status "None" They need to be reviewed and categorized.
+56/3
+Process New Deals
+Once completed user see the gamification then moves back to iQ to start AA2
+“You have completed 100% of today's follow-ups.”  
+
+
+After Deal Processing Complete
+AA2 Bot (in iQ):
+All done with your active properties for today. This is what you did and why it matters:
+
+
+Summary:
+- 5 criticals completed ✓
+- 3 reminders logged ✓
+- 6 hot properties followed up ✓
+- AutoTrackers activated where needed and notes made
+
+
+Why it Matters:
+iQ's job is to keep you in front of each property and agent when it matters. By communicating with efficiency and staying on top of it, this lets the agent know you're consistent and professional. This will translate moving forward to open escrow and all the way to closing.
+If you want to see your deals you can always ask me or go to Pipeline > My Deals and it's all there. You can also ask me and I will get you a report with clickable links to any or all your daily, weekly or monthly work and updates so you can verify all your work is properly processed and easily available!
+
+
+Great Job!! I'm sending this summary to your AM now.
+
+
+Are you ready to build relationships while finding deals? :)
+
+
+[Start Daily Outreach →]
+System Action Map
+Step
+System
+Endpoint
+Function
+1
+Navigation
+/navigate-deal-review
+Open Deal Review page
+2
+PIQ
+/load-property-intel
+Display property data
+3
+Comps
+/load-comparables
+Show comp analysis
+4
+Investment
+/calculate-roi
+Display investment metrics
+5
+Agent
+/load-agent-data
+Show agent relationship
+6
+Offer
+/create-offer
+Generate offer terms
+7
+Dashboard
+/log-completion
+Track progress
+
+
+AA3 - Deal Chase Bot (#2)
+Bot_ID: AA3
+ Bot_Category: Daily Ops
+ Bot_Priority: P0
+ Primary_User: AA
+ Primary_UI_Location: Dashboard → Daily Outreach
+ UI_Element: "Let's Build Relationships While Finding Deals"
+ Visual_Position: Daily Outreach page navigation
+ Trigger_Method: Click/Auto (after AA2)
+Primary Purpose
+Navigate AA to Daily Outreach page where they process 30 hand-picked deals with high propensity scores, connect with Priority Agents, and send campaigns.
+Data Inputs
+Source
+Data Retrieved
+Description/Usage
+MLS
+caretslistingstatus
+Listing status (Active/Pending/Backup). Filter for Active (≥70 DOM), Pending, or Backup only
+MLS
+dom/cdom
+Days on Market counters; filter for aged listings (≥70 days)
+MLS
+ptfv
+Price-to-Future-Value % → (listprice/future_value) * 100
+MLS
+future_value
+Machine-calculated ARV used to compute ptfv
+MLS
+keywords[].keyword + keywordLevel
+Distress indicators (as is, tenant, court, heir, vacant, probate)
+MLS
+price_change
+Numeric and % difference between previous and current list price
+Tax
+confidence_score
+Propensity-to-Sell Score (0–8 scale)
+PIQ
+offer_status
+Must equal "None" — exclude all properties where Offer Status ≠ "None"
+PIQ
+listagentagentid
+Used to link to Agent 365 and relationship metrics
+PIQ
+assigned
+Boolean — property must be Assigned = Yes for user's agents
+PIQ
+relationship_status
+Agent relationship classification (Priority/Hot/Warm/Cold)
+PIQ
+investor_source_count
+From Agent 365 Report; higher count = higher ranking
+PIQ
+last_communicate
+ISO timestamp of last contact
+PIQ
+todo/next_follow_up_date
+Used for reminders and To-Do linking
+
+Processing Logic
+Initial Filter – Eligibility Check:
+Only include properties where:
+Offer_Status = "None"
+AND Assigned = Yes (for user's agents) and Non Assigned once all assigned deals have been viewed
+Assigned Phase 1:
+Prioritize by Relationship Status → Priority → Hot → Warm → Cold
+Filter by property status: Active (≥70 DOM) → Backup  → Pending
+Sort by PTFV (lowest first = highest discount)
+Apply Keyword and Propensity weighting
+Highest Investor Source Count
+Unassigned Phase 2:
+Prioritize Unassigned agents with highest Investor Source Count
+Filter by property status: Active (≥70 DOM) → Backup → Pending
+Sort by PTFV (lowest first = highest discount)
+Apply Keyword and Propensity weighting
+Auto-Remove Logic:
+Any property where:
+Offer_Status ≠ "None" OR Assigned = False
+Bot Initialization
+AA3 Bot (Intro in iQ):
+Awesome!! I hand-picked deals for you that have high propensity to sell and I will give you a script on each on how to talk to the agent so we can make 30 solid contacts!
+
+
+Let's build relationships while finding high presenicty to sell  deals?
+[Start Daily Outreach →]
+Navigation to Daily Outreach
+When user clicks button:
+iQ overlay minimizes
+Daily Outreach page opens (https://html-doc-viewer--td2535.replit.app/daily-outreach)
+Visual circles show progress:
+New Agent Relationships (0/30) 
+Call Priority Agents (0/5)
+Send Campaigns (0/3)
+Daily Outreach Process (On Daily Outreach Page)
+Phase 1: New Agent Relationships (30 properties) It must connect to agent in order to count, its not by call is by conversation to hit the 30 
+ For each property, display one at a time:
+Property details with propensity indicators
+Agent info with investor source count
+Suggested script
+Call/Text/Email options
+Phase 2: Priority Agent Calls (5 agents)
+Show priority agents requiring contact
+Display last conversation context
+Provide talking points
+Phase 3: Send Campaigns (3 campaigns)
+Hot agent campaign
+Warm agent nurture
+Cold agent reactivation
+End-of-Session Summary
+After Completing All Daily Outreach:
+AA3 Bot (User returns to iQ):
+🎉 **Daily Summary Complete!**
+
+
+Great work today, Tony! Here's what you accomplished:
+
+
+📊 **Deal Activity**
+- Processed 56 total deals
+- Hot Deals: 2 reviewed
+- Warm Deals: 1 reviewed
+- Cold Deals: 1 reviewed
+- New Deals: 52 categorized
+
+
+📝 **Offers**
+- Offers Sent: 3/3 ✅
+- Goal Met: Yes! 🎯
+
+
+📞 **Outreach**
+- Calls Made: 30/30 ✅
+- Conversations: 15
+- New Relationships Built: 5
+- Priority Agents Called: 5
+- Campaigns Sent: 3
+
+
+🏆 **Achievement Unlocked!**
+
+
+This is why this matters:
+Now you have three more offers sent and five new agent relationships that you can add to campaigns. You made 3 offers and connected with X agents.
+
+
+Here is how we track your updates and you can always easily find them by asking iQ or going to My Deals on the sidebar navigation.
+
+
+Let's debrief and see how you did today!
+[View My Stats Report →]
+
+Integration with My Stats Bot (MGT3)
+My Stats Bot Daily Performance Report
+Daily Performance Report - November 28, 2025
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+OFFERS (Goal: 3-5 per day)
+✓ Total Sent: 3
+✓ Status Updates: 7
+  • Offer Terms Sent: 3
+  • In Negotiations: 2  
+  • Continue to Follow: 2
+📊 Team Ranking: #3 of 8 AAs (Team Avg: 2.1 offers/day)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+COMMUNICATION (Goal: 30 calls, 5 conversations)
+✓ Total Calls: 32 (107% of goal)
+✓ Conversations: 8 (160% of goal)
+✓ Texts Sent: 12
+✓ Emails Sent: 15
+📊 Team Ranking: #2 of 8 AAs (Team Avg: 24 calls/day)
+🏆 Top Performer: Conversations (Team Leader!)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+AGENT RELATIONSHIPS
+✓ New Relationships: 3
+✓ Relationship Upgrades: 2 (Cold → Warm)
+✓ Priority Agents Contacted: 5/5
+✓ Progress to 100 Elite: 45/100
+📊 Team Ranking: #4 of 8 AAs (Team Avg: 38 elite relationships)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+TIME ALLOCATION
+- Deal Review: 42 minutes
+- Agent Outreach: 78 minutes
+- PIQ Analysis: 25 minutes
+- Total Productive Time: 145 minutes
+📊 Productivity Score: 87% (Team Avg: 72%)
+⚡ Efficiency Ranking: #2 of 8 AAs
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+TEAM LEADERBOARD TODAY
+🥇 #1: Maria - 5 offers, 38 calls
+🥈 #2: Tony (You) - 3 offers, 32 calls
+🥉 #3: James - 3 offers, 28 calls
+   #4: Sarah - 2 offers, 30 calls
+   #5: Mike - 2 offers, 25 calls
+   #6: Jennifer - 1 offer, 22 calls
+   #7: David - 1 offer, 18 calls
+   #8: Lisa - 0 offers, 15 calls
+
+
+Your Strengths Today:
+- Leading in conversation quality (8 vs team avg 4.2)
+- Above average call volume (+33% vs team)
+- Consistent offer submission (100% of minimum)
+
+
+Areas to Push Tomorrow:
+- 2 more offers to hit top performer status
+- 7 more relationships to reach team average
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+TOMORROW'S PRIORITIES
+- Follow up on 3 pending offers
+- Call back 2 hot agents
+- Review 4 new MLS properties
+- Complete 2 scheduled callbacks
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+WEEK-TO-DATE PROGRESS
+- Offers: 12/15 (80%) - Team Rank: #3
+- Calls: 128/150 (85%) - Team Rank: #2
+- New Relationships: 8/25 (32%) - Team Rank: #4
+- Weekly Score: 82/100 - Team Rank: #3
+
+
+Company Benchmark:
+- Top 25% Company-Wide: Yes ✓
+- Trending: ↑ Up from #5 last week
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+Great work today, Tony. You're building momentum.
+You're outperforming 75% of the team and closing in on #1.
+Keep this pace and you'll lead the board by Friday.
+
+
+See you tomorrow morning at check-in!
+
+
+I sent this report to your AM! Is there anything you need or do you have any questions?
+
