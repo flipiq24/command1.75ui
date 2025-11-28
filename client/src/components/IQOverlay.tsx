@@ -247,6 +247,29 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
     if (callback) callback();
   }, []);
 
+  const getAIResponse = async (userMessage: string, dealContext?: any): Promise<string> => {
+    try {
+      const response = await fetch('/api/ai/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          message: userMessage,
+          dealContext: dealContext || currentProperty
+        })
+      });
+      
+      if (!response.ok) {
+        throw new Error('AI request failed');
+      }
+      
+      const data = await response.json();
+      return data.response;
+    } catch (error) {
+      console.error('AI error:', error);
+      return "I'm having trouble connecting right now. Let me help you with what I know about this property.";
+    }
+  };
+
   const addPropertyCard = useCallback((property: PropertyCard) => {
     const typeEmoji = property.type === 'hot' ? '🔥 HOT' : property.type === 'warm' ? '🌡️ WARM' : property.type === 'cold' ? '❄️ COLD' : '🆕 NEW';
     const typeColor = property.type === 'hot' ? 'border-orange-400 bg-orange-50' : property.type === 'warm' ? 'border-amber-400 bg-amber-50' : property.type === 'cold' ? 'border-blue-400 bg-blue-50' : 'border-gray-400 bg-gray-50';
@@ -512,16 +535,44 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
         }, 300);
       }
     } else if (currentPhase === 'briefing') {
-      setTimeout(async () => {
-        await streamMessage("Click the 'Start Deal Review' button above when you're ready to begin!");
-      }, 300);
+      if (userMessage.includes('start') || userMessage.includes('ready') || userMessage.includes('go') || userMessage.includes('begin')) {
+        startDealReview();
+      } else {
+        // Use AI for free-form questions during briefing
+        setIsTyping(true);
+        setStreamingText('Thinking...');
+        try {
+          const aiResponse = await getAIResponse(
+            `User is in the daily briefing phase. They have ${pipelineStats.hot} hot deals, ${pipelineStats.warm} warm deals, ${pipelineStats.cold} cold deals, and ${pipelineStats.new} new deals. Goals: ${pipelineStats.offersGoal} offers, ${pipelineStats.conversationsGoal} conversations. User asks: ${inputValue.trim()}`
+          );
+          setIsTyping(false);
+          setStreamingText('');
+          await streamMessage(aiResponse);
+        } catch (error) {
+          setIsTyping(false);
+          setStreamingText('');
+          await streamMessage("Click the 'Start Deal Review' button above when you're ready to begin!");
+        }
+      }
     } else if (currentPhase === 'dealreview') {
       if (userMessage === 'next' || userMessage === 'n') {
         goToNextProperty();
       } else {
-        setTimeout(async () => {
+        // Use AI for free-form questions about properties
+        setIsTyping(true);
+        setStreamingText('Analyzing...');
+        try {
+          const aiResponse = await getAIResponse(
+            `User is reviewing a property at ${currentProperty.address}. Price: ${currentProperty.price}, Propensity: ${currentProperty.propensity}, Flags: ${currentProperty.flags.join(', ')}. User asks: ${inputValue.trim()}`
+          );
+          setIsTyping(false);
+          setStreamingText('');
+          await streamMessage(aiResponse);
+        } catch (error) {
+          setIsTyping(false);
+          setStreamingText('');
           await streamMessage(`Based on the property at ${currentProperty.address}:\n\nThe ${currentProperty.flags.join(' and ')} flags indicate higher seller motivation. With a propensity score of ${currentProperty.propensity}, this is a strong opportunity.\n\nWould you like me to draft talking points for your call, or shall we move to the next property?`);
-        }, 300);
+        }
       }
     }
   };
