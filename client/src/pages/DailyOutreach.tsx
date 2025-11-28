@@ -585,6 +585,17 @@ export default function DailyOutreach() {
     setActiveFilter('connections');
     triggerIQAnimation();
   };
+
+  // Reset state when activeFilter changes
+  useEffect(() => {
+    setCurrentIndex(0);
+    setCurrentAgentIndex(0);
+    setFormFields({});
+    setAgentFormFields({});
+    setSelectedDealIds([]);
+    setSelectedAgentIds([]);
+    triggerIQAnimation();
+  }, [activeFilter]);
   
   const getCurrentDealFields = () => {
     const dealId = filteredDeals[currentIndex]?.id;
