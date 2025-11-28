@@ -90,11 +90,7 @@ export default function PIQ() {
 
   const highlightKeywords = (text: string) => {
     const keywords = [
-      { word: 'Investor', color: 'bg-yellow-200' },
-      { word: 'opportunity', color: 'bg-yellow-200' },
       { word: 'potential', color: 'bg-blue-200' },
-      { word: 'repairs', color: 'bg-red-200' },
-      { word: 'AS IS', color: 'bg-green-200' },
     ];
     
     let result = text;
