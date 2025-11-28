@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useLayoutEffect } from 'react';
 import { useLocation, useSearch } from 'wouter';
 import { cn } from "@/lib/utils";
 import Layout, { useLayout } from '@/components/Layout';
-import MilestoneCompletionModal from '@/components/MilestoneCompletionModal';
+import FlipIQCelebration from '@/components/FlipIQCelebration';
 import { 
   ArrowLeft,
   Snowflake,
@@ -228,7 +228,7 @@ function PIQContent() {
 
   return (
       <>
-      <MilestoneCompletionModal 
+      <FlipIQCelebration 
         isOpen={showCelebration} 
         userName="Tony"
         onComplete={handleCelebrationComplete}
