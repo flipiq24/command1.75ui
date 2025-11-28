@@ -427,16 +427,29 @@ export default function Home() {
                                       </span>
                                     </div>
                                     <div className="flex flex-wrap justify-center gap-x-1 gap-y-0.5 mb-1">
-                                      {deal.propensity.map((item: string, idx: number) => (
-                                        <div key={idx} className="group/item relative cursor-help leading-none hover:z-50">
-                                          <span className={cn("text-[10px] font-normal inline-block", getPropensityColor(item))}>
-                                            {item}
-                                          </span>
-                                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover/item:opacity-100 pointer-events-none z-50 text-center hidden group-hover/item:block">
-                                            {item}
+                                      {deal.propensity.map((item: string, idx: number) => {
+                                        const indicatorData = PROPENSITY_LEGEND.find(l => l.indicator === item);
+                                        return (
+                                          <div key={idx} className="group/item relative cursor-help leading-none hover:z-50">
+                                            <span className={cn("text-[10px] font-bold inline-block px-1.5 py-0.5 rounded", 
+                                              indicatorData?.color || getPropensityColor(item),
+                                              indicatorData && "bg-opacity-10 bg-current"
+                                            )}>
+                                              {item}
+                                            </span>
+                                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover/item:opacity-100 pointer-events-none z-50 hidden group-hover/item:block border border-gray-700">
+                                              <div className="font-bold text-[#FF6600] mb-1.5">{item}</div>
+                                              {indicatorData && (
+                                                <>
+                                                  <div className="text-gray-300 mb-1"><span className="text-gray-400">Category:</span> {indicatorData.category}</div>
+                                                  <div className="text-gray-300 mb-1"><span className="text-gray-400">Points:</span> {indicatorData.points}</div>
+                                                  <div className="text-gray-400 italic text-[10px]">Source: {indicatorData.source}</div>
+                                                </>
+                                              )}
+                                            </div>
                                           </div>
-                                        </div>
-                                      ))}
+                                        );
+                                      })}
                                     </div>
                                   </>
                                 ) : (
