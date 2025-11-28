@@ -9,7 +9,7 @@ import {
   Flame
 } from 'lucide-react';
 
-export type OutreachType = 'connections' | 'priority' | 'topOfMind';
+export type OutreachType = 'connections' | 'priority' | 'topOfMind' | 'newRelationships';
 
 interface OutreachActionPlanProps {
   activeFilter?: OutreachType | null;
@@ -88,7 +88,14 @@ export default function OutreachActionPlan({
           </div>
         </div>
 
-        <div className="text-right ml-8 group relative cursor-help">
+        <div 
+          className={cn(
+            "text-right ml-8 group relative cursor-pointer transition-all",
+            activeFilter === 'newRelationships' && "ring-2 ring-orange-400 rounded-lg p-2 -m-2 bg-orange-50"
+          )}
+          onClick={() => handleCircleClick('newRelationships')}
+          data-testid="circle-new-relationships"
+        >
           <div className="flex items-center justify-end gap-1 text-[11px] text-gray-400 uppercase tracking-wider font-medium mb-1">
             <span>New Agent Relationships</span>
             <HelpCircle className="w-3 h-3" />
@@ -99,13 +106,18 @@ export default function OutreachActionPlan({
           </div>
           <div className="text-xs text-gray-400 mt-0.5">Relationships Built</div>
           
-          <div className="absolute top-full right-0 mt-2 w-72 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-left">
-            <div className="font-bold text-[#FF6600] mb-2">New Agent Relationships</div>
-            <div className="mb-2">Goal: 5 per day (100+ relationships/year)</div>
-            <div className="text-gray-300">
+          <div className="absolute top-full right-0 mt-2 w-80 bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-left">
+            <div className="flex items-baseline gap-2 mb-2">
+              <span className="text-2xl font-black text-[#FF6600]">{newRelationships}</span>
+              <span className="text-lg text-gray-400">/ {newRelationshipsGoal}</span>
+            </div>
+            <div className="font-bold text-white mb-1">Relationships Built</div>
+            <div className="font-bold text-[#FF6600] mb-3">New Agent Relationships</div>
+            <div className="mb-3 text-gray-300">Goal: 5 per day (1300+ relationships/year)</div>
+            <div className="text-gray-300 leading-relaxed">
               Increments when an agent's relationship status changes from "Cold" or "Unassigned" to "Warm" or "Hot".
             </div>
-            <div className="mt-2 text-gray-400 italic">
+            <div className="mt-3 pt-3 border-t border-gray-700 text-gray-400 italic">
               Click to filter and see relationships built today.
             </div>
           </div>

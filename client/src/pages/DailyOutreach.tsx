@@ -1182,6 +1182,236 @@ export default function DailyOutreach() {
                   </div>
                 )}
               </>
+            ) : activeFilter === 'newRelationships' ? (
+              <div className="space-y-4">
+                {/* Header */}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h2 className="text-xl font-bold text-gray-900">New Agent Relationships</h2>
+                    <p className="text-sm text-gray-500">Agents whose relationship status changed to Warm or Hot today</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-orange-500">1<span className="text-gray-300">/5</span></div>
+                    <div className="text-xs text-gray-400">Relationships Built Today</div>
+                  </div>
+                </div>
+
+                {/* Agent Table */}
+                <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                  {/* Table Header */}
+                  <div className="grid grid-cols-12 bg-gray-50 border-b border-gray-200 px-4 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    <div className="col-span-1 flex items-center">
+                      <input type="checkbox" className="w-4 h-4 rounded border-gray-300" />
+                    </div>
+                    <div className="col-span-3">Agent Info</div>
+                    <div className="col-span-3">Relationship</div>
+                    <div className="col-span-2">Follow-Up</div>
+                    <div className="col-span-3">Activity & Status</div>
+                  </div>
+
+                  {/* Table Rows */}
+                  {[
+                    {
+                      id: 1,
+                      name: '1213 Property Corp',
+                      office: 'Flipiq',
+                      phone: '7145817805',
+                      email: 'tony@flipiq.com',
+                      assignedUser: 'Josh Santos',
+                      relationshipStatus: 'Priority',
+                      basket: 'Clients',
+                      requiredAction: 0,
+                      followUpStatus: 'Priority',
+                      followUpDate: '11/27/2025',
+                      investorSourceCount: 2,
+                      match: true,
+                      activeInTwoYears: false,
+                      pending: 0, backup: 0, sold: 0
+                    },
+                    {
+                      id: 2,
+                      name: 'Brian Tran',
+                      office: 'HPT Realty',
+                      phone: '714-501-1770',
+                      email: 'briantran3154@gmail.com',
+                      assignedUser: 'Josh Santos',
+                      relationshipStatus: 'Unknown',
+                      basket: 'High Value',
+                      requiredAction: 0,
+                      followUpStatus: 'Unknown',
+                      followUpDate: '11/23/2025',
+                      investorSourceCount: 2,
+                      match: false,
+                      activeInTwoYears: true,
+                      pending: 1, backup: 0, sold: 0
+                    },
+                    {
+                      id: 3,
+                      name: 'Brian Meuse',
+                      office: 'Desert Sky Real Estate Inc',
+                      phone: '760-329-7892',
+                      email: 'desertproperty4u@msn.com',
+                      assignedUser: 'Josh Santos',
+                      relationshipStatus: 'Hot',
+                      basket: 'Low Value',
+                      requiredAction: 0,
+                      followUpStatus: 'Hot',
+                      followUpDate: 'N/A',
+                      investorSourceCount: 3,
+                      match: false,
+                      activeInTwoYears: true,
+                      pending: 7, backup: 3, sold: 3
+                    },
+                    {
+                      id: 4,
+                      name: 'Jihe Xu',
+                      office: 'Carefree Realty & Management',
+                      phone: '858-699-1693',
+                      email: 'xujihe@gmail.com',
+                      assignedUser: 'Josh Santos',
+                      relationshipStatus: 'Unknown',
+                      basket: 'Low Value',
+                      requiredAction: 0,
+                      followUpStatus: 'Unknown',
+                      followUpDate: 'N/A',
+                      investorSourceCount: 'N/A',
+                      match: false,
+                      activeInTwoYears: false,
+                      pending: 0, backup: 0, sold: 0
+                    },
+                    {
+                      id: 5,
+                      name: 'Salvador Armijo',
+                      office: 'CARNAVAL REALTY',
+                      phone: '626-290-0373',
+                      email: 'salvadorarmijo007@gmail.com',
+                      assignedUser: 'Josh Santos',
+                      relationshipStatus: 'Warm',
+                      basket: 'High Value',
+                      requiredAction: 0,
+                      followUpStatus: 'Warm',
+                      followUpDate: 'N/A',
+                      investorSourceCount: 'N/A',
+                      match: false,
+                      activeInTwoYears: true,
+                      pending: 4, backup: 0, sold: 1
+                    },
+                    {
+                      id: 6,
+                      name: 'Sharon Jenkins',
+                      office: 'Sharon Jenkins Real Estate',
+                      phone: '760-519-9551',
+                      email: 'sharonjenkins4realestate@gmail.com',
+                      assignedUser: 'Josh Santos',
+                      relationshipStatus: 'Unknown',
+                      basket: 'Prospect',
+                      requiredAction: 0,
+                      followUpStatus: 'Unknown',
+                      followUpDate: 'N/A',
+                      investorSourceCount: 'N/A',
+                      match: false,
+                      activeInTwoYears: true,
+                      pending: 9, backup: 1, sold: 8
+                    },
+                    {
+                      id: 7,
+                      name: 'Team Michael',
+                      office: 'Keller Williams Realty',
+                      phone: '(760) 770-1555',
+                      email: 'teammichaeloffice@gmail.com',
+                      assignedUser: 'Josh Santos',
+                      relationshipStatus: 'Unknown',
+                      basket: 'Prospect',
+                      requiredAction: 0,
+                      followUpStatus: 'Unknown',
+                      followUpDate: 'N/A',
+                      investorSourceCount: 3,
+                      match: false,
+                      activeInTwoYears: true,
+                      pending: 15, backup: 6, sold: 8
+                    }
+                  ].map((agent, idx) => (
+                    <div key={agent.id} className="grid grid-cols-12 border-b border-gray-100 px-4 py-4 hover:bg-gray-50 items-start">
+                      {/* Checkbox + Menu */}
+                      <div className="col-span-1 flex items-start gap-2">
+                        <input type="checkbox" className="w-4 h-4 rounded border-gray-300 mt-1" />
+                        <button className="text-gray-400 hover:text-gray-600">
+                          <MoreVertical className="w-4 h-4" />
+                        </button>
+                      </div>
+
+                      {/* Agent Info */}
+                      <div className="col-span-3">
+                        <div className="font-semibold text-gray-900">{agent.name}</div>
+                        <div className="text-xs text-gray-500">Office Name: {agent.office}</div>
+                        <div className="text-xs text-gray-500">Best Cell phone: <span className="text-blue-600">{agent.phone}</span></div>
+                        <div className="text-xs text-gray-500">Best Email: <span className="text-blue-600">{agent.email}</span></div>
+                      </div>
+
+                      {/* Relationship */}
+                      <div className="col-span-3">
+                        <div className="text-xs text-gray-500">Assigned User: {agent.assignedUser}</div>
+                        <div className="text-xs">
+                          <span className="text-gray-500">Relationship Status: </span>
+                          <span className={cn(
+                            "font-semibold",
+                            agent.relationshipStatus === 'Hot' ? "text-orange-600" :
+                            agent.relationshipStatus === 'Warm' ? "text-amber-600" :
+                            agent.relationshipStatus === 'Priority' ? "text-blue-600" :
+                            "text-gray-600"
+                          )}>{agent.relationshipStatus}</span>
+                        </div>
+                        <div className="text-xs text-gray-500">Basket: {agent.basket}</div>
+                      </div>
+
+                      {/* Follow-Up */}
+                      <div className="col-span-2">
+                        <div className="text-xs text-gray-500">Required Action: {agent.requiredAction}</div>
+                        <div className="text-xs">
+                          <span className="text-gray-500">Follow-Up Status: </span>
+                          <span className={cn(
+                            "font-semibold",
+                            agent.followUpStatus === 'Hot' ? "text-orange-600" :
+                            agent.followUpStatus === 'Warm' ? "text-amber-600" :
+                            agent.followUpStatus === 'Priority' ? "text-blue-600" :
+                            "text-gray-600"
+                          )}>{agent.followUpStatus}</span>
+                        </div>
+                        <div className="text-xs text-gray-500">Follow-Up Date: {agent.followUpDate}</div>
+                      </div>
+
+                      {/* Activity & Status */}
+                      <div className="col-span-3">
+                        <div className="text-xs">
+                          <span className="text-gray-500">Investor Source Count: </span>
+                          <span className="font-semibold text-gray-900">{agent.investorSourceCount}{agent.match ? ' Match' : ''}</span>
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          Active in Last 2 Years: <span className={agent.activeInTwoYears ? "text-green-600" : "text-red-500"}>{agent.activeInTwoYears ? 'TRUE' : 'FALSE'}</span>
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          Pending, Backup, Sold: ({agent.pending}) {agent.pending}P, {agent.backup}B, {agent.sold}S
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Pagination */}
+                <div className="flex items-center justify-between text-sm text-gray-600">
+                  <div>Showing 1 to 7 of 7 agents</div>
+                  <div className="flex items-center gap-2">
+                    <select className="border border-gray-200 rounded px-2 py-1 text-xs">
+                      <option>25 / page</option>
+                      <option>50 / page</option>
+                      <option>100 / page</option>
+                    </select>
+                    <button className="px-3 py-1 border border-gray-200 rounded text-gray-500 hover:bg-gray-50">Previous</button>
+                    <button className="px-3 py-1 bg-blue-600 text-white rounded">1</button>
+                    <button className="px-3 py-1 border border-gray-200 rounded text-gray-500 hover:bg-gray-50">Next</button>
+                  </div>
+                </div>
+              </div>
             ) : activeFilter === 'topOfMind' ? (
               <div className="space-y-8">
                 {/* 1. HEADER / GOAL */}
