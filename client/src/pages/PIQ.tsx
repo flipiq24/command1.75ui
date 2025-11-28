@@ -59,7 +59,7 @@ export default function PIQ() {
     setTimeout(() => {
       setIsIQAnalyzing(false);
       setIsIQAnalyzed(true);
-    }, 3000);
+    }, 1500);
   };
 
   const handleCompsIQClick = () => {
@@ -67,7 +67,7 @@ export default function PIQ() {
     setShowCompsIQReport(true);
     setTimeout(() => {
       setIsCompsIQLoading(false);
-    }, 1500);
+    }, 750);
   };
 
   const leftTabs = [

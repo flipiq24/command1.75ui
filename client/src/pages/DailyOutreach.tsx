@@ -120,7 +120,7 @@ const useTypingEffect = (lines: StreamingLine[], triggerKey: number) => {
       return () => clearTimeout(timeout);
     }
 
-    const randomDelay = Math.floor(Math.random() * 12) + 8;
+    const randomDelay = Math.floor(Math.random() * 6) + 4;
     const timeout = setTimeout(() => {
       setDisplayedLines(prev => {
         const newMap = new Map(prev);
