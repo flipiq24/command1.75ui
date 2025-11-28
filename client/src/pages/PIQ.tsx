@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useLayoutEffect } from 'react';
 import { useLocation, useSearch } from 'wouter';
 import { cn } from "@/lib/utils";
 import Sidebar from '@/components/Sidebar';
@@ -23,7 +23,8 @@ import {
   MapPin,
   Pencil,
   Hand,
-  Check
+  Check,
+  Sparkles
 } from 'lucide-react';
 
 export default function PIQ() {
@@ -42,6 +43,8 @@ export default function PIQ() {
   const [isCompsIQLoading, setIsCompsIQLoading] = useState(false);
   const [isIQAnalyzed, setIsIQAnalyzed] = useState(fromNewAgent);
   const [isIQAnalyzing, setIsIQAnalyzing] = useState(false);
+  const [piqIQRevealKey, setPiqIQRevealKey] = useState(0);
+  const [showPiqCompletionState, setShowPiqCompletionState] = useState(false);
 
   useEffect(() => {
     if (fromNewAgent) {
@@ -101,6 +104,115 @@ export default function PIQ() {
     });
     return result;
   };
+
+  interface StreamingLine {
+    type: 'stat' | 'header' | 'bullet' | 'action';
+    label?: string;
+    value?: string;
+    isLink?: boolean;
+    linkUrl?: string;
+    color?: string;
+  }
+
+  const useTypingEffect = (lines: StreamingLine[], triggerKey: number) => {
+    const [displayedLines, setDisplayedLines] = useState<Map<number, string>>(() => new Map());
+    const [currentLineIndex, setCurrentLineIndex] = useState(0);
+    const [currentCharIndex, setCurrentCharIndex] = useState(0);
+    const [isComplete, setIsComplete] = useState(false);
+    const [cursorVisible, setCursorVisible] = useState(true);
+
+    useLayoutEffect(() => {
+      setDisplayedLines(new Map());
+      setCurrentLineIndex(0);
+      setCurrentCharIndex(0);
+      setIsComplete(false);
+      setCursorVisible(true);
+    }, [triggerKey]);
+
+    useEffect(() => {
+      if (isComplete) return;
+      const cursorInterval = setInterval(() => {
+        setCursorVisible(prev => !prev);
+      }, 530);
+      return () => clearInterval(cursorInterval);
+    }, [isComplete]);
+
+    useEffect(() => {
+      if (currentLineIndex >= lines.length) {
+        setIsComplete(true);
+        setCursorVisible(false);
+        return;
+      }
+
+      const currentLine = lines[currentLineIndex];
+      let fullText = '';
+      
+      if (currentLine.type === 'stat' && currentLine.label && currentLine.value) {
+        fullText = `${currentLine.label}: ${currentLine.value}`;
+      } else if (currentLine.type === 'header' && currentLine.value) {
+        fullText = currentLine.value;
+      } else if (currentLine.type === 'bullet' && currentLine.value) {
+        fullText = currentLine.value;
+      } else if (currentLine.type === 'action' && currentLine.value) {
+        fullText = currentLine.value;
+      }
+
+      if (currentCharIndex >= fullText.length) {
+        const pauseTime = currentLine.type === 'header' ? 400 : 150;
+        const timeout = setTimeout(() => {
+          setCurrentLineIndex(prev => prev + 1);
+          setCurrentCharIndex(0);
+        }, pauseTime);
+        return () => clearTimeout(timeout);
+      }
+
+      const randomDelay = Math.floor(Math.random() * 6) + 4;
+      const timeout = setTimeout(() => {
+        setDisplayedLines(prev => {
+          const newMap = new Map(prev);
+          newMap.set(currentLineIndex, fullText.slice(0, currentCharIndex + 1));
+          return newMap;
+        });
+        setCurrentCharIndex(prev => prev + 1);
+      }, randomDelay);
+
+      return () => clearTimeout(timeout);
+    }, [currentLineIndex, currentCharIndex, lines, triggerKey]);
+
+    const showCursor = cursorVisible && !isComplete;
+
+    return { displayedLines, currentLineIndex, isComplete, showCursor };
+  };
+
+  const piqStreamingLines: StreamingLine[] = useMemo(() => [
+    { type: 'stat', label: 'Status', value: 'Active' },
+    { type: 'stat', label: 'Days on Market', value: '45' },
+    { type: 'stat', label: 'Price to Future Value', value: '82%' },
+    { type: 'stat', label: 'Propensity Score', value: '0 / 8' },
+    { type: 'stat', label: 'Agent', value: 'Sarah Johnson (Unassigned)' },
+    { type: 'stat', label: 'Relationship Status', value: 'Warm' },
+    { type: 'stat', label: 'Investor Source Count', value: '[View Agent]', isLink: true, linkUrl: 'https://nextjs-flipiq-agent.vercel.app/agents/AaronMills' },
+    { type: 'stat', label: 'Last Communication Date', value: '11/15/2025' },
+    { type: 'stat', label: 'Last Address Discussed', value: '1234 Oak Street, Phoenix AZ' },
+    { type: 'header', value: 'Why this Property' },
+    { type: 'bullet', value: 'No propensity indicators detected for this property.' },
+    { type: 'bullet', value: 'Aged listing (≥70 DOM) with strong discount potential.' },
+    { type: 'bullet', value: 'Price-to-value ratio suggests room for negotiation.' },
+    { type: 'action', value: 'Would you like me to run a detailed AI report?' },
+  ], [piqIQRevealKey]);
+
+  const { displayedLines: piqDisplayedLines, currentLineIndex: piqCurrentLineIndex, isComplete: piqIsTypingComplete, showCursor: piqShowCursor } = useTypingEffect(piqStreamingLines, piqIQRevealKey);
+
+  useEffect(() => {
+    if (piqIsTypingComplete) {
+      const timer = setTimeout(() => {
+        setShowPiqCompletionState(true);
+      }, 300);
+      return () => clearTimeout(timer);
+    } else {
+      setShowPiqCompletionState(false);
+    }
+  }, [piqIsTypingComplete]);
 
   return (
     <div className="bg-gray-50 text-gray-800 h-screen flex overflow-hidden font-sans">
