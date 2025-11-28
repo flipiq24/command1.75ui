@@ -99,10 +99,10 @@ function HomeContent() {
   const [selectedDealIds, setSelectedDealIds] = useState<number[]>([]);
   const [completionPercent, setCompletionPercent] = useState(100);
   const queryClient = useQueryClient();
-  const { openIQWithSummary } = useLayout();
+  const { openIQWithDealComplete } = useLayout();
 
   const handleMilestoneComplete = () => {
-    openIQWithSummary();
+    openIQWithDealComplete();
   };
 
   useEffect(() => {

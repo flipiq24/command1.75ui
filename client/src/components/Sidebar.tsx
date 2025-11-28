@@ -205,14 +205,25 @@ export default function Sidebar({ onIQClick, onCloseIQ, isIQActive = false, onCo
                   {isCollapsed ? "Tools" : "Tools"}
               </div>
               <div className="space-y-1">
-                  <a href="#" className={cn("group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg", isCollapsed && "justify-center")}>
+                  <Link 
+                    href="/my-stats" 
+                    onClick={() => onCloseIQ?.()}
+                    className={cn(
+                      "group relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg",
+                      location === '/my-stats'
+                        ? "bg-gray-100 text-gray-900 hover:bg-gray-200"
+                        : "text-gray-600 hover:bg-gray-50",
+                      isCollapsed && "justify-center"
+                    )}
+                    data-testid="link-my-stats"
+                  >
                       <BarChart2 className="w-4 h-4 text-gray-500 flex-shrink-0" />
                       {!isCollapsed && "My Stats"}
                       <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
                           <span className="font-bold text-[#FF6600]">My Stats:</span><br/>
                           Text, call, email and offer tracking.
                       </div>
-                  </a>
+                  </Link>
                   
                   <a href="#" className={cn("group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg", isCollapsed && "justify-center")}>
                       <FileText className="w-4 h-4 text-gray-500 flex-shrink-0" />

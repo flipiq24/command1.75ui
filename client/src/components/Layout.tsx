@@ -6,16 +6,24 @@ interface LayoutContextType {
   isIQOpen: boolean;
   openIQ: () => void;
   closeIQ: () => void;
-  openIQWithSummary: () => void;
-  showSummary: boolean;
+  openIQWithDealComplete: () => void;
+  openIQWithCelebration: () => void;
+  resetDealComplete: () => void;
+  resetCelebration: () => void;
+  showDealComplete: boolean;
+  showCelebration: boolean;
 }
 
 const LayoutContext = createContext<LayoutContextType>({
   isIQOpen: false,
   openIQ: () => {},
   closeIQ: () => {},
-  openIQWithSummary: () => {},
-  showSummary: false
+  openIQWithDealComplete: () => {},
+  openIQWithCelebration: () => {},
+  resetDealComplete: () => {},
+  resetCelebration: () => {},
+  showDealComplete: false,
+  showCelebration: false
 });
 
 export const useLayout = () => useContext(LayoutContext);
@@ -36,20 +44,28 @@ const getInitialIQState = () => {
 export default function Layout({ children }: LayoutProps) {
   const [isIQOpen, setIsIQOpen] = useState(getInitialIQState);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const [showSummary, setShowSummary] = useState(false);
+  const [showDealComplete, setShowDealComplete] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
 
   const openIQ = () => setIsIQOpen(true);
   const closeIQ = () => {
     setIsIQOpen(false);
-    setShowSummary(false);
   };
-  const openIQWithSummary = () => {
-    setShowSummary(true);
+  const openIQWithDealComplete = () => {
+    setShowDealComplete(true);
+    setShowCelebration(false);
     setIsIQOpen(true);
   };
+  const openIQWithCelebration = () => {
+    setShowDealComplete(false);
+    setShowCelebration(true);
+    setIsIQOpen(true);
+  };
+  const resetDealComplete = () => setShowDealComplete(false);
+  const resetCelebration = () => setShowCelebration(false);
 
   return (
-    <LayoutContext.Provider value={{ isIQOpen, openIQ, closeIQ, openIQWithSummary, showSummary }}>
+    <LayoutContext.Provider value={{ isIQOpen, openIQ, closeIQ, openIQWithDealComplete, openIQWithCelebration, resetDealComplete, resetCelebration, showDealComplete, showCelebration }}>
       <div className="min-h-screen flex bg-gray-100">
         <Sidebar 
           onIQClick={openIQ} 
@@ -67,7 +83,10 @@ export default function Layout({ children }: LayoutProps) {
           onClose={closeIQ}
           userName="Tony"
           sidebarCollapsed={isSidebarCollapsed}
-          showSummary={showSummary}
+          showDealComplete={showDealComplete}
+          showCelebration={showCelebration}
+          onDealCompleteFinished={resetDealComplete}
+          onCelebrationFinished={resetCelebration}
         />
       </div>
     </LayoutContext.Provider>

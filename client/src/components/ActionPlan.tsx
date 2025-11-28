@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { Info, CheckCircle } from "lucide-react";
-import MilestoneCompletionModal from "./MilestoneCompletionModal";
 
 export type DealType = "hot" | "warm" | "cold" | "new";
 
@@ -138,18 +137,9 @@ export default function ActionPlan({
 }: ActionPlanProps) {
   const [hoveredId, setHoveredId] = useState<DealType | null>(null);
   const [goalTooltipOpen, setGoalTooltipOpen] = useState(false);
-  const [showCelebration, setShowCelebration] = useState(false);
-
-  const handleCelebrationComplete = () => {
-    setShowCelebration(false);
-    if (onMilestoneComplete) {
-      onMilestoneComplete();
-    }
-  };
 
   const handleFilterClick = (filter: DealType | "goal" | "completed") => {
     if (onFilterChange) {
-      // Toggle off if already active
       if (activeFilter === filter) {
         onFilterChange(null);
       } else {
@@ -159,20 +149,14 @@ export default function ActionPlan({
   };
 
   const handleNewDealsClick = () => {
-    if (completionPercent >= 100) {
-      setShowCelebration(true);
+    if (completionPercent >= 100 && onMilestoneComplete) {
+      onMilestoneComplete();
     } else {
       handleFilterClick("new");
     }
   };
 
   return (
-    <>
-      <MilestoneCompletionModal 
-        isOpen={showCelebration} 
-        userName={userName}
-        onComplete={handleCelebrationComplete}
-      />
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
       <div className="flex justify-between items-end mb-8">
         <div className="w-1/2">
@@ -369,6 +353,5 @@ export default function ActionPlan({
         ))}
       </div>
     </div>
-    </>
   );
 }

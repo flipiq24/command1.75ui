@@ -20,6 +20,7 @@ interface OutreachActionPlanProps {
   onStart?: () => void;
   connectionsMade?: number;
   dailyGoal?: number;
+  onComplete?: () => void;
 }
 
 export default function OutreachActionPlan({ 
@@ -30,7 +31,8 @@ export default function OutreachActionPlan({
   hasStarted = false,
   onStart,
   connectionsMade = 0,
-  dailyGoal = 30
+  dailyGoal = 30,
+  onComplete
 }: OutreachActionPlanProps) {
   
   const connectionsCompleted = connectionsMade;
@@ -329,6 +331,19 @@ export default function OutreachActionPlan({
         </div>
 
       </div>
+
+      {hasStarted && onComplete && (
+        <div className="mt-6 pt-6 border-t border-gray-100 flex justify-center">
+          <button
+            onClick={onComplete}
+            className="px-8 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white rounded-full text-sm font-bold shadow-lg hover:shadow-xl transition-all flex items-center gap-2"
+            data-testid="button-complete-day"
+          >
+            <Flame className="w-5 h-5" />
+            Complete Day & View Summary
+          </button>
+        </div>
+      )}
     </div>
   );
 }

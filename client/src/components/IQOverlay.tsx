@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { X, Send, Lightbulb, Flame, Clock, Phone, Home, ChevronRight, ExternalLink, Plus, Mic, AudioLines } from 'lucide-react';
+import { X, Send, Lightbulb, Flame, Clock, Phone, Home, ChevronRight, ExternalLink, Plus, Mic, AudioLines, Users, Mail, BarChart2 } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation } from 'wouter';
+import MilestoneCompletionModal from './MilestoneCompletionModal';
 
 interface Message {
   id: string;
@@ -34,7 +35,10 @@ interface IQOverlayProps {
   userName?: string;
   deals?: any[];
   sidebarCollapsed?: boolean;
-  showSummary?: boolean;
+  showDealComplete?: boolean;
+  showCelebration?: boolean;
+  onDealCompleteFinished?: () => void;
+  onCelebrationFinished?: () => void;
 }
 
 const SAMPLE_PROPERTIES: PropertyCard[] = [
@@ -85,57 +89,110 @@ const SAMPLE_PROPERTIES: PropertyCard[] = [
   }
 ];
 
-export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = [], sidebarCollapsed = false, showSummary = false }: IQOverlayProps) {
+export default function IQOverlay({ isOpen, onClose, userName = 'Tony', deals = [], sidebarCollapsed = false, showDealComplete = false, showCelebration: showCelebrationProp = false, onDealCompleteFinished, onCelebrationFinished }: IQOverlayProps) {
   const [, setLocation] = useLocation();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
-  const [currentPhase, setCurrentPhase] = useState<'checkin' | 'briefing' | 'dealreview' | 'summary'>('checkin');
+  const [currentPhase, setCurrentPhase] = useState<'checkin' | 'briefing' | 'dealreview' | 'deal_complete' | 'outreach_intro' | 'outreach_complete' | 'summary'>('checkin');
   const [currentPropertyIndex, setCurrentPropertyIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const [streamingText, setStreamingText] = useState('');
   const [checkinStep, setCheckinStep] = useState(0);
   const [isVoiceActive, setIsVoiceActive] = useState(false);
+  const [helpRequestDetails, setHelpRequestDetails] = useState<string | null>(null);
+  const [blockerDetails, setBlockerDetails] = useState<string | null>(null);
+  const [showCelebrationModal, setShowCelebrationModal] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (showSummary && isOpen) {
+    if (showDealComplete && isOpen && currentPhase !== 'deal_complete' && currentPhase !== 'outreach_intro') {
+      setCurrentPhase('deal_complete');
+      setMessages([]);
+      showDealCompleteSummary();
+    }
+  }, [showDealComplete, isOpen, currentPhase]);
+
+  useEffect(() => {
+    if (showCelebrationProp && isOpen && currentPhase !== 'summary' && !showCelebrationModal) {
       setCurrentPhase('summary');
       setMessages([]);
-      generateDailySummary();
+      setShowCelebrationModal(true);
     }
-  }, [showSummary, isOpen]);
+  }, [showCelebrationProp, isOpen, currentPhase, showCelebrationModal]);
+
+  const handleCelebrationComplete = useCallback(() => {
+    setShowCelebrationModal(false);
+    if (onCelebrationFinished) {
+      onCelebrationFinished();
+    }
+    generateFinalSummary();
+  }, [onCelebrationFinished]);
 
   const properties = SAMPLE_PROPERTIES;
   const currentProperty = properties[currentPropertyIndex];
 
+  // Pipeline stats that match the Action Plan component
   const pipelineStats = {
     criticals: 5,
     reminders: 3,
     hot: 2,
     warm: 1,
     cold: 1,
-    new: 56,
+    new: 52,
     offersNone: 12,
-    totalProperties: 60,
+    totalProperties: 56,
     agentCalls: 30,
+    priorityCalls: 5,
+    campaigns: 3,
     offersOut: 0,
-    offersGoal: 5,
-    conversations: 3,
-    conversationsGoal: 30,
-    priorityCalls: 0,
-    priorityCallsGoal: 5,
-    campaignsSent: 0,
-    campaignsGoal: 3
+    offersGoal: 3,
+    conversations: 0,
+    conversationsGoal: 30
+  };
+
+  // Outreach stats
+  const outreachStats = {
+    newRelationships: 30,
+    priorityAgents: 5,
+    campaignsToSend: 3
+  };
+
+  // Completed stats (for summaries)
+  const completedStats = {
+    dealsProcessed: 56,
+    hotDeals: 2,
+    warmDeals: 1,
+    coldDeals: 1,
+    newDeals: 52,
+    offersSent: 3,
+    callsMade: 30,
+    conversationsHad: 15,
+    newRelationships: 5,
+    priorityAgentsCalled: 5,
+    campaignsSent: 3
+  };
+
+  const getDayDescriptor = () => {
+    const dayOfWeek = new Date().getDay();
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const descriptors = [
+      'beautiful day',
+      'productive Monday',
+      'exciting Tuesday',
+      'wonderful Wednesday',
+      'productive Thursday',
+      'exciting Friday',
+      'great Saturday'
+    ];
+    return descriptors[dayOfWeek];
   };
 
   const getDynamicGreeting = () => {
     const greetings = [
-      "You've got a full plate today",
-      "You've got a solid lineup today", 
-      "Big day ahead",
-      "Plenty of opportunities waiting",
-      "Ready to make some moves today"
+      "a full plate",
+      "lots of opportunities",
+      "some hot deals"
     ];
     const dayOfWeek = new Date().getDay();
     return greetings[dayOfWeek % greetings.length];
@@ -144,6 +201,14 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
   const goToDealReview = () => {
     onClose();
     setLocation('/?filter=hot');
+  };
+
+  const goToDailyOutreach = () => {
+    if (onDealCompleteFinished) {
+      onDealCompleteFinished();
+    }
+    onClose();
+    setLocation('/daily-outreach');
   };
 
   const toggleVoice = () => {
@@ -165,10 +230,6 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
 
   const getCurrentTime = () => {
     return new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-  };
-
-  const getCurrentDate = () => {
-    return new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
   };
 
   const getTimeOfDay = () => {
@@ -224,6 +285,7 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
     const sessionState = getSessionState();
     const timeOfDay = getTimeOfDay();
     const dynamicGreeting = getDynamicGreeting();
+    const dayDescriptor = getDayDescriptor();
     
     if (sessionState === 'returning_after_lunch') {
       return `Welcome back, ${userName}!\n\nHope you had a good lunch.\n\nThis morning you:\n• Reviewed ${progressStats.dealsReviewedAM} deals\n• Sent ${progressStats.offersOutAM} offers\n• Made ${progressStats.callsMadeAM} calls\n\nYou've got ${progressStats.dealsLeft} deals, ${progressStats.offersLeft} offers, and ${progressStats.callsLeft} calls left for today.\n\nReady to finish strong?`;
@@ -238,14 +300,14 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
     }
     
     if (timeOfDay === 'afternoon') {
-      return `Good afternoon, ${userName}.\n\nI'll check you in at ${getCurrentTime()}.\n\n${dynamicGreeting}, so I just want to make sure you're ready to take it on.\n\nAre you able to work the rest of the day?`;
+      return `Good afternoon, ${userName}.\n\nI'll check you in at ${getCurrentTime()}.\n\nYou've got ${dynamicGreeting} today, so I just want to make sure you're ready to take it on.\n\nAre you able to work the rest of the day?`;
     }
     
     if (timeOfDay === 'evening') {
       return `Good evening, ${userName}.\n\nI'll check you in at ${getCurrentTime()}.\n\nLate session? Let's make it count.\n\nHow much time do you have to work tonight?`;
     }
     
-    return `Good morning, ${userName}.\n\nI'll check you in for this beautiful day at ${getCurrentTime()}.\n\n${dynamicGreeting}, so I just want to make sure you're ready to take it on.\n\nAre you able to work a full day today?`;
+    return `Good morning, ${userName}.\n\nI'll check you in for this ${dayDescriptor} at ${getCurrentTime()}.\n\nYou've got ${dynamicGreeting} today, so I just want to make sure you're ready to take it on.\n\nAre you able to work a full day today?`;
   };
 
   const streamMessage = useCallback(async (text: string, callback?: () => void) => {
@@ -296,56 +358,172 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
     }
   };
 
-  const generateDailySummary = useCallback(() => {
-    const summaryStats = {
-      dealsProcessed: 56,
-      hotDeals: 2,
-      warmDeals: 1,
-      coldDeals: 1,
-      newDeals: 52,
-      offersSent: 3,
-      offersGoal: 3,
-      callsMade: 30,
-      callsGoal: 30,
-      conversationsHad: 15,
-      newRelationships: 5,
-      priorityAgentsCalled: 5,
-      campaignsSent: 3
-    };
+  // AA2 Deal Complete Summary - "Why it Matters"
+  const showDealCompleteSummary = async () => {
+    setCurrentPhase('deal_complete');
+    
+    const summaryMessage = `All done with your active properties for today. This is what you did and why it matters:
 
+**Summary:**
+✓ ${pipelineStats.criticals} criticals completed
+✓ ${pipelineStats.reminders} reminders logged
+✓ ${pipelineStats.hot} hot properties followed up
+✓ AutoTrackers activated where needed and notes made
+
+**Why it Matters:**
+iQ's job is to keep you in front of each property and agent when it matters. By communicating with efficiency and staying on top of it, this lets the agent know you're consistent and professional. This will translate moving forward to open escrow and all the way to closing.
+
+If you want to see your deals you can always ask me or go to Pipeline > My Deals and it's all there. You can also ask me and I will get you a report with clickable links to any or all your daily, weekly or monthly work and updates so you can verify all your work is properly processed and easily available!
+
+**Great Job!!** I'm sending this summary to your AM now.
+
+Are you ready to build relationships while finding deals? :)`;
+
+    await streamMessage(summaryMessage);
+    
+    setTimeout(() => {
+      setMessages(prev => [...prev, {
+        id: 'start-outreach-button',
+        role: 'ai',
+        content: '',
+        component: (
+          <div className="flex gap-3 mt-4">
+            <button
+              onClick={showOutreachIntro}
+              className="px-6 py-3 bg-[#FF6600] hover:bg-[#e65c00] text-white font-bold rounded-xl shadow-lg transition flex items-center gap-2"
+              data-testid="button-start-daily-outreach"
+            >
+              <Phone className="w-5 h-5" />
+              Start Daily Outreach
+            </button>
+          </div>
+        )
+      }]);
+    }, 300);
+  };
+
+  // AA3 Daily Outreach Intro
+  const showOutreachIntro = async () => {
+    setCurrentPhase('outreach_intro');
+    setMessages(prev => prev.filter(m => m.id !== 'start-outreach-button'));
+    
+    await streamMessage(`Awesome!! I hand-picked deals for you that have high propensity to sell and I will give you a script on each on how to talk to the agent so we can make ${outreachStats.newRelationships} solid contacts!
+
+Let's build relationships while finding high propensity to sell deals!`);
+
+    setTimeout(() => {
+      setMessages(prev => [...prev, {
+        id: 'outreach-stats-card',
+        role: 'ai',
+        content: '',
+        component: (
+          <div className="my-4">
+            <div className="border-2 border-gray-300 rounded-xl p-5 bg-white">
+              <div className="text-center font-bold text-gray-700 mb-4">📞 DAILY OUTREACH GOALS</div>
+              <div className="grid grid-cols-3 gap-4 text-center">
+                <div className="bg-blue-50 rounded-lg p-4">
+                  <div className="text-3xl font-black text-blue-600">0/{outreachStats.newRelationships}</div>
+                  <div className="text-xs text-gray-500 mt-1">New Agent Relationships</div>
+                </div>
+                <div className="bg-orange-50 rounded-lg p-4">
+                  <div className="text-3xl font-black text-orange-600">0/{outreachStats.priorityAgents}</div>
+                  <div className="text-xs text-gray-500 mt-1">Call Priority Agents</div>
+                </div>
+                <div className="bg-purple-50 rounded-lg p-4">
+                  <div className="text-3xl font-black text-purple-600">0/{outreachStats.campaignsToSend}</div>
+                  <div className="text-xs text-gray-500 mt-1">Send Campaigns</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+      }]);
+
+      setTimeout(() => {
+        setMessages(prev => [...prev, {
+          id: 'go-outreach-button',
+          role: 'ai',
+          content: '',
+          component: (
+            <div className="flex gap-3 mt-4">
+              <button
+                onClick={goToDailyOutreach}
+                className="px-6 py-3 bg-[#FF6600] hover:bg-[#e65c00] text-white font-bold rounded-xl shadow-lg transition flex items-center gap-2"
+                data-testid="button-go-daily-outreach-aa3"
+              >
+                <Phone className="w-5 h-5" />
+                Start Daily Outreach
+                <ExternalLink className="w-4 h-4" />
+              </button>
+            </div>
+          )
+        }]);
+      }, 300);
+    }, 300);
+  };
+
+  // Final Summary after ALL daily tasks complete (AA3 complete)
+  const generateFinalSummary = useCallback(() => {
     const summaryMessage = `🎉 **Daily Summary Complete!**
 
 Great work today, ${userName}! Here's what you accomplished:
 
 📊 **Deal Activity**
-• Processed ${summaryStats.dealsProcessed} total deals
-• Hot Deals: ${summaryStats.hotDeals} reviewed
-• Warm Deals: ${summaryStats.warmDeals} reviewed  
-• Cold Deals: ${summaryStats.coldDeals} reviewed
-• New Deals: ${summaryStats.newDeals} categorized
+• Processed ${completedStats.dealsProcessed} total deals
+• Hot Deals: ${completedStats.hotDeals} reviewed
+• Warm Deals: ${completedStats.warmDeals} reviewed
+• Cold Deals: ${completedStats.coldDeals} reviewed
+• New Deals: ${completedStats.newDeals} categorized
 
 📝 **Offers**
-• Offers Sent: ${summaryStats.offersSent}/${summaryStats.offersGoal} ✅
-• Goal Met: ${summaryStats.offersSent >= summaryStats.offersGoal ? 'Yes! 🎯' : 'Not yet'}
+• Offers Sent: ${completedStats.offersSent}/${pipelineStats.offersGoal} ✅
+• Goal Met: Yes! 🎯
 
 📞 **Outreach**
-• Calls Made: ${summaryStats.callsMade}/${summaryStats.callsGoal} ✅
-• Conversations: ${summaryStats.conversationsHad}
-• New Relationships Built: ${summaryStats.newRelationships}
-• Priority Agents Called: ${summaryStats.priorityAgentsCalled}
-• Campaigns Sent: ${summaryStats.campaignsSent}
+• Calls Made: ${completedStats.callsMade}/${pipelineStats.agentCalls} ✅
+• Conversations: ${completedStats.conversationsHad}
+• New Relationships Built: ${completedStats.newRelationships}
+• Priority Agents Called: ${completedStats.priorityAgentsCalled}
+• Campaigns Sent: ${completedStats.campaignsSent}
 
-🏆 **Achievement Unlocked**
-You completed 100% of your Action Plan today!
+🏆 **Achievement Unlocked!**
 
-Keep up the amazing work. See you tomorrow! 💪`;
+**This is why this matters:**
+Now you have ${completedStats.offersSent} more offers sent and ${completedStats.newRelationships} new agent relationships that you can add to campaigns. You made ${completedStats.offersSent} offers and connected with ${completedStats.callsMade} agents.
+
+Here is how we track your updates and you can always easily find them by asking iQ or going to My Deals on the sidebar navigation.
+
+Let's debrief and see how you did today!`;
 
     setMessages([{
       id: Date.now().toString(),
       role: 'ai',
       content: summaryMessage
     }]);
-  }, [userName]);
+
+    setTimeout(() => {
+      setMessages(prev => [...prev, {
+        id: 'view-stats-button',
+        role: 'ai',
+        content: '',
+        component: (
+          <div className="flex gap-3 mt-4">
+            <button
+              onClick={() => {
+                onClose();
+                setLocation('/my-stats');
+              }}
+              className="px-6 py-3 bg-[#FF6600] hover:bg-[#e65c00] text-white font-bold rounded-xl shadow-lg transition flex items-center gap-2"
+              data-testid="button-view-my-stats"
+            >
+              <BarChart2 className="w-5 h-5" />
+              View My Stats Report
+            </button>
+          </div>
+        )
+      }]);
+    }, 500);
+  }, [userName, onClose, setLocation]);
 
   const addPropertyCard = useCallback((property: PropertyCard) => {
     const typeEmoji = property.type === 'hot' ? '🔥 HOT' : property.type === 'warm' ? '🌡️ WARM' : property.type === 'cold' ? '❄️ COLD' : '🆕 NEW';
@@ -428,7 +606,7 @@ Keep up the amazing work. See you tomorrow! 💪`;
   }, []);
 
   useEffect(() => {
-    if (isOpen && messages.length === 0) {
+    if (isOpen && messages.length === 0 && !showDealComplete && !showCelebrationProp) {
       const sessionState = getSessionState();
       const greeting = getContextualGreeting();
       
@@ -450,12 +628,12 @@ Keep up the amazing work. See you tomorrow! 💪`;
         }
       }, 500);
     }
-  }, [isOpen, messages.length, userName, streamMessage]);
+  }, [isOpen, messages.length, userName, streamMessage, showDealComplete, showCelebrationProp]);
 
   const showDailyBriefing = async () => {
     setCurrentPhase('briefing');
     
-    await streamMessage(`Alright ${userName}, here's your action plan for today:`);
+    await streamMessage(`Here's your action plan for today:`);
     
     setTimeout(() => {
       setMessages(prev => [...prev, {
@@ -497,36 +675,12 @@ Keep up the amazing work. See you tomorrow! 💪`;
                 </div>
               </div>
             </div>
-            
-            <div className="border-2 border-gray-300 rounded-xl p-5 bg-white mt-4">
-              <div className="text-center font-bold text-gray-700 mb-4">🎯 TODAY'S GOALS</div>
-              <div className="border-t border-gray-200 pt-3 space-y-2">
-                <div className="flex justify-between items-center">
-                  <span>📝 Offers Out:</span>
-                  <span className={pipelineStats.offersOut >= pipelineStats.offersGoal ? "font-bold text-green-600" : "font-bold text-gray-600"}>
-                    {pipelineStats.offersOut} / {pipelineStats.offersGoal}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span>📞 Agent Calls:</span>
-                  <span className="font-bold text-gray-600">
-                    0 / {pipelineStats.agentCalls}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span>💬 Conversations:</span>
-                  <span className={pipelineStats.conversations >= pipelineStats.conversationsGoal ? "font-bold text-green-600" : "font-bold text-gray-600"}>
-                    {pipelineStats.conversations} / {pipelineStats.conversationsGoal}
-                  </span>
-                </div>
-              </div>
-            </div>
           </div>
         )
       }]);
       
       setTimeout(async () => {
-        await streamMessage(`Today we're going to go over all your active properties and call about ${pipelineStats.agentCalls} agents with high-propensity-to-sell listings.\n\nAs we go through the day, I'll help where needed or get your Acquisition Manager involved if anything stalls.\n\nAre you ready to get started?`);
+        await streamMessage(`Let's start by navigating to your Deal Review.`);
         
         setTimeout(() => {
           setMessages(prev => [...prev, {
@@ -542,17 +696,6 @@ Keep up the amazing work. See you tomorrow! 💪`;
                 >
                   <Flame className="w-5 h-5" />
                   Go to Deal Review
-                </button>
-                <button
-                  onClick={() => {
-                    onClose();
-                    setLocation('/daily-outreach');
-                  }}
-                  className="px-6 py-3 bg-white hover:bg-gray-50 text-gray-700 font-bold rounded-xl shadow-lg border-2 border-gray-200 transition flex items-center gap-2"
-                  data-testid="button-go-daily-outreach"
-                >
-                  <Phone className="w-5 h-5" />
-                  Daily Outreach
                 </button>
               </div>
             )
@@ -572,10 +715,11 @@ Keep up the amazing work. See you tomorrow! 💪`;
     if (!inputValue.trim()) return;
     
     const userMessage = inputValue.trim().toLowerCase();
+    const originalInput = inputValue.trim();
     setMessages(prev => [...prev, {
       id: Date.now().toString(),
       role: 'user',
-      content: inputValue.trim()
+      content: originalInput
     }]);
     setInputValue('');
 
@@ -605,31 +749,85 @@ Keep up the amazing work. See you tomorrow! 💪`;
         }
       } else if (checkinStep === 2) {
         // Step 2: Is there anything you'll need help with?
-        if (userMessage === 'no' || userMessage === 'n' || userMessage.includes('no') || userMessage.includes('nothing') || userMessage.includes("i'm good") || userMessage.includes("nope")) {
+        const isNo = userMessage === 'no' || userMessage === 'n' || userMessage.includes('no') || userMessage.includes('nothing') || userMessage.includes("i'm good") || userMessage.includes("nope");
+        
+        if (isNo) {
           setTimeout(async () => {
-            await streamMessage(`Alright ${userName}, today we're going to go over all your active properties and call about ${pipelineStats.agentCalls} agents with high-propensity-to-sell listings.\n\nIs there anything that might prevent you from getting those calls done today?`);
+            await streamMessage(`Alright ${userName}, today we're going to go over all your active properties, Criticals and notifications. After that we will help you connect with about ${pipelineStats.agentCalls} agents with high-propensity-to-sell listings. Once you complete that we will help you connect with your Priority Agents and then send out a few campaigns to your Hot, Warm and Cold to keep you top of mind.\n\nIs there anything that might prevent you from getting to all those items today?`);
             setCheckinStep(3);
           }, 300);
         } else {
+          // User needs help - capture details
+          setHelpRequestDetails(originalInput);
           setTimeout(async () => {
-            await streamMessage(`Got it. I'll send a note to your AM right now so they can support you before we start.\n\nAlright ${userName}, today we're going to go over all your active properties and call about ${pipelineStats.agentCalls} agents with high-propensity-to-sell listings.\n\nIs there anything that might prevent you from getting those calls done today?`);
-            setCheckinStep(3);
+            await streamMessage(`Got it. Tell me what you need help with:`);
+            setCheckinStep(2.5); // Waiting for help details
           }, 300);
         }
-      } else if (checkinStep === 3) {
-        // Step 3: Any blockers for calls? (Also handles returning users)
+      } else if (checkinStep === 2.5) {
+        // Step 2.5: Capture help details and show confirmation
+        setHelpRequestDetails(originalInput);
         setTimeout(async () => {
-          if (userMessage === 'no' || userMessage === 'n' || userMessage.includes('no') || userMessage.includes('nothing') || userMessage.includes('nope') || userMessage.includes('ready') || userMessage.includes('yes') || userMessage.includes('good')) {
-            await streamMessage(`Perfect. You're locked in.\n\nLet me load your Action Plan to get started.`);
-          } else {
-            await streamMessage(`Understood — I'll make a note of that and send an update to your AM.\n\nLet's clear what we can now so you can focus on the calls.`);
-          }
-          setCheckinStep(5);
+          await streamMessage(`I'll send this note to your AM right now:\n\n"${userName} needs help with: ${originalInput}"\n\nIs this correct?`);
           
           setTimeout(() => {
-            showDailyBriefing();
-          }, 800);
+            setMessages(prev => [...prev, {
+              id: 'confirm-help-buttons',
+              role: 'ai',
+              content: '',
+              component: (
+                <div className="flex gap-3 mt-4">
+                  <button
+                    onClick={async () => {
+                      setMessages(prev => prev.filter(m => m.id !== 'confirm-help-buttons'));
+                      await streamMessage(`✓ Note sent to your AM.\n\nAlright ${userName}, today we're going to go over all your active properties, Criticals and notifications. After that we will help you connect with about ${pipelineStats.agentCalls} agents with high-propensity-to-sell listings. Once you complete that we will help you connect with your Priority Agents and then send out a few campaigns to your Hot, Warm and Cold to keep you top of mind.\n\nIs there anything that might prevent you from getting to all those items today?`);
+                      setCheckinStep(3);
+                    }}
+                    className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition"
+                    data-testid="button-confirm-help-yes"
+                  >
+                    Yes, Send It
+                  </button>
+                  <button
+                    onClick={async () => {
+                      setMessages(prev => prev.filter(m => m.id !== 'confirm-help-buttons'));
+                      await streamMessage(`No problem. Tell me again what you need help with:`);
+                    }}
+                    className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-lg transition"
+                    data-testid="button-confirm-help-no"
+                  >
+                    No, Let Me Rephrase
+                  </button>
+                </div>
+              )
+            }]);
+          }, 300);
         }, 300);
+      } else if (checkinStep === 3) {
+        // Step 3: Any blockers for calls? (Also handles returning users)
+        const isNo = userMessage === 'no' || userMessage === 'n' || userMessage.includes('no') || userMessage.includes('nothing') || userMessage.includes('nope') || userMessage.includes('ready') || userMessage.includes('yes') || userMessage.includes('good');
+        
+        if (isNo) {
+          setTimeout(async () => {
+            await streamMessage(`Perfect. You're locked in for a full day.\n\nI'll mark you as available and load your Action Plan to get started.`);
+            setCheckinStep(5);
+            
+            setTimeout(() => {
+              showDailyBriefing();
+            }, 800);
+          }, 300);
+        } else {
+          // User has blockers - capture details
+          setBlockerDetails(originalInput);
+          setTimeout(async () => {
+            await streamMessage(`Understood — I'll make a note of that and send an update to your AM.\n\nLet's clear what we can now so you can focus on the calls.`);
+            setCheckinStep(5);
+            
+            setTimeout(() => {
+              showDailyBriefing();
+            }, 800);
+          }, 300);
+        }
       } else if (checkinStep === 4) {
         // Step 4: Quick check-in for continuing sessions ("Is everything going smoothly?")
         setTimeout(async () => {
@@ -649,15 +847,14 @@ Keep up the amazing work. See you tomorrow! 💪`;
       if (userMessage.includes('start') || userMessage.includes('ready') || userMessage.includes('go') || userMessage.includes('begin') || userMessage.includes('deal')) {
         goToDealReview();
       } else if (userMessage.includes('outreach') || userMessage.includes('call') || userMessage.includes('agent')) {
-        onClose();
-        setLocation('/daily-outreach');
+        goToDailyOutreach();
       } else {
         // Use AI for free-form questions during briefing
         setIsTyping(true);
         setStreamingText('Thinking...');
         try {
           const aiResponse = await getAIResponse(
-            `User is in the daily briefing phase. They have ${pipelineStats.hot} hot deals, ${pipelineStats.warm} warm deals, ${pipelineStats.cold} cold deals, and ${pipelineStats.new} new deals. Goals: ${pipelineStats.offersGoal} offers, ${pipelineStats.conversationsGoal} conversations. User asks: ${inputValue.trim()}`
+            `User is in the daily briefing phase. They have ${pipelineStats.hot} hot deals, ${pipelineStats.warm} warm deals, ${pipelineStats.cold} cold deals, and ${pipelineStats.new} new deals. Goals: ${pipelineStats.offersGoal} offers, ${pipelineStats.conversationsGoal} conversations. User asks: ${originalInput}`
           );
           setIsTyping(false);
           setStreamingText('');
@@ -665,7 +862,7 @@ Keep up the amazing work. See you tomorrow! 💪`;
         } catch (error) {
           setIsTyping(false);
           setStreamingText('');
-          await streamMessage("Click the 'Start Deal Review' button above when you're ready to begin!");
+          await streamMessage("Click the 'Go to Deal Review' button above when you're ready to begin!");
         }
       }
     } else if (currentPhase === 'dealreview') {
@@ -677,7 +874,7 @@ Keep up the amazing work. See you tomorrow! 💪`;
         setStreamingText('Analyzing...');
         try {
           const aiResponse = await getAIResponse(
-            `User is reviewing a property at ${currentProperty.address}. Price: ${currentProperty.price}, Propensity: ${currentProperty.propensity}, Flags: ${currentProperty.flags.join(', ')}. User asks: ${inputValue.trim()}`
+            `User is reviewing a property at ${currentProperty.address}. Price: ${currentProperty.price}, Propensity: ${currentProperty.propensity}, Flags: ${currentProperty.flags.join(', ')}. User asks: ${originalInput}`
           );
           setIsTyping(false);
           setStreamingText('');
@@ -687,6 +884,28 @@ Keep up the amazing work. See you tomorrow! 💪`;
           setStreamingText('');
           await streamMessage(`Based on the property at ${currentProperty.address}:\n\nThe ${currentProperty.flags.join(' and ')} flags indicate higher seller motivation. With a propensity score of ${currentProperty.propensity}, this is a strong opportunity.\n\nWould you like me to draft talking points for your call, or shall we move to the next property?`);
         }
+      }
+    } else if (currentPhase === 'deal_complete') {
+      if (userMessage.includes('yes') || userMessage.includes('ready') || userMessage.includes('outreach') || userMessage.includes('build')) {
+        showOutreachIntro();
+      } else {
+        await streamMessage(`Great question! Click "Start Daily Outreach" when you're ready to build relationships with ${outreachStats.newRelationships} agents with high propensity deals.`);
+      }
+    } else if (currentPhase === 'summary') {
+      // AI-powered chat for stats questions
+      setIsTyping(true);
+      setStreamingText('Analyzing your stats...');
+      try {
+        const aiResponse = await getAIResponse(
+          `User completed their daily workflow. Stats: ${completedStats.dealsProcessed} deals processed, ${completedStats.offersSent} offers sent, ${completedStats.callsMade} calls made, ${completedStats.conversationsHad} conversations. User asks: ${originalInput}`
+        );
+        setIsTyping(false);
+        setStreamingText('');
+        await streamMessage(aiResponse);
+      } catch (error) {
+        setIsTyping(false);
+        setStreamingText('');
+        await streamMessage(`Great job today! You processed ${completedStats.dealsProcessed} deals, sent ${completedStats.offersSent} offers, and made ${completedStats.callsMade} calls. Click "View My Stats Report" for the full breakdown.`);
       }
     }
   };
@@ -736,7 +955,8 @@ Keep up the amazing work. See you tomorrow! 💪`;
         }, 300);
       }, 500);
     } else {
-      await streamMessage("🎉 Great work! You've reviewed all priority properties for today.\n\nWould you like me to:\n• Generate a summary of today's review\n• Move to Daily Outreach calls\n• Exit and return to dashboard");
+      // All properties reviewed - show deal complete summary
+      showDealCompleteSummary();
     }
   };
 
@@ -747,9 +967,27 @@ Keep up the amazing work. See you tomorrow! 💪`;
     }
   };
 
-  if (!isOpen) return null;
+  const getPhaseLabel = () => {
+    switch (currentPhase) {
+      case 'checkin': return 'AA1 Check-In';
+      case 'briefing': return 'AA2 Today\'s Action Plan';
+      case 'dealreview': return `AA2 Deal Review — Property ${currentPropertyIndex + 1}/${properties.length}`;
+      case 'deal_complete': return 'AA2 Deal Review Complete';
+      case 'outreach_intro': return 'AA3 Daily Outreach';
+      case 'outreach_complete': return 'AA3 Outreach Complete';
+      case 'summary': return 'Daily Summary';
+      default: return '';
+    }
+  };
 
   return (
+    <>
+    <MilestoneCompletionModal 
+      isOpen={showCelebrationModal} 
+      userName={userName}
+      onComplete={handleCelebrationComplete}
+    />
+    {isOpen && (
     <AnimatePresence>
       <motion.div
         initial={{ opacity: 0 }}
@@ -773,11 +1011,7 @@ Keep up the amazing work. See you tomorrow! 💪`;
               </div>
               <div>
                 <h2 className="text-lg font-bold text-gray-900">FlipIQ Assistant</h2>
-                <p className="text-xs text-gray-500">
-                  {currentPhase === 'checkin' && 'AA1 Check-In'}
-                  {currentPhase === 'briefing' && 'Daily Briefing'}
-                  {currentPhase === 'dealreview' && `AA2 Deal Review — Property ${currentPropertyIndex + 1}/${properties.length}`}
-                </p>
+                <p className="text-xs text-gray-500">{getPhaseLabel()}</p>
               </div>
             </div>
             <button
@@ -908,5 +1142,7 @@ Keep up the amazing work. See you tomorrow! 💪`;
         </motion.div>
       </motion.div>
     </AnimatePresence>
+    )}
+    </>
   );
 }

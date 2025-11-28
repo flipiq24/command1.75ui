@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect, useCallback, useLayoutEffect } fro
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import OutreachActionPlan, { OutreachType } from "@/components/OutreachActionPlan";
-import Layout from "@/components/Layout";
+import Layout, { useLayout } from "@/components/Layout";
 import { 
   ChevronDown,
   ChevronLeft,
@@ -353,6 +353,7 @@ const getPropensityColor = (text: string) => {
 
 export default function DailyOutreach() {
   const [, setLocation] = useLocation();
+  const { openIQWithCelebration } = useLayout();
   const [activeFilter, setActiveFilter] = useState<OutreachType | null>('connections');
   const [selectedDealIds, setSelectedDealIds] = useState<number[]>([]);
   const [iQViewMode, setIQViewMode] = useState<'stats' | 'description'>('stats');
@@ -892,6 +893,7 @@ export default function DailyOutreach() {
             onStart={handleStart}
             connectionsMade={connectionsMade}
             dailyGoal={dailyGoal}
+            onComplete={openIQWithCelebration}
           />
 
           {hasStarted ? (
