@@ -65,6 +65,7 @@ interface StreamingLine {
   isLink?: boolean;
   linkUrl?: string;
   color?: string;
+  isDiveIn?: boolean;
 }
 
 const useTypingEffect = (lines: StreamingLine[], triggerKey: number) => {
@@ -431,6 +432,7 @@ export default function DailyOutreach() {
       { type: 'bullet', value: 'Aged listing (≥70 DOM) with strong discount potential.' },
       { type: 'bullet', value: 'Price-to-value ratio suggests room for negotiation.' },
       { type: 'action', value: 'Would you like me to run a detailed AI report?' },
+      { type: 'action', value: "Let's dive into the property —", isDiveIn: true },
     ];
   }, [currentDeal, iqRevealKey, propensityScore]);
 
@@ -965,7 +967,7 @@ export default function DailyOutreach() {
                                           <span className="inline-block w-0.5 h-4 bg-[#FF6600] ml-0.5 animate-pulse"></span>
                                         )}
                                       </p>
-                                      {showCompletionState && (
+                                      {showCompletionState && !line.isDiveIn && (
                                         <button 
                                           onClick={() => setLocation(`/piq/${currentDeal.id}?from=new-agent&report=true`)}
                                           className="mt-3 bg-[#FF6600] hover:bg-[#e65c00] text-white text-xs font-bold py-2 px-4 rounded-lg shadow-sm transition animate-in fade-in duration-300"
@@ -973,6 +975,24 @@ export default function DailyOutreach() {
                                         >
                                           Generate AI Report
                                         </button>
+                                      )}
+                                      {showCompletionState && line.isDiveIn && (
+                                        <div className="mt-3 flex items-center gap-3">
+                                          <button 
+                                            onClick={() => setLocation(`/piq/${currentDeal.id}`)}
+                                            className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-bold rounded-lg shadow-sm transition animate-in fade-in duration-300"
+                                            data-testid="button-yes-dive-in"
+                                          >
+                                            Yes
+                                          </button>
+                                          <button 
+                                            onClick={handleNextDeal}
+                                            className="px-6 py-2 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-lg border border-gray-300 shadow-sm transition animate-in fade-in duration-300"
+                                            data-testid="button-no-skip"
+                                          >
+                                            No
+                                          </button>
+                                        </div>
                                       )}
                                     </div>
                                   </div>
