@@ -386,6 +386,8 @@ export default function DailyOutreach() {
     relationshipStatus: string;
     followUpStatus: string;
   }>>({});
+  const [agentCallsMade, setAgentCallsMade] = useState<Record<number, boolean>>({});
+  const [showCallFirstWarning, setShowCallFirstWarning] = useState(false);
   const [campaignSegments, setCampaignSegments] = useState([
     { 
       id: 'hot' as const, label: 'Hot', color: 'red' as const,
@@ -503,7 +505,22 @@ export default function DailyOutreach() {
   
   const handleCallNow = () => {
     setPriorityCallsMade(prev => prev + 1);
+    if (currentAgent) {
+      setAgentCallsMade(prev => ({ ...prev, [currentAgent.id]: true }));
+    }
     window.open(`tel:${currentAgent?.phone}`, '_self');
+  };
+  
+  const handleTextEmailClick = (action: 'text' | 'email') => {
+    if (!currentAgent || !agentCallsMade[currentAgent.id]) {
+      setShowCallFirstWarning(true);
+      return;
+    }
+    if (action === 'text') {
+      window.open(`sms:${currentAgent?.phone}`, '_self');
+    } else {
+      window.open(`mailto:${currentAgent?.email}`, '_self');
+    }
   };
   
   const handleSelectAgent = (id: number, checked: boolean) => {
@@ -1086,16 +1103,26 @@ export default function DailyOutreach() {
                     Call Now
                   </button>
                   <button
-                    onClick={() => window.open(`sms:${currentAgent?.phone}`, '_self')}
-                    className="px-6 py-2.5 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-lg border border-gray-300 shadow-sm transition flex items-center gap-2"
+                    onClick={() => handleTextEmailClick('text')}
+                    className={cn(
+                      "px-6 py-2.5 text-sm font-medium rounded-lg border shadow-sm transition flex items-center gap-2",
+                      currentAgent && agentCallsMade[currentAgent.id]
+                        ? "bg-white hover:bg-gray-50 text-gray-700 border-gray-300 cursor-pointer"
+                        : "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
+                    )}
                     data-testid="button-send-text"
                   >
                     <MessageSquare className="w-4 h-4" />
                     Send Text
                   </button>
                   <button
-                    onClick={() => window.open(`mailto:${currentAgent?.email}`, '_self')}
-                    className="px-6 py-2.5 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-lg border border-gray-300 shadow-sm transition flex items-center gap-2"
+                    onClick={() => handleTextEmailClick('email')}
+                    className={cn(
+                      "px-6 py-2.5 text-sm font-medium rounded-lg border shadow-sm transition flex items-center gap-2",
+                      currentAgent && agentCallsMade[currentAgent.id]
+                        ? "bg-white hover:bg-gray-50 text-gray-700 border-gray-300 cursor-pointer"
+                        : "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
+                    )}
                     data-testid="button-send-email"
                   >
                     <Mail className="w-4 h-4" />
@@ -2218,6 +2245,31 @@ export default function DailyOutreach() {
                   Skip Anyway
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Call First Warning Modal */}
+      {showCallFirstWarning && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/50" onClick={() => setShowCallFirstWarning(false)} />
+          <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-sm mx-4 animate-in fade-in zoom-in-95 duration-200">
+            <div className="p-6 text-center">
+              <div className="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center mx-auto mb-4">
+                <Phone className="w-6 h-6 text-[#FF6600]" />
+              </div>
+              <h2 className="text-lg font-bold text-gray-900 mb-2">Call Required First</h2>
+              <p className="text-sm text-gray-600 mb-6">
+                You must make an initial call before you can text and email this agent.
+              </p>
+              <button
+                onClick={() => setShowCallFirstWarning(false)}
+                className="w-full px-4 py-2.5 bg-[#FF6600] hover:bg-[#e65c00] text-white text-sm font-bold rounded-lg transition"
+                data-testid="button-close-call-warning"
+              >
+                Got It
+              </button>
             </div>
           </div>
         </div>
