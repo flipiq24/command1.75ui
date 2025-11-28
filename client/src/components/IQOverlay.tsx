@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { X, Send, Lightbulb, Flame, Clock, Phone, Home, ChevronRight } from 'lucide-react';
+import { X, Send, Lightbulb, Flame, Clock, Phone, Home, ChevronRight, ExternalLink } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation } from 'wouter';
 
 interface Message {
   id: string;
@@ -83,6 +84,7 @@ const SAMPLE_PROPERTIES: PropertyCard[] = [
 ];
 
 export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = [] }: IQOverlayProps) {
+  const [, setLocation] = useLocation();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [currentPhase, setCurrentPhase] = useState<'checkin' | 'dealreview'>('checkin');
@@ -95,6 +97,11 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
 
   const properties = SAMPLE_PROPERTIES;
   const currentProperty = properties[currentPropertyIndex];
+
+  const goToDealReview = () => {
+    onClose();
+    setLocation('/?filter=hot');
+  };
 
   const getCurrentTime = () => {
     return new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
@@ -301,19 +308,26 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
     setCurrentPhase('dealreview');
     setMessages(prev => prev.filter(m => m.id !== 'start-button'));
     
-    await streamMessage("Loading your Deal Review...\n\nHere's your first priority property:");
+    await streamMessage("Great! I've prepared your Deal Review with Hot Deals ready to go.\n\nYou have 2 hot properties that need immediate attention today. Click the link below to start reviewing them.");
     
     setTimeout(() => {
-      addPropertyCard(properties[0]);
-      
-      setTimeout(() => {
-        setMessages(prev => [...prev, {
-          id: 'next-prompt',
-          role: 'ai',
-          content: "Ready to proceed? Type 'next' or ask me anything about this property."
-        }]);
-      }, 300);
-    }, 500);
+      setMessages(prev => [...prev, {
+        id: 'deal-review-link',
+        role: 'ai',
+        content: '',
+        component: (
+          <button
+            onClick={goToDealReview}
+            className="mt-4 px-6 py-3 bg-gradient-to-r from-[#FF6600] to-[#FF8533] hover:from-[#e65c00] hover:to-[#FF6600] text-white font-bold rounded-xl shadow-lg transition flex items-center gap-3"
+            data-testid="button-go-to-deal-review"
+          >
+            <Flame className="w-5 h-5" />
+            <span>Go to Deal Review — Hot Deals</span>
+            <ExternalLink className="w-4 h-4" />
+          </button>
+        )
+      }]);
+    }, 300);
   };
 
   const goToNextProperty = async () => {

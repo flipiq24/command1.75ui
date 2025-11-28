@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { Link } from "wouter";
+import React, { useState, useMemo, useEffect } from 'react';
+import { Link, useSearch } from "wouter";
 import { cn } from "@/lib/utils";
 import ActionPlan, { DealType } from "@/components/ActionPlan";
 import Layout from "@/components/Layout";
@@ -94,9 +94,18 @@ const getPropensityColor = (text: string) => {
 };
 
 export default function Home() {
+  const searchString = useSearch();
   const [activeFilter, setActiveFilter] = useState<DealType | 'goal' | 'completed' | null>(null);
   const [selectedDealIds, setSelectedDealIds] = useState<number[]>([]);
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchString);
+    const filterParam = params.get('filter');
+    if (filterParam === 'hot' || filterParam === 'warm' || filterParam === 'cold' || filterParam === 'new') {
+      setActiveFilter(filterParam as DealType);
+    }
+  }, [searchString]);
 
   const { data: deals = [], isLoading } = useQuery({
     queryKey: ['deals'],
