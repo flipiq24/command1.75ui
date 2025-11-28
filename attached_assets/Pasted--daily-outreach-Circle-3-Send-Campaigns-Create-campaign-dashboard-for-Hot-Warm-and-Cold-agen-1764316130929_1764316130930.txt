@@ -1,0 +1,91 @@
+/daily-outreach - Circle 3 "Send Campaigns" - Create campaign dashboard for Hot, Warm, and Cold agent relationships.
+
+RENAME CIRCLE 3:
+- Change "Send Campaigns" to "Campaigns to Hot, Warm, Cold"
+- Or keep "Send Campaigns" but tooltip explains it's for relationship nurturing
+
+WHEN "SEND CAMPAIGNS" IS CLICKED:
+
+1. CAMPAIGN SUMMARY TABLE (appears at top):
+
+Header: "Agent Relationship Campaign Report"
+
+| Segment | Total Agents | Today's Campaign (10%) | Last Communication | Last Template Used |
+|---------|--------------|------------------------|--------------------|--------------------|
+| Hot     | 35           | 4                      | 11/15/2025         | Market Update Q4   |
+| Warm    | 51           | 5                      | 11/10/2025         | New Listings Alert |
+| Cold    | 50           | 5                      | 11/01/2025         | Re-engagement      |
+| **Total** | **136**    | **14**                 | —                  | —                  |
+
+CALCULATION LOGIC:
+- Today's Campaign = Math.ceil(Total Agents × 0.10)
+- Pull Last Communication Date for each segment (most recent date in that group)
+- Pull Last Template Name used for each segment
+
+2. SEGMENT SELECTOR:
+- Three tabs or buttons: "Hot (4)" | "Warm (5)" | "Cold (5)"
+- Number in parentheses = today's campaign count for that segment
+- Clicking a segment shows agents in that group
+
+3. AGENT LIST (same format as Priority Agents):
+Show agents for selected segment with columns:
+- Agent Info (Name, Office, Phone, Email)
+- Relationship (Assigned User, Status, Basket)
+- Follow-Up (Required Action, Follow-Up Status, Date)
+- Activity & Status (Investor Source Count, Active in 2 Years, P/B/S counts)
+
+4. SELECT TODAY'S COMMUNICATION:
+Header: "Select Campaign Type"
+
+Three buttons in a row:
+- "📱 Text" (blue outline)
+- "📧 Email" (blue outline)  
+- "🎤 Direct to Voicemail" (blue outline)
+
+When a button is clicked:
+- Button becomes solid/selected state
+- Dropdown appears below: "Select Template"
+- Dropdown shows available templates for that communication type
+
+TEMPLATE DROPDOWNS:
+
+Text Templates:
+- Quick Check-In
+- New Listing Alert
+- Market Update
+- Just Sold Nearby
+- Holiday Greeting
+
+Email Templates:
+- Monthly Market Report
+- New Listings in Your Area
+- Investment Opportunity
+- Re-engagement - Miss You
+- Quarterly Newsletter
+
+Voicemail Templates:
+- Quick Hello
+- Checking In
+- New Opportunity
+- Following Up
+
+5. ACTION BUTTONS (after template selected):
+- "Send to All [X] Agents" (orange #FF6600) - sends to entire segment
+- "Send to Selected" (outline) - only sends to checked agents
+- "Preview Message" (text link) - shows template preview
+
+6. NAVIGATION:
+"Hot Agent 1 of 4"
+[Previous Agent] [Next Agent]
+
+Or show list view with checkboxes for bulk selection.
+
+7. COUNTER LOGIC:
+- When campaign is sent → Send Campaigns counter +1 per agent contacted
+- Track: Text sent, Email sent, Voicemail sent separately if needed
+
+FOOTER:
+"Showing 1 to 7 of 7 agents"
+[25/page dropdown] [Previous] [1] [Next]
+
+Same pagination as screenshot.

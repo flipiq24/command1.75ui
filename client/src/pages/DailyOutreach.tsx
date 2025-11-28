@@ -162,6 +162,53 @@ const PRIORITY_AGENTS: Agent[] = [
   }
 ];
 
+const CAMPAIGN_SEGMENTS = {
+  hot: {
+    total: 35,
+    todaysCampaign: 4,
+    lastCommunication: '11/15/2025',
+    lastTemplate: 'Market Update Q4',
+    agents: [
+      { id: 101, agentName: 'Jennifer Martinez', officeName: 'Century 21 Premier', phone: '714-555-1234', email: 'jmartinez@c21.com', assignedUser: 'Josh Santos', relationshipStatus: 'Hot', basket: 'High Value', followUpStatus: 'Active', followUpDate: '11/20/2025', investorSourceCount: 8, activeInLastTwoYears: true },
+      { id: 102, agentName: 'Michael Chen', officeName: 'RE/MAX Elite', phone: '949-555-5678', email: 'mchen@remax.com', assignedUser: 'Sarah Johnson', relationshipStatus: 'Hot', basket: 'High Value', followUpStatus: 'Pending', followUpDate: '11/22/2025', investorSourceCount: 12, activeInLastTwoYears: true },
+      { id: 103, agentName: 'David Thompson', officeName: 'Keller Williams Realty', phone: '562-555-9012', email: 'dthompson@kw.com', assignedUser: 'Josh Santos', relationshipStatus: 'Hot', basket: 'Medium Value', followUpStatus: 'Active', followUpDate: '11/18/2025', investorSourceCount: 5, activeInLastTwoYears: true },
+      { id: 104, agentName: 'Lisa Anderson', officeName: 'Coldwell Banker', phone: '310-555-3456', email: 'landerson@cb.com', assignedUser: 'Mike Wilson', relationshipStatus: 'Hot', basket: 'High Value', followUpStatus: 'Scheduled', followUpDate: '11/25/2025', investorSourceCount: 15, activeInLastTwoYears: true },
+    ]
+  },
+  warm: {
+    total: 51,
+    todaysCampaign: 5,
+    lastCommunication: '11/10/2025',
+    lastTemplate: 'New Listings Alert',
+    agents: [
+      { id: 201, agentName: 'Robert Williams', officeName: 'Berkshire Hathaway', phone: '818-555-1111', email: 'rwilliams@bh.com', assignedUser: 'Josh Santos', relationshipStatus: 'Warm', basket: 'Medium Value', followUpStatus: 'Active', followUpDate: '11/12/2025', investorSourceCount: 3, activeInLastTwoYears: true },
+      { id: 202, agentName: 'Emily Davis', officeName: 'Sothebys International', phone: '323-555-2222', email: 'edavis@sothebys.com', assignedUser: 'Sarah Johnson', relationshipStatus: 'Warm', basket: 'High Value', followUpStatus: 'Pending', followUpDate: '11/14/2025', investorSourceCount: 6, activeInLastTwoYears: true },
+      { id: 203, agentName: 'James Wilson', officeName: 'eXp Realty', phone: '626-555-3333', email: 'jwilson@exp.com', assignedUser: 'Josh Santos', relationshipStatus: 'Warm', basket: 'Low Value', followUpStatus: 'Active', followUpDate: '11/16/2025', investorSourceCount: 2, activeInLastTwoYears: false },
+      { id: 204, agentName: 'Amanda Brown', officeName: 'Compass Real Estate', phone: '714-555-4444', email: 'abrown@compass.com', assignedUser: 'Mike Wilson', relationshipStatus: 'Warm', basket: 'Medium Value', followUpStatus: 'Scheduled', followUpDate: '11/19/2025', investorSourceCount: 4, activeInLastTwoYears: true },
+      { id: 205, agentName: 'Christopher Lee', officeName: 'HomeSmart Realty', phone: '949-555-5555', email: 'clee@homesmart.com', assignedUser: 'Josh Santos', relationshipStatus: 'Warm', basket: 'Medium Value', followUpStatus: 'Active', followUpDate: '11/21/2025', investorSourceCount: 5, activeInLastTwoYears: true },
+    ]
+  },
+  cold: {
+    total: 50,
+    todaysCampaign: 5,
+    lastCommunication: '11/01/2025',
+    lastTemplate: 'Re-engagement',
+    agents: [
+      { id: 301, agentName: 'Patricia Garcia', officeName: 'Exit Realty', phone: '562-555-6666', email: 'pgarcia@exit.com', assignedUser: 'Josh Santos', relationshipStatus: 'Cold', basket: 'Low Value', followUpStatus: 'Inactive', followUpDate: '10/15/2025', investorSourceCount: 1, activeInLastTwoYears: false },
+      { id: 302, agentName: 'Kevin Johnson', officeName: 'Redfin', phone: '310-555-7777', email: 'kjohnson@redfin.com', assignedUser: 'Sarah Johnson', relationshipStatus: 'Cold', basket: 'Medium Value', followUpStatus: 'Inactive', followUpDate: '10/20/2025', investorSourceCount: 2, activeInLastTwoYears: false },
+      { id: 303, agentName: 'Michelle White', officeName: 'Weichert Realtors', phone: '818-555-8888', email: 'mwhite@weichert.com', assignedUser: 'Josh Santos', relationshipStatus: 'Cold', basket: 'Low Value', followUpStatus: 'Re-engage', followUpDate: '10/25/2025', investorSourceCount: 0, activeInLastTwoYears: false },
+      { id: 304, agentName: 'Steven Taylor', officeName: 'Real Living', phone: '323-555-9999', email: 'staylor@realliving.com', assignedUser: 'Mike Wilson', relationshipStatus: 'Cold', basket: 'Low Value', followUpStatus: 'Inactive', followUpDate: '10/30/2025', investorSourceCount: 1, activeInLastTwoYears: false },
+      { id: 305, agentName: 'Nancy Moore', officeName: 'Better Homes', phone: '626-555-0000', email: 'nmoore@bhg.com', assignedUser: 'Josh Santos', relationshipStatus: 'Cold', basket: 'Medium Value', followUpStatus: 'Re-engage', followUpDate: '11/02/2025', investorSourceCount: 3, activeInLastTwoYears: true },
+    ]
+  }
+};
+
+const CAMPAIGN_TEMPLATES = {
+  text: ['Quick Check-In', 'New Listing Alert', 'Market Update', 'Just Sold Nearby', 'Holiday Greeting'],
+  email: ['Monthly Market Report', 'New Listings in Your Area', 'Investment Opportunity', 'Re-engagement - Miss You', 'Quarterly Newsletter'],
+  voicemail: ['Quick Hello', 'Checking In', 'New Opportunity', 'Following Up']
+};
+
 const getPropensityScore = (propensity: string | string[]) => {
   if (!Array.isArray(propensity)) return 0;
   
@@ -333,6 +380,9 @@ export default function DailyOutreach() {
     relationshipStatus: string;
     followUpStatus: string;
   }>>({});
+  const [selectedCampaignSegment, setSelectedCampaignSegment] = useState<'hot' | 'warm' | 'cold'>('hot');
+  const [selectedCampaignType, setSelectedCampaignType] = useState<'text' | 'email' | 'voicemail' | null>(null);
+  const [selectedTemplate, setSelectedTemplate] = useState<string>('');
   
   const priorityAgents = PRIORITY_AGENTS;
   const currentAgent = priorityAgents[currentAgentIndex];
@@ -1086,6 +1136,220 @@ export default function DailyOutreach() {
                     </div>
                   </div>
                 )}
+              </>
+            ) : activeFilter === 'topOfMind' ? (
+              <>
+                {/* Campaign Dashboard */}
+                <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-6">
+                  <h3 className="text-lg font-bold text-gray-900 mb-4">Agent Relationship Campaign Report</h3>
+                  
+                  {/* Summary Table */}
+                  <div className="overflow-x-auto mb-6">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b border-gray-200">
+                          <th className="text-left py-3 px-4 font-semibold text-gray-600">Segment</th>
+                          <th className="text-center py-3 px-4 font-semibold text-gray-600">Total Agents</th>
+                          <th className="text-center py-3 px-4 font-semibold text-gray-600">Today's Campaign (10%)</th>
+                          <th className="text-center py-3 px-4 font-semibold text-gray-600">Last Communication</th>
+                          <th className="text-left py-3 px-4 font-semibold text-gray-600">Last Template Used</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="border-b border-gray-100 hover:bg-gray-50 cursor-pointer" onClick={() => setSelectedCampaignSegment('hot')}>
+                          <td className="py-3 px-4"><span className="inline-flex items-center gap-2"><Flame className="w-4 h-4 text-red-500" /> Hot</span></td>
+                          <td className="text-center py-3 px-4">{CAMPAIGN_SEGMENTS.hot.total}</td>
+                          <td className="text-center py-3 px-4 font-semibold text-[#FF6600]">{CAMPAIGN_SEGMENTS.hot.todaysCampaign}</td>
+                          <td className="text-center py-3 px-4 text-gray-500">{CAMPAIGN_SEGMENTS.hot.lastCommunication}</td>
+                          <td className="py-3 px-4 text-gray-500">{CAMPAIGN_SEGMENTS.hot.lastTemplate}</td>
+                        </tr>
+                        <tr className="border-b border-gray-100 hover:bg-gray-50 cursor-pointer" onClick={() => setSelectedCampaignSegment('warm')}>
+                          <td className="py-3 px-4"><span className="inline-flex items-center gap-2"><span className="w-3 h-3 bg-amber-400 rounded-full"></span> Warm</span></td>
+                          <td className="text-center py-3 px-4">{CAMPAIGN_SEGMENTS.warm.total}</td>
+                          <td className="text-center py-3 px-4 font-semibold text-[#FF6600]">{CAMPAIGN_SEGMENTS.warm.todaysCampaign}</td>
+                          <td className="text-center py-3 px-4 text-gray-500">{CAMPAIGN_SEGMENTS.warm.lastCommunication}</td>
+                          <td className="py-3 px-4 text-gray-500">{CAMPAIGN_SEGMENTS.warm.lastTemplate}</td>
+                        </tr>
+                        <tr className="border-b border-gray-100 hover:bg-gray-50 cursor-pointer" onClick={() => setSelectedCampaignSegment('cold')}>
+                          <td className="py-3 px-4"><span className="inline-flex items-center gap-2"><span className="w-3 h-3 bg-blue-400 rounded-full"></span> Cold</span></td>
+                          <td className="text-center py-3 px-4">{CAMPAIGN_SEGMENTS.cold.total}</td>
+                          <td className="text-center py-3 px-4 font-semibold text-[#FF6600]">{CAMPAIGN_SEGMENTS.cold.todaysCampaign}</td>
+                          <td className="text-center py-3 px-4 text-gray-500">{CAMPAIGN_SEGMENTS.cold.lastCommunication}</td>
+                          <td className="py-3 px-4 text-gray-500">{CAMPAIGN_SEGMENTS.cold.lastTemplate}</td>
+                        </tr>
+                        <tr className="bg-gray-50 font-semibold">
+                          <td className="py-3 px-4">Total</td>
+                          <td className="text-center py-3 px-4">{CAMPAIGN_SEGMENTS.hot.total + CAMPAIGN_SEGMENTS.warm.total + CAMPAIGN_SEGMENTS.cold.total}</td>
+                          <td className="text-center py-3 px-4 text-[#FF6600]">{CAMPAIGN_SEGMENTS.hot.todaysCampaign + CAMPAIGN_SEGMENTS.warm.todaysCampaign + CAMPAIGN_SEGMENTS.cold.todaysCampaign}</td>
+                          <td className="text-center py-3 px-4">—</td>
+                          <td className="py-3 px-4">—</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Segment Selector Tabs */}
+                  <div className="flex gap-2 mb-6">
+                    <button
+                      onClick={() => setSelectedCampaignSegment('hot')}
+                      className={cn(
+                        "px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2",
+                        selectedCampaignSegment === 'hot' 
+                          ? "bg-red-100 text-red-700 border-2 border-red-300" 
+                          : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                      )}
+                    >
+                      <Flame className="w-4 h-4" /> Hot ({CAMPAIGN_SEGMENTS.hot.todaysCampaign})
+                    </button>
+                    <button
+                      onClick={() => setSelectedCampaignSegment('warm')}
+                      className={cn(
+                        "px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2",
+                        selectedCampaignSegment === 'warm' 
+                          ? "bg-amber-100 text-amber-700 border-2 border-amber-300" 
+                          : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                      )}
+                    >
+                      <span className="w-3 h-3 bg-amber-400 rounded-full"></span> Warm ({CAMPAIGN_SEGMENTS.warm.todaysCampaign})
+                    </button>
+                    <button
+                      onClick={() => setSelectedCampaignSegment('cold')}
+                      className={cn(
+                        "px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2",
+                        selectedCampaignSegment === 'cold' 
+                          ? "bg-blue-100 text-blue-700 border-2 border-blue-300" 
+                          : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                      )}
+                    >
+                      <span className="w-3 h-3 bg-blue-400 rounded-full"></span> Cold ({CAMPAIGN_SEGMENTS.cold.todaysCampaign})
+                    </button>
+                  </div>
+
+                  {/* Select Campaign Type */}
+                  <div className="mb-6">
+                    <h4 className="text-sm font-semibold text-gray-700 mb-3">Select Campaign Type</h4>
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => { setSelectedCampaignType('text'); setSelectedTemplate(''); }}
+                        className={cn(
+                          "flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition border-2",
+                          selectedCampaignType === 'text'
+                            ? "bg-blue-50 text-blue-700 border-blue-400"
+                            : "bg-white text-gray-600 border-gray-200 hover:border-blue-300"
+                        )}
+                      >
+                        <MessageSquare className="w-4 h-4" /> Text
+                      </button>
+                      <button
+                        onClick={() => { setSelectedCampaignType('email'); setSelectedTemplate(''); }}
+                        className={cn(
+                          "flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition border-2",
+                          selectedCampaignType === 'email'
+                            ? "bg-blue-50 text-blue-700 border-blue-400"
+                            : "bg-white text-gray-600 border-gray-200 hover:border-blue-300"
+                        )}
+                      >
+                        <Mail className="w-4 h-4" /> Email
+                      </button>
+                      <button
+                        onClick={() => { setSelectedCampaignType('voicemail'); setSelectedTemplate(''); }}
+                        className={cn(
+                          "flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition border-2",
+                          selectedCampaignType === 'voicemail'
+                            ? "bg-blue-50 text-blue-700 border-blue-400"
+                            : "bg-white text-gray-600 border-gray-200 hover:border-blue-300"
+                        )}
+                      >
+                        <Mic className="w-4 h-4" /> Direct to Voicemail
+                      </button>
+                    </div>
+
+                    {selectedCampaignType && (
+                      <div className="mt-4">
+                        <label className="text-xs text-gray-500 block mb-2">Select Template</label>
+                        <select
+                          value={selectedTemplate}
+                          onChange={(e) => setSelectedTemplate(e.target.value)}
+                          className="w-full max-w-xs text-sm text-gray-900 bg-white border border-gray-200 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent"
+                        >
+                          <option value="">Choose a template...</option>
+                          {CAMPAIGN_TEMPLATES[selectedCampaignType].map((template) => (
+                            <option key={template} value={template}>{template}</option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Action Buttons */}
+                  {selectedTemplate && (
+                    <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
+                      <button className="px-6 py-2.5 bg-[#FF6600] hover:bg-[#e65c00] text-white text-sm font-bold rounded-lg transition">
+                        Send to All {CAMPAIGN_SEGMENTS[selectedCampaignSegment].todaysCampaign} Agents
+                      </button>
+                      <button className="px-6 py-2.5 bg-white text-gray-700 text-sm font-medium rounded-lg border border-gray-300 hover:bg-gray-50 transition">
+                        Send to Selected
+                      </button>
+                      <button className="text-sm text-blue-600 hover:underline">
+                        Preview Message
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {/* Agent List for Selected Segment */}
+                <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
+                  <div className="p-4 border-b border-gray-200">
+                    <h4 className="text-sm font-bold text-gray-900 capitalize">{selectedCampaignSegment} Agents - Today's Campaign</h4>
+                  </div>
+                  <div className="divide-y divide-gray-100">
+                    {CAMPAIGN_SEGMENTS[selectedCampaignSegment].agents.map((agent) => (
+                      <div key={agent.id} className="p-4 hover:bg-gray-50 flex items-center gap-4">
+                        <input type="checkbox" className="w-4 h-4 rounded border-gray-300" />
+                        <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                          <Users className="w-5 h-5 text-gray-400" />
+                        </div>
+                        <div className="flex-1 grid grid-cols-4 gap-4">
+                          <div>
+                            <p className="text-sm font-medium text-gray-900">{agent.agentName}</p>
+                            <p className="text-xs text-gray-500">{agent.officeName}</p>
+                            <p className="text-xs text-gray-400">{agent.phone}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-gray-500">Assigned: {agent.assignedUser}</p>
+                            <p className="text-xs text-gray-500">Status: <span className={cn(
+                              agent.relationshipStatus === 'Hot' && 'text-red-600',
+                              agent.relationshipStatus === 'Warm' && 'text-amber-600',
+                              agent.relationshipStatus === 'Cold' && 'text-blue-600'
+                            )}>{agent.relationshipStatus}</span></p>
+                            <p className="text-xs text-gray-500">Basket: {agent.basket}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-gray-500">Follow Up: {agent.followUpStatus}</p>
+                            <p className="text-xs text-gray-500">Date: {agent.followUpDate}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-gray-500">Investor Count: {agent.investorSourceCount}</p>
+                            <p className="text-xs text-gray-500">Active 2 Yrs: {agent.activeInLastTwoYears ? 'Yes' : 'No'}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="p-4 border-t border-gray-200 flex items-center justify-between text-sm text-gray-500">
+                    <span>Showing 1 to {CAMPAIGN_SEGMENTS[selectedCampaignSegment].agents.length} of {CAMPAIGN_SEGMENTS[selectedCampaignSegment].agents.length} agents</span>
+                    <div className="flex items-center gap-2">
+                      <select className="text-xs border border-gray-200 rounded px-2 py-1">
+                        <option>25/page</option>
+                        <option>50/page</option>
+                        <option>100/page</option>
+                      </select>
+                      <button className="px-3 py-1 border border-gray-200 rounded text-xs hover:bg-gray-50">Previous</button>
+                      <button className="px-3 py-1 bg-[#FF6600] text-white rounded text-xs">1</button>
+                      <button className="px-3 py-1 border border-gray-200 rounded text-xs hover:bg-gray-50">Next</button>
+                    </div>
+                  </div>
+                </div>
               </>
             ) : (
               <>
