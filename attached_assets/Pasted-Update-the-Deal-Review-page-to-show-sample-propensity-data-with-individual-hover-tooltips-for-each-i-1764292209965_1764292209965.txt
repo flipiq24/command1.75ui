@@ -1,0 +1,60 @@
+Update the Deal Review page to show sample propensity data with individual hover tooltips for each indicator.
+
+ADD SAMPLE DATA TO EXISTING DEALS:
+Update the mock/sample deals to include propensity arrays like this:
+
+Deal 1: propensity: ["Notice of Default (NOD)", "Vacant Property"]
+Deal 2: propensity: ["Tax Delinquency", "Expired Listing", "High Equity (>50%)"]
+Deal 3: propensity: ["Notice of Trustee Sale (NTS)"]
+Deal 4: propensity: ["Non-Owner Occupied", "Long Term Owner (20+ Yrs)", "Free & Clear"]
+Deal 5: propensity: [] (empty - no indicators)
+
+PROPENSITY DISPLAY FORMAT:
+Show total score prominently, then list each active indicator below with color coding:
+
+Propensity Score: 8
+━━━━━━━━━━━━━━━━
+🔴 NOD (6 pts)
+🟢 Vacant (2 pts)
+
+INDIVIDUAL TOOLTIP FOR EACH INDICATOR:
+When user hovers over each indicator tag, show tooltip with:
+- Indicator name (bold, orange)
+- Category
+- Points value
+- Data source
+- Plain English explanation
+
+TOOLTIP CONTENT FOR EACH INDICATOR:
+
+RED INDICATORS:
+- "Notice of Trustee Sale (NTS)" → "Property scheduled for foreclosure auction. Highest motivation to sell. Owner has limited time before losing property."
+- "Notice of Default (NOD)" → "Foreclosure process has started. Owner missed payments and received formal notice. 90-120 days before auction typically."
+- "Tax Delinquency" → "Property taxes are past due. Owner may be facing financial hardship or has abandoned property."
+- "Affidavit of Death" → "Recent death of property owner. Estate may need to liquidate quickly to settle debts or distribute assets."
+- "Bankruptcy / Judgment" → "Owner has bankruptcy filing or court judgment. May need to sell to settle debts."
+
+GREEN INDICATORS:
+- "Involuntary Liens" → "HOA, mechanics, or judgment liens attached to property. Owner has outstanding debts that must be cleared at sale."
+- "Expired Listing" → "Property was listed but didn't sell. Owner may be frustrated, more realistic on price, and motivated to try again."
+- "Vacant Property" → "Property is unoccupied per USPS data. Owner carrying costs (taxes, insurance, maintenance) with no income."
+- "High Mortgage / Debt" → "Low equity or high loan balance. Owner may be underwater or have thin margins—motivated by relief."
+- "Non-Owner Occupied" → "Absentee owner / investor property. Often more willing to sell for right price—it's business, not emotional."
+- "High Equity (>50%)" → "Owner has significant equity built up. More room to negotiate below market and still walk away with profit."
+- "Long Term Owner (20+ Yrs)" → "Owned 20+ years. Likely has massive equity, may be tired landlord, aging owner, or inherited situation."
+
+BLUE INDICATORS:
+- "Corporate / Trust Owned" → "Owned by LLC, trust, or corporation. Often indicates investor who may be liquidating portfolio or settling estate."
+- "Owns Multiple Properties" → "Owner has multiple properties. May be willing to sell underperformers to focus on better assets."
+- "Adjustable Rate Mortgage" → "ARM loan that may adjust upward. Rising payments could create future motivation to sell."
+- "Free & Clear" → "No mortgage on property. Owner has 100% equity and full flexibility—no lender approval needed."
+- "Transferred in Last 2 Years" → "Recent ownership transfer. New owner unlikely to sell quickly—low motivation indicator."
+
+VISUAL SPECS:
+- Each indicator shows as colored pill/tag matching its category (red/green/blue background tint)
+- Hover tooltip: dark gray (#1f2937) background, white text, rounded corners
+- Tooltip shows indicator name in orange (#FF6600), then details below
+- Score color: Red if ≥6, Green if 3-5, Blue if 1-2, Gray if 0
+- Tags should wrap if multiple indicators
+
+The PROPENSITY_LEGEND array already exists in the code - use it to pull points and source data for tooltips. Just need to add the plain English explanations and wire up the individual hover tooltips.
