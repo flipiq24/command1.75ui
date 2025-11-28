@@ -1,0 +1,421 @@
+📌 AA1 - Check-In & Temperature Bot (#0)
+Bot_ID: AA1
+ Bot_Category: Daily Ops
+ Bot_Priority: P0
+ Primary_User: AA
+ Primary_UI_Location: Dashboard 
+ Specific_Tab: Action Plan
+ UI_Element: Morning Check-In Modal
+ Visual_Position: Modal popup on login
+ Trigger_Method: Auto (first login of day)
+
+
+Primary Purpose
+Kick off the day with energy, readiness, and tactical focus.
+ Confirm Tony’s full-day availability and identify any blockers before activating the workflow for AA2 (Action Plan) and AA3 (Deal Chase).
+
+Bot Dialogue & Flow
+AA1 Bot:
+Good morning, Tony.
+I’ll check you in for this beautiful day at [System Time].
+
+You’ve got a full plate today (change so its not static every day) , so I just want to make sure you’re ready to take it on.
+Are you able to work a full day today?
+
+If YES:
+Great — let’s get moving.
+As we go through the day, I’ll help where needed or get your Acquisition Manager involved if anything stalls.
+Before we jump in, is there anything you already know you’ll need help with today?
+
+If help needed:
+Got it. I’ll send a note to your AM right now so they can support you before we start.  It will ask what it is, it will create the content and ask it its correct then send 
+
+Next prompt (daily objective alignment):
+Alright Tony, today we’re going to go over all your active properties
+and call about 30 agents (actions for today: # for New Agent Calls)  with high-propensity-to-sell listings.
+
+Is there anything that might prevent you from getting those calls done today?
+
+If YES (blockers identified):
+Understood — I’ll make a note of that and send an update to your AM.
+Let’s clear what we can now so you can focus on the calls.
+
+If NO:
+Perfect. You’re locked in for a full day.
+I’ll mark you as available and load your Action Plan to get started.
+
+
+Processing Logic
+Record:
+
+
+check_in_time
+
+
+available_today = true/false
+
+
+help_requested (text/null)
+
+
+blockers (text/null)
+
+
+If help or blockers present → route AM task.
+
+
+Push control flow to AA2 – Today’s Action Plan Bot.
+
+
+
+Output Format
+Dashboard Notification:
+AA1 Check-In Complete — 9:42 AM
+Status: Available Full Day ✅
+Help Needed: None
+Next: Today’s Action Plan → AA2 + AA3
+
+
+System Actions
+Step
+System
+Endpoint
+Function
+1
+Dashboard
+/log-checkin
+Log time and responses
+2
+Dashboard
+/create-task
+Send AM help/blocker
+3
+Dashboard
+/notify-dashboard
+Display status summary
+4
+Dashboard
+/trigger-AA2
+Launch Today’s Action Plan workflow
+
+
+It will replace this check in box when in IQ form 
+
+
+Output_Location: Dashboard notification, At First log in for the day
+
+📌 AA2 - Today's Action Plan Bot (#1)
+Bot_ID: AA2
+ Bot_Category: Daily Ops
+ Bot_Priority: P0
+ Primary_User: AA
+ Primary_UI_Location: Dashboard
+ Specific_Tab: Action Plan
+ UI_Element:”Today's Action Plan”
+ Visual_Position: Action Plan section (Due Today)
+ Trigger_Method: Auto (after check-in)
+Primary_Purpose: Prioritize deals by status & urgency
+ Success_Metrics: 100% high-priority tasks completed
+Data_Inputs:
+Data Inputs
+
+Source
+Fields
+Use
+Dashboard
+criticals, reminders
+Urgent tasks
+PIQ
+offer_status, todo, notes, last_communicate
+Deal context
+Comms
+Text / Email / DTV
+Last activity
+
+
+Agent 365
+relationship_status, assigned-User
+Ownership logic
+
+
+
+
+Processing Logic
+
+Make sure this are filters and not AI filtering,  This filters needs to be integrated to the AI 
+Sort by Communication Group (All → Text → Email → DTV).
+
+
+Priority sequence:
+   #1 Criticals & Reminders
+   #2 Hot / Warm / Cold / New
+   #3 Offer_Status = “None”
+
+
+
+Locate key fields: LOC, LCD, Offer Status, Notes, Last Communication
+Compare timestamps to identify latest activity
+Generate Action Plan with a single property prompt at a time
+Output_Format: Prioritized action list with explanation of each
+Output_Location: iQ Overlay → Action Plan                                                                 Output_Actionable Item: Sorts Properties by Communication Group with reasoning for each property and task.  →  Type next or prompt for any question related to this data set - Provide a list of one property at a time with a explanation of what needs to happen and why 
+Note:  Must fix PIR
+AA2 – Output Behavior (Final Spec)
+1. Bot Initialization (After Daily Check-In)
+Trigger: User completes check-in → Bot auto-activates
+ AA2 Bot:
+Good morning, Tony.
+Here’s your action plan for today:
+• 5 critical calls
+• 3 reminders
+• 6 hot properties
+• 3 new follow-ups
+• Several offers still showing “None.”
+
+Let’s start with your criticals.
+
+
+2. Critical Property Output (one at time)
+AA2 Bot:
+1 of 5 Criticals
+Property: [Address]
+Last Open Date: [LOC]
+Last Communication: [LCD]
+Task: Follow up to confirm agent received the offer.
+Next Step: Call the agent now.
+Would you like me to dial the agent?
+
+
+3. If YES (Preferred Path – Call Made)
+System: Dialpad opens → Bot mutes and transcribes the call.
+AA2 Bot (after call ends):
+Okay Tony, based on your call, here’s what I’ve done and what’s next:
+
+I reviewed your call summary and transcribed it to Notes.
+I updated the logs with relevant information.
+Let’s change/or keep the offer status to: [Offer Status Value].
+I’ve also set a reminder for you to call again in two days.
+
+Based on what you said, I recommend turning on/keeping  the AutoTracker: [Recommended Tracker Name].
+(if not on) Would you like me to turn that tracker on and complete the updates for you?
+
+
+4. If YES (Approve AutoTracker Activation)
+AA2 Bot:
+Got it. I’ve updated your offer status to [Offer Status Value],
+transcribed and saved your notes,
+set your reminder,
+and activated the AutoTracker [Tracker Name].
+
+You’re ready for the next property.
+
+System Actions:
+Update status → /update-offer-status
+
+
+Log transcription to Notes → /update-notes
+
+
+Set reminder base if different than  PIR logic  ( days) → /create-reminder or remind the AA that we are set to follow up on X
+
+
+Activate AutoTracker → /enable-tracker
+
+
+Confirm updates complete → /confirm-updates
+
+
+
+5. If NO (Decline AutoTracker Activation)
+AA2 Bot:
+Okay. What’s your plan to make sure you’re staying on top of this property?  
+Please tell me what you’d like me to note for follow-up.
+
+System Actions:
+Wait for user input
+
+
+Log user’s response in Notes (e.g., “Manual follow-up – no AutoTracker activated”)
+
+
+Maintain current reminder if outside of PIR  ( days)
+
+
+Continue to next property after note confirmation
+
+
+
+6. If NO to Initial Call (Declines Dial)
+AA2 Bot:
+Understood. Remember, this is a full-contact Sport” — calls build relationships and get deals done.
+Since you decided not to call, I’ll note that decision.
+
+Let’s at least send a text and follow up with an email so the xts and emails until they respond?
+
+YES → Activate AI Connect → Bot takes over outreach.
+
+
+NO → Log “AI Connect declined – manual follow-up”.
+
+System Actions:
+Generate text template for review/send
+
+
+Send follow-up email automatically
+
+
+Log: “Call skipped; text/email sent per compliance.”
+
+
+Set reminder (+1 day) for call attempt
+
+
+
+7. If No Answer (Agent Unreachable)
+AA2 Bot:
+No answer.
+I’ll log the attempt, send a quick text, and set a reminder to call again on X .(based on offer status and PIR logic) 
+
+System Actions:
+Log call result
+
+
+Send text automatically
+
+
+Set reminder (+1 day)
+
+
+
+8. Universal Post-Call Workflow (Always Runs After Any Call Event)
+AA2 executes the automation chain:
+Update status
+
+
+Log transcription to Notes
+
+
+Set reminder if different than the logic (based on offer status and PIR logic)
+
+
+Recommend and activate relevant AutoTracker
+
+
+Confirm updates complete
+
+
+AA2 Bot (spoken confirmation):
+Status updated, notes logged, reminder created, and AutoTracker activated.
+All updates are complete.
+Ready for the next property?
+
+
+9. AutoTracker Recommendation Logic
+Offer Status
+Action
+AutoTracker Recommendation
+Offer Terms Sent
+Agent hasn’t sent RPA after 24h
+11 Contact / Offer Terms Sent
+Continue to Follow
+Seller/Agent not ready
+Continue to Follow
+Back Up
+Pending with another buyer
+Backup
+Offer Accepted / In Escrow / Acquired
+Deal closed/active
+Turn off all trackers
+Canceled FEC
+Escrow canceled
+Stop all trackers
+None
+File incomplete
+Prompt user to update
+Pass
+Not qualified
+Send pass email + log
+In Negotiations
+Active dialogue
+Negotiation Tracker (24h)
+New Deal
+New inbound lead
+New Deal AutoTracker
+
+
+10. Completion + Next Property
+AA2 Bot:
+That one’s complete. Ready for the next property?
+
+If Yes → load next based on priority order:
+Criticals & Reminders
+
+
+Hot / Warm / Cold / New
+
+
+Offer Status = None
+
+
+
+11. End 
+AA2 Bot:
+All done with your active properties for today.  Are you ready to build relationships while Finding deals?  Note to AA3 - Deal Chase Bot(#2)
+Summary:
+• 5 criticals completed
+• 3 reminders logged
+• 6 hot properties followed up
+• AutoTrackers activated where needed
+
+I will send this summary to your AM!!!  
+
+
+Bot emails report containing to AM 
+Property links
+
+
+Offer Status updates
+
+
+Tracker activity
+
+
+Follow-up reminders
+
+
+
+12. System Action Map
+Step
+System
+Endpoint
+Function
+Call
+Dialpad
+/dial
+Initiate agent call
+Notes
+PIQ
+/update-notes
+Save transcription
+Status
+PIQ
+/update-offer-status
+Update offer status
+Reminder
+AutoTracker
+/create-reminder
+Schedule reminder
+Tracker
+AutoTracker
+/enable-tracker
+Activate tracker
+Confirm
+Dashboard
+/confirm-updates
+Verify completion
+Summary
+Email API
+/send-summary
+Email AM daily recap
+
+
+This is the authoritative output-behavior blueprint for AA2 — end-to-end, action-driven, and compliant with your “full-contact sport” rule set. After move to AA3 

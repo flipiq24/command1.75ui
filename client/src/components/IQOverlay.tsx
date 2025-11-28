@@ -101,11 +101,15 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
   const currentProperty = properties[currentPropertyIndex];
 
   const pipelineStats = {
+    criticals: 5,
+    reminders: 3,
     hot: 2,
     warm: 1,
-    warmComplete: true,
     cold: 1,
     new: 56,
+    offersNone: 12,
+    totalProperties: 60,
+    agentCalls: 30,
     offersOut: 0,
     offersGoal: 5,
     conversations: 3,
@@ -114,6 +118,18 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
     priorityCallsGoal: 5,
     campaignsSent: 0,
     campaignsGoal: 3
+  };
+
+  const getDynamicGreeting = () => {
+    const greetings = [
+      "You've got a full plate today",
+      "You've got a solid lineup today", 
+      "Big day ahead",
+      "Plenty of opportunities waiting",
+      "Ready to make some moves today"
+    ];
+    const dayOfWeek = new Date().getDay();
+    return greetings[dayOfWeek % greetings.length];
   };
 
   const goToDealReview = () => {
@@ -198,6 +214,7 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
   const getContextualGreeting = () => {
     const sessionState = getSessionState();
     const timeOfDay = getTimeOfDay();
+    const dynamicGreeting = getDynamicGreeting();
     
     if (sessionState === 'returning_after_lunch') {
       return `Welcome back, ${userName}!\n\nHope you had a good lunch.\n\nThis morning you:\n• Reviewed ${progressStats.dealsReviewedAM} deals\n• Sent ${progressStats.offersOutAM} offers\n• Made ${progressStats.callsMadeAM} calls\n\nYou've got ${progressStats.dealsLeft} deals, ${progressStats.offersLeft} offers, and ${progressStats.callsLeft} calls left for today.\n\nReady to finish strong?`;
@@ -212,14 +229,14 @@ export default function IQOverlay({ isOpen, onClose, userName = 'Josh', deals = 
     }
     
     if (timeOfDay === 'afternoon') {
-      return `Good afternoon, ${userName}.\n\nChecking you in at ${getCurrentTime()}.\n\nYou've got a productive afternoon ahead — let me make sure you're set.\n\nAre you able to work the rest of the day?`;
+      return `Good afternoon, ${userName}.\n\nI'll check you in at ${getCurrentTime()}.\n\n${dynamicGreeting}, so I just want to make sure you're ready to take it on.\n\nAre you able to work the rest of the day?`;
     }
     
     if (timeOfDay === 'evening') {
-      return `Good evening, ${userName}.\n\nChecking you in at ${getCurrentTime()}.\n\nLate session? Let's make it count.\n\nHow much time do you have to work tonight?`;
+      return `Good evening, ${userName}.\n\nI'll check you in at ${getCurrentTime()}.\n\nLate session? Let's make it count.\n\nHow much time do you have to work tonight?`;
     }
     
-    return `Good morning, ${userName}.\n\nChecking you in at ${getCurrentTime()}.\n\nYou've got a strong day ahead — let me make sure you're ready.\n\nAre you able to work a full day today?`;
+    return `Good morning, ${userName}.\n\nI'll check you in for this beautiful day at ${getCurrentTime()}.\n\n${dynamicGreeting}, so I just want to make sure you're ready to take it on.\n\nAre you able to work a full day today?`;
   };
 
   const streamMessage = useCallback(async (text: string, callback?: () => void) => {
