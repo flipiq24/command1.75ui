@@ -1188,7 +1188,7 @@ export default function DailyOutreach() {
                 <div className="flex justify-between items-end border-b border-gray-100 pb-6">
                   <div>
                     <h2 className="text-xl font-bold text-gray-900">Campaign Configuration</h2>
-                    <p className="text-xs text-gray-500 mt-1">Select audience and define message.</p>
+                    <p className="text-xs text-gray-500 mt-1">You have a total of <span className="font-semibold text-gray-700">136</span> agent relationships</p>
                   </div>
                   <div className="text-right">
                     <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Campaigns Sent</span>
@@ -1310,20 +1310,14 @@ export default function DailyOutreach() {
                           <Mail className="w-4 h-4 text-gray-700"/>
                           <span className="font-bold text-sm text-gray-900">Email</span>
                         </div>
-                        <div className="space-y-2">
-                          <input 
-                            disabled={!campaignChannels.email} 
-                            type="text" 
-                            placeholder="Subject Line..." 
-                            className="w-full text-xs p-2.5 border border-gray-200 rounded bg-gray-50" 
-                          />
-                          <select 
-                            disabled={!campaignChannels.email} 
-                            className="w-full text-xs p-2.5 border border-gray-200 rounded bg-gray-50 text-gray-700"
-                          >
-                            <option>Newsletter Template</option>
-                          </select>
-                        </div>
+                        <select 
+                          disabled={!campaignChannels.email} 
+                          className="w-full text-xs p-2.5 border border-gray-200 rounded bg-gray-50 text-gray-700"
+                        >
+                          <option>Newsletter Template</option>
+                          <option>New Listings Alert</option>
+                          <option>Market Update</option>
+                        </select>
                       </div>
 
                       {/* VM */}
@@ -1343,6 +1337,9 @@ export default function DailyOutreach() {
                           className="w-full text-xs p-2.5 border border-gray-200 rounded bg-gray-50 text-gray-700"
                         >
                           <option>General Check-in.mp3</option>
+                          <option>Quick Hello.mp3</option>
+                          <option>Market Update.mp3</option>
+                          <option value="record">🎙️ Record New...</option>
                         </select>
                       </div>
 
