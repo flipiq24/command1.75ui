@@ -115,10 +115,15 @@ export default function OutreachActionPlan({
       <div className="grid grid-cols-3 gap-8 mt-8">
         
         <div 
-          className="flex flex-col items-center cursor-pointer transition-all group"
+          className="flex flex-col items-center cursor-pointer transition-all group relative"
           onClick={() => handleCircleClick('connections')}
           data-testid="circle-connections"
         >
+          <div className="absolute -top-32 left-1/2 transform -translate-x-1/2 w-80 bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-left leading-relaxed">
+            <p className="mb-2">Focuses on High-Value Agents with Aged, Pending, and Backup listings that have a high Propensity to Sell.</p>
+            <p className="mb-0"><strong>Goal:</strong> 30 Contacts per day that create 5 new solid relationships per day (25/week or 1,300/year).</p>
+            <div className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 rotate-45 w-3 h-3 bg-gray-900"></div>
+          </div>
           <div className={cn(
             "relative w-28 h-28 mb-4 transition-transform group-hover:scale-105",
             activeFilter === 'connections' && "scale-105"
@@ -190,10 +195,15 @@ export default function OutreachActionPlan({
         </div>
 
         <div 
-          className="flex flex-col items-center cursor-pointer transition-all group"
+          className="flex flex-col items-center cursor-pointer transition-all group relative"
           onClick={() => handleCircleClick('priority')}
           data-testid="circle-priority"
         >
+          <div className="absolute -top-32 left-1/2 transform -translate-x-1/2 w-80 bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-left leading-relaxed">
+            <p className="mb-2">Constant live phone calls to reinforce your 100 Priority Relationships.</p>
+            <p className="mb-0"><strong className="text-green-400">This is your long term money maker!</strong></p>
+            <div className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 rotate-45 w-3 h-3 bg-gray-900"></div>
+          </div>
           <div className={cn(
             "relative w-28 h-28 mb-4 transition-transform group-hover:scale-105",
             activeFilter === 'priority' && "scale-105"
@@ -257,10 +267,14 @@ export default function OutreachActionPlan({
         </div>
 
         <div 
-          className="flex flex-col items-center cursor-pointer transition-all group"
+          className="flex flex-col items-center cursor-pointer transition-all group relative"
           onClick={() => handleCircleClick('topOfMind')}
           data-testid="circle-top-of-mind"
         >
+          <div className="absolute -top-32 left-1/2 transform -translate-x-1/2 w-80 bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-left leading-relaxed">
+            <p className="mb-0">Send valuable, relevant content every 2 weeks to Hot, Warm, and Cold agents to stay top of mind.</p>
+            <div className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 rotate-45 w-3 h-3 bg-gray-900"></div>
+          </div>
           <div className={cn(
             "relative w-28 h-28 mb-4 transition-transform group-hover:scale-105",
             activeFilter === 'topOfMind' && "scale-105"
