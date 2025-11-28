@@ -352,6 +352,14 @@ function PIQContent() {
                 </div>
 
                 <div className="flex gap-1 items-center">
+                  <button
+                    onClick={handleCelebrationTrigger}
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-[#FF6600] hover:bg-[#e55c00] text-white text-xs font-bold rounded-lg transition shadow-sm mr-2"
+                    data-testid="button-piq-iq-celebration"
+                  >
+                    <Lightbulb className="w-4 h-4" />
+                    iQ
+                  </button>
                   {rightTabs.map((tab) => (
                     <button
                       key={tab.id}
