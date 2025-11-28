@@ -82,9 +82,9 @@ export default function Sidebar({ onIQClick, isIQActive = false }: SidebarProps)
 
                 <Link href="/" className={cn(
                   "group relative flex items-center px-3 py-2 text-sm font-medium rounded-lg border transition",
-                  location === '/' 
+                  location === '/' && !isIQActive
                     ? "bg-gray-100 text-gray-900 border-gray-200 hover:bg-gray-200" 
-                    : "text-gray-600 hover:bg-gray-50 border-transparent hover:border-gray-100 animate-orange-glow border-[#FF6600]/30",
+                    : "text-gray-600 hover:bg-gray-50 border-transparent hover:border-gray-100",
                   isCollapsed ? "justify-center" : "justify-between"
                 )}>
                     <span className="flex items-center gap-3">
