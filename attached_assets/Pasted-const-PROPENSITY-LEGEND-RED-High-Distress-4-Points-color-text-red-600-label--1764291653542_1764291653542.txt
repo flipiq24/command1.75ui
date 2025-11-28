@@ -1,0 +1,24 @@
+const PROPENSITY_LEGEND = [
+  // RED (High Distress - 4+ Points)
+  { color: "text-red-600", label: "🔴 RED", indicator: "Notice of Trustee Sale (NTS)", category: "Foreclosure", points: 8 },
+  { color: "text-red-600", label: "🔴 RED", indicator: "Notice of Default (NOD)", category: "Foreclosure", points: 6 },
+  { color: "text-red-600", label: "🔴 RED", indicator: "Tax Delinquency", category: "Financial", points: 5 },
+  { color: "text-red-600", label: "🔴 RED", indicator: "Affidavit of Death", category: "Life Event", points: 5 },
+  { color: "text-red-600", label: "🔴 RED", indicator: "Bankruptcy / Judgment", category: "Financial", points: 4 },
+
+  // GREEN (Medium Distress - 2-3 Points)
+  { color: "text-green-600", label: "🟢 GREEN", indicator: "Involuntary Liens", category: "Financial", points: 3 },
+  { color: "text-green-600", label: "🟢 GREEN", indicator: "Expired Listing", category: "Market Status", points: 3 },
+  { color: "text-green-600", label: "🟢 GREEN", indicator: "Vacant Property", category: "Occupancy", points: 2 },
+  { color: "text-green-600", label: "🟢 GREEN", indicator: "High Mortgage / Debt", category: "Financial", points: 2 },
+  { color: "text-green-600", label: "🟢 GREEN", indicator: "Non-Owner Occupied", category: "Occupancy", points: 2 },
+  { color: "text-green-600", label: "🟢 GREEN", indicator: "High Equity (>50%)", category: "Financial", points: 2 },
+  { color: "text-green-600", label: "🟢 GREEN", indicator: "Long Term Owner (20+ Yrs)", category: "Ownership", points: 2 },
+
+  // BLUE (Low Distress - 0-1 Points)
+  { color: "text-blue-600", label: "🔵 BLUE", indicator: "Corporate / Trust Owned", category: "Ownership", points: 1 },
+  { color: "text-blue-600", label: "🔵 BLUE", indicator: "Owns Multiple Properties", category: "Ownership", points: 1 },
+  { color: "text-blue-600", label: "🔵 BLUE", indicator: "Adjustable Rate Mortgage", category: "Financial", points: 1 },
+  { color: "text-blue-600", label: "🔵 BLUE", indicator: "Free & Clear", category: "Financial", points: 1 },
+  { color: "text-blue-600", label: "🔵 BLUE", indicator: "Transferred in Last 2 Years", category: "Ownership", points: 0 }
+];

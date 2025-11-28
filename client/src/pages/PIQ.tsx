@@ -115,14 +115,14 @@ export default function PIQ() {
   }
 
   const useTypingEffect = (lines: StreamingLine[], triggerKey: number) => {
-    const [displayedLines, setDisplayedLines] = useState<Map<number, string>>(() => new Map());
+    const [displayedLines, setDisplayedLines] = useState<Record<number, string>>({});
     const [currentLineIndex, setCurrentLineIndex] = useState(0);
     const [currentCharIndex, setCurrentCharIndex] = useState(0);
     const [isComplete, setIsComplete] = useState(false);
     const [cursorVisible, setCursorVisible] = useState(true);
 
     useLayoutEffect(() => {
-      setDisplayedLines(new Map());
+      setDisplayedLines({});
       setCurrentLineIndex(0);
       setCurrentCharIndex(0);
       setIsComplete(false);
@@ -168,11 +168,10 @@ export default function PIQ() {
 
       const randomDelay = Math.floor(Math.random() * 6) + 4;
       const timeout = setTimeout(() => {
-        setDisplayedLines(prev => {
-          const newMap = new Map(prev);
-          newMap.set(currentLineIndex, fullText.slice(0, currentCharIndex + 1));
-          return newMap;
-        });
+        setDisplayedLines(prev => ({
+          ...prev,
+          [currentLineIndex]: fullText.slice(0, currentCharIndex + 1)
+        }));
         setCurrentCharIndex(prev => prev + 1);
       }, randomDelay);
 
