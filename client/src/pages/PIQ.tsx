@@ -531,14 +531,6 @@ export default function PIQ() {
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <button 
-                        onClick={handleCompsIQClick}
-                        className="flex items-center justify-center w-8 h-8 bg-[#FF6600] hover:bg-[#e55c00] text-white rounded-lg transition shadow-sm"
-                        data-testid="button-comps-iq"
-                        title="IQ Analysis"
-                      >
-                        <Lightbulb className="w-4 h-4" />
-                      </button>
                       <div className="flex bg-gray-100 rounded-lg p-0.5">
                         <button 
                           onClick={() => setCompsMapView('map')}
