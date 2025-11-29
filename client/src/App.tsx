@@ -9,6 +9,7 @@ import Home from "@/pages/home";
 import DailyOutreach from "@/pages/DailyOutreach";
 import PIQ from "@/pages/PIQ";
 import MyStats from "@/pages/MyStats";
+import Agent from "@/pages/Agent";
 
 function Router() {
   return (
@@ -17,6 +18,7 @@ function Router() {
       <Route path="/daily-outreach" component={DailyOutreach} />
       <Route path="/piq" component={PIQ} />
       <Route path="/piq/:id" component={PIQ} />
+      <Route path="/agent/:id" component={Agent} />
       <Route path="/my-stats" component={MyStats} />
       <Route component={NotFound} />
     </Switch>

@@ -337,7 +337,13 @@ function PIQContent() {
                   {leftTabs.map((tab) => (
                     <button
                       key={tab.id}
-                      onClick={() => setActiveTab(tab.id)}
+                      onClick={() => {
+                        if (tab.id === 'agent') {
+                          setLocation('/agent/12');
+                        } else {
+                          setActiveTab(tab.id);
+                        }
+                      }}
                       className={cn(
                         "px-4 py-2 text-sm font-medium rounded-lg transition",
                         activeTab === tab.id
