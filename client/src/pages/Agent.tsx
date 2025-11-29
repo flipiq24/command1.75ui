@@ -399,7 +399,7 @@ function AgentContent() {
           <div className="grid grid-cols-3 gap-8">
             {/* Agent Record */}
             <div>
-              <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Agent Record</h4>
+              <h4 className="text-xs font-semibold text-gray-900 uppercase tracking-wide mb-3">Agent Record</h4>
               <div className="space-y-1.5">
                 <div className="flex items-center gap-2 text-sm text-gray-600">
                   <Phone className="w-4 h-4 text-gray-400" />
@@ -454,41 +454,41 @@ function AgentContent() {
             
             {/* Last Communication */}
             <div>
-              <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Last Communication</h4>
-              <div className="space-y-1.5 text-sm text-gray-600">
-                <div className="flex justify-between">
-                  <span className="text-gray-500">Last Communication Date</span>
-                  <span className="font-medium">-</span>
+              <h4 className="text-xs font-semibold text-gray-900 uppercase tracking-wide mb-3">Last Communication</h4>
+              <div className="space-y-1.5 text-sm">
+                <div>
+                  <span className="text-gray-500">Last Communication Date: </span>
+                  <span className="font-medium text-gray-700">-</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-500">Last Address Discussed</span>
-                  <span className="font-medium">-</span>
+                <div>
+                  <span className="text-gray-500">Last Address Discussed: </span>
+                  <span className="font-medium text-gray-700">-</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-500">Last Communicated AA</span>
-                  <span className="font-medium">-</span>
+                <div>
+                  <span className="text-gray-500">Last Communicated AA: </span>
+                  <span className="font-medium text-gray-700">-</span>
                 </div>
               </div>
             </div>
             
             {/* Performance */}
             <div>
-              <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Performance</h4>
-              <div className="space-y-1.5 text-sm text-gray-600">
-                <div className="flex justify-between">
-                  <span className="text-gray-500">Active In Last 2 Years</span>
+              <h4 className="text-xs font-semibold text-gray-900 uppercase tracking-wide mb-3">Performance</h4>
+              <div className="space-y-1.5 text-sm">
+                <div>
+                  <span className="text-gray-500">Active In Last 2 Years: </span>
                   <span className={activeInLast2Years ? "text-green-600 font-semibold" : "text-gray-400"}>{activeInLast2Years ? 'True' : 'False'}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-500">Average Deals Per Year</span>
+                <div>
+                  <span className="text-gray-500">Average Deals Per Year: </span>
                   <span className={averageDealsPerYear > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{averageDealsPerYear}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-500">Double Ended</span>
+                <div>
+                  <span className="text-gray-500">Double Ended: </span>
                   <span className={doubleEnded > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{doubleEnded}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-500">Investor Source</span>
+                <div>
+                  <span className="text-gray-500">Investor Source: </span>
                   {investorSourceCount > 0 ? (
                     <a 
                       href="https://nextjs-flipiq-agent.vercel.app/agents/AaronVillarreal"
