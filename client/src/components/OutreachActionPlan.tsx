@@ -5,8 +5,7 @@ import {
   Check,
   Phone,
   Users,
-  MessageSquare,
-  Flame
+  MessageSquare
 } from 'lucide-react';
 
 export type OutreachType = 'connections' | 'priority' | 'topOfMind' | 'newRelationships';
@@ -20,7 +19,6 @@ interface OutreachActionPlanProps {
   onStart?: () => void;
   connectionsMade?: number;
   dailyGoal?: number;
-  onComplete?: () => void;
 }
 
 export default function OutreachActionPlan({ 
@@ -31,8 +29,7 @@ export default function OutreachActionPlan({
   hasStarted = false,
   onStart,
   connectionsMade = 0,
-  dailyGoal = 30,
-  onComplete
+  dailyGoal = 30
 }: OutreachActionPlanProps) {
   
   const connectionsCompleted = connectionsMade;
@@ -332,23 +329,6 @@ export default function OutreachActionPlan({
 
       </div>
 
-      {onComplete && (
-        <div className="mt-6 pt-6 border-t border-gray-100 flex justify-center">
-          <button
-            onClick={onComplete}
-            className={cn(
-              "px-8 py-3 rounded-full text-sm font-bold shadow-lg hover:shadow-xl transition-all flex items-center gap-2",
-              hasStarted 
-                ? "bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white"
-                : "bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white opacity-90"
-            )}
-            data-testid="button-complete-day"
-          >
-            <Flame className="w-5 h-5" />
-            Complete Day & View Summary
-          </button>
-        </div>
-      )}
     </div>
   );
 }

@@ -893,7 +893,6 @@ function DailyOutreachContent() {
             onStart={handleStart}
             connectionsMade={connectionsMade}
             dailyGoal={dailyGoal}
-            onComplete={openIQWithCelebration}
           />
 
           {hasStarted ? (
@@ -1622,7 +1621,11 @@ function DailyOutreachContent() {
                     <span>You are sending to <strong className="text-gray-900">{campaignTotal} Agents</strong>. Next step: Review Queue.</span>
                   </div>
                   
-                  <button className="flex items-center gap-2 bg-[#FF6600] hover:bg-orange-700 text-white text-sm font-bold py-2.5 px-6 rounded-lg shadow-sm transition transform active:scale-95">
+                  <button 
+                    onClick={openIQWithCelebration}
+                    className="flex items-center gap-2 bg-[#FF6600] hover:bg-orange-700 text-white text-sm font-bold py-2.5 px-6 rounded-lg shadow-sm transition transform active:scale-95"
+                    data-testid="button-send-campaign"
+                  >
                     Send Campaign <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
