@@ -21,7 +21,8 @@ import {
   Filter,
   Paperclip,
   ChevronRight,
-  Voicemail
+  Voicemail,
+  Lightbulb
 } from 'lucide-react';
 
 function AgentContent() {
@@ -216,9 +217,9 @@ function AgentContent() {
         <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
           <div className="flex items-start justify-between">
             <div className="flex items-start gap-4">
-              {/* Avatar */}
-              <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
-                <User className="w-8 h-8 text-gray-400" />
+              {/* IQ Icon */}
+              <div className="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center">
+                <Lightbulb className="w-8 h-8 text-orange-500" />
               </div>
               
               {/* Agent Info */}
