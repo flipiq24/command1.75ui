@@ -358,6 +358,7 @@ function MLSHotDealsContent() {
                     ) : (
                       sortedDeals.map((deal) => {
                         const propensityArray = Array.isArray(deal.propensity) ? deal.propensity : [deal.propensity];
+                        const totalScore = getPropensityScore(deal.propensity);
                         
                         return (
                           <div 
@@ -373,8 +374,8 @@ function MLSHotDealsContent() {
                               />
                             </div>
                             
-                            {/* Property Details */}
-                            <div className="flex-1 flex flex-col">
+                            {/* Property Details - Left Section */}
+                            <div className="flex-1 flex flex-col min-w-0">
                               {/* Top Row: New, Checkbox, To do, Critical, Reminders */}
                               <div className="flex items-center gap-3 text-sm mb-2">
                                 <button className="flex items-center gap-1 text-gray-500 hover:text-gray-700 transition">
@@ -429,6 +430,74 @@ function MLSHotDealsContent() {
                                   );
                                 })}
                               </div>
+                            </div>
+                            
+                            {/* Price / Propensity Column */}
+                            <div className="w-[180px] shrink-0 flex flex-col">
+                              <div className="text-xl font-bold text-gray-800 mb-1">{deal.price}</div>
+                              <div className="text-sm text-gray-500 mb-2">Propensity Score: <span className="text-blue-600 font-medium">{totalScore}</span></div>
+                              <div className="flex flex-col gap-1">
+                                {propensityArray.map((indicator: string, idx: number) => (
+                                  <span key={idx} className="text-sm font-medium text-red-600">
+                                    {indicator}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                            
+                            {/* Last Open / Called Column */}
+                            <div className="w-[160px] shrink-0 flex flex-col">
+                              <div className="mb-2">
+                                <div className="text-sm text-gray-500">Last Open Date:</div>
+                                <div className="text-sm font-medium text-gray-800">{deal.lastOpen}</div>
+                              </div>
+                              <div>
+                                <div className="text-sm text-gray-500">Last Called Date:</div>
+                                <div className="text-sm font-medium text-gray-800">{deal.lastCalled}</div>
+                              </div>
+                            </div>
+                            
+                            {/* Offer Status / Source Column */}
+                            <div className="w-[180px] shrink-0 flex flex-col">
+                              <div className="mb-3">
+                                <span className="text-sm text-gray-500">Source: </span>
+                                <span className="text-sm font-bold text-gray-800">{deal.source}</span>
+                              </div>
+                              <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                  <button className="flex items-center gap-1 hover:bg-gray-100 px-2 py-1 rounded transition w-fit">
+                                    <span className={cn(
+                                      "text-sm font-medium",
+                                      deal.statusPercent === "100%" ? "text-green-600" :
+                                      deal.statusPercent === "0%" ? "text-gray-400" :
+                                      "text-blue-600"
+                                    )}>
+                                      {deal.statusPercent}
+                                    </span>
+                                    <span className="text-sm text-gray-700">{deal.status}</span>
+                                    <ChevronDown className="w-3 h-3 text-gray-400" />
+                                  </button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end" className="w-56 bg-white z-50 shadow-xl border-none">
+                                  {STATUS_OPTIONS.map((option, idx) => (
+                                    <DropdownMenuItem
+                                      key={idx}
+                                      className="flex items-center gap-2 px-3 py-2 cursor-pointer hover:bg-gray-50"
+                                      onClick={() => handleStatusChange(deal.id, option.label, option.percent)}
+                                    >
+                                      <span className={cn(
+                                        "text-sm font-medium w-12",
+                                        option.percent === "100%" ? "text-green-600" :
+                                        option.percent === "0%" ? "text-gray-400" :
+                                        "text-blue-600"
+                                      )}>
+                                        {option.percent}
+                                      </span>
+                                      <span className="text-sm text-gray-700">{option.label}</span>
+                                    </DropdownMenuItem>
+                                  ))}
+                                </DropdownMenuContent>
+                              </DropdownMenu>
                             </div>
                           </div>
                         );
