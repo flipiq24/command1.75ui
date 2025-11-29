@@ -394,9 +394,9 @@ function AgentContent() {
           {/* Gray Line */}
           <div className="border-t border-gray-200 mb-4"></div>
           
-          {/* Below the line - Contact on left, Metrics below Assigned on right */}
-          <div className="flex items-start">
-            {/* Left side - Contact info */}
+          {/* Below the line - Contact and Metrics side by side on left */}
+          <div className="flex items-start gap-12">
+            {/* Contact info */}
             <div className="space-y-1.5">
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <Phone className="w-4 h-4 text-gray-400" />
@@ -448,8 +448,8 @@ function AgentContent() {
               </div>
             </div>
             
-            {/* Right side - Metrics (below Assigned dropdown position) */}
-            <div className="ml-auto grid grid-cols-2 gap-x-6 gap-y-1 text-sm text-gray-600">
+            {/* Metrics - below Assigned dropdown */}
+            <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm text-gray-600">
               <span>Active In Last 2 Years: <span className={activeInLast2Years ? "text-green-600 font-semibold" : "text-gray-400"}>{activeInLast2Years ? 'True' : 'False'}</span></span>
               <span>Average Deals Per Year: <span className={averageDealsPerYear > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{averageDealsPerYear}</span></span>
               <span>Double Ended: <span className={doubleEnded > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{doubleEnded}</span></span>
