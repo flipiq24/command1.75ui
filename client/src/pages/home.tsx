@@ -196,22 +196,19 @@ function HomeContent() {
         
         <header className="bg-white border-b border-gray-200 py-4 px-6 flex justify-between items-center">
           <div>
-            <div className="text-sm text-gray-500 font-medium mb-1">Wednesday, November 26</div>
+            <div className="text-sm text-gray-500 font-medium mb-1">Saturday, November 29</div>
             <h1 className="text-xl font-bold text-gray-900">Welcome, Tony!</h1>
           </div>
           <div className="flex items-center gap-3">
             <div className="relative group">
-              <button className="bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg flex items-center gap-2 transition-colors border border-gray-200">
-                <span className="group-hover:text-[#FF6600] transition-colors">Add Property</span>
+              <button className="bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium px-4 py-2.5 rounded-lg flex items-center gap-2 transition-colors border border-gray-200 shadow-sm">
+                Add Property
                 <span className="text-[#FF6600] text-lg font-bold leading-none">+</span>
               </button>
-              <div className="absolute top-full left-0 mt-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+              <div className="absolute top-full right-0 mt-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
                 Enter an address and price. I'll automatically gather property details and run comparables for you.
               </div>
             </div>
-            <button className="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center justify-center text-gray-600 transition-colors border border-gray-200 shadow-sm">
-              <Bot className="w-5 h-5" />
-            </button>
           </div>
         </header>
 
