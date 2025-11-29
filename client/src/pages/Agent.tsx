@@ -222,7 +222,7 @@ function AgentContent() {
                     <ExternalLink className="w-4 h-4 text-gray-400" />
                   </button>
                   <button className="p-1 hover:bg-gray-100 rounded transition" data-testid="button-agent-menu">
-                    <MoreVertical className="w-4 h-4 text-gray-400" />
+                    <MoreVertical className="w-4 h-4 text-red-500" />
                   </button>
                   <span className="text-gray-300">|</span>
                   <div className="flex items-center gap-4 text-sm">
