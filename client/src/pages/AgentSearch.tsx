@@ -322,6 +322,7 @@ function AgentSearchContent() {
                 onChange={(e) => handleSelectAll(e.target.checked)}
                 title="Select All Agents"
               />
+              <span className="text-[8px] font-bold text-gray-400 uppercase leading-none">All</span>
             </div> 
             <div className="flex-1 flex items-center">
               <div className="w-3/12 px-4">Agent Info</div>
