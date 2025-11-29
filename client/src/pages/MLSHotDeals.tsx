@@ -520,7 +520,6 @@ function MLSHotDealsContent() {
                                 </DropdownMenuContent>
                               </DropdownMenu>
                               <div className="text-xs text-gray-500 mt-1">Assigned AA: Michael May</div>
-                              <div className="text-xs text-gray-400 mt-0.5">{deal.lastOpen}</div>
                             </div>
                           </div>
                         );
