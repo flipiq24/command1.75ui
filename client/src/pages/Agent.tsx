@@ -451,7 +451,7 @@ function AgentContent() {
             </div>
             
             {/* Last Communication */}
-            <div>
+            <div className="flex flex-col items-center">
               <h4 className="text-xs font-semibold text-gray-900 uppercase tracking-wide mb-3">Last Communication</h4>
               <div className="space-y-1.5 text-sm">
                 <div>
@@ -470,7 +470,7 @@ function AgentContent() {
             </div>
             
             {/* Performance */}
-            <div>
+            <div className="flex flex-col items-end">
               <h4 className="text-xs font-semibold text-gray-900 uppercase tracking-wide mb-3">Performance</h4>
               <div className="space-y-1.5 text-sm">
                 <div>
