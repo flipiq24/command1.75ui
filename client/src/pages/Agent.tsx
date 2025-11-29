@@ -395,82 +395,115 @@ function AgentContent() {
           {/* Gray Line */}
           <div className="border-t border-gray-200 mb-4"></div>
           
-          {/* Below the line - Contact on left, Metrics aligned with Assigned on right */}
-          <div className="flex items-start">
-            {/* Contact info */}
-            <div className="space-y-1.5 min-w-[180px]">
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <Phone className="w-4 h-4 text-gray-400" />
-                <span>2135367426</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <Mail className="w-4 h-4 text-gray-400" />
-                <span className="underline">jeremydtla@gmail.com</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <Building2 className="w-4 h-4 text-gray-400" />
-                <span>ABC Realty</span>
-              </div>
-              
-              {/* Social Media Icons */}
-              <div className="flex items-center gap-3 mt-2">
-                <button 
-                  onClick={() => window.open('https://www.linkedin.com/search/results/all/?keywords=Jeremy%20Flores%20Real%20Estate', '_blank')}
-                  className="p-1.5 rounded-full hover:bg-blue-50 transition group"
-                  title="Search on LinkedIn"
-                  data-testid="icon-linkedin"
-                >
-                  <Linkedin className="w-4 h-4 text-gray-400 group-hover:text-blue-600" />
-                </button>
-                <button 
-                  onClick={() => window.open('https://www.facebook.com/search/top?q=Jeremy%20Flores%20Real%20Estate', '_blank')}
-                  className="p-1.5 rounded-full hover:bg-blue-50 transition group"
-                  title="Search on Facebook"
-                  data-testid="icon-facebook"
-                >
-                  <Facebook className="w-4 h-4 text-gray-400 group-hover:text-blue-700" />
-                </button>
-                <button 
-                  onClick={() => window.open('https://www.instagram.com/explore/search/keyword/?q=Jeremy%20Flores%20Real%20Estate', '_blank')}
-                  className="p-1.5 rounded-full hover:bg-pink-50 transition group"
-                  title="Search on Instagram"
-                  data-testid="icon-instagram"
-                >
-                  <Instagram className="w-4 h-4 text-gray-400 group-hover:text-pink-600" />
-                </button>
-                <button 
-                  onClick={() => window.open('https://www.google.com/search?q=Jeremy%20Flores%20Real%20Estate%20Agent', '_blank')}
-                  className="p-1.5 rounded-full hover:bg-gray-100 transition group"
-                  title="Search on Web"
-                  data-testid="icon-web"
-                >
-                  <Globe className="w-4 h-4 text-gray-400 group-hover:text-gray-700" />
-                </button>
+          {/* Below the line - Three columns: Agent Record, Last Communication, Performance */}
+          <div className="grid grid-cols-3 gap-8">
+            {/* Agent Record */}
+            <div>
+              <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Agent Record</h4>
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <Phone className="w-4 h-4 text-gray-400" />
+                  <span>2135367426</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <Mail className="w-4 h-4 text-gray-400" />
+                  <span className="underline">jeremydtla@gmail.com</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <Building2 className="w-4 h-4 text-gray-400" />
+                  <span>ABC Realty</span>
+                </div>
+                
+                {/* Social Media Icons */}
+                <div className="flex items-center gap-3 mt-2">
+                  <button 
+                    onClick={() => window.open('https://www.linkedin.com/search/results/all/?keywords=Jeremy%20Flores%20Real%20Estate', '_blank')}
+                    className="p-1.5 rounded-full hover:bg-blue-50 transition group"
+                    title="Search on LinkedIn"
+                    data-testid="icon-linkedin"
+                  >
+                    <Linkedin className="w-4 h-4 text-gray-400 group-hover:text-blue-600" />
+                  </button>
+                  <button 
+                    onClick={() => window.open('https://www.facebook.com/search/top?q=Jeremy%20Flores%20Real%20Estate', '_blank')}
+                    className="p-1.5 rounded-full hover:bg-blue-50 transition group"
+                    title="Search on Facebook"
+                    data-testid="icon-facebook"
+                  >
+                    <Facebook className="w-4 h-4 text-gray-400 group-hover:text-blue-700" />
+                  </button>
+                  <button 
+                    onClick={() => window.open('https://www.instagram.com/explore/search/keyword/?q=Jeremy%20Flores%20Real%20Estate', '_blank')}
+                    className="p-1.5 rounded-full hover:bg-pink-50 transition group"
+                    title="Search on Instagram"
+                    data-testid="icon-instagram"
+                  >
+                    <Instagram className="w-4 h-4 text-gray-400 group-hover:text-pink-600" />
+                  </button>
+                  <button 
+                    onClick={() => window.open('https://www.google.com/search?q=Jeremy%20Flores%20Real%20Estate%20Agent', '_blank')}
+                    className="p-1.5 rounded-full hover:bg-gray-100 transition group"
+                    title="Search on Web"
+                    data-testid="icon-web"
+                  >
+                    <Globe className="w-4 h-4 text-gray-400 group-hover:text-gray-700" />
+                  </button>
+                </div>
               </div>
             </div>
             
-            {/* Metrics - Average & Investor Source in middle */}
-            <div className="flex flex-col gap-1 text-sm text-gray-600 ml-8">
-              <span>Average Deals Per Year: <span className={averageDealsPerYear > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{averageDealsPerYear}</span></span>
-              <span>Investor Source: {investorSourceCount > 0 ? (
-                <a 
-                  href="https://nextjs-flipiq-agent.vercel.app/agents/AaronVillarreal"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 font-semibold hover:underline"
-                  data-testid="link-investor-source"
-                >
-                  {investorSourceCount}
-                </a>
-              ) : (
-                <span className="text-gray-400">{investorSourceCount}</span>
-              )}</span>
+            {/* Last Communication */}
+            <div>
+              <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Last Communication</h4>
+              <div className="space-y-1.5 text-sm text-gray-600">
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Last Communication Date</span>
+                  <span className="font-medium">-</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Last Address Discussed</span>
+                  <span className="font-medium">-</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Last Communicated AA</span>
+                  <span className="font-medium">-</span>
+                </div>
+              </div>
             </div>
             
-            {/* Active & Double Ended - aligned below Assigned dropdown */}
-            <div className="flex flex-col gap-1 text-sm text-gray-600 ml-auto" style={{ marginRight: '140px' }}>
-              <span>Active In Last 2 Years: <span className={activeInLast2Years ? "text-green-600 font-semibold" : "text-gray-400"}>{activeInLast2Years ? 'True' : 'False'}</span></span>
-              <span>Double Ended: <span className={doubleEnded > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{doubleEnded}</span></span>
+            {/* Performance */}
+            <div>
+              <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Performance</h4>
+              <div className="space-y-1.5 text-sm text-gray-600">
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Active In Last 2 Years</span>
+                  <span className={activeInLast2Years ? "text-green-600 font-semibold" : "text-gray-400"}>{activeInLast2Years ? 'True' : 'False'}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Average Deals Per Year</span>
+                  <span className={averageDealsPerYear > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{averageDealsPerYear}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Double Ended</span>
+                  <span className={doubleEnded > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{doubleEnded}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Investor Source</span>
+                  {investorSourceCount > 0 ? (
+                    <a 
+                      href="https://nextjs-flipiq-agent.vercel.app/agents/AaronVillarreal"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 font-semibold hover:underline"
+                      data-testid="link-investor-source"
+                    >
+                      {investorSourceCount}
+                    </a>
+                  ) : (
+                    <span className="text-gray-400">{investorSourceCount}</span>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -597,8 +630,8 @@ function AgentContent() {
           </div>
         </div>
 
-        {/* Three Column Section */}
-        <div className="grid grid-cols-3 gap-6 mb-6">
+        {/* Two Column Section - Status & Follow Up */}
+        <div className="grid grid-cols-2 gap-6 mb-6">
           {/* Agent Status */}
           <div className="bg-white rounded-lg border border-gray-200 p-5">
             <h4 className="text-sm font-semibold text-gray-900 mb-4">Agent Status</h4>
@@ -648,46 +681,6 @@ function AgentContent() {
                   <option>High Value</option>
                   <option>Clients</option>
                 </select>
-              </div>
-            </div>
-          </div>
-
-          {/* Last Communication Date */}
-          <div className="bg-white rounded-lg border border-gray-200 p-5">
-            <h4 className="text-sm font-semibold text-gray-900 mb-4">Last Communication Date</h4>
-            
-            <div className="space-y-4">
-              <div>
-                <label className="block text-xs text-gray-500 mb-1.5">Last Communication Date</label>
-                <input 
-                  type="text"
-                  defaultValue="-"
-                  className="w-full border-0 border-b border-gray-200 px-0 py-2 text-sm bg-transparent focus:border-orange-500 focus:ring-0 outline-none"
-                  readOnly
-                  data-testid="input-last-comm-date"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-xs text-gray-500 mb-1.5">Last Address Discussed</label>
-                <input 
-                  type="text"
-                  defaultValue="-"
-                  className="w-full border-0 border-b border-gray-200 px-0 py-2 text-sm bg-transparent focus:border-orange-500 focus:ring-0 outline-none"
-                  readOnly
-                  data-testid="input-last-address"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-xs text-gray-500 mb-1.5">Last Communicated AA</label>
-                <input 
-                  type="text"
-                  defaultValue="-"
-                  className="w-full border-0 border-b border-gray-200 px-0 py-2 text-sm bg-transparent focus:border-orange-500 focus:ring-0 outline-none"
-                  readOnly
-                  data-testid="input-last-comm-aa"
-                />
               </div>
             </div>
           </div>
