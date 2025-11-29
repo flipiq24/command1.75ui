@@ -20,7 +20,8 @@ import {
   Globe,
   AlertCircle,
   Bell,
-  X
+  X,
+  Heart
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -512,6 +513,9 @@ function MLSSearchContent() {
           <div className="flex items-center gap-3">
             <button className="p-1.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded transition">
               <Filter className="w-4 h-4" />
+            </button>
+            <button className="p-1.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded transition">
+              <Heart className="w-4 h-4" />
             </button>
             <button className="p-1.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded transition">
               <ArrowUpDown className="w-4 h-4" />
