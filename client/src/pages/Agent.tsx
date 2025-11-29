@@ -28,7 +28,8 @@ import {
   Clock,
   Linkedin,
   Facebook,
-  Instagram
+  Instagram,
+  Plus
 } from 'lucide-react';
 
 function AgentContent() {
@@ -467,46 +468,52 @@ function AgentContent() {
                 <span className="text-gray-400">{investorSourceCount}</span>
               )}</span>
             </div>
-            
-            {/* Next Steps - aligned with phone number row */}
-            <div className="flex items-center gap-3 flex-wrap">
-              <span className={`text-xs font-semibold text-orange-500 uppercase tracking-wide ${nextSteps.some(step => !step.completed) ? 'animate-pulse' : ''}`}>Next Steps:</span>
+          </div>
+        </div>
+
+        {/* Next Steps - Modern Action Chips */}
+        <div className="flex items-center gap-3 mb-6 flex-wrap">
+          <span className={`text-sm font-semibold text-orange-500 uppercase tracking-wide ${nextSteps.some(step => !step.completed) ? 'animate-pulse' : ''}`}>Next Steps:</span>
           {nextSteps.map((step) => (
             <div key={step.id} className="group relative">
-              <div 
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-full cursor-pointer transition text-xs ${
+              <button 
+                onClick={(e) => {
+                  if (!step.completed) {
+                    handleStepAction(step.text);
+                  } else {
+                    toggleStep(step.id);
+                  }
+                }}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full cursor-pointer transition-all text-sm font-medium shadow-sm ${
                   step.completed 
-                    ? 'bg-gray-100 text-gray-400 line-through' 
-                    : 'bg-gray-50 text-gray-700 hover:bg-gray-100 border border-gray-200'
+                    ? 'bg-gray-100 text-gray-400 line-through border border-gray-200' 
+                    : 'bg-white text-gray-700 hover:bg-orange-50 hover:text-orange-600 hover:border-orange-300 hover:shadow-md border border-gray-200 active:scale-95'
                 }`}
+                data-testid={`chip-step-${step.id}`}
               >
                 <input 
                   type="checkbox" 
                   checked={step.completed}
-                  onChange={() => toggleStep(step.id)}
-                  className="w-3 h-3 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  onChange={(e) => {
+                    e.stopPropagation();
+                    toggleStep(step.id);
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                  className="w-4 h-4 rounded-full border-2 border-gray-300 text-orange-500 focus:ring-orange-500 cursor-pointer"
                   data-testid={`checkbox-step-${step.id}`}
                 />
-                <span 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (!step.completed) {
-                      handleStepAction(step.text);
-                    }
-                  }}
-                  className="hover:underline"
-                >
+                <span>
                   {step.text === 'Relationship Status -' ? `Relationship Status - ${relationshipStatus}` : step.text}
                 </span>
-              </div>
+              </button>
               
               {/* Inline Status Dropdown */}
               {step.text === 'Update Agent Status' && showStatusDropdown && (
-                <div className="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg py-1 min-w-[140px] z-50">
+                <div className="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-xl py-2 min-w-[160px] z-50">
                   {['Unknown', 'Priority', 'Hot', 'Warm', 'Cold'].map((status) => (
                     <button
                       key={status}
-                      className={`w-full text-left px-3 py-1.5 text-xs hover:bg-gray-50 ${agentRating === status ? 'bg-blue-50 text-blue-600' : 'text-gray-700'}`}
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-orange-50 transition ${agentRating === status ? 'bg-orange-50 text-orange-600 font-medium' : 'text-gray-700'}`}
                       onClick={() => {
                         setAgentRating(status);
                         setShowStatusDropdown(false);
@@ -521,11 +528,11 @@ function AgentContent() {
               
               {/* Inline Relationship Dropdown */}
               {step.text === 'Relationship Status -' && showRelationshipDropdown && (
-                <div className="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg py-1 min-w-[140px] z-50">
+                <div className="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-xl py-2 min-w-[160px] z-50">
                   {['Unknown', 'Priority', 'Hot', 'Warm', 'Cold'].map((status) => (
                     <button
                       key={status}
-                      className={`w-full text-left px-3 py-1.5 text-xs hover:bg-gray-50 ${relationshipStatus === status ? 'bg-blue-50 text-blue-600' : 'text-gray-700'}`}
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-orange-50 transition ${relationshipStatus === status ? 'bg-orange-50 text-orange-600 font-medium' : 'text-gray-700'}`}
                       onClick={() => {
                         setRelationshipStatus(status);
                         setShowRelationshipDropdown(false);
@@ -538,49 +545,51 @@ function AgentContent() {
                 </div>
               )}
               
-              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
+              {/* Tooltip */}
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-gray-900 text-white text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 shadow-lg">
                 {step.tooltip}
               </div>
             </div>
           ))}
+          
+          {/* Add Button */}
           <div className="relative">
             <button 
-              className="text-xs text-blue-600 hover:underline" 
+              className="flex items-center gap-1 px-4 py-2 rounded-full text-sm font-medium text-orange-600 bg-orange-50 hover:bg-orange-100 border border-orange-200 transition-all hover:shadow-sm active:scale-95" 
               data-testid="button-add-step"
               onClick={() => setShowAddStep(!showAddStep)}
             >
-              + Add
+              <Plus className="w-4 h-4" />
+              Add
             </button>
             {showAddStep && (
-              <div className="absolute top-6 left-0 bg-white border border-gray-200 rounded-lg shadow-lg p-3 min-w-[220px] z-50">
-                <div className="space-y-1 mb-3">
+              <div className="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-xl p-4 min-w-[240px] z-50">
+                <div className="space-y-2 mb-3">
                   {['Send follow-up email', 'Schedule property tour', 'Send market analysis', 'Request referral'].map((item, i) => (
-                    <label key={i} className="flex items-center gap-2 text-xs text-gray-700 cursor-pointer hover:bg-gray-50 p-1.5 rounded">
-                      <input type="checkbox" className="w-3 h-3 rounded border-gray-300" />
+                    <label key={i} className="flex items-center gap-3 text-sm text-gray-700 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition">
+                      <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-orange-500 focus:ring-orange-500" />
                       {item}
                     </label>
                   ))}
                 </div>
-                <div className="border-t border-gray-200 pt-2">
+                <div className="border-t border-gray-200 pt-3">
                   <input 
                     type="text"
                     placeholder="Custom step..."
                     value={customStep}
                     onChange={(e) => setCustomStep(e.target.value)}
-                    className="w-full border border-gray-300 rounded px-2 py-1 text-xs mb-2"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm mb-3 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
                     data-testid="input-custom-step"
                   />
                   <button 
-                    className="w-full px-2 py-1 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded transition"
+                    className="w-full px-3 py-2 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 rounded-lg transition active:scale-98"
                     onClick={() => setShowAddStep(false)}
                   >
-                    Add
+                    Add Step
                   </button>
                 </div>
               </div>
             )}
-          </div>
-            </div>
           </div>
         </div>
 
