@@ -340,35 +340,27 @@ function AgentContent() {
         <div className="bg-white rounded-lg border border-gray-200 p-5 mb-6">
           <div className="flex items-center justify-between mb-4">
             <h4 className="text-sm font-semibold text-gray-900">Next Steps</h4>
-            <button className="text-xs text-blue-600 hover:underline" data-testid="button-add-step">+ Add Step</button>
           </div>
-          <div className="grid grid-cols-3 gap-4">
-            <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100">
-              <div className="w-6 h-6 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <Phone className="w-3 h-3 text-orange-500" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-gray-900">Follow up call</p>
-                <p className="text-xs text-gray-500 mt-0.5">Schedule a follow-up call with agent</p>
-              </div>
+          <div className="grid grid-cols-5 gap-4">
+            <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-gray-100 transition">
+              <Lightbulb className="w-4 h-4 text-orange-500" />
+              <span className="text-sm text-gray-700">Run agent IQ reports</span>
             </div>
-            <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100">
-              <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <Mail className="w-3 h-3 text-blue-500" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-gray-900">Send property list</p>
-                <p className="text-xs text-gray-500 mt-0.5">Email curated property listings</p>
-              </div>
+            <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-gray-100 transition">
+              <Phone className="w-4 h-4 text-gray-500" />
+              <span className="text-sm text-gray-700">Call Agent</span>
             </div>
-            <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100">
-              <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <Calendar className="w-3 h-3 text-green-500" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-gray-900">Schedule meeting</p>
-                <p className="text-xs text-gray-500 mt-0.5">Set up in-person meeting</p>
-              </div>
+            <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-gray-100 transition">
+              <RefreshCw className="w-4 h-4 text-gray-500" />
+              <span className="text-sm text-gray-700">Update Agent Status</span>
+            </div>
+            <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-gray-100 transition">
+              <User className="w-4 h-4 text-gray-500" />
+              <span className="text-sm text-gray-700">Relationship Status -</span>
+            </div>
+            <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-gray-100 transition border-orange-500">
+              <Calendar className="w-4 h-4 text-orange-500" />
+              <span className="text-sm text-gray-700">Set reminder</span>
             </div>
           </div>
         </div>
