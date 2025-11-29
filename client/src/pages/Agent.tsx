@@ -394,29 +394,9 @@ function AgentContent() {
           {/* Gray Line */}
           <div className="border-t border-gray-200 mb-4"></div>
           
-          {/* Below the line - Metrics aligned with phone number */}
-          <div className="flex items-start gap-8">
-            {/* Left side - Metrics */}
-            <div className="grid grid-cols-2 gap-x-8 gap-y-1.5 text-sm text-gray-600">
-              <span>Active In Last 2 Years: <span className={activeInLast2Years ? "text-green-600 font-semibold" : "text-gray-400"}>{activeInLast2Years ? 'True' : 'False'}</span></span>
-              <span>Average Deals Per Year: <span className={averageDealsPerYear > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{averageDealsPerYear}</span></span>
-              <span>Double Ended: <span className={doubleEnded > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{doubleEnded}</span></span>
-              <span>Investor Source: {investorSourceCount > 0 ? (
-                <a 
-                  href="https://nextjs-flipiq-agent.vercel.app/agents/AaronVillarreal"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 font-semibold hover:underline"
-                  data-testid="link-investor-source"
-                >
-                  {investorSourceCount}
-                </a>
-              ) : (
-                <span className="text-gray-400">{investorSourceCount}</span>
-              )}</span>
-            </div>
-            
-            {/* Right side - Contact info */}
+          {/* Below the line - Contact on left, Metrics on right */}
+          <div className="flex items-start justify-between">
+            {/* Left side - Contact info */}
             <div className="space-y-1.5">
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <Phone className="w-4 h-4 text-gray-400" />
@@ -466,6 +446,26 @@ function AgentContent() {
                   <Globe className="w-4 h-4 text-gray-400 group-hover:text-gray-700" />
                 </button>
               </div>
+            </div>
+            
+            {/* Right side - Metrics */}
+            <div className="grid grid-cols-2 gap-x-8 gap-y-1.5 text-sm text-gray-600">
+              <span>Active In Last 2 Years: <span className={activeInLast2Years ? "text-green-600 font-semibold" : "text-gray-400"}>{activeInLast2Years ? 'True' : 'False'}</span></span>
+              <span>Average Deals Per Year: <span className={averageDealsPerYear > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{averageDealsPerYear}</span></span>
+              <span>Double Ended: <span className={doubleEnded > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{doubleEnded}</span></span>
+              <span>Investor Source: {investorSourceCount > 0 ? (
+                <a 
+                  href="https://nextjs-flipiq-agent.vercel.app/agents/AaronVillarreal"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 font-semibold hover:underline"
+                  data-testid="link-investor-source"
+                >
+                  {investorSourceCount}
+                </a>
+              ) : (
+                <span className="text-gray-400">{investorSourceCount}</span>
+              )}</span>
             </div>
           </div>
         </div>
