@@ -24,7 +24,8 @@ import {
   Voicemail,
   Lightbulb,
   Mic,
-  Bot
+  Bot,
+  Clock
 } from 'lucide-react';
 
 function AgentContent() {
@@ -49,6 +50,13 @@ function AgentContent() {
   const [showAgentMenu, setShowAgentMenu] = useState(false);
   const [showAddStep, setShowAddStep] = useState(false);
   const [customStep, setCustomStep] = useState('');
+  const [showReminderPopup, setShowReminderPopup] = useState(false);
+  const [reminderDate, setReminderDate] = useState('11/29/2025');
+  const [reminderTime, setReminderTime] = useState('11:30 AM');
+  const [reminderCritical, setReminderCritical] = useState(false);
+  const [reminderEmail, setReminderEmail] = useState(false);
+  const [reminderText, setReminderText] = useState(false);
+  const [reminderMessage, setReminderMessage] = useState('');
   const [nextSteps, setNextSteps] = useState([
     { id: 1, text: 'Run agent IQ reports', completed: false, tooltip: 'Generate AI-powered insights and analytics for this agent' },
     { id: 2, text: 'Call Agent', completed: false, tooltip: 'Make a phone call to discuss opportunities' },
@@ -365,6 +373,12 @@ function AgentContent() {
                     ? 'bg-gray-100 text-gray-400 line-through' 
                     : 'bg-gray-50 text-gray-700 hover:bg-gray-100 border border-gray-200'
                 }`}
+                onClick={(e) => {
+                  if (step.text === 'Set reminder' && !step.completed) {
+                    e.preventDefault();
+                    setShowReminderPopup(true);
+                  }
+                }}
               >
                 <input 
                   type="checkbox" 
@@ -689,6 +703,140 @@ function AgentContent() {
           </div>
         </div>
       </div>
+
+      {/* Reminder Popup */}
+      {showReminderPopup && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] flex flex-col">
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-100">
+              <div>
+                <h3 className="text-base font-semibold text-gray-900">Reminder</h3>
+                <p className="text-sm text-gray-500">1119 Calzona Street</p>
+              </div>
+              <button 
+                onClick={() => setShowReminderPopup(false)}
+                className="p-1 hover:bg-gray-100 rounded transition"
+                data-testid="button-close-reminder"
+              >
+                <X className="w-5 h-5 text-gray-400" />
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto p-4">
+              {/* Date */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Date</label>
+                <div className="flex gap-3">
+                  <div className="flex-1 relative">
+                    <input 
+                      type="text" 
+                      value={reminderDate}
+                      onChange={(e) => setReminderDate(e.target.value)}
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm pr-10"
+                      data-testid="input-reminder-date"
+                    />
+                    <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  </div>
+                  <div className="relative">
+                    <input 
+                      type="text" 
+                      value={reminderTime}
+                      onChange={(e) => setReminderTime(e.target.value)}
+                      className="w-24 border border-gray-300 rounded-lg px-3 py-2 text-sm pr-8"
+                      data-testid="input-reminder-time"
+                    />
+                    <Clock className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Quick Time Buttons */}
+              <div className="flex gap-2 mb-4">
+                <button className="px-3 py-1.5 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                  10 Mins
+                </button>
+                <button className="px-3 py-1.5 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                  30 Mins
+                </button>
+                <button className="px-3 py-1.5 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                  1 Hour
+                </button>
+              </div>
+
+              {/* Critical Checkbox */}
+              <label className="flex items-center gap-2 mb-4 cursor-pointer">
+                <input 
+                  type="checkbox" 
+                  checked={reminderCritical}
+                  onChange={(e) => setReminderCritical(e.target.checked)}
+                  className="w-4 h-4 rounded border-gray-300"
+                  data-testid="checkbox-reminder-critical"
+                />
+                <span className="text-sm text-gray-700">Critical</span>
+              </label>
+
+              {/* Notification Methods */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Notification Methods</label>
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input 
+                      type="checkbox" 
+                      checked={reminderEmail}
+                      onChange={(e) => setReminderEmail(e.target.checked)}
+                      className="w-4 h-4 rounded border-gray-300"
+                      data-testid="checkbox-reminder-email"
+                    />
+                    <span className="text-sm text-gray-700">Email</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input 
+                      type="checkbox" 
+                      checked={reminderText}
+                      onChange={(e) => setReminderText(e.target.checked)}
+                      className="w-4 h-4 rounded border-gray-300"
+                      data-testid="checkbox-reminder-text"
+                    />
+                    <span className="text-sm text-gray-700">Text</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Message */}
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                <textarea 
+                  placeholder="Enter your message here..."
+                  value={reminderMessage}
+                  onChange={(e) => setReminderMessage(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm min-h-[200px] resize-none"
+                  data-testid="textarea-reminder-message"
+                />
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="flex justify-end gap-3 p-4 border-t border-gray-100">
+              <button 
+                onClick={() => setShowReminderPopup(false)}
+                className="px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition"
+                data-testid="button-cancel-reminder"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={() => setShowReminderPopup(false)}
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition"
+                data-testid="button-save-reminder"
+              >
+                Save Reminder
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
