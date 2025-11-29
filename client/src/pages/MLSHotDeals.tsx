@@ -484,7 +484,6 @@ function MLSHotDealsContent() {
                             <div className="w-[120px] shrink-0 flex flex-col text-sm">
                               <div className="text-gray-800">109 Days /</div>
                               <div className="text-gray-500">DOM: 109</div>
-                              <div className="text-gray-500">Created: 11/29/25</div>
                             </div>
                             
                             {/* ARV Column */}
