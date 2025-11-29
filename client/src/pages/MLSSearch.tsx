@@ -192,7 +192,7 @@ function MLSSearchContent() {
                 <h2 className="text-lg font-semibold text-gray-900">MLS Filters</h2>
                 <div className="flex items-center gap-1.5">
                   <Heart className="w-4 h-4 text-red-500 fill-red-500" />
-                  <span className="text-sm text-gray-600">Search Results</span>
+                  <span className="text-sm text-gray-600">My Saved Filters</span>
                 </div>
                 <button 
                   onClick={() => setShowFilterModal(false)}
