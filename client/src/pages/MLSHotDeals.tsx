@@ -171,7 +171,7 @@ function MLSHotDealsContent() {
         
         <header className="bg-white border-b border-gray-200 py-4 px-6 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <h1 className="text-xl font-bold text-gray-900">MLS Hot Deals</h1>
+            <h1 className="text-xl font-bold text-gray-900">Last 24h MLS Hot Deals</h1>
             <div className="relative">
               <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <input 
