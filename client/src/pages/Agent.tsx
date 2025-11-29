@@ -14,7 +14,14 @@ import {
   Edit2,
   RefreshCw,
   MessageSquare,
-  Building2
+  Building2,
+  FileText,
+  X,
+  Search,
+  Filter,
+  Paperclip,
+  ChevronRight,
+  Voicemail
 } from 'lucide-react';
 
 function AgentContent() {
@@ -472,25 +479,93 @@ function AgentContent() {
         </div>
 
         {/* Notes Section */}
-        <div className="grid grid-cols-2 gap-6">
-          <div className="bg-white rounded-lg border border-gray-200 p-5">
-            <div className="flex items-center justify-between mb-4">
-              <h4 className="text-sm font-semibold text-gray-900">Notes</h4>
-              <button className="p-1 hover:bg-gray-100 rounded transition">
-                <Edit2 className="w-4 h-4 text-gray-400" />
+        <div className="bg-white rounded-lg border border-gray-200">
+          {/* Tab Bar */}
+          <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
+            <div className="flex items-center gap-2">
+              <button className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-lg" data-testid="tab-notes">
+                <FileText className="w-4 h-4" />
+                Notes
+              </button>
+              <button className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-500 bg-gray-50 border border-gray-200 rounded-lg" data-testid="tab-emails">
+                <Mail className="w-4 h-4" />
+                Emails
+                <span className="text-xs text-gray-400">Soon</span>
+              </button>
+              <button className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-500 bg-gray-50 border border-gray-200 rounded-lg" data-testid="tab-sms">
+                <Phone className="w-4 h-4" />
+                SMS
+                <span className="text-xs text-gray-400">Soon</span>
+              </button>
+              <button className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-500 bg-gray-50 border border-gray-200 rounded-lg" data-testid="tab-voicemail">
+                <Voicemail className="w-4 h-4" />
+                Voicemail
+                <span className="text-xs text-gray-400">Soon</span>
               </button>
             </div>
-            <div className="text-sm text-gray-500">—</div>
+            <div className="flex items-center gap-2">
+              <button className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition" data-testid="button-cancel">
+                <X className="w-4 h-4" />
+                Cancel
+              </button>
+              <button className="p-2 hover:bg-gray-100 rounded-lg transition" data-testid="button-search-notes">
+                <Search className="w-4 h-4 text-gray-500" />
+              </button>
+              <button className="p-2 hover:bg-gray-100 rounded-lg transition" data-testid="button-filter-notes">
+                <Filter className="w-4 h-4 text-gray-500" />
+              </button>
+            </div>
           </div>
           
-          <div className="bg-white rounded-lg border border-gray-200 p-5">
-            <div className="flex items-center justify-between mb-4">
-              <h4 className="text-sm font-semibold text-gray-900">Note Dates</h4>
-              <button className="p-1 hover:bg-gray-100 rounded transition">
-                <Edit2 className="w-4 h-4 text-gray-400" />
+          {/* Text Input Area */}
+          <div className="p-4 border-b border-gray-200">
+            <textarea 
+              placeholder="Start Typing"
+              className="w-full h-24 p-3 text-sm text-gray-700 border border-gray-200 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              data-testid="textarea-note"
+            />
+            <div className="flex items-center justify-end gap-4 mt-3">
+              <button className="p-1.5 hover:bg-gray-100 rounded transition">
+                <Paperclip className="w-4 h-4 text-gray-400" />
+              </button>
+              <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+                <input type="checkbox" className="w-4 h-4 rounded border-gray-300" data-testid="checkbox-communication" />
+                Communication
+              </label>
+              <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+                <input type="checkbox" className="w-4 h-4 rounded border-gray-300" data-testid="checkbox-critical" />
+                Critical
+              </label>
+              <button className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition" data-testid="button-post-note">
+                Post Note
               </button>
             </div>
-            <div className="text-sm text-gray-500">—</div>
+          </div>
+          
+          {/* Note Entry */}
+          <div className="p-4 border-b border-gray-100">
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-medium">
+                MM
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-gray-900">Michael May</span>
+                  <span className="text-xs text-gray-400">33s</span>
+                </div>
+                <p className="text-sm text-gray-600 mt-1">Notes</p>
+              </div>
+            </div>
+            <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+              <button className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700" data-testid="button-replies">
+                <ChevronRight className="w-4 h-4" />
+                0 Replies
+              </button>
+              <button className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700" data-testid="button-email-note">
+                <Mail className="w-4 h-4" />
+                Email
+              </button>
+            </div>
           </div>
         </div>
       </div>
