@@ -472,7 +472,7 @@ function AgentContent() {
 
         {/* Next Steps Section */}
         <div className="flex items-center gap-3 mb-6 flex-wrap">
-          <span className="text-xs font-semibold text-orange-500 uppercase tracking-wide">Next Steps:</span>
+          <span className={`text-xs font-semibold text-orange-500 uppercase tracking-wide ${nextSteps.some(step => !step.completed) ? 'animate-pulse' : ''}`}>Next Steps:</span>
           {nextSteps.map((step) => (
             <div key={step.id} className="group relative">
               <div 
