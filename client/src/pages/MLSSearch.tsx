@@ -181,12 +181,13 @@ function MLSSearchContent() {
   return (
       <div className="flex-1 flex flex-col overflow-hidden relative z-10 bg-gray-50">
         
-        {/* Filter Modal Overlay */}
+        {/* Filter Sidebar Overlay */}
         {showFilterModal && (
-          <div className="fixed inset-0 bg-black/50 z-50 flex items-start justify-center pt-8 overflow-y-auto">
-            <div className="bg-white rounded-lg shadow-2xl w-full max-w-2xl mx-4 mb-8">
-              {/* Modal Header */}
-              <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+          <div className="fixed inset-0 bg-black/50 z-50 flex">
+            <div className="flex-1" onClick={() => setShowFilterModal(false)}></div>
+            <div className="bg-white shadow-2xl w-[600px] h-full flex flex-col animate-in slide-in-from-right duration-300">
+              {/* Sidebar Header */}
+              <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 shrink-0">
                 <h2 className="text-lg font-semibold text-gray-900">Filter MLS Notifications</h2>
                 <button 
                   onClick={() => setShowFilterModal(false)}
@@ -196,8 +197,8 @@ function MLSSearchContent() {
                 </button>
               </div>
 
-              {/* Modal Body - Scrollable */}
-              <div className="px-6 py-4 max-h-[70vh] overflow-y-auto space-y-6">
+              {/* Sidebar Body - Scrollable */}
+              <div className="px-6 py-4 flex-1 overflow-y-auto space-y-6">
                 
                 {/* BASIC FILTERS */}
                 <div>
@@ -461,8 +462,8 @@ function MLSSearchContent() {
                 </div>
               </div>
 
-              {/* Modal Footer */}
-              <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 bg-gray-50 rounded-b-lg">
+              {/* Sidebar Footer */}
+              <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 bg-gray-50 shrink-0">
                 <button className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition">
                   Reset
                 </button>
