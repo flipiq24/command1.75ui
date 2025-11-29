@@ -59,7 +59,6 @@ function AgentContent() {
   const [reminderMessage, setReminderMessage] = useState('');
   
   // Action popups state
-  const [showIQReportPopup, setShowIQReportPopup] = useState(false);
   const [iqReportLoading, setIqReportLoading] = useState(false);
   const [iqReportContent, setIqReportContent] = useState('');
   const [showCallPopup, setShowCallPopup] = useState(false);
@@ -84,8 +83,8 @@ function AgentContent() {
   };
 
   const runIQReport = async () => {
-    setShowIQReportPopup(true);
     setIqReportLoading(true);
+    setIqReportContent('');
     try {
       const response = await fetch('/api/ai/agent-iq-report', {
         method: 'POST',
@@ -719,6 +718,54 @@ function AgentContent() {
           </div>
         </div>
 
+        {/* iQ Report Section - Shows when report is loading or has content */}
+        {(iqReportLoading || iqReportContent) && (
+          <div className="bg-white rounded-lg border border-gray-200 p-5 mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
+                  <Lightbulb className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-900">Agent iQ Report</h3>
+                  <p className="text-xs text-gray-500">AI-Powered Analysis for Sarah Martinez</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <button 
+                  onClick={() => runIQReport()}
+                  className="px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition flex items-center gap-1.5"
+                  disabled={iqReportLoading}
+                  data-testid="button-regenerate-iq"
+                >
+                  <RefreshCw className={`w-3 h-3 ${iqReportLoading ? 'animate-spin' : ''}`} />
+                  Regenerate
+                </button>
+                <button 
+                  onClick={() => setIqReportContent('')}
+                  className="p-1.5 hover:bg-gray-100 rounded transition"
+                  data-testid="button-close-iq-inline"
+                >
+                  <X className="w-4 h-4 text-gray-400" />
+                </button>
+              </div>
+            </div>
+            
+            {iqReportLoading ? (
+              <div className="flex flex-col items-center justify-center py-8">
+                <div className="w-10 h-10 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mb-3"></div>
+                <p className="text-sm text-gray-600">Generating AI report...</p>
+              </div>
+            ) : (
+              <div className="bg-gray-50 rounded-lg p-4 max-h-[400px] overflow-y-auto">
+                <div className="whitespace-pre-wrap text-sm text-gray-700 leading-relaxed">
+                  {iqReportContent}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Notes Section */}
         <div className="bg-white rounded-lg border border-gray-200">
           {/* Tab Bar */}
@@ -939,68 +986,6 @@ function AgentContent() {
                 data-testid="button-save-reminder"
               >
                 Save Reminder
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* IQ Report Popup */}
-      {showIQReportPopup && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[85vh] flex flex-col">
-            {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-gray-100">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center">
-                  <Lightbulb className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-base font-semibold text-gray-900">Agent iQ Report</h3>
-                  <p className="text-sm text-gray-500">AI-Powered Analysis for Sarah Martinez</p>
-                </div>
-              </div>
-              <button 
-                onClick={() => setShowIQReportPopup(false)}
-                className="p-1 hover:bg-gray-100 rounded transition"
-                data-testid="button-close-iq-report"
-              >
-                <X className="w-5 h-5 text-gray-400" />
-              </button>
-            </div>
-
-            {/* Content */}
-            <div className="flex-1 overflow-y-auto p-6">
-              {iqReportLoading ? (
-                <div className="flex flex-col items-center justify-center py-12">
-                  <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-                  <p className="text-sm text-gray-600">Generating AI report...</p>
-                </div>
-              ) : (
-                <div className="prose prose-sm max-w-none">
-                  <div className="whitespace-pre-wrap text-sm text-gray-700 leading-relaxed">
-                    {iqReportContent}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Footer */}
-            <div className="flex justify-end gap-3 p-4 border-t border-gray-100">
-              <button 
-                onClick={() => runIQReport()}
-                className="px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition flex items-center gap-2"
-                disabled={iqReportLoading}
-              >
-                <RefreshCw className={`w-4 h-4 ${iqReportLoading ? 'animate-spin' : ''}`} />
-                Regenerate
-              </button>
-              <button 
-                onClick={() => setShowIQReportPopup(false)}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition"
-                data-testid="button-close-iq-report-done"
-              >
-                Done
               </button>
             </div>
           </div>
