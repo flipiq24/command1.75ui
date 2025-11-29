@@ -316,15 +316,10 @@ function AgentContent() {
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-4">
               {/* IQ Icon */}
-              <button 
-                onClick={() => runIQReport()}
-                className="flex items-center gap-1 px-3 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg transition cursor-pointer"
-                data-testid="button-iq-report"
-                title="Run Agent iQ Report"
-              >
+              <div className="flex items-center gap-1 px-3 py-2 bg-orange-500 rounded-lg">
                 <Lightbulb className="w-5 h-5 text-white" />
                 <span className="text-white font-semibold text-sm">iQ</span>
-              </button>
+              </div>
               
               {/* Name and Menu */}
               <div className="flex items-center gap-2">
