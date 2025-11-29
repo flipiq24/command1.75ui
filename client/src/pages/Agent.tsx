@@ -336,6 +336,43 @@ function AgentContent() {
           </div>
         </div>
 
+        {/* Next Steps Section */}
+        <div className="bg-white rounded-lg border border-gray-200 p-5 mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h4 className="text-sm font-semibold text-gray-900">Next Steps</h4>
+            <button className="text-xs text-blue-600 hover:underline" data-testid="button-add-step">+ Add Step</button>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
+            <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100">
+              <div className="w-6 h-6 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <Phone className="w-3 h-3 text-orange-500" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-900">Follow up call</p>
+                <p className="text-xs text-gray-500 mt-0.5">Schedule a follow-up call with agent</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100">
+              <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <Mail className="w-3 h-3 text-blue-500" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-900">Send property list</p>
+                <p className="text-xs text-gray-500 mt-0.5">Email curated property listings</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100">
+              <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <Calendar className="w-3 h-3 text-green-500" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-900">Schedule meeting</p>
+                <p className="text-xs text-gray-500 mt-0.5">Set up in-person meeting</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Three Column Section */}
         <div className="grid grid-cols-3 gap-6 mb-6">
           {/* Agent Status */}
