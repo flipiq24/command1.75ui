@@ -394,10 +394,10 @@ function AgentContent() {
           {/* Gray Line */}
           <div className="border-t border-gray-200 mb-4"></div>
           
-          {/* Below the line - Contact and Metrics side by side on left */}
-          <div className="flex items-start gap-12">
+          {/* Below the line - Contact, Metrics, and Next Steps in same row */}
+          <div className="flex items-start gap-8">
             {/* Contact info */}
-            <div className="space-y-1.5">
+            <div className="space-y-1.5 min-w-[180px]">
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <Phone className="w-4 h-4 text-gray-400" />
                 <span>2135367426</span>
@@ -449,7 +449,7 @@ function AgentContent() {
             </div>
             
             {/* Metrics - below Assigned dropdown */}
-            <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm text-gray-600">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm text-gray-600 min-w-[320px]">
               <span>Active In Last 2 Years: <span className={activeInLast2Years ? "text-green-600 font-semibold" : "text-gray-400"}>{activeInLast2Years ? 'True' : 'False'}</span></span>
               <span>Average Deals Per Year: <span className={averageDealsPerYear > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{averageDealsPerYear}</span></span>
               <span>Double Ended: <span className={doubleEnded > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{doubleEnded}</span></span>
@@ -467,12 +467,10 @@ function AgentContent() {
                 <span className="text-gray-400">{investorSourceCount}</span>
               )}</span>
             </div>
-          </div>
-        </div>
-
-        {/* Next Steps Section */}
-        <div className="flex items-center gap-3 mb-6 flex-wrap">
-          <span className={`text-xs font-semibold text-orange-500 uppercase tracking-wide ${nextSteps.some(step => !step.completed) ? 'animate-pulse' : ''}`}>Next Steps:</span>
+            
+            {/* Next Steps - aligned with phone number row */}
+            <div className="flex items-center gap-3 flex-wrap">
+              <span className={`text-xs font-semibold text-orange-500 uppercase tracking-wide ${nextSteps.some(step => !step.completed) ? 'animate-pulse' : ''}`}>Next Steps:</span>
           {nextSteps.map((step) => (
             <div key={step.id} className="group relative">
               <div 
@@ -581,6 +579,8 @@ function AgentContent() {
                 </div>
               </div>
             )}
+          </div>
+            </div>
           </div>
         </div>
 
