@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { cn } from "@/lib/utils";
 import { 
   ChevronDown,
+  ChevronUp,
   MoreVertical,
   Target,
   Flame,
@@ -13,7 +14,8 @@ import {
   Search,
   Filter,
   ArrowUpDown,
-  Calendar
+  Calendar,
+  X
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -96,7 +98,21 @@ const getPropensityColor = (text: string) => {
 
 function MyDealsContent() {
   const [selectedDealIds, setSelectedDealIds] = useState<number[]>([]);
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [expandedSections, setExpandedSections] = useState({
+    userAssignment: true,
+    communication: true,
+    dealInfo: true,
+    propertyInfo: true
+  });
   const queryClient = useQueryClient();
+
+  const toggleSection = (section: keyof typeof expandedSections) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
 
   const { data: deals = [], isLoading } = useQuery({
     queryKey: ['deals'],
@@ -163,24 +179,179 @@ function MyDealsContent() {
   return (
       <div className="flex-1 flex flex-col overflow-hidden relative z-10 bg-gray-50">
         
+        {/* Filter Sidebar Overlay */}
+        {showFilterModal && (
+          <div className="fixed inset-0 bg-black/50 z-50 flex">
+            <div className="flex-1" onClick={() => setShowFilterModal(false)}></div>
+            <div className="bg-white shadow-2xl w-[520px] h-full flex flex-col animate-in slide-in-from-right duration-300">
+              {/* Sidebar Header */}
+              <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 shrink-0">
+                <h2 className="text-lg font-semibold text-gray-900">Filter Deals</h2>
+                <button 
+                  onClick={() => setShowFilterModal(false)}
+                  className="p-1 hover:bg-gray-100 rounded transition"
+                >
+                  <X className="w-5 h-5 text-gray-500" />
+                </button>
+              </div>
+
+              {/* Sidebar Body - Scrollable */}
+              <div className="px-6 py-4 flex-1 overflow-y-auto space-y-4">
+                
+                {/* USER ASSIGNMENT AND RESPONSIBILITIES */}
+                <div className="border border-gray-200 rounded-lg">
+                  <button 
+                    onClick={() => toggleSection('userAssignment')}
+                    className="w-full flex items-center justify-between px-4 py-3 text-left"
+                  >
+                    <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">User Assignment and Responsibilities</span>
+                    {expandedSections.userAssignment ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
+                  </button>
+                  {expandedSections.userAssignment && (
+                    <div className="px-4 pb-4 space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Acquisition Associate</label>
+                        <select className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                          <option>Tony Fletcher</option>
+                          <option>Michael May</option>
+                          <option>Not Assigned</option>
+                        </select>
+                        <div className="mt-2 flex flex-wrap gap-1">
+                          <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">
+                            Tony Fletcher
+                            <button className="hover:text-blue-900">×</button>
+                          </span>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">To-Do Status</label>
+                        <select className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                          <option>Select status...</option>
+                          <option>Pending</option>
+                          <option>In Progress</option>
+                          <option>Completed</option>
+                        </select>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* COMMUNICATION & NOTIFICATIONS */}
+                <div className="border border-gray-200 rounded-lg">
+                  <button 
+                    onClick={() => toggleSection('communication')}
+                    className="w-full flex items-center justify-between px-4 py-3 text-left"
+                  >
+                    <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Communication & Notifications</span>
+                    {expandedSections.communication ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
+                  </button>
+                  {expandedSections.communication && (
+                    <div className="px-4 pb-4 space-y-3">
+                      <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                        <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+                        Deals with reminders
+                      </label>
+                      <label className="flex items-center gap-2 text-sm text-gray-400 cursor-not-allowed">
+                        <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" disabled />
+                        Deals with unopened text messages (Will be available soon)
+                      </label>
+                      <label className="flex items-center gap-2 text-sm text-gray-400 cursor-not-allowed">
+                        <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" disabled />
+                        Deals with unopened emails (Will be available soon)
+                      </label>
+                    </div>
+                  )}
+                </div>
+
+                {/* DEAL INFORMATION */}
+                <div className="border border-gray-200 rounded-lg">
+                  <button 
+                    onClick={() => toggleSection('dealInfo')}
+                    className="w-full flex items-center justify-between px-4 py-3 text-left"
+                  >
+                    <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Deal Information</span>
+                    {expandedSections.dealInfo ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
+                  </button>
+                  {expandedSections.dealInfo && (
+                    <div className="px-4 pb-4 space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Offer Status</label>
+                        <select className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                          <option>Select status...</option>
+                          <option>Initial Contact Started</option>
+                          <option>Continue to Follow</option>
+                          <option>Offer Terms Sent</option>
+                          <option>Back Up</option>
+                          <option>Contract Submitted</option>
+                          <option>In Negotiations</option>
+                          <option>Offer Accepted</option>
+                          <option>Acquired</option>
+                        </select>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* PROPERTY INFORMATION */}
+                <div className="border border-gray-200 rounded-lg">
+                  <button 
+                    onClick={() => toggleSection('propertyInfo')}
+                    className="w-full flex items-center justify-between px-4 py-3 text-left"
+                  >
+                    <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Property Information</span>
+                    {expandedSections.propertyInfo ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
+                  </button>
+                  {expandedSections.propertyInfo && (
+                    <div className="px-4 pb-4 space-y-3">
+                      <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                        <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+                        Deals with critical issues
+                      </label>
+                    </div>
+                  )}
+                </div>
+
+              </div>
+
+              {/* Sidebar Footer */}
+              <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 bg-gray-50 shrink-0">
+                <button className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition">
+                  Reset All
+                </button>
+                <button 
+                  onClick={() => setShowFilterModal(false)}
+                  className="px-6 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition"
+                >
+                  Apply
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         <header className="bg-white border-b border-gray-200 py-4 px-6 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <h1 className="text-xl font-bold text-gray-900">My Deals</h1>
             <div className="relative">
-              <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <Search className="w-5 h-5 absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <input 
                 type="text" 
                 placeholder="Search deals..." 
-                className="pl-9 pr-4 py-2 w-64 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="pl-12 pr-4 py-3 w-80 border border-gray-200 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 data-testid="input-search"
               />
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <button className="w-9 h-9 flex items-center justify-center rounded-lg border border-blue-500 bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors" data-testid="button-filter">
+          <div className="flex items-center gap-3">
+            <button 
+              onClick={() => setShowFilterModal(true)}
+              className="px-4 py-2 text-sm font-medium text-white bg-[#FF6600] hover:bg-[#e65c00] rounded-lg transition flex items-center gap-2"
+              data-testid="button-filter"
+            >
               <Filter className="w-4 h-4" />
+              Filters
             </button>
-            <button className="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-500 hover:text-gray-700 transition-colors" data-testid="button-sort">
+            <button className="p-1.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded transition" data-testid="button-sort">
               <ArrowUpDown className="w-4 h-4" />
             </button>
             <div className="h-6 w-px bg-gray-200 mx-1"></div>
