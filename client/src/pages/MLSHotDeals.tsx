@@ -167,7 +167,7 @@ function MLSHotDealsContent() {
   return (
       <div className="flex-1 flex flex-col overflow-hidden relative z-10 bg-gray-50">
         
-        <header className="bg-white border-b border-gray-200 py-4 px-6 flex justify-between items-center">
+        <header className="bg-white border-b border-gray-200 py-4 px-6 flex items-center">
           <div className="flex items-center gap-4">
             <h1 className="text-xl font-bold text-gray-900">MLS Hot Deals</h1>
             <div className="relative">
@@ -178,26 +178,6 @@ function MLSHotDealsContent() {
                 className="pl-9 pr-4 py-2 w-64 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 data-testid="input-search"
               />
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <button className="w-9 h-9 flex items-center justify-center rounded-lg border border-blue-500 bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors" data-testid="button-filter">
-              <Filter className="w-4 h-4" />
-            </button>
-            <button className="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-500 hover:text-gray-700 transition-colors" data-testid="button-sort">
-              <ArrowUpDown className="w-4 h-4" />
-            </button>
-            <div className="h-6 w-px bg-gray-200 mx-1"></div>
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-2 px-3 py-1.5 border border-gray-200 rounded-lg bg-white cursor-pointer hover:bg-gray-50">
-                <span className="text-sm text-gray-700">11/24/2025</span>
-                <Calendar className="w-4 h-4 text-gray-400" />
-              </div>
-              <span className="text-sm text-gray-500">to</span>
-              <div className="flex items-center gap-2 px-3 py-1.5 border border-gray-200 rounded-lg bg-white cursor-pointer hover:bg-gray-50">
-                <span className="text-sm text-gray-700">11/29/2025</span>
-                <Calendar className="w-4 h-4 text-gray-400" />
-              </div>
             </div>
           </div>
         </header>
