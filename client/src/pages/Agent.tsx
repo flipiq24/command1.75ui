@@ -47,6 +47,8 @@ function AgentContent() {
   const [assignedUser, setAssignedUser] = useState('Michael May');
   const [doNotCall, setDoNotCall] = useState(false);
   const [showAgentMenu, setShowAgentMenu] = useState(false);
+  const [showAddStep, setShowAddStep] = useState(false);
+  const [customStep, setCustomStep] = useState('');
 
   const leftTabs = [
     { id: 'piq', label: 'PIQ' },
@@ -340,6 +342,72 @@ function AgentContent() {
         <div className="bg-white rounded-lg border border-gray-200 p-5 mb-6">
           <div className="flex items-center justify-between mb-4">
             <h4 className="text-sm font-semibold text-gray-900">Next Steps</h4>
+            <div className="relative">
+              <button 
+                className="text-xs text-blue-600 hover:underline flex items-center gap-1" 
+                data-testid="button-add-step"
+                onClick={() => setShowAddStep(!showAddStep)}
+              >
+                + Add Step
+              </button>
+              {showAddStep && (
+                <div className="absolute top-6 right-0 bg-white border border-gray-200 rounded-lg shadow-lg p-4 min-w-[280px] z-50">
+                  <h5 className="text-sm font-semibold text-gray-900 mb-3">Add New Step</h5>
+                  
+                  {/* Checklist Options */}
+                  <div className="space-y-2 mb-4">
+                    <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-50 p-2 rounded">
+                      <input type="checkbox" className="w-4 h-4 rounded border-gray-300" />
+                      Send follow-up email
+                    </label>
+                    <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-50 p-2 rounded">
+                      <input type="checkbox" className="w-4 h-4 rounded border-gray-300" />
+                      Schedule property tour
+                    </label>
+                    <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-50 p-2 rounded">
+                      <input type="checkbox" className="w-4 h-4 rounded border-gray-300" />
+                      Send market analysis
+                    </label>
+                    <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-50 p-2 rounded">
+                      <input type="checkbox" className="w-4 h-4 rounded border-gray-300" />
+                      Request referral
+                    </label>
+                    <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-50 p-2 rounded">
+                      <input type="checkbox" className="w-4 h-4 rounded border-gray-300" />
+                      Update CRM notes
+                    </label>
+                  </div>
+                  
+                  {/* Manual Update */}
+                  <div className="border-t border-gray-200 pt-3">
+                    <label className="block text-xs text-gray-500 mb-1.5">Manual Update</label>
+                    <input 
+                      type="text"
+                      placeholder="Enter custom step..."
+                      value={customStep}
+                      onChange={(e) => setCustomStep(e.target.value)}
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm mb-2"
+                      data-testid="input-custom-step"
+                    />
+                    <div className="flex gap-2">
+                      <button 
+                        className="flex-1 px-3 py-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition"
+                        data-testid="button-save-step"
+                        onClick={() => setShowAddStep(false)}
+                      >
+                        Add Step
+                      </button>
+                      <button 
+                        className="px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
+                        onClick={() => setShowAddStep(false)}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
           <div className="grid grid-cols-5 gap-4">
             <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-gray-100 transition">
