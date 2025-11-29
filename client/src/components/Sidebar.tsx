@@ -165,47 +165,34 @@ export default function Sidebar({ onIQClick, onCloseIQ, isIQActive = false, onCo
 
           {/* Find Leads Section */}
           <div>
-            <div className={cn("px-2 mb-2 text-xs font-bold text-gray-400 uppercase tracking-wider", isCollapsed && "text-center")}>
+            <div className={cn("px-2 mb-2 text-xs font-bold text-gray-300 uppercase tracking-wider", isCollapsed && "text-center")}>
                 {isCollapsed ? "Deals" : "Find Deals"}
             </div>
             <div className="space-y-1">
-                <a href="#" className={cn("group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg", isCollapsed && "justify-center")}>
-                    <div className="text-gray-500"><Zap className="w-5 h-5 flex-shrink-0" /></div>
+                <div className={cn("group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-300 cursor-not-allowed rounded-lg", isCollapsed && "justify-center")}>
+                    <div className="text-gray-300"><Zap className="w-5 h-5 flex-shrink-0" /></div>
                     {!isCollapsed && "MLS Hot Deals"}
-                    <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                        <span className="font-bold text-[#FF6600]">MLS Hot Deals:</span><br/>
-                        Latest MLS deals based on propensity to sell, Key words and percentage off ARV.
-                    </div>
-                </a>
+                    {!isCollapsed && <span className="text-[10px] text-gray-400 ml-auto">Soon</span>}
+                </div>
 
-                <a href="#" className={cn("group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg", isCollapsed && "justify-center")}>
-                     <div className="text-gray-500"><Search className="w-5 h-5 flex-shrink-0" /></div>
+                <div className={cn("group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-300 cursor-not-allowed rounded-lg", isCollapsed && "justify-center")}>
+                     <div className="text-gray-300"><Search className="w-5 h-5 flex-shrink-0" /></div>
                     {!isCollapsed && "MLS Search"}
-                    <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                        <span className="font-bold text-[#FF6600]">MLS Search:</span><br/>
-                        Use standard MLS filters to find any deal on the MLS.
-                    </div>
-                </a>
+                    {!isCollapsed && <span className="text-[10px] text-gray-400 ml-auto">Soon</span>}
+                </div>
 
-                <a href="#" className={cn("group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg", isCollapsed && "justify-center")}>
-                     <div className="text-gray-500"><Users className="w-5 h-5 flex-shrink-0" /></div>
+                <div className={cn("group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-300 cursor-not-allowed rounded-lg", isCollapsed && "justify-center")}>
+                     <div className="text-gray-300"><Users className="w-5 h-5 flex-shrink-0" /></div>
                     {!isCollapsed && "Agent Search"}
-                    <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                        <span className="font-bold text-[#FF6600]">Agent Search:</span><br/>
-                        Find investor friendly agents based on how they transact.
-                    </div>
-                </a>
+                    {!isCollapsed && <span className="text-[10px] text-gray-400 ml-auto">Soon</span>}
+                </div>
 
-                <a href="#" className={cn("group relative flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-gray-500 hover:text-gray-900 transition", isCollapsed ? "justify-center" : "pl-8 pr-3")}>
-                    {!isCollapsed && <span className="text-gray-400">└──</span>}
+                <div className={cn("group relative flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-gray-300 cursor-not-allowed", isCollapsed ? "justify-center" : "pl-8 pr-3")}>
+                    {!isCollapsed && <span className="text-gray-300">└──</span>}
                     {!isCollapsed && "Campaigns"}
-                    {isCollapsed && <div className="w-1 h-1 rounded-full bg-gray-400"></div>} {/* Dot for collapsed state */}
-                    
-                    <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                        <span className="font-bold text-[#FF6600]">Campaigns:</span><br/>
-                        My campaigns sent to my agent target list.
-                    </div>
-                </a>
+                    {!isCollapsed && <span className="text-[10px] text-gray-400 ml-auto">Soon</span>}
+                    {isCollapsed && <div className="w-1 h-1 rounded-full bg-gray-300"></div>}
+                </div>
             </div>
           </div>
 

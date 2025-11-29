@@ -216,15 +216,6 @@ function HomeContent() {
         </header>
 
         <main className="flex-1 overflow-y-auto p-6">
-            
-          {/* Action Plan Component */}
-          <ActionPlan 
-            activeFilter={activeFilter} 
-            onFilterChange={setActiveFilter}
-            completionPercent={completionPercent}
-            userName="Tony"
-            onMilestoneComplete={handleMilestoneComplete}
-          />
 
             {/* Current Task List - Reorganized Layout */}
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm flex-1 flex flex-col">
