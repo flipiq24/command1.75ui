@@ -12,7 +12,9 @@ import {
   User,
   Calendar,
   Edit2,
-  RefreshCw
+  RefreshCw,
+  MessageSquare,
+  Building2
 } from 'lucide-react';
 
 function AgentContent() {
@@ -224,14 +226,16 @@ function AgentContent() {
                   <div className="flex items-center gap-2 text-sm text-gray-600">
                     <Phone className="w-4 h-4 text-gray-400" />
                     <span>2135367426</span>
+                    <MessageSquare className="w-4 h-4 text-gray-400 ml-1 cursor-pointer hover:text-gray-600" />
+                    <Mail className="w-4 h-4 text-gray-400 cursor-pointer hover:text-gray-600" />
                   </div>
                   <div className="flex items-center gap-2 text-sm text-gray-600">
                     <Mail className="w-4 h-4 text-gray-400" />
-                    <span>jeremydtla@gmail.com</span>
+                    <span className="underline">jeremydtla@gmail.com</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <User className="w-4 h-4 text-gray-400" />
-                    <span>Jeremy Flores</span>
+                    <Building2 className="w-4 h-4 text-gray-400" />
+                    <span>ABC Realty</span>
                   </div>
                 </div>
               </div>
