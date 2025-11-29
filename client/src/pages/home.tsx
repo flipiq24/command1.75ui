@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Link, useSearch } from "wouter";
 import { cn } from "@/lib/utils";
 import ActionPlan, { DealType } from "@/components/ActionPlan";
-import Layout, { useLayout } from "@/components/Layout";
+import { useLayout } from "@/components/Layout";
 import { 
   ChevronDown,
   MoreVertical,
@@ -562,9 +562,5 @@ function HomeContent() {
 }
 
 export default function Home() {
-  return (
-    <Layout>
-      <HomeContent />
-    </Layout>
-  );
+  return <HomeContent />;
 }

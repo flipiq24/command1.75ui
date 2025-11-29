@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useLayoutEffect } from 'react';
 import { useLocation, useSearch } from 'wouter';
 import { cn } from "@/lib/utils";
-import Layout, { useLayout } from '@/components/Layout';
+import { useLayout } from '@/components/Layout';
 import MilestoneCompletionModal from '@/components/MilestoneCompletionModal';
 import { 
   ArrowLeft,
@@ -52,11 +52,11 @@ function PIQContent() {
   const [showMapValueIQCompletion, setShowMapValueIQCompletion] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   
-  const { openIQWithSummary } = useLayout();
+  const { openIQ } = useLayout();
 
   const handleCelebrationComplete = () => {
     setShowCelebration(false);
-    openIQWithSummary();
+    openIQ();
   };
 
   const handleCelebrationTrigger = () => {
@@ -963,9 +963,5 @@ function PIQContent() {
 }
 
 export default function PIQ() {
-  return (
-    <Layout>
-      <PIQContent />
-    </Layout>
-  );
+  return <PIQContent />;
 }

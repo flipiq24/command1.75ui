@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Layout, { useLayout } from "@/components/Layout";
 import { cn } from "@/lib/utils";
 import { 
   Phone, 
@@ -462,9 +461,5 @@ function MyStatsContent() {
 }
 
 export default function MyStats() {
-  return (
-    <Layout>
-      <MyStatsContent />
-    </Layout>
-  );
+  return <MyStatsContent />;
 }

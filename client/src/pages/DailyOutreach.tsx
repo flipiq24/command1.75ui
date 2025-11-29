@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect, useCallback, useLayoutEffect } fro
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import OutreachActionPlan, { OutreachType } from "@/components/OutreachActionPlan";
-import Layout, { useLayout } from "@/components/Layout";
+import { useLayout } from "@/components/Layout";
 import { 
   ChevronDown,
   ChevronLeft,
@@ -2294,9 +2294,5 @@ function DailyOutreachContent() {
 }
 
 export default function DailyOutreach() {
-  return (
-    <Layout>
-      <DailyOutreachContent />
-    </Layout>
-  );
+  return <DailyOutreachContent />;
 }
