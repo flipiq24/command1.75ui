@@ -483,7 +483,7 @@ function MLSHotDealsContent() {
                             
                             {/* ARV Column */}
                             {(() => {
-                              const investorSourceCnt = (deal.id * 7 + 3) % 11;
+                              const investorSourceCnt = (deal.id * 3) % 9;
                               return (
                                 <div className="w-[160px] shrink-0 flex flex-col text-sm">
                                   <div className="text-gray-800">Asking vs ARV: <span className="font-medium">92.16%</span></div>
