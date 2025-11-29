@@ -481,10 +481,26 @@ function MLSHotDealsContent() {
                             </div>
                             
                             {/* Days / DOM Column */}
-                            <div className="w-[120px] shrink-0 flex flex-col text-sm">
-                              <div className="text-gray-800">109 Days /</div>
-                              <div className="text-gray-500">DOM: 109</div>
-                            </div>
+                            {(() => {
+                              const priceChangeAmounts = [40000, 25000, 15000, 50000, 35000, 0, 20000];
+                              const priceChangePercents = [6.5, 4.2, 2.8, 8.1, 5.5, 0, 3.2];
+                              const idx = deal.id % 7;
+                              const amount = priceChangeAmounts[idx];
+                              const percent = priceChangePercents[idx];
+                              return (
+                                <div className="w-[140px] shrink-0 flex flex-col text-sm">
+                                  {amount > 0 && (
+                                    <div className="text-gray-800 mb-1">
+                                      <span className="text-green-600 font-medium">${amount.toLocaleString()}</span>
+                                      <span className="text-gray-500"> - </span>
+                                      <span className="text-green-600 font-medium">{percent}%</span>
+                                    </div>
+                                  )}
+                                  <div className="text-gray-800">109 Days /</div>
+                                  <div className="text-gray-500">DOM: 109</div>
+                                </div>
+                              );
+                            })()}
                             
                             {/* ARV Column */}
                             {(() => {
