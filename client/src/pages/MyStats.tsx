@@ -200,57 +200,57 @@ function MyStatsContent() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-white">
-      <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-        <h1 className="text-lg font-semibold text-gray-900">My Stats</h1>
-        <div className="flex items-center gap-4">
-          <button className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-600 bg-white border border-gray-200 rounded hover:bg-gray-50">
-            <span>{dateRange}</span>
-            <ChevronDown className="w-3.5 h-3.5" />
-          </button>
-          <div className="flex items-center gap-1.5 text-sm text-gray-500">
-            <Calendar className="w-4 h-4" />
-            <span>Nov 17 - Nov 23, 2025</span>
+    <div className="relative h-full bg-white">
+      <div className="h-full overflow-y-auto pb-24">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 sticky top-0 bg-white z-10">
+          <h1 className="text-lg font-semibold text-gray-900">My Stats</h1>
+          <div className="flex items-center gap-4">
+            <button className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-600 bg-white border border-gray-200 rounded hover:bg-gray-50">
+              <span>{dateRange}</span>
+              <ChevronDown className="w-3.5 h-3.5" />
+            </button>
+            <div className="flex items-center gap-1.5 text-sm text-gray-500">
+              <Calendar className="w-4 h-4" />
+              <span>Nov 17 - Nov 23, 2025</span>
+            </div>
+            <button className="text-sm text-gray-600 hover:text-gray-900">
+              Open all stats
+            </button>
           </div>
-          <button className="text-sm text-gray-600 hover:text-gray-900">
-            Open all stats
-          </button>
         </div>
-      </div>
 
-      <div className="flex border-b border-gray-100">
-        <StatCard
-          icon={Phone}
-          label="Calls"
-          value={MOCK_STATS.calls.value}
-          percentDiff={MOCK_STATS.calls.percentDiff}
-          chartData={MOCK_STATS.calls.chartData}
-        />
-        <StatCard
-          icon={MessageSquare}
-          label="Text"
-          value={MOCK_STATS.text.value}
-          percentDiff={MOCK_STATS.text.percentDiff}
-          chartData={MOCK_STATS.text.chartData}
-        />
-        <StatCard
-          icon={FileText}
-          label="Offers"
-          value={MOCK_STATS.offers.value}
-          percentDiff={MOCK_STATS.offers.percentDiff}
-          chartData={MOCK_STATS.offers.chartData}
-        />
-        <StatCard
-          icon={Users}
-          label="Relationships"
-          value={MOCK_STATS.relationships.value}
-          percentDiff={MOCK_STATS.relationships.percentDiff}
-          chartData={MOCK_STATS.relationships.chartData}
-          isLast
-        />
-      </div>
+        <div className="flex border-b border-gray-100">
+          <StatCard
+            icon={Phone}
+            label="Calls"
+            value={MOCK_STATS.calls.value}
+            percentDiff={MOCK_STATS.calls.percentDiff}
+            chartData={MOCK_STATS.calls.chartData}
+          />
+          <StatCard
+            icon={MessageSquare}
+            label="Text"
+            value={MOCK_STATS.text.value}
+            percentDiff={MOCK_STATS.text.percentDiff}
+            chartData={MOCK_STATS.text.chartData}
+          />
+          <StatCard
+            icon={FileText}
+            label="Offers"
+            value={MOCK_STATS.offers.value}
+            percentDiff={MOCK_STATS.offers.percentDiff}
+            chartData={MOCK_STATS.offers.chartData}
+          />
+          <StatCard
+            icon={Users}
+            label="Relationships"
+            value={MOCK_STATS.relationships.value}
+            percentDiff={MOCK_STATS.relationships.percentDiff}
+            chartData={MOCK_STATS.relationships.chartData}
+            isLast
+          />
+        </div>
 
-      <div className="flex-1 overflow-y-auto">
         <div className="p-6 space-y-6">
           <div className="bg-white rounded-lg border border-gray-100 p-5">
             <h3 className="text-sm font-semibold text-gray-900 mb-4 flex items-center gap-2">
@@ -349,7 +349,7 @@ function MyStatsContent() {
           <div className="bg-white rounded-lg border border-gray-100 p-5">
             <div 
               ref={chatContainerRef}
-              className="h-48 overflow-y-auto mb-4"
+              className="h-48 overflow-y-auto"
             >
               <div className="space-y-3">
                 {messages.map((message) => (
@@ -395,58 +395,60 @@ function MyStatsContent() {
                 )}
               </div>
             </div>
+          </div>
+        </div>
+      </div>
 
-            <div className="relative">
-              <div 
-                className="flex items-center gap-2 bg-white rounded-full px-4 py-3 border border-gray-200"
+      <div className="absolute bottom-6 left-6 right-6 z-20">
+        <div className="max-w-3xl mx-auto">
+          <div 
+            className="flex items-center gap-2 bg-white rounded-full px-4 py-3 border border-gray-200"
+            style={{
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08), 0 -1px 0 rgba(255, 255, 255, 0.8) inset',
+              background: 'linear-gradient(to bottom, #ffffff, #fafafa)'
+            }}
+          >
+            <button className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition rounded-full hover:bg-gray-100">
+              <Plus className="w-4 h-4" />
+            </button>
+            
+            <input
+              type="text"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Ask about your stats..."
+              className="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none"
+              data-testid="input-stats-chat"
+            />
+            
+            <button className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition rounded-full hover:bg-gray-100">
+              <Mic className="w-4 h-4" />
+            </button>
+            
+            {inputValue.trim() ? (
+              <button
+                onClick={handleSend}
+                disabled={isTyping}
+                className="w-9 h-9 rounded-full bg-gray-900 hover:bg-gray-800 text-white flex items-center justify-center transition shadow-md"
                 style={{
-                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04), 0 -1px 0 rgba(255, 255, 255, 0.8) inset',
-                  background: 'linear-gradient(to bottom, #ffffff, #fafafa)'
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1)'
                 }}
+                data-testid="button-send-stats"
               >
-                <button className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition rounded-full hover:bg-gray-100">
-                  <Plus className="w-4 h-4" />
-                </button>
-                
-                <input
-                  type="text"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder="Ask about your stats..."
-                  className="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none"
-                  data-testid="input-stats-chat"
-                />
-                
-                <button className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition rounded-full hover:bg-gray-100">
-                  <Mic className="w-4 h-4" />
-                </button>
-                
-                {inputValue.trim() ? (
-                  <button
-                    onClick={handleSend}
-                    disabled={isTyping}
-                    className="w-9 h-9 rounded-full bg-gray-900 hover:bg-gray-800 text-white flex items-center justify-center transition shadow-md"
-                    style={{
-                      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1)'
-                    }}
-                    data-testid="button-send-stats"
-                  >
-                    <Send className="w-4 h-4" />
-                  </button>
-                ) : (
-                  <button
-                    className="w-9 h-9 rounded-full bg-gray-900 hover:bg-gray-800 text-white flex items-center justify-center transition shadow-md"
-                    style={{
-                      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1)'
-                    }}
-                    data-testid="button-voice-stats"
-                  >
-                    <AudioLines className="w-4 h-4" />
-                  </button>
-                )}
-              </div>
-            </div>
+                <Send className="w-4 h-4" />
+              </button>
+            ) : (
+              <button
+                className="w-9 h-9 rounded-full bg-gray-900 hover:bg-gray-800 text-white flex items-center justify-center transition shadow-md"
+                style={{
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1)'
+                }}
+                data-testid="button-voice-stats"
+              >
+                <AudioLines className="w-4 h-4" />
+              </button>
+            )}
           </div>
         </div>
       </div>
