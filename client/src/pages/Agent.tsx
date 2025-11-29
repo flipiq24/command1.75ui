@@ -57,6 +57,15 @@ function AgentContent() {
   const [reminderEmail, setReminderEmail] = useState(false);
   const [reminderText, setReminderText] = useState(false);
   const [reminderMessage, setReminderMessage] = useState('');
+  
+  // Action popups state
+  const [showIQReportPopup, setShowIQReportPopup] = useState(false);
+  const [iqReportLoading, setIqReportLoading] = useState(false);
+  const [iqReportContent, setIqReportContent] = useState('');
+  const [showCallPopup, setShowCallPopup] = useState(false);
+  const [showStatusDropdown, setShowStatusDropdown] = useState(false);
+  const [showRelationshipDropdown, setShowRelationshipDropdown] = useState(false);
+  
   const [nextSteps, setNextSteps] = useState([
     { id: 1, text: 'Run agent IQ reports', completed: false, tooltip: 'Generate AI-powered insights and analytics for this agent' },
     { id: 2, text: 'Call Agent', completed: false, tooltip: 'Make a phone call to discuss opportunities' },
@@ -72,6 +81,61 @@ function AgentContent() {
       );
       return [...updated.filter(s => !s.completed), ...updated.filter(s => s.completed)];
     });
+  };
+
+  const runIQReport = async () => {
+    setShowIQReportPopup(true);
+    setIqReportLoading(true);
+    try {
+      const response = await fetch('/api/ai/agent-iq-report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          agentData: {
+            agentName: 'Sarah Martinez',
+            officeName: 'Keller Williams Realty',
+            phone: '(323) 555-1234',
+            email: 'sarah.martinez@kw.com',
+            assignedUser: assignedUser,
+            relationshipStatus: relationshipStatus,
+            basket: basket,
+            followUpStatus: followUpStatus || 'None',
+            followUpDate: followUpDate || 'Not set',
+            investorSourceCount: investorSourceCount,
+            activeInLastTwoYears: activeInLast2Years,
+          }
+        })
+      });
+      const data = await response.json();
+      setIqReportContent(data.report || 'Unable to generate report.');
+    } catch (error) {
+      setIqReportContent('Error generating report. Please try again.');
+    }
+    setIqReportLoading(false);
+  };
+
+  const handleStepAction = (stepText: string) => {
+    switch (stepText) {
+      case 'Run agent IQ reports':
+        runIQReport();
+        break;
+      case 'Call Agent':
+        setShowCallPopup(true);
+        break;
+      case 'Update Agent Status':
+        setShowStatusDropdown(!showStatusDropdown);
+        setShowRelationshipDropdown(false);
+        break;
+      case 'Relationship Status -':
+        setShowRelationshipDropdown(!showRelationshipDropdown);
+        setShowStatusDropdown(false);
+        break;
+      case 'Set reminder':
+        setShowReminderPopup(true);
+        break;
+      default:
+        break;
+    }
   };
 
   const leftTabs = [
@@ -367,18 +431,12 @@ function AgentContent() {
           <span className="text-xs font-semibold text-orange-500 uppercase tracking-wide">Next Steps:</span>
           {nextSteps.map((step) => (
             <div key={step.id} className="group relative">
-              <label 
+              <div 
                 className={`flex items-center gap-2 px-3 py-1.5 rounded-full cursor-pointer transition text-xs ${
                   step.completed 
                     ? 'bg-gray-100 text-gray-400 line-through' 
                     : 'bg-gray-50 text-gray-700 hover:bg-gray-100 border border-gray-200'
                 }`}
-                onClick={(e) => {
-                  if (step.text === 'Set reminder' && !step.completed) {
-                    e.preventDefault();
-                    setShowReminderPopup(true);
-                  }
-                }}
               >
                 <input 
                   type="checkbox" 
@@ -387,8 +445,57 @@ function AgentContent() {
                   className="w-3 h-3 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                   data-testid={`checkbox-step-${step.id}`}
                 />
-                {step.text}
-              </label>
+                <span 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (!step.completed) {
+                      handleStepAction(step.text);
+                    }
+                  }}
+                  className="hover:underline"
+                >
+                  {step.text === 'Relationship Status -' ? `Relationship Status - ${relationshipStatus}` : step.text}
+                </span>
+              </div>
+              
+              {/* Inline Status Dropdown */}
+              {step.text === 'Update Agent Status' && showStatusDropdown && (
+                <div className="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg py-1 min-w-[140px] z-50">
+                  {['Unknown', 'Priority', 'Hot', 'Warm', 'Cold'].map((status) => (
+                    <button
+                      key={status}
+                      className={`w-full text-left px-3 py-1.5 text-xs hover:bg-gray-50 ${agentRating === status ? 'bg-blue-50 text-blue-600' : 'text-gray-700'}`}
+                      onClick={() => {
+                        setAgentRating(status);
+                        setShowStatusDropdown(false);
+                        toggleStep(step.id);
+                      }}
+                    >
+                      {status}
+                    </button>
+                  ))}
+                </div>
+              )}
+              
+              {/* Inline Relationship Dropdown */}
+              {step.text === 'Relationship Status -' && showRelationshipDropdown && (
+                <div className="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg py-1 min-w-[140px] z-50">
+                  {['Unknown', 'Priority', 'Hot', 'Warm', 'Cold'].map((status) => (
+                    <button
+                      key={status}
+                      className={`w-full text-left px-3 py-1.5 text-xs hover:bg-gray-50 ${relationshipStatus === status ? 'bg-blue-50 text-blue-600' : 'text-gray-700'}`}
+                      onClick={() => {
+                        setRelationshipStatus(status);
+                        setShowRelationshipDropdown(false);
+                        toggleStep(step.id);
+                      }}
+                    >
+                      {status}
+                    </button>
+                  ))}
+                </div>
+              )}
+              
               <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
                 {step.tooltip}
               </div>
@@ -832,6 +939,133 @@ function AgentContent() {
                 data-testid="button-save-reminder"
               >
                 Save Reminder
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* IQ Report Popup */}
+      {showIQReportPopup && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[85vh] flex flex-col">
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-100">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center">
+                  <Lightbulb className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-base font-semibold text-gray-900">Agent iQ Report</h3>
+                  <p className="text-sm text-gray-500">AI-Powered Analysis for Sarah Martinez</p>
+                </div>
+              </div>
+              <button 
+                onClick={() => setShowIQReportPopup(false)}
+                className="p-1 hover:bg-gray-100 rounded transition"
+                data-testid="button-close-iq-report"
+              >
+                <X className="w-5 h-5 text-gray-400" />
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto p-6">
+              {iqReportLoading ? (
+                <div className="flex flex-col items-center justify-center py-12">
+                  <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+                  <p className="text-sm text-gray-600">Generating AI report...</p>
+                </div>
+              ) : (
+                <div className="prose prose-sm max-w-none">
+                  <div className="whitespace-pre-wrap text-sm text-gray-700 leading-relaxed">
+                    {iqReportContent}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Footer */}
+            <div className="flex justify-end gap-3 p-4 border-t border-gray-100">
+              <button 
+                onClick={() => runIQReport()}
+                className="px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition flex items-center gap-2"
+                disabled={iqReportLoading}
+              >
+                <RefreshCw className={`w-4 h-4 ${iqReportLoading ? 'animate-spin' : ''}`} />
+                Regenerate
+              </button>
+              <button 
+                onClick={() => setShowIQReportPopup(false)}
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition"
+                data-testid="button-close-iq-report-done"
+              >
+                Done
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Call Agent Popup */}
+      {showCallPopup && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-sm">
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-100">
+              <h3 className="text-base font-semibold text-gray-900">Call Agent</h3>
+              <button 
+                onClick={() => setShowCallPopup(false)}
+                className="p-1 hover:bg-gray-100 rounded transition"
+                data-testid="button-close-call"
+              >
+                <X className="w-5 h-5 text-gray-400" />
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="p-6">
+              <div className="text-center mb-6">
+                <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-3">
+                  <Phone className="w-8 h-8 text-green-600" />
+                </div>
+                <h4 className="text-lg font-semibold text-gray-900">Sarah Martinez</h4>
+                <p className="text-sm text-gray-500">Keller Williams Realty</p>
+              </div>
+              
+              <div className="space-y-3">
+                <a 
+                  href="tel:+13235551234"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition"
+                  data-testid="button-call-primary"
+                >
+                  <Phone className="w-5 h-5" />
+                  Call (323) 555-1234
+                </a>
+                <button 
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition"
+                  data-testid="button-call-secondary"
+                >
+                  <Phone className="w-5 h-5" />
+                  Call Office: (323) 555-5678
+                </button>
+              </div>
+              
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" className="w-4 h-4 rounded border-gray-300" />
+                  <span className="text-sm text-gray-600">Log this call automatically</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="flex justify-end gap-3 p-4 border-t border-gray-100">
+              <button 
+                onClick={() => setShowCallPopup(false)}
+                className="px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition"
+              >
+                Cancel
               </button>
             </div>
           </div>
