@@ -13,6 +13,8 @@ import {
   Search,
   Filter,
   ArrowUpDown,
+  ArrowUp,
+  ArrowDown,
   Calendar,
   Plus,
   Globe,
@@ -482,18 +484,51 @@ function MLSHotDealsContent() {
                             
                             {/* Days / DOM Column */}
                             {(() => {
-                              const priceChangeAmounts = [40000, 25000, 15000, 50000, 35000, 0, 20000];
-                              const priceChangePercents = [6.5, 4.2, 2.8, 8.1, 5.5, 0, 3.2];
+                              const priceChangeAmounts = [40000, 25000, -15000, 50000, -35000, 0, 20000];
+                              const priceChangePercents = [6.5, 4.2, -2.8, 8.1, -5.5, 0, 3.2];
+                              const priceHistory = [
+                                { date: '10/15/25', price: '$1,128,000', event: 'Price Change' },
+                                { date: '09/01/25', price: '$1,088,000', event: 'Listed' },
+                              ];
                               const idx = deal.id % 7;
                               const amount = priceChangeAmounts[idx];
                               const percent = priceChangePercents[idx];
+                              const isDecrease = amount > 0;
+                              const addressSlug = deal.address.replace(/[,\s]+/g, '-').replace(/[^a-zA-Z0-9-]/g, '');
+                              const zillowUrl = `https://www.zillow.com/homes/${addressSlug}`;
                               return (
                                 <div className="w-[140px] shrink-0 flex flex-col text-sm">
-                                  {amount > 0 && (
-                                    <div className="text-gray-800 mb-1">
-                                      <span className="text-green-600 font-medium">${amount.toLocaleString()}</span>
-                                      <span className="text-gray-500"> - </span>
-                                      <span className="text-green-600 font-medium">{percent}%</span>
+                                  {amount !== 0 && (
+                                    <div className="relative group">
+                                      <div className="flex items-center gap-1 mb-1 cursor-pointer">
+                                        {isDecrease ? (
+                                          <ArrowDown className="w-4 h-4 text-green-600" />
+                                        ) : (
+                                          <ArrowUp className="w-4 h-4 text-red-600" />
+                                        )}
+                                        <span className="text-gray-800 font-medium">${Math.abs(amount).toLocaleString()}</span>
+                                        <span className="text-gray-500"> - </span>
+                                        <span className="text-gray-800 font-medium">{Math.abs(percent)}%</span>
+                                      </div>
+                                      {/* Hover Tooltip */}
+                                      <div className="absolute left-0 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-xl p-3 z-50 w-56 hidden group-hover:block">
+                                        <div className="text-xs font-semibold text-gray-700 mb-2">Price History</div>
+                                        {priceHistory.map((item, i) => (
+                                          <div key={i} className="flex justify-between text-xs text-gray-600 mb-1">
+                                            <span>{item.date}</span>
+                                            <span className="font-medium">{item.price}</span>
+                                            <span className="text-gray-400">{item.event}</span>
+                                          </div>
+                                        ))}
+                                        <a 
+                                          href={zillowUrl} 
+                                          target="_blank" 
+                                          rel="noopener noreferrer"
+                                          className="text-xs text-blue-600 hover:underline mt-2 block"
+                                        >
+                                          View full history on Zillow →
+                                        </a>
+                                      </div>
                                     </div>
                                   )}
                                   <div className="text-gray-800">109 Days /</div>
