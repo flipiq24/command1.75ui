@@ -312,153 +312,159 @@ function AgentContent() {
       <div className="flex-1 overflow-y-auto p-6">
         {/* Agent Profile Card */}
         <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
-          <div className="flex items-start justify-between">
-            <div className="flex items-start gap-4">
+          {/* Top Row - Name, buttons, assigned user, do not call - ABOVE the line */}
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
               {/* IQ Icon */}
               <div className="flex items-center gap-1 px-3 py-2 bg-orange-500 rounded-lg">
                 <Lightbulb className="w-5 h-5 text-white" />
                 <span className="text-white font-semibold text-sm">iQ</span>
               </div>
               
-              {/* Agent Info */}
-              <div>
-                <div className="flex items-center gap-3 mb-2">
-                  <h3 className="text-lg font-semibold text-gray-900">Jeremy Flores</h3>
-                  <button className="p-1 hover:bg-gray-100 rounded transition">
-                    <ExternalLink className="w-4 h-4 text-gray-400" />
-                  </button>
-                  <div className="relative">
-                    <button 
-                      className="p-1 hover:bg-gray-100 rounded transition" 
-                      data-testid="button-agent-menu"
-                      onClick={() => setShowAgentMenu(!showAgentMenu)}
-                    >
-                      <MoreVertical className="w-4 h-4 text-red-500" />
+              <h3 className="text-lg font-semibold text-gray-900">Jeremy Flores</h3>
+              <button className="p-1 hover:bg-gray-100 rounded transition">
+                <ExternalLink className="w-4 h-4 text-gray-400" />
+              </button>
+              <div className="relative">
+                <button 
+                  className="p-1 hover:bg-gray-100 rounded transition" 
+                  data-testid="button-agent-menu"
+                  onClick={() => setShowAgentMenu(!showAgentMenu)}
+                >
+                  <MoreVertical className="w-4 h-4 text-red-500" />
+                </button>
+                {showAgentMenu && (
+                  <div className="absolute top-8 right-0 bg-white border border-gray-200 rounded-lg shadow-lg py-2 min-w-[160px] z-50">
+                    <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-testid="menu-call">
+                      <Phone className="w-4 h-4" />
+                      Call
                     </button>
-                    {showAgentMenu && (
-                      <div className="absolute top-8 right-0 bg-white border border-gray-200 rounded-lg shadow-lg py-2 min-w-[160px] z-50">
-                        <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-testid="menu-call">
-                          <Phone className="w-4 h-4" />
-                          Call
-                        </button>
-                        <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-testid="menu-text">
-                          <MessageSquare className="w-4 h-4" />
-                          Text
-                        </button>
-                        <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-testid="menu-email">
-                          <Mail className="w-4 h-4" />
-                          Email
-                        </button>
-                        <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-testid="menu-voicemail">
-                          <Mic className="w-4 h-4" />
-                          Text Voicemail
-                        </button>
-                        <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-testid="menu-ai-connect">
-                          <Bot className="w-4 h-4" />
-                          AI Connect
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                  <div className="grid grid-cols-2 gap-x-8 gap-y-1.5 text-sm text-gray-600">
-                    <span>Active In Last 2 Years: <span className={activeInLast2Years ? "text-green-600 font-semibold" : "text-gray-400"}>{activeInLast2Years ? 'True' : 'False'}</span></span>
-                    <span>Average Deals Per Year: <span className={averageDealsPerYear > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{averageDealsPerYear}</span></span>
-                    <span>Double Ended: <span className={doubleEnded > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{doubleEnded}</span></span>
-                    <span>Investor Source: {investorSourceCount > 0 ? (
-                      <a 
-                        href="https://nextjs-flipiq-agent.vercel.app/agents/AaronVillarreal"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 font-semibold hover:underline"
-                        data-testid="link-investor-source"
-                      >
-                        {investorSourceCount}
-                      </a>
-                    ) : (
-                      <span className="text-gray-400">{investorSourceCount}</span>
-                    )}</span>
-                  </div>
-                </div>
-                
-                <div className="space-y-1.5">
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Phone className="w-4 h-4 text-gray-400" />
-                    <span>2135367426</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Mail className="w-4 h-4 text-gray-400" />
-                    <span className="underline">jeremydtla@gmail.com</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Building2 className="w-4 h-4 text-gray-400" />
-                    <span>ABC Realty</span>
-                  </div>
-                  
-                  {/* Social Media Icons */}
-                  <div className="flex items-center gap-3 mt-2">
-                    <button 
-                      onClick={() => window.open('https://www.linkedin.com/search/results/all/?keywords=Sarah%20Martinez%20Real%20Estate', '_blank')}
-                      className="p-1.5 rounded-full hover:bg-blue-50 transition group"
-                      title="Search on LinkedIn"
-                      data-testid="icon-linkedin"
-                    >
-                      <Linkedin className="w-4 h-4 text-gray-400 group-hover:text-blue-600" />
+                    <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-testid="menu-text">
+                      <MessageSquare className="w-4 h-4" />
+                      Text
                     </button>
-                    <button 
-                      onClick={() => window.open('https://www.facebook.com/search/top?q=Sarah%20Martinez%20Real%20Estate', '_blank')}
-                      className="p-1.5 rounded-full hover:bg-blue-50 transition group"
-                      title="Search on Facebook"
-                      data-testid="icon-facebook"
-                    >
-                      <Facebook className="w-4 h-4 text-gray-400 group-hover:text-blue-700" />
+                    <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-testid="menu-email">
+                      <Mail className="w-4 h-4" />
+                      Email
                     </button>
-                    <button 
-                      onClick={() => window.open('https://www.instagram.com/explore/search/keyword/?q=Sarah%20Martinez%20Real%20Estate', '_blank')}
-                      className="p-1.5 rounded-full hover:bg-pink-50 transition group"
-                      title="Search on Instagram"
-                      data-testid="icon-instagram"
-                    >
-                      <Instagram className="w-4 h-4 text-gray-400 group-hover:text-pink-600" />
+                    <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-testid="menu-voicemail">
+                      <Mic className="w-4 h-4" />
+                      Text Voicemail
                     </button>
-                    <button 
-                      onClick={() => window.open('https://www.google.com/search?q=Sarah%20Martinez%20Real%20Estate%20Agent', '_blank')}
-                      className="p-1.5 rounded-full hover:bg-gray-100 transition group"
-                      title="Search on Web"
-                      data-testid="icon-web"
-                    >
-                      <Globe className="w-4 h-4 text-gray-400 group-hover:text-gray-700" />
+                    <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-testid="menu-ai-connect">
+                      <Bot className="w-4 h-4" />
+                      AI Connect
                     </button>
                   </div>
-                </div>
+                )}
+              </div>
+              
+              {/* Assigned User - next to red button */}
+              <div className="flex items-center gap-2 ml-4">
+                <span className="text-xs font-medium text-gray-500">Assigned:</span>
+                <select 
+                  value={assignedUser}
+                  onChange={(e) => setAssignedUser(e.target.value)}
+                  className="border border-gray-300 rounded-lg px-2 py-1 text-sm bg-white"
+                  data-testid="select-assigned-user"
+                >
+                  <option>Michael May</option>
+                  <option>Tony Fletcher</option>
+                  <option>Sarah Johnson</option>
+                </select>
               </div>
             </div>
 
-            {/* Right Side - Assigned User */}
-            <div className="text-right">
-              <div className="text-xs font-medium text-gray-500 mb-2">Assigned User</div>
-              <select 
-                value={assignedUser}
-                onChange={(e) => setAssignedUser(e.target.value)}
-                className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white min-w-[150px]"
-                data-testid="select-assigned-user"
-              >
-                <option>Michael May</option>
-                <option>Tony Fletcher</option>
-                <option>Sarah Johnson</option>
-              </select>
+            {/* Do Not Call - top right */}
+            <div className="flex items-center gap-2">
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input 
+                  type="checkbox" 
+                  checked={doNotCall}
+                  onChange={(e) => setDoNotCall(e.target.checked)}
+                  className="sr-only peer"
+                  data-testid="toggle-do-not-call"
+                />
+                <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+              </label>
+              <span className="text-sm text-gray-600">Do Not Call</span>
+            </div>
+          </div>
+          
+          {/* Gray Line */}
+          <div className="border-t border-gray-200 mb-4"></div>
+          
+          {/* Below the line - Metrics aligned with phone number */}
+          <div className="flex items-start gap-8">
+            {/* Left side - Metrics */}
+            <div className="grid grid-cols-2 gap-x-8 gap-y-1.5 text-sm text-gray-600">
+              <span>Active In Last 2 Years: <span className={activeInLast2Years ? "text-green-600 font-semibold" : "text-gray-400"}>{activeInLast2Years ? 'True' : 'False'}</span></span>
+              <span>Average Deals Per Year: <span className={averageDealsPerYear > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{averageDealsPerYear}</span></span>
+              <span>Double Ended: <span className={doubleEnded > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{doubleEnded}</span></span>
+              <span>Investor Source: {investorSourceCount > 0 ? (
+                <a 
+                  href="https://nextjs-flipiq-agent.vercel.app/agents/AaronVillarreal"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 font-semibold hover:underline"
+                  data-testid="link-investor-source"
+                >
+                  {investorSourceCount}
+                </a>
+              ) : (
+                <span className="text-gray-400">{investorSourceCount}</span>
+              )}</span>
+            </div>
+            
+            {/* Right side - Contact info */}
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <Phone className="w-4 h-4 text-gray-400" />
+                <span>2135367426</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <Mail className="w-4 h-4 text-gray-400" />
+                <span className="underline">jeremydtla@gmail.com</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <Building2 className="w-4 h-4 text-gray-400" />
+                <span>ABC Realty</span>
+              </div>
               
-              <div className="flex items-center justify-end gap-2 mt-3">
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input 
-                    type="checkbox" 
-                    checked={doNotCall}
-                    onChange={(e) => setDoNotCall(e.target.checked)}
-                    className="sr-only peer"
-                    data-testid="toggle-do-not-call"
-                  />
-                  <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
-                </label>
-                <span className="text-sm text-gray-600">Do Not Call</span>
+              {/* Social Media Icons */}
+              <div className="flex items-center gap-3 mt-2">
+                <button 
+                  onClick={() => window.open('https://www.linkedin.com/search/results/all/?keywords=Jeremy%20Flores%20Real%20Estate', '_blank')}
+                  className="p-1.5 rounded-full hover:bg-blue-50 transition group"
+                  title="Search on LinkedIn"
+                  data-testid="icon-linkedin"
+                >
+                  <Linkedin className="w-4 h-4 text-gray-400 group-hover:text-blue-600" />
+                </button>
+                <button 
+                  onClick={() => window.open('https://www.facebook.com/search/top?q=Jeremy%20Flores%20Real%20Estate', '_blank')}
+                  className="p-1.5 rounded-full hover:bg-blue-50 transition group"
+                  title="Search on Facebook"
+                  data-testid="icon-facebook"
+                >
+                  <Facebook className="w-4 h-4 text-gray-400 group-hover:text-blue-700" />
+                </button>
+                <button 
+                  onClick={() => window.open('https://www.instagram.com/explore/search/keyword/?q=Jeremy%20Flores%20Real%20Estate', '_blank')}
+                  className="p-1.5 rounded-full hover:bg-pink-50 transition group"
+                  title="Search on Instagram"
+                  data-testid="icon-instagram"
+                >
+                  <Instagram className="w-4 h-4 text-gray-400 group-hover:text-pink-600" />
+                </button>
+                <button 
+                  onClick={() => window.open('https://www.google.com/search?q=Jeremy%20Flores%20Real%20Estate%20Agent', '_blank')}
+                  className="p-1.5 rounded-full hover:bg-gray-100 transition group"
+                  title="Search on Web"
+                  data-testid="icon-web"
+                >
+                  <Globe className="w-4 h-4 text-gray-400 group-hover:text-gray-700" />
+                </button>
               </div>
             </div>
           </div>
