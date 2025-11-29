@@ -524,16 +524,28 @@ function MLSSearchContent() {
             <button className="p-1.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded transition">
               <ArrowUpDown className="w-4 h-4" />
             </button>
-            <input 
-              type="text" 
-              placeholder="Low PTFV" 
-              className="px-3 py-1.5 w-28 border border-gray-200 rounded text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-            />
-            <input 
-              type="text" 
-              placeholder="High PTFV" 
-              className="px-3 py-1.5 w-28 border border-gray-200 rounded text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-            />
+            <div className="relative group">
+              <input 
+                type="text" 
+                placeholder="Low PTFV %" 
+                className="px-3 py-1.5 w-28 border border-gray-200 rounded text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+              />
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-center">
+                <span className="font-bold text-[#FF6600]">Price to Future Value</span><br/>
+                Enter percentage (1-100%)
+              </div>
+            </div>
+            <div className="relative group">
+              <input 
+                type="text" 
+                placeholder="High PTFV %" 
+                className="px-3 py-1.5 w-28 border border-gray-200 rounded text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+              />
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-center">
+                <span className="font-bold text-[#FF6600]">Price to Future Value</span><br/>
+                Enter percentage (1-100%)
+              </div>
+            </div>
             <button className="flex items-center gap-2 px-3 py-1.5 bg-gray-700 text-white rounded text-sm font-medium hover:bg-gray-800 transition">
               Keyword
               <ChevronDown className="w-4 h-4" />
