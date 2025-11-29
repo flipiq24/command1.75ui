@@ -283,16 +283,18 @@ function AgentSearchContent() {
         <div className="flex items-center gap-4">
           <h1 className="text-xl font-bold text-gray-900">Agent Search</h1>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+        <div className="flex-1 flex justify-center px-8">
+          <div className="relative w-full max-w-xl">
+            <Search className="w-5 h-5 absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <input 
               type="text" 
               placeholder="Search agents..." 
-              className="pl-9 pr-4 py-2 w-64 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="pl-12 pr-4 py-3 w-full border border-gray-200 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               data-testid="input-search-agents"
             />
           </div>
+        </div>
+        <div className="flex items-center gap-3">
           <button className="p-1.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded transition">
             <Filter className="w-4 h-4" />
           </button>
