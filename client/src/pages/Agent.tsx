@@ -395,8 +395,8 @@ function AgentContent() {
           {/* Gray Line */}
           <div className="border-t border-gray-200 mb-4"></div>
           
-          {/* Below the line - Contact, Metrics, and Next Steps in same row */}
-          <div className="flex items-start gap-8">
+          {/* Below the line - Contact on left, Metrics aligned with Assigned on right */}
+          <div className="flex items-start">
             {/* Contact info */}
             <div className="space-y-1.5 min-w-[180px]">
               <div className="flex items-center gap-2 text-sm text-gray-600">
@@ -449,11 +449,9 @@ function AgentContent() {
               </div>
             </div>
             
-            {/* Metrics - below Assigned dropdown */}
-            <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm text-gray-600 min-w-[320px]">
-              <span>Active In Last 2 Years: <span className={activeInLast2Years ? "text-green-600 font-semibold" : "text-gray-400"}>{activeInLast2Years ? 'True' : 'False'}</span></span>
+            {/* Metrics - Average & Investor Source in middle */}
+            <div className="flex flex-col gap-1 text-sm text-gray-600 ml-8">
               <span>Average Deals Per Year: <span className={averageDealsPerYear > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{averageDealsPerYear}</span></span>
-              <span>Double Ended: <span className={doubleEnded > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{doubleEnded}</span></span>
               <span>Investor Source: {investorSourceCount > 0 ? (
                 <a 
                   href="https://nextjs-flipiq-agent.vercel.app/agents/AaronVillarreal"
@@ -467,6 +465,12 @@ function AgentContent() {
               ) : (
                 <span className="text-gray-400">{investorSourceCount}</span>
               )}</span>
+            </div>
+            
+            {/* Active & Double Ended - aligned below Assigned dropdown */}
+            <div className="flex flex-col gap-1 text-sm text-gray-600 ml-auto" style={{ marginRight: '140px' }}>
+              <span>Active In Last 2 Years: <span className={activeInLast2Years ? "text-green-600 font-semibold" : "text-gray-400"}>{activeInLast2Years ? 'True' : 'False'}</span></span>
+              <span>Double Ended: <span className={doubleEnded > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{doubleEnded}</span></span>
             </div>
           </div>
         </div>
