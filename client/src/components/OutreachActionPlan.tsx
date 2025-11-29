@@ -332,11 +332,16 @@ export default function OutreachActionPlan({
 
       </div>
 
-      {hasStarted && onComplete && (
+      {onComplete && (
         <div className="mt-6 pt-6 border-t border-gray-100 flex justify-center">
           <button
             onClick={onComplete}
-            className="px-8 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white rounded-full text-sm font-bold shadow-lg hover:shadow-xl transition-all flex items-center gap-2"
+            className={cn(
+              "px-8 py-3 rounded-full text-sm font-bold shadow-lg hover:shadow-xl transition-all flex items-center gap-2",
+              hasStarted 
+                ? "bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white"
+                : "bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white opacity-90"
+            )}
             data-testid="button-complete-day"
           >
             <Flame className="w-5 h-5" />

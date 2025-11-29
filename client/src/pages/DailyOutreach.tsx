@@ -351,7 +351,7 @@ const getPropensityColor = (text: string) => {
   return "text-gray-500";
 };
 
-export default function DailyOutreach() {
+function DailyOutreachContent() {
   const [, setLocation] = useLocation();
   const { openIQWithCelebration } = useLayout();
   const [activeFilter, setActiveFilter] = useState<OutreachType | null>('connections');
@@ -872,7 +872,7 @@ export default function DailyOutreach() {
   };
 
   return (
-    <Layout>
+    <>
       <div className="flex-1 flex flex-col overflow-hidden relative z-10 bg-gray-50">
         
         <div className="bg-white px-8 py-4 border-b border-gray-200 flex justify-between items-center sticky top-0 z-20">
@@ -2286,6 +2286,14 @@ export default function DailyOutreach() {
         </div>
       )}
 
+    </>
+  );
+}
+
+export default function DailyOutreach() {
+  return (
+    <Layout>
+      <DailyOutreachContent />
     </Layout>
   );
 }
