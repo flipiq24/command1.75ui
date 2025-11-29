@@ -189,7 +189,10 @@ function MLSSearchContent() {
             <div className="bg-white shadow-2xl w-[800px] h-full flex flex-col animate-in slide-in-from-right duration-300">
               {/* Sidebar Header */}
               <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 shrink-0">
-                <h2 className="text-lg font-semibold text-gray-900">Search Results</h2>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-lg font-semibold text-gray-900">Search Results</h2>
+                  <Heart className="w-5 h-5 text-gray-400" />
+                </div>
                 <button 
                   onClick={() => setShowFilterModal(false)}
                   className="p-1 hover:bg-gray-100 rounded transition"
