@@ -447,6 +447,42 @@ function AgentContent() {
           </div>
         </div>
 
+        {/* Agent Info Details */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-semibold text-gray-900">Agent Info Details</h3>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <div className="relative">
+                <input 
+                  type="checkbox" 
+                  className="sr-only peer"
+                  data-testid="toggle-hide-empty"
+                />
+                <div className="w-9 h-5 bg-blue-600 rounded-full peer peer-checked:bg-blue-600"></div>
+                <div className="absolute top-0.5 right-0.5 w-4 h-4 bg-white rounded-full transition peer-checked:translate-x-0"></div>
+              </div>
+              <span className="text-sm text-gray-600">Hide Empty Fields</span>
+            </label>
+          </div>
+          <div className="flex items-center gap-2">
+            <button className="px-4 py-2 text-sm font-medium text-blue-600 bg-white border border-blue-200 rounded-lg" data-testid="tab-general">
+              General
+            </button>
+            <button className="px-4 py-2 text-sm font-medium text-gray-500 bg-gray-50 border border-gray-200 rounded-lg" data-testid="tab-agent-365">
+              Agent 365 Report
+            </button>
+            <button className="px-4 py-2 text-sm font-medium text-gray-500 bg-gray-50 border border-gray-200 rounded-lg" data-testid="tab-milestones">
+              Milestones
+            </button>
+            <button className="px-4 py-2 text-sm font-medium text-gray-500 bg-gray-50 border border-gray-200 rounded-lg" data-testid="tab-crm">
+              CRM
+            </button>
+            <button className="px-4 py-2 text-sm font-medium text-gray-500 bg-gray-50 border border-gray-200 rounded-lg" data-testid="tab-other-fields">
+              Other Fields
+            </button>
+          </div>
+        </div>
+
         {/* Notes Section */}
         <div className="bg-white rounded-lg border border-gray-200">
           {/* Tab Bar */}
