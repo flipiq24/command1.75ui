@@ -207,6 +207,31 @@ function MLSHotDealsContent() {
             {/* Current Task List - Reorganized Layout */}
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm flex-1 flex flex-col">
 
+                {/* Filter Bar */}
+                <div className="flex items-center gap-4 px-4 py-3 border-b border-gray-200">
+                  <button className="text-gray-500 hover:text-gray-700 transition">
+                    <Filter className="w-5 h-5" />
+                  </button>
+                  <input 
+                    type="text" 
+                    placeholder="Low PTFV" 
+                    className="px-3 py-1.5 w-32 border border-gray-200 rounded text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                  <input 
+                    type="text" 
+                    placeholder="High PTFV" 
+                    className="px-3 py-1.5 w-32 border border-gray-200 rounded text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                  <button className="flex items-center gap-2 px-3 py-1.5 bg-gray-700 text-white rounded text-sm font-medium hover:bg-gray-800 transition">
+                    Keyword
+                    <ChevronDown className="w-4 h-4" />
+                  </button>
+                  <button className="flex items-center gap-2 px-3 py-1.5 bg-gray-700 text-white rounded text-sm font-medium hover:bg-gray-800 transition">
+                    Status
+                    <ChevronDown className="w-4 h-4" />
+                  </button>
+                </div>
+
                 {/* Table Header */}
                 <div className="flex py-3 bg-white border-b border-gray-200 text-[11px] uppercase tracking-wider font-bold text-gray-400 select-none">
                     <div className="w-[48px] shrink-0 flex flex-col justify-center items-center gap-0.5">
