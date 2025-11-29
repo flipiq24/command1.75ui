@@ -316,12 +316,6 @@ function AgentContent() {
           {/* Top Row - Name, buttons, assigned user, do not call - ABOVE the line */}
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              {/* IQ Icon */}
-              <div className="flex items-center gap-1 px-3 py-2 bg-orange-500 rounded-lg">
-                <Lightbulb className="w-5 h-5 text-white" />
-                <span className="text-white font-semibold text-sm">iQ</span>
-              </div>
-              
               <h3 className="text-lg font-semibold text-gray-900">Jeremy Flores</h3>
               <button className="p-1 hover:bg-gray-100 rounded transition">
                 <ExternalLink className="w-4 h-4 text-gray-400" />
@@ -351,10 +345,6 @@ function AgentContent() {
                     <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-testid="menu-voicemail">
                       <Mic className="w-4 h-4" />
                       Text Voicemail
-                    </button>
-                    <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-testid="menu-ai-connect">
-                      <Bot className="w-4 h-4" />
-                      AI Connect
                     </button>
                   </div>
                 )}
@@ -843,6 +833,14 @@ function AgentContent() {
               </button>
             </div>
             <div className="flex items-center gap-2">
+              <button 
+                onClick={generateIQReport}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 rounded-lg transition"
+                data-testid="button-ai-connect"
+              >
+                <Lightbulb className="w-4 h-4" />
+                AI Connect
+              </button>
               <button className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition" data-testid="button-cancel">
                 <X className="w-4 h-4" />
                 Cancel
