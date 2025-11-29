@@ -9,7 +9,11 @@ import {
   MessageSquare,
   Mail,
   Mic,
-  Bot
+  Bot,
+  Search,
+  Filter,
+  ArrowUpDown,
+  Calendar
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -185,6 +189,33 @@ function MyDealsContent() {
             {/* Current Task List - Reorganized Layout */}
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm flex-1 flex flex-col">
                 
+                {/* Toolbar with Search, Filter, Sort and Date Range */}
+                <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
+                  <div className="flex items-center gap-2">
+                    <button className="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-500 hover:text-gray-700 transition-colors" data-testid="button-search">
+                      <Search className="w-4 h-4" />
+                    </button>
+                    <button className="w-9 h-9 flex items-center justify-center rounded-lg border border-blue-500 bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors" data-testid="button-filter">
+                      <Filter className="w-4 h-4" />
+                    </button>
+                    <button className="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-500 hover:text-gray-700 transition-colors" data-testid="button-sort">
+                      <ArrowUpDown className="w-4 h-4" />
+                    </button>
+                    <div className="h-6 w-px bg-gray-200 mx-2"></div>
+                    <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 px-3 py-1.5 border border-gray-200 rounded-lg bg-white">
+                        <span className="text-sm text-gray-700">11/24/2025</span>
+                        <Calendar className="w-4 h-4 text-gray-400" />
+                      </div>
+                      <span className="text-sm text-gray-500">to</span>
+                      <div className="flex items-center gap-2 px-3 py-1.5 border border-gray-200 rounded-lg bg-white">
+                        <span className="text-sm text-gray-700">11/29/2025</span>
+                        <Calendar className="w-4 h-4 text-gray-400" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Table Header */}
                 <div className="flex py-3 bg-white border-b border-gray-200 text-[11px] uppercase tracking-wider font-bold text-gray-400 select-none">
                     <div className="w-[48px] shrink-0 flex flex-col justify-center items-center gap-0.5">
