@@ -502,9 +502,9 @@ function MLSHotDealsContent() {
                                     <div className="relative group">
                                       <div className="flex items-center gap-1 mb-1 cursor-pointer">
                                         {isDecrease ? (
-                                          <ArrowDown className="w-4 h-4 text-green-600" />
+                                          <ArrowDown className="w-4 h-4 text-red-600" />
                                         ) : (
-                                          <ArrowUp className="w-4 h-4 text-red-600" />
+                                          <ArrowUp className="w-4 h-4 text-green-600" />
                                         )}
                                         <span className="text-gray-800 font-medium">${Math.abs(amount).toLocaleString()}</span>
                                         <span className="text-gray-500"> - </span>
