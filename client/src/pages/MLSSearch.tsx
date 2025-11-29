@@ -185,7 +185,7 @@ function MLSSearchContent() {
         {showFilterModal && (
           <div className="fixed inset-0 bg-black/50 z-50 flex">
             <div className="flex-1" onClick={() => setShowFilterModal(false)}></div>
-            <div className="bg-white shadow-2xl w-[600px] h-full flex flex-col animate-in slide-in-from-right duration-300">
+            <div className="bg-white shadow-2xl w-[800px] h-full flex flex-col animate-in slide-in-from-right duration-300">
               {/* Sidebar Header */}
               <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 shrink-0">
                 <h2 className="text-lg font-semibold text-gray-900">Filter MLS Notifications</h2>
