@@ -392,7 +392,15 @@ function AgentContent() {
 
           {/* Follow Up */}
           <div className="bg-white rounded-lg border border-gray-200 p-5">
-            <h4 className="text-sm font-semibold text-gray-900 mb-4">Follow Up</h4>
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="text-sm font-semibold text-gray-900">Follow Up</h4>
+              <button 
+                className="px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded transition"
+                data-testid="button-reminders"
+              >
+                Reminders
+              </button>
+            </div>
             
             <div className="space-y-4">
               <div>
