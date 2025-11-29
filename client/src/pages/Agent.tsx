@@ -391,114 +391,114 @@ function AgentContent() {
           </div>
           
           {/* Gray Line */}
-          <div className="border-t border-gray-200 mb-5"></div>
+          <div className="border-t border-gray-200 mb-4"></div>
           
-          {/* Below the line - Three columns with dividers */}
-          <div className="grid grid-cols-3 divide-x divide-gray-100">
-            {/* Agent Record - Left */}
-            <div className="pr-6">
-              <h4 className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-4">Agent Record</h4>
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <Phone className="w-4 h-4 text-gray-300" />
-                  <span className="text-sm font-medium text-gray-700">2135367426</span>
+          {/* Below the line - Three columns: Agent Record, Last Communication, Performance */}
+          <div className="grid grid-cols-3 gap-8">
+            {/* Agent Record */}
+            <div>
+              <h4 className="text-xs font-semibold text-gray-900 uppercase tracking-wide mb-3">Agent Record</h4>
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <Phone className="w-4 h-4 text-gray-400" />
+                  <span>2135367426</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Mail className="w-4 h-4 text-gray-300" />
-                  <a href="mailto:jeremydtla@gmail.com" className="text-sm font-medium text-blue-600 hover:underline">jeremydtla@gmail.com</a>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <Mail className="w-4 h-4 text-gray-400" />
+                  <span className="underline">jeremydtla@gmail.com</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Building2 className="w-4 h-4 text-gray-300" />
-                  <span className="text-sm font-medium text-gray-700">ABC Realty</span>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <Building2 className="w-4 h-4 text-gray-400" />
+                  <span>ABC Realty</span>
                 </div>
                 
                 {/* Social Media Icons */}
-                <div className="flex items-center gap-2 pt-2">
+                <div className="flex items-center gap-3 mt-2">
                   <button 
                     onClick={() => window.open('https://www.linkedin.com/search/results/all/?keywords=Jeremy%20Flores%20Real%20Estate', '_blank')}
-                    className="p-1.5 rounded hover:bg-gray-50 transition"
+                    className="p-1.5 rounded-full hover:bg-blue-50 transition group"
                     title="Search on LinkedIn"
                     data-testid="icon-linkedin"
                   >
-                    <Linkedin className="w-4 h-4 text-gray-400 hover:text-blue-600" />
+                    <Linkedin className="w-4 h-4 text-gray-400 group-hover:text-blue-600" />
                   </button>
                   <button 
                     onClick={() => window.open('https://www.facebook.com/search/top?q=Jeremy%20Flores%20Real%20Estate', '_blank')}
-                    className="p-1.5 rounded hover:bg-gray-50 transition"
+                    className="p-1.5 rounded-full hover:bg-blue-50 transition group"
                     title="Search on Facebook"
                     data-testid="icon-facebook"
                   >
-                    <Facebook className="w-4 h-4 text-gray-400 hover:text-blue-700" />
+                    <Facebook className="w-4 h-4 text-gray-400 group-hover:text-blue-700" />
                   </button>
                   <button 
                     onClick={() => window.open('https://www.instagram.com/explore/search/keyword/?q=Jeremy%20Flores%20Real%20Estate', '_blank')}
-                    className="p-1.5 rounded hover:bg-gray-50 transition"
+                    className="p-1.5 rounded-full hover:bg-pink-50 transition group"
                     title="Search on Instagram"
                     data-testid="icon-instagram"
                   >
-                    <Instagram className="w-4 h-4 text-gray-400 hover:text-pink-600" />
+                    <Instagram className="w-4 h-4 text-gray-400 group-hover:text-pink-600" />
                   </button>
                   <button 
                     onClick={() => window.open('https://www.google.com/search?q=Jeremy%20Flores%20Real%20Estate%20Agent', '_blank')}
-                    className="p-1.5 rounded hover:bg-gray-50 transition"
+                    className="p-1.5 rounded-full hover:bg-gray-100 transition group"
                     title="Search on Web"
                     data-testid="icon-web"
                   >
-                    <Globe className="w-4 h-4 text-gray-400 hover:text-gray-700" />
+                    <Globe className="w-4 h-4 text-gray-400 group-hover:text-gray-700" />
                   </button>
                 </div>
               </div>
             </div>
             
-            {/* Last Communication - Center */}
-            <div className="px-6 flex flex-col items-center">
-              <h4 className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-4 text-center">Last Communication</h4>
-              <div className="space-y-2.5 w-full">
-                <div className="flex justify-between items-baseline">
-                  <span className="text-xs text-gray-400">Date</span>
-                  <span className="text-sm font-medium text-gray-700">11/27/2025</span>
+            {/* Last Communication */}
+            <div>
+              <h4 className="text-xs font-semibold text-gray-900 uppercase tracking-wide mb-3">Last Communication</h4>
+              <div className="space-y-1.5 text-sm">
+                <div>
+                  <span className="text-gray-500">Last Communication Date: </span>
+                  <span className="font-medium text-gray-700">11/27/2025</span>
                 </div>
-                <div className="flex justify-between items-baseline gap-4">
-                  <span className="text-xs text-gray-400 whitespace-nowrap">Address</span>
-                  <span className="text-sm font-medium text-gray-700 text-right">2842 Rosarita St, San Bernardino</span>
+                <div>
+                  <span className="text-gray-500">Last Address Discussed: </span>
+                  <span className="font-medium text-gray-700">2842 Rosarita St, San Bernardino</span>
                 </div>
-                <div className="flex justify-between items-baseline">
-                  <span className="text-xs text-gray-400">AA</span>
-                  <span className="text-sm font-medium text-gray-700">Michael May</span>
+                <div>
+                  <span className="text-gray-500">Last Communicated AA: </span>
+                  <span className="font-medium text-gray-700">Michael May</span>
                 </div>
               </div>
             </div>
             
-            {/* Performance - Right */}
-            <div className="pl-6 flex flex-col items-end">
-              <h4 className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-4">Performance</h4>
-              <div className="space-y-2.5 w-full">
-                <div className="flex justify-between items-baseline">
-                  <span className="text-xs text-gray-400">Active (2 Yrs)</span>
-                  <span className={`text-sm font-semibold ${activeInLast2Years ? "text-green-600" : "text-gray-400"}`}>{activeInLast2Years ? 'Yes' : 'No'}</span>
+            {/* Performance */}
+            <div>
+              <h4 className="text-xs font-semibold text-gray-900 uppercase tracking-wide mb-3">Performance</h4>
+              <div className="space-y-1.5 text-sm">
+                <div>
+                  <span className="text-gray-500">Active In Last 2 Years: </span>
+                  <span className={activeInLast2Years ? "text-green-600 font-semibold" : "text-gray-400"}>{activeInLast2Years ? 'True' : 'False'}</span>
                 </div>
-                <div className="flex justify-between items-baseline">
-                  <span className="text-xs text-gray-400">Avg Deals/Yr</span>
-                  <span className={`text-sm font-semibold ${averageDealsPerYear > 0 ? "text-gray-700" : "text-gray-400"}`}>{averageDealsPerYear}</span>
+                <div>
+                  <span className="text-gray-500">Average Deals Per Year: </span>
+                  <span className={averageDealsPerYear > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{averageDealsPerYear}</span>
                 </div>
-                <div className="flex justify-between items-baseline">
-                  <span className="text-xs text-gray-400">Double Ended</span>
-                  <span className={`text-sm font-semibold ${doubleEnded > 0 ? "text-gray-700" : "text-gray-400"}`}>{doubleEnded}</span>
+                <div>
+                  <span className="text-gray-500">Double Ended: </span>
+                  <span className={doubleEnded > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{doubleEnded}</span>
                 </div>
-                <div className="flex justify-between items-baseline">
-                  <span className="text-xs text-gray-400">Investor Source</span>
+                <div>
+                  <span className="text-gray-500">Investor Source: </span>
                   {investorSourceCount > 0 ? (
                     <a 
                       href="https://nextjs-flipiq-agent.vercel.app/agents/AaronVillarreal"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-semibold text-blue-600 hover:underline"
+                      className="text-blue-600 font-semibold hover:underline"
                       data-testid="link-investor-source"
                     >
                       {investorSourceCount}
                     </a>
                   ) : (
-                    <span className="text-sm font-semibold text-gray-400">{investorSourceCount}</span>
+                    <span className="text-gray-400">{investorSourceCount}</span>
                   )}
                 </div>
               </div>
