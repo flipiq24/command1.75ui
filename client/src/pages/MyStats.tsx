@@ -345,97 +345,107 @@ function MyStatsContent() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div className="bg-white border-t border-gray-100">
-        <div 
-          ref={chatContainerRef}
-          className="h-48 overflow-y-auto px-6 py-4"
-        >
-          <div className="max-w-3xl mx-auto space-y-3">
-            {messages.map((message) => (
-              <div
-                key={message.id}
-                className={cn(
-                  "flex",
-                  message.role === 'user' ? "justify-end" : "justify-start"
-                )}
-              >
-                {message.role === 'ai' && (
-                  <div className="flex items-start gap-2 max-w-[85%]">
+          <div className="bg-white rounded-lg border border-gray-100 p-5">
+            <div 
+              ref={chatContainerRef}
+              className="h-48 overflow-y-auto mb-4"
+            >
+              <div className="space-y-3">
+                {messages.map((message) => (
+                  <div
+                    key={message.id}
+                    className={cn(
+                      "flex",
+                      message.role === 'user' ? "justify-end" : "justify-start"
+                    )}
+                  >
+                    {message.role === 'ai' && (
+                      <div className="flex items-start gap-2 max-w-[85%]">
+                        <div className="w-7 h-7 rounded-full bg-gradient-to-r from-[#FF6600] to-[#FF8533] flex items-center justify-center flex-shrink-0">
+                          <Lightbulb className="w-3.5 h-3.5 text-white" />
+                        </div>
+                        <div className="bg-gray-50 rounded-xl rounded-tl-sm px-3 py-2">
+                          <p className="text-xs text-gray-700 whitespace-pre-line">{message.content}</p>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {message.role === 'user' && (
+                      <div className="bg-[#FF6600] text-white rounded-xl rounded-tr-sm px-3 py-2 max-w-[70%]">
+                        <p className="text-xs">{message.content}</p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+                
+                {isTyping && (
+                  <div className="flex items-start gap-2">
                     <div className="w-7 h-7 rounded-full bg-gradient-to-r from-[#FF6600] to-[#FF8533] flex items-center justify-center flex-shrink-0">
                       <Lightbulb className="w-3.5 h-3.5 text-white" />
                     </div>
                     <div className="bg-gray-50 rounded-xl rounded-tl-sm px-3 py-2">
-                      <p className="text-xs text-gray-700 whitespace-pre-line">{message.content}</p>
+                      <div className="flex gap-1">
+                        <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                        <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                        <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                      </div>
                     </div>
                   </div>
                 )}
+              </div>
+            </div>
+
+            <div className="relative">
+              <div 
+                className="flex items-center gap-2 bg-white rounded-full px-4 py-3 border border-gray-200"
+                style={{
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04), 0 -1px 0 rgba(255, 255, 255, 0.8) inset',
+                  background: 'linear-gradient(to bottom, #ffffff, #fafafa)'
+                }}
+              >
+                <button className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition rounded-full hover:bg-gray-100">
+                  <Plus className="w-4 h-4" />
+                </button>
                 
-                {message.role === 'user' && (
-                  <div className="bg-[#FF6600] text-white rounded-xl rounded-tr-sm px-3 py-2 max-w-[70%]">
-                    <p className="text-xs">{message.content}</p>
-                  </div>
+                <input
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Ask about your stats..."
+                  className="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none"
+                  data-testid="input-stats-chat"
+                />
+                
+                <button className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition rounded-full hover:bg-gray-100">
+                  <Mic className="w-4 h-4" />
+                </button>
+                
+                {inputValue.trim() ? (
+                  <button
+                    onClick={handleSend}
+                    disabled={isTyping}
+                    className="w-9 h-9 rounded-full bg-gray-900 hover:bg-gray-800 text-white flex items-center justify-center transition shadow-md"
+                    style={{
+                      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1)'
+                    }}
+                    data-testid="button-send-stats"
+                  >
+                    <Send className="w-4 h-4" />
+                  </button>
+                ) : (
+                  <button
+                    className="w-9 h-9 rounded-full bg-gray-900 hover:bg-gray-800 text-white flex items-center justify-center transition shadow-md"
+                    style={{
+                      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1)'
+                    }}
+                    data-testid="button-voice-stats"
+                  >
+                    <AudioLines className="w-4 h-4" />
+                  </button>
                 )}
               </div>
-            ))}
-            
-            {isTyping && (
-              <div className="flex items-start gap-2">
-                <div className="w-7 h-7 rounded-full bg-gradient-to-r from-[#FF6600] to-[#FF8533] flex items-center justify-center flex-shrink-0">
-                  <Lightbulb className="w-3.5 h-3.5 text-white" />
-                </div>
-                <div className="bg-gray-50 rounded-xl rounded-tl-sm px-3 py-2">
-                  <div className="flex gap-1">
-                    <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="px-6 py-3 border-t border-gray-50">
-          <div className="max-w-3xl mx-auto">
-            <div className="flex items-center gap-2 bg-gray-50 rounded-full px-3 py-2">
-              <button className="w-7 h-7 flex items-center justify-center text-gray-400 hover:text-gray-600 transition">
-                <Plus className="w-4 h-4" />
-              </button>
-              
-              <input
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Ask about your stats..."
-                className="flex-1 bg-transparent text-xs text-gray-700 placeholder-gray-400 outline-none"
-                data-testid="input-stats-chat"
-              />
-              
-              <button className="w-7 h-7 flex items-center justify-center text-gray-400 hover:text-gray-600 transition">
-                <Mic className="w-4 h-4" />
-              </button>
-              
-              {inputValue.trim() ? (
-                <button
-                  onClick={handleSend}
-                  disabled={isTyping}
-                  className="w-8 h-8 rounded-full bg-gray-900 hover:bg-gray-800 text-white flex items-center justify-center transition"
-                  data-testid="button-send-stats"
-                >
-                  <Send className="w-3.5 h-3.5" />
-                </button>
-              ) : (
-                <button
-                  className="w-8 h-8 rounded-full bg-gray-900 hover:bg-gray-800 text-white flex items-center justify-center transition"
-                  data-testid="button-voice-stats"
-                >
-                  <AudioLines className="w-4 h-4" />
-                </button>
-              )}
             </div>
           </div>
         </div>
