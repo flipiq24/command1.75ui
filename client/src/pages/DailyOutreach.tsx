@@ -1634,7 +1634,7 @@ function DailyOutreachContent() {
               <>
             <div className="flex items-center justify-start px-4 py-3 mb-4">
               <div className="flex items-center gap-4">
-                <span className="text-sm font-bold text-gray-500">Property {currentIndex + 1} of {filteredDeals.length || totalDeals}</span>
+                <span className="text-sm font-bold text-gray-500">{connectionsMade}/{dailyGoal} new agent calls</span>
                 
                 <div className="flex gap-3">
                   <button 
