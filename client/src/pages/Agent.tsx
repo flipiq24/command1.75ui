@@ -236,31 +236,35 @@ function AgentContent() {
                     <MoreVertical className="w-4 h-4 text-red-500" />
                   </button>
                   <span className="text-gray-300">|</span>
-                  <div className="flex items-center gap-4 text-sm">
-                    <span className="text-gray-500">
-                      Active In Last 2 Years: <span className={activeInLast2Years ? "text-green-600 font-medium" : "text-gray-600"}>{activeInLast2Years ? 'True' : 'False'}</span>
-                    </span>
-                    <span className="text-gray-500">
-                      Double Ended: <span className={doubleEnded > 0 ? "text-blue-600 font-medium" : "text-gray-400"}>{doubleEnded}</span>
-                    </span>
-                    <span className="text-gray-500">
-                      Average Deals Per Year: <span className={averageDealsPerYear > 0 ? "text-blue-600 font-medium" : "text-gray-400"}>{averageDealsPerYear}</span>
-                    </span>
-                    <span className="text-gray-500">
-                      Investor Source: {investorSourceCount > 0 ? (
-                        <a 
-                          href="https://nextjs-flipiq-agent.vercel.app/agents/AaronVillarreal"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-600 font-medium hover:underline"
-                          data-testid="link-investor-source"
-                        >
-                          {investorSourceCount}
-                        </a>
-                      ) : (
-                        <span className="text-gray-600">{investorSourceCount}</span>
-                      )}
-                    </span>
+                  <div className="flex flex-col gap-1 text-sm">
+                    <div className="flex items-center gap-4">
+                      <span className="text-gray-500">
+                        Active In Last 2 Years: <span className={activeInLast2Years ? "text-green-600 font-medium" : "text-gray-600"}>{activeInLast2Years ? 'True' : 'False'}</span>
+                      </span>
+                      <span className="text-gray-500">
+                        Investor Source: {investorSourceCount > 0 ? (
+                          <a 
+                            href="https://nextjs-flipiq-agent.vercel.app/agents/AaronVillarreal"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 font-medium hover:underline"
+                            data-testid="link-investor-source"
+                          >
+                            {investorSourceCount}
+                          </a>
+                        ) : (
+                          <span className="text-gray-600">{investorSourceCount}</span>
+                        )}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <span className="text-gray-500">
+                        Double Ended: <span className={doubleEnded > 0 ? "text-blue-600 font-medium" : "text-gray-400"}>{doubleEnded}</span>
+                      </span>
+                      <span className="text-gray-500">
+                        Average Deals Per Year: <span className={averageDealsPerYear > 0 ? "text-blue-600 font-medium" : "text-gray-400"}>{averageDealsPerYear}</span>
+                      </span>
+                    </div>
                   </div>
                 </div>
                 
