@@ -38,6 +38,8 @@ function AgentContent() {
   const [basket, setBasket] = useState('Low Value');
   const [activeInLast2Years, setActiveInLast2Years] = useState(true);
   const [investorSourceCount, setInvestorSourceCount] = useState(9);
+  const [doubleEnded, setDoubleEnded] = useState(0);
+  const [averageDealsPerYear, setAverageDealsPerYear] = useState(6);
   const [followUpStatus, setFollowUpStatus] = useState('');
   const [followUpDate, setFollowUpDate] = useState('');
   const [assignedUser, setAssignedUser] = useState('Michael May');
@@ -237,6 +239,12 @@ function AgentContent() {
                   <div className="flex items-center gap-4 text-sm">
                     <span className="text-gray-500">
                       Active In Last 2 Years: <span className={activeInLast2Years ? "text-green-600 font-medium" : "text-gray-600"}>{activeInLast2Years ? 'True' : 'False'}</span>
+                    </span>
+                    <span className="text-gray-500">
+                      Double Ended: <span className={doubleEnded > 0 ? "text-blue-600 font-medium" : "text-gray-400"}>{doubleEnded}</span>
+                    </span>
+                    <span className="text-gray-500">
+                      Average Deals Per Year: <span className={averageDealsPerYear > 0 ? "text-blue-600 font-medium" : "text-gray-400"}>{averageDealsPerYear}</span>
                     </span>
                     <span className="text-gray-500">
                       Investor Source: {investorSourceCount > 0 ? (
