@@ -44,24 +44,6 @@ function AgentContent() {
   const [followUpDate, setFollowUpDate] = useState('');
   const [assignedUser, setAssignedUser] = useState('Michael May');
   const [doNotCall, setDoNotCall] = useState(false);
-  const [lastCommunicationDate, setLastCommunicationDate] = useState('-');
-  const [daysSinceContact, setDaysSinceContact] = useState(30);
-
-  // Smart Next Step Logic
-  const getNextStep = () => {
-    if (relationshipStatus === 'Unknown') {
-      return { action: 'Start Vetting Script', type: 'vetting', color: 'bg-blue-600 hover:bg-blue-700' };
-    }
-    if (basket === 'Low Value') {
-      return { action: 'Send Low-Ball Template', type: 'email', color: 'bg-orange-500 hover:bg-orange-600' };
-    }
-    if (daysSinceContact > 7) {
-      return { action: 'Call Agent', type: 'call', color: 'bg-green-600 hover:bg-green-700' };
-    }
-    return { action: 'Log Activity', type: 'log', color: 'bg-gray-600 hover:bg-gray-700' };
-  };
-
-  const nextStep = getNextStep();
 
   const leftTabs = [
     { id: 'piq', label: 'PIQ' },
@@ -253,29 +235,23 @@ function AgentContent() {
                   <button className="p-1 hover:bg-gray-100 rounded transition" data-testid="button-agent-menu">
                     <MoreVertical className="w-4 h-4 text-red-500" />
                   </button>
-                  <div className="flex items-center gap-3 ml-4">
-                    {activeInLast2Years && (
-                      <span className="px-2 py-0.5 text-xs font-semibold text-green-700 bg-green-100 rounded-full">
-                        ACTIVE AGENT
-                      </span>
-                    )}
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-0.5 text-xs text-gray-500">
-                      <span>Double Ended: <span className={doubleEnded > 0 ? "text-blue-600 font-medium" : "text-gray-400"}>{doubleEnded}</span></span>
-                      <span>Investor Source: {investorSourceCount > 0 ? (
-                        <a 
-                          href="https://nextjs-flipiq-agent.vercel.app/agents/AaronVillarreal"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-600 font-medium hover:underline"
-                          data-testid="link-investor-source"
-                        >
-                          {investorSourceCount}
-                        </a>
-                      ) : (
-                        <span className="text-gray-400">{investorSourceCount}</span>
-                      )}</span>
-                      <span>Avg Deals/Year: <span className={averageDealsPerYear > 0 ? "text-blue-600 font-medium" : "text-gray-400"}>{averageDealsPerYear}</span></span>
-                    </div>
+                  <div className="grid grid-cols-2 gap-x-6 gap-y-0.5 text-xs text-gray-500 ml-4">
+                    <span>Active In Last 2 Years: <span className={activeInLast2Years ? "text-green-600 font-medium" : "text-gray-400"}>{activeInLast2Years ? 'True' : 'False'}</span></span>
+                    <span>Investor Source: {investorSourceCount > 0 ? (
+                      <a 
+                        href="https://nextjs-flipiq-agent.vercel.app/agents/AaronVillarreal"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 font-medium hover:underline"
+                        data-testid="link-investor-source"
+                      >
+                        {investorSourceCount}
+                      </a>
+                    ) : (
+                      <span className="text-gray-400">{investorSourceCount}</span>
+                    )}</span>
+                    <span>Double Ended: <span className={doubleEnded > 0 ? "text-blue-600 font-medium" : "text-gray-400"}>{doubleEnded}</span></span>
+                    <span>Average Deals Per Year: <span className={averageDealsPerYear > 0 ? "text-blue-600 font-medium" : "text-gray-400"}>{averageDealsPerYear}</span></span>
                   </div>
                 </div>
                 
@@ -329,157 +305,143 @@ function AgentContent() {
 
         {/* Three Column Section */}
         <div className="grid grid-cols-3 gap-6 mb-6">
-          {/* Agent Status - Quick Select Pills */}
+          {/* Agent Status */}
           <div className="bg-white rounded-lg border border-gray-200 p-5">
             <h4 className="text-sm font-semibold text-gray-900 mb-4">Agent Status</h4>
             
             <div className="space-y-4">
               <div>
-                <label className="block text-xs text-gray-500 mb-2">Relationship Status</label>
-                <div className="flex flex-wrap gap-1.5">
-                  {['Unknown', 'New', 'Vetted', 'VIP', 'Blacklist'].map((status) => (
-                    <button
-                      key={status}
-                      onClick={() => setRelationshipStatus(status)}
-                      className={cn(
-                        "px-2.5 py-1 text-xs font-medium rounded-full transition",
-                        relationshipStatus === status
-                          ? "bg-blue-600 text-white"
-                          : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                      )}
-                      data-testid={`pill-relationship-${status.toLowerCase()}`}
-                    >
-                      {status}
-                    </button>
-                  ))}
-                </div>
+                <label className="block text-xs text-gray-500 mb-1.5">Relationship Status</label>
+                <select 
+                  value={relationshipStatus}
+                  onChange={(e) => setRelationshipStatus(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
+                  data-testid="select-relationship-status"
+                >
+                  <option>Unknown</option>
+                  <option>Priority</option>
+                  <option>Hot</option>
+                  <option>Warm</option>
+                  <option>Cold</option>
+                </select>
               </div>
               
               <div>
-                <label className="block text-xs text-gray-500 mb-2">Basket</label>
-                <div className="flex flex-wrap gap-1.5">
-                  {['High Value', 'Medium', 'Low Value', 'Trash'].map((value) => (
-                    <button
-                      key={value}
-                      onClick={() => setBasket(value)}
-                      className={cn(
-                        "px-2.5 py-1 text-xs font-medium rounded-full transition",
-                        basket === value
-                          ? value === 'High Value' ? "bg-green-600 text-white" 
-                            : value === 'Low Value' || value === 'Trash' ? "bg-red-500 text-white"
-                            : "bg-blue-600 text-white"
-                          : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                      )}
-                      data-testid={`pill-basket-${value.toLowerCase().replace(' ', '-')}`}
-                    >
-                      {value}
-                    </button>
-                  ))}
-                </div>
+                <label className="block text-xs text-gray-500 mb-1.5">Agent Rating</label>
+                <select 
+                  value={agentRating}
+                  onChange={(e) => setAgentRating(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
+                  data-testid="select-agent-rating"
+                >
+                  <option>Unknown</option>
+                  <option>Excellent</option>
+                  <option>Good</option>
+                  <option>Average</option>
+                  <option>Poor</option>
+                </select>
               </div>
-
+              
               <div>
-                <label className="block text-xs text-gray-500 mb-2">Agent Rating</label>
-                <div className="flex flex-wrap gap-1.5">
-                  {['Excellent', 'Good', 'Average', 'Poor'].map((rating) => (
-                    <button
-                      key={rating}
-                      onClick={() => setAgentRating(rating)}
-                      className={cn(
-                        "px-2.5 py-1 text-xs font-medium rounded-full transition",
-                        agentRating === rating
-                          ? rating === 'Excellent' || rating === 'Good' ? "bg-green-600 text-white"
-                            : rating === 'Poor' ? "bg-red-500 text-white"
-                            : "bg-yellow-500 text-white"
-                          : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                      )}
-                      data-testid={`pill-rating-${rating.toLowerCase()}`}
-                    >
-                      {rating}
-                    </button>
-                  ))}
-                </div>
+                <label className="block text-xs text-gray-500 mb-1.5">Basket</label>
+                <select 
+                  value={basket}
+                  onChange={(e) => setBasket(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
+                  data-testid="select-basket"
+                >
+                  <option>Low Value</option>
+                  <option>High Value</option>
+                  <option>Clients</option>
+                </select>
               </div>
             </div>
           </div>
 
-          {/* Last Communication */}
+          {/* Last Communication Date */}
           <div className="bg-white rounded-lg border border-gray-200 p-5">
-            <h4 className="text-sm font-semibold text-gray-900 mb-4">Communication History</h4>
+            <h4 className="text-sm font-semibold text-gray-900 mb-4">Last Communication Date</h4>
             
-            <div className="space-y-3">
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <span className="text-xs text-gray-500">Last Contact</span>
-                <span className={cn(
-                  "text-sm font-medium",
-                  daysSinceContact > 14 ? "text-red-500" : daysSinceContact > 7 ? "text-orange-500" : "text-green-600"
-                )}>
-                  {lastCommunicationDate === '-' ? 'Never' : `${daysSinceContact} days ago`}
-                </span>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs text-gray-500 mb-1.5">Last Communication Date</label>
+                <input 
+                  type="text"
+                  defaultValue="-"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
+                  readOnly
+                  data-testid="input-last-comm-date"
+                />
               </div>
               
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <span className="text-xs text-gray-500">Last Address</span>
-                <span className="text-sm text-gray-700">-</span>
+              <div>
+                <label className="block text-xs text-gray-500 mb-1.5">Last Address Discussed</label>
+                <input 
+                  type="text"
+                  defaultValue="-"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
+                  readOnly
+                  data-testid="input-last-address"
+                />
               </div>
               
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <span className="text-xs text-gray-500">Last AA</span>
-                <span className="text-sm text-gray-700">-</span>
+              <div>
+                <label className="block text-xs text-gray-500 mb-1.5">Last Communicated AA</label>
+                <input 
+                  type="text"
+                  defaultValue="-"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
+                  readOnly
+                  data-testid="input-last-comm-aa"
+                />
               </div>
             </div>
           </div>
 
-          {/* Next Steps - Smart Action Card */}
-          <div className="bg-white rounded-lg border-2 border-yellow-400 p-5 shadow-sm">
-            <div className="flex items-center justify-between mb-3">
-              <h4 className="text-sm font-semibold text-gray-900 flex items-center gap-2">
-                <Lightbulb className="w-4 h-4 text-yellow-500" />
-                Next Step
-              </h4>
+          {/* Follow Up */}
+          <div className="bg-white rounded-lg border border-gray-200 p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="text-sm font-semibold text-gray-900">Follow Up</h4>
               <button 
-                className="px-2 py-1 text-xs font-medium text-gray-500 hover:bg-gray-100 rounded transition"
-                data-testid="button-snooze"
-              >
-                Snooze
-              </button>
-            </div>
-            
-            {/* Smart Alert */}
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
-              <p className="text-xs text-yellow-800">
-                {relationshipStatus === 'Unknown' && "This is a new lead. Start the vetting process."}
-                {relationshipStatus !== 'Unknown' && basket === 'Low Value' && "Low value agent. Send templated outreach."}
-                {relationshipStatus !== 'Unknown' && basket !== 'Low Value' && daysSinceContact > 7 && `You haven't spoken to Jeremy in ${daysSinceContact} days.`}
-                {relationshipStatus !== 'Unknown' && basket !== 'Low Value' && daysSinceContact <= 7 && "Agent is engaged. Keep the momentum."}
-              </p>
-            </div>
-
-            {/* Primary Action Button */}
-            <button 
-              className={cn(
-                "w-full py-3 text-sm font-semibold text-white rounded-lg transition mb-2",
-                nextStep.color
-              )}
-              data-testid="button-next-step"
-            >
-              {nextStep.action}
-            </button>
-
-            {/* Secondary Actions */}
-            <div className="flex gap-2">
-              <button 
-                className="flex-1 py-2 text-xs font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
-                data-testid="button-log-call"
-              >
-                Log Call
-              </button>
-              <button 
-                className="flex-1 py-2 text-xs font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg border border-orange-500 transition"
-                data-testid="button-set-reminder"
+                className="px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded border border-orange-500 transition"
+                data-testid="button-reminders"
               >
                 Set Reminder
               </button>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs text-gray-500 mb-1.5">Follow Up Status</label>
+                <select 
+                  value={followUpStatus}
+                  onChange={(e) => setFollowUpStatus(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
+                  data-testid="select-followup-status"
+                >
+                  <option value="">Select...</option>
+                  <option>Priority</option>
+                  <option>Hot</option>
+                  <option>Warm</option>
+                  <option>Cold</option>
+                  <option>Attempt 5</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-xs text-gray-500 mb-1.5">Follow Up Status Date</label>
+                <div className="relative">
+                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <input 
+                    type="text"
+                    placeholder="Select date"
+                    value={followUpDate}
+                    onChange={(e) => setFollowUpDate(e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg pl-9 pr-3 py-2 text-sm bg-white"
+                    data-testid="input-followup-date"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
