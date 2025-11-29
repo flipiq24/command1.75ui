@@ -181,6 +181,12 @@ function MLSHotDealsContent() {
             </div>
           </div>
           <div className="flex items-center gap-3">
+            <button className="p-1.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded transition">
+              <Filter className="w-4 h-4" />
+            </button>
+            <button className="p-1.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded transition">
+              <ArrowUpDown className="w-4 h-4" />
+            </button>
             <input 
               type="text" 
               placeholder="Low PTFV" 
