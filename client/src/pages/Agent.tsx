@@ -50,11 +50,11 @@ function AgentContent() {
   const [showAddStep, setShowAddStep] = useState(false);
   const [customStep, setCustomStep] = useState('');
   const [nextSteps, setNextSteps] = useState([
-    { id: 1, text: 'Run agent IQ reports', completed: false },
-    { id: 2, text: 'Call Agent', completed: false },
-    { id: 3, text: 'Update Agent Status', completed: false },
-    { id: 4, text: 'Relationship Status -', completed: false },
-    { id: 5, text: 'Set reminder', completed: false },
+    { id: 1, text: 'Run agent IQ reports', completed: false, tooltip: 'Generate AI-powered insights and analytics for this agent' },
+    { id: 2, text: 'Call Agent', completed: false, tooltip: 'Make a phone call to discuss opportunities' },
+    { id: 3, text: 'Update Agent Status', completed: false, tooltip: 'Change relationship status or agent rating' },
+    { id: 4, text: 'Relationship Status -', completed: false, tooltip: 'Set the current relationship status with agent' },
+    { id: 5, text: 'Set reminder', completed: false, tooltip: 'Schedule a follow-up reminder for this agent' },
   ]);
 
   const toggleStep = (id: number) => {
@@ -355,96 +355,67 @@ function AgentContent() {
         </div>
 
         {/* Next Steps Section */}
-        <div className="bg-white rounded-lg border border-gray-200 p-5 mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h4 className="text-sm font-semibold text-gray-900">Next Steps</h4>
-            <div className="relative">
-              <button 
-                className="text-xs text-blue-600 hover:underline flex items-center gap-1" 
-                data-testid="button-add-step"
-                onClick={() => setShowAddStep(!showAddStep)}
-              >
-                + Add Step
-              </button>
-              {showAddStep && (
-                <div className="absolute top-6 right-0 bg-white border border-gray-200 rounded-lg shadow-lg p-4 min-w-[280px] z-50">
-                  <h5 className="text-sm font-semibold text-gray-900 mb-3">Add New Step</h5>
-                  
-                  {/* Checklist Options */}
-                  <div className="space-y-2 mb-4">
-                    <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                      <input type="checkbox" className="w-4 h-4 rounded border-gray-300" />
-                      Send follow-up email
-                    </label>
-                    <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                      <input type="checkbox" className="w-4 h-4 rounded border-gray-300" />
-                      Schedule property tour
-                    </label>
-                    <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                      <input type="checkbox" className="w-4 h-4 rounded border-gray-300" />
-                      Send market analysis
-                    </label>
-                    <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                      <input type="checkbox" className="w-4 h-4 rounded border-gray-300" />
-                      Request referral
-                    </label>
-                    <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                      <input type="checkbox" className="w-4 h-4 rounded border-gray-300" />
-                      Update CRM notes
-                    </label>
-                  </div>
-                  
-                  {/* Manual Update */}
-                  <div className="border-t border-gray-200 pt-3">
-                    <label className="block text-xs text-gray-500 mb-1.5">Manual Update</label>
-                    <input 
-                      type="text"
-                      placeholder="Enter custom step..."
-                      value={customStep}
-                      onChange={(e) => setCustomStep(e.target.value)}
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm mb-2"
-                      data-testid="input-custom-step"
-                    />
-                    <div className="flex gap-2">
-                      <button 
-                        className="flex-1 px-3 py-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition"
-                        data-testid="button-save-step"
-                        onClick={() => setShowAddStep(false)}
-                      >
-                        Add Step
-                      </button>
-                      <button 
-                        className="px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
-                        onClick={() => setShowAddStep(false)}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="space-y-2">
-            {nextSteps.map((step) => (
+        <div className="flex items-center gap-3 mb-6 flex-wrap">
+          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Next Steps:</span>
+          {nextSteps.map((step) => (
+            <div key={step.id} className="group relative">
               <label 
-                key={step.id}
-                className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer transition ${
-                  step.completed ? 'bg-gray-50 opacity-60' : 'hover:bg-gray-50'
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-full cursor-pointer transition text-xs ${
+                  step.completed 
+                    ? 'bg-gray-100 text-gray-400 line-through' 
+                    : 'bg-gray-50 text-gray-700 hover:bg-gray-100 border border-gray-200'
                 }`}
               >
                 <input 
                   type="checkbox" 
                   checked={step.completed}
                   onChange={() => toggleStep(step.id)}
-                  className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  className="w-3 h-3 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                   data-testid={`checkbox-step-${step.id}`}
                 />
-                <span className={`text-sm ${step.completed ? 'text-gray-400 line-through' : 'text-gray-700'}`}>
-                  {step.text}
-                </span>
+                {step.text}
               </label>
-            ))}
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
+                {step.tooltip}
+              </div>
+            </div>
+          ))}
+          <div className="relative">
+            <button 
+              className="text-xs text-blue-600 hover:underline" 
+              data-testid="button-add-step"
+              onClick={() => setShowAddStep(!showAddStep)}
+            >
+              + Add
+            </button>
+            {showAddStep && (
+              <div className="absolute top-6 left-0 bg-white border border-gray-200 rounded-lg shadow-lg p-3 min-w-[220px] z-50">
+                <div className="space-y-1 mb-3">
+                  {['Send follow-up email', 'Schedule property tour', 'Send market analysis', 'Request referral'].map((item, i) => (
+                    <label key={i} className="flex items-center gap-2 text-xs text-gray-700 cursor-pointer hover:bg-gray-50 p-1.5 rounded">
+                      <input type="checkbox" className="w-3 h-3 rounded border-gray-300" />
+                      {item}
+                    </label>
+                  ))}
+                </div>
+                <div className="border-t border-gray-200 pt-2">
+                  <input 
+                    type="text"
+                    placeholder="Custom step..."
+                    value={customStep}
+                    onChange={(e) => setCustomStep(e.target.value)}
+                    className="w-full border border-gray-300 rounded px-2 py-1 text-xs mb-2"
+                    data-testid="input-custom-step"
+                  />
+                  <button 
+                    className="w-full px-2 py-1 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded transition"
+                    onClick={() => setShowAddStep(false)}
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
