@@ -142,14 +142,25 @@ export default function Sidebar({ onIQClick, onCloseIQ, isIQActive = false, onCo
                 {isCollapsed ? "Pipe" : "Pipeline"}
             </div>
             <div className="space-y-1">
-                <a href="#" className={cn("group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg", isCollapsed && "justify-center")}>
+                <Link 
+                  href="/my-deals" 
+                  onClick={() => onCloseIQ?.()}
+                  className={cn(
+                    "group relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg border transition",
+                    location === '/my-deals' && !isIQActive
+                      ? "bg-gray-100 text-gray-900 border-gray-200 hover:bg-gray-200"
+                      : "text-gray-600 hover:bg-gray-50 border-transparent hover:border-gray-100",
+                    isCollapsed && "justify-center"
+                  )}
+                  data-testid="link-my-deals"
+                >
                     <div className="text-gray-500"><Folder className="w-4 h-4 flex-shrink-0" /></div>
                     {!isCollapsed && "My Deals"}
                     <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
                         <span className="font-bold text-[#FF6600]">My Deals:</span><br/>
                         List of all my active properties in the chronological order that are assigned to me.
                     </div>
-                </a>
+                </Link>
             </div>
           </div>
 
