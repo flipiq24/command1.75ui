@@ -28,7 +28,8 @@ function AgentContent() {
   const [relationshipStatus, setRelationshipStatus] = useState('Unknown');
   const [agentRating, setAgentRating] = useState('Unknown');
   const [basket, setBasket] = useState('Low Value');
-  const [activeInLast2Years, setActiveInLast2Years] = useState('');
+  const [activeInLast2Years, setActiveInLast2Years] = useState(true);
+  const [investorSourceCount, setInvestorSourceCount] = useState(9);
   const [followUpStatus, setFollowUpStatus] = useState('');
   const [followUpDate, setFollowUpDate] = useState('');
   const [assignedUser, setAssignedUser] = useState('Michael May');
@@ -215,11 +216,32 @@ function AgentContent() {
               
               {/* Agent Info */}
               <div>
-                <div className="flex items-center gap-2 mb-2">
+                <div className="flex items-center gap-3 mb-2">
                   <h3 className="text-lg font-semibold text-gray-900">Jeremy Flores</h3>
                   <button className="p-1 hover:bg-gray-100 rounded transition">
                     <ExternalLink className="w-4 h-4 text-gray-400" />
                   </button>
+                  <span className="text-gray-300">|</span>
+                  <div className="flex items-center gap-4 text-sm">
+                    <span className="text-gray-500">
+                      Active: <span className={activeInLast2Years ? "text-green-600 font-medium" : "text-gray-600"}>{activeInLast2Years ? 'Yes' : 'No'}</span>
+                    </span>
+                    <span className="text-gray-500">
+                      Investor Source: {investorSourceCount > 0 ? (
+                        <a 
+                          href="https://nextjs-flipiq-agent.vercel.app/agents/AaronVillarreal"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 font-medium hover:underline"
+                          data-testid="link-investor-source"
+                        >
+                          {investorSourceCount}
+                        </a>
+                      ) : (
+                        <span className="text-gray-600">{investorSourceCount}</span>
+                      )}
+                    </span>
+                  </div>
                 </div>
                 
                 <div className="space-y-1.5">
@@ -272,8 +294,8 @@ function AgentContent() {
           </div>
         </div>
 
-        {/* Three Column Section */}
-        <div className="grid grid-cols-3 gap-6 mb-6">
+        {/* Two Column Section */}
+        <div className="grid grid-cols-2 gap-6 mb-6">
           {/* Agent Status */}
           <div className="bg-white rounded-lg border border-gray-200 p-5">
             <h4 className="text-sm font-semibold text-gray-900 mb-4">Agent Status</h4>
@@ -323,37 +345,6 @@ function AgentContent() {
                   <option>High Value</option>
                   <option>Clients</option>
                 </select>
-              </div>
-            </div>
-          </div>
-
-          {/* Agent Profile */}
-          <div className="bg-white rounded-lg border border-gray-200 p-5">
-            <h4 className="text-sm font-semibold text-gray-900 mb-4">Agent Profile</h4>
-            
-            <div className="space-y-4">
-              <div>
-                <label className="block text-xs text-gray-500 mb-1.5">Active In Last 2 Years</label>
-                <select 
-                  value={activeInLast2Years}
-                  onChange={(e) => setActiveInLast2Years(e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
-                  data-testid="select-active-2-years"
-                >
-                  <option value="">Select...</option>
-                  <option>Yes</option>
-                  <option>No</option>
-                </select>
-              </div>
-              
-              <div>
-                <label className="block text-xs text-gray-500 mb-1.5">Investor Source Count</label>
-                <input 
-                  type="text"
-                  defaultValue="1 Match"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
-                  data-testid="input-investor-source"
-                />
               </div>
             </div>
           </div>
