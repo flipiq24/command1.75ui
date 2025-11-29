@@ -458,15 +458,15 @@ function AgentContent() {
               <div className="space-y-1.5 text-sm">
                 <div>
                   <span className="text-gray-500">Last Communication Date: </span>
-                  <span className="font-medium text-gray-700">-</span>
+                  <span className="font-medium text-gray-700">11/27/2025</span>
                 </div>
                 <div>
                   <span className="text-gray-500">Last Address Discussed: </span>
-                  <span className="font-medium text-gray-700">-</span>
+                  <span className="font-medium text-gray-700">2842 Rosarita St, San Bernardino</span>
                 </div>
                 <div>
                   <span className="text-gray-500">Last Communicated AA: </span>
-                  <span className="font-medium text-gray-700">-</span>
+                  <span className="font-medium text-gray-700">Michael May</span>
                 </div>
               </div>
             </div>
