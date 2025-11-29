@@ -164,23 +164,37 @@ function MyDealsContent() {
       <div className="flex-1 flex flex-col overflow-hidden relative z-10 bg-gray-50">
         
         <header className="bg-white border-b border-gray-200 py-4 px-6 flex justify-between items-center">
-          <div>
-            <div className="text-sm text-gray-500 font-medium mb-1">Wednesday, November 26</div>
-            <h1 className="text-xl font-bold text-gray-900">Welcome, Tony!</h1>
+          <div className="flex items-center gap-4">
+            <h1 className="text-xl font-bold text-gray-900">My Deals</h1>
+            <div className="relative">
+              <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <input 
+                type="text" 
+                placeholder="Search deals..." 
+                className="pl-9 pr-4 py-2 w-64 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                data-testid="input-search"
+              />
+            </div>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="relative group">
-              <button className="bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg flex items-center gap-2 transition-colors border border-gray-200">
-                <span className="group-hover:text-[#FF6600] transition-colors">Add Property</span>
-                <span className="text-[#FF6600] text-lg font-bold leading-none">+</span>
-              </button>
-              <div className="absolute top-full left-0 mt-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                Enter an address and price. I'll automatically gather property details and run comparables for you.
+          <div className="flex items-center gap-2">
+            <button className="w-9 h-9 flex items-center justify-center rounded-lg border border-blue-500 bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors" data-testid="button-filter">
+              <Filter className="w-4 h-4" />
+            </button>
+            <button className="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-500 hover:text-gray-700 transition-colors" data-testid="button-sort">
+              <ArrowUpDown className="w-4 h-4" />
+            </button>
+            <div className="h-6 w-px bg-gray-200 mx-1"></div>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 px-3 py-1.5 border border-gray-200 rounded-lg bg-white cursor-pointer hover:bg-gray-50">
+                <span className="text-sm text-gray-700">11/24/2025</span>
+                <Calendar className="w-4 h-4 text-gray-400" />
+              </div>
+              <span className="text-sm text-gray-500">to</span>
+              <div className="flex items-center gap-2 px-3 py-1.5 border border-gray-200 rounded-lg bg-white cursor-pointer hover:bg-gray-50">
+                <span className="text-sm text-gray-700">11/29/2025</span>
+                <Calendar className="w-4 h-4 text-gray-400" />
               </div>
             </div>
-            <button className="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center justify-center text-gray-600 transition-colors border border-gray-200 shadow-sm">
-              <Bot className="w-5 h-5" />
-            </button>
           </div>
         </header>
 
@@ -188,33 +202,6 @@ function MyDealsContent() {
 
             {/* Current Task List - Reorganized Layout */}
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm flex-1 flex flex-col">
-                
-                {/* Toolbar with Search, Filter, Sort and Date Range */}
-                <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
-                  <div className="flex items-center gap-2">
-                    <button className="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-500 hover:text-gray-700 transition-colors" data-testid="button-search">
-                      <Search className="w-4 h-4" />
-                    </button>
-                    <button className="w-9 h-9 flex items-center justify-center rounded-lg border border-blue-500 bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors" data-testid="button-filter">
-                      <Filter className="w-4 h-4" />
-                    </button>
-                    <button className="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-500 hover:text-gray-700 transition-colors" data-testid="button-sort">
-                      <ArrowUpDown className="w-4 h-4" />
-                    </button>
-                    <div className="h-6 w-px bg-gray-200 mx-2"></div>
-                    <div className="flex items-center gap-2">
-                      <div className="flex items-center gap-2 px-3 py-1.5 border border-gray-200 rounded-lg bg-white">
-                        <span className="text-sm text-gray-700">11/24/2025</span>
-                        <Calendar className="w-4 h-4 text-gray-400" />
-                      </div>
-                      <span className="text-sm text-gray-500">to</span>
-                      <div className="flex items-center gap-2 px-3 py-1.5 border border-gray-200 rounded-lg bg-white">
-                        <span className="text-sm text-gray-700">11/29/2025</span>
-                        <Calendar className="w-4 h-4 text-gray-400" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
 
                 {/* Table Header */}
                 <div className="flex py-3 bg-white border-b border-gray-200 text-[11px] uppercase tracking-wider font-bold text-gray-400 select-none">
