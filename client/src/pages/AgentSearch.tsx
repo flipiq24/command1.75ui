@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { cn } from "@/lib/utils";
 import { 
   ChevronDown,
+  ChevronUp,
   MoreVertical,
   Search,
   Filter,
@@ -10,7 +11,10 @@ import {
   MessageSquare,
   Mail,
   Mic,
-  Bot
+  Bot,
+  X,
+  Calendar,
+  Settings2
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -242,6 +246,18 @@ const SAMPLE_AGENTS: Agent[] = [
 function AgentSearchContent() {
   const [selectedAgentIds, setSelectedAgentIds] = useState<number[]>([]);
   const [isBulkActionsOpen, setIsBulkActionsOpen] = useState(false);
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  
+  const [expandedSections, setExpandedSections] = useState({
+    personal: true,
+    assignment: true,
+    communication: true,
+    grouping: true
+  });
+
+  const toggleSection = (section: keyof typeof expandedSections) => {
+    setExpandedSections(prev => ({ ...prev, [section]: !prev[section] }));
+  };
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
@@ -284,6 +300,218 @@ function AgentSearchContent() {
   return (
     <div className="flex-1 flex flex-col overflow-hidden relative z-10 bg-gray-50">
       
+      {/* Filter Sidebar Overlay */}
+      {showFilterModal && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex">
+          <div className="flex-1" onClick={() => setShowFilterModal(false)}></div>
+          <div className="bg-white shadow-2xl w-[520px] h-full flex flex-col animate-in slide-in-from-right duration-300">
+            {/* Sidebar Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 shrink-0">
+              <h2 className="text-lg font-semibold text-gray-900">Filter Agents</h2>
+              <div className="flex items-center gap-3">
+                <button className="flex items-center gap-2 px-3 py-1.5 border border-gray-200 rounded text-sm font-medium hover:bg-gray-50 transition">
+                  <Settings2 className="w-4 h-4" />
+                  Advanced Filters
+                </button>
+                <button className="px-3 py-1.5 border border-gray-200 rounded text-sm font-medium hover:bg-gray-50 transition">
+                  Expand all
+                </button>
+                <button 
+                  onClick={() => setShowFilterModal(false)}
+                  className="p-1 hover:bg-gray-100 rounded transition"
+                >
+                  <X className="w-5 h-5 text-gray-500" />
+                </button>
+              </div>
+            </div>
+
+            {/* Sidebar Body - Scrollable */}
+            <div className="px-6 py-4 flex-1 overflow-y-auto space-y-4">
+              
+              {/* PERSONAL INFORMATION */}
+              <div className="border border-gray-200 rounded-lg">
+                <button 
+                  onClick={() => toggleSection('personal')}
+                  className="w-full flex items-center justify-between px-4 py-3 text-left"
+                >
+                  <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Personal Information</span>
+                  {expandedSections.personal ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
+                </button>
+                {expandedSections.personal && (
+                  <div className="px-4 pb-4 space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                        <input type="text" className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                        <input type="text" className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                        <input type="text" className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* ASSIGNMENT & RELATIONSHIP */}
+              <div className="border border-gray-200 rounded-lg">
+                <button 
+                  onClick={() => toggleSection('assignment')}
+                  className="w-full flex items-center justify-between px-4 py-3 text-left"
+                >
+                  <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Assignment & Relationship</span>
+                  {expandedSections.assignment ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
+                </button>
+                {expandedSections.assignment && (
+                  <div className="px-4 pb-4 space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Assigned User</label>
+                        <div className="border border-gray-200 rounded-lg h-32 overflow-y-auto">
+                          <div className="px-3 py-2 bg-blue-50 text-blue-700 text-sm border-b border-gray-100">Clear selection</div>
+                          <div className="px-3 py-2 text-sm hover:bg-gray-50 cursor-pointer">Not Assigned</div>
+                          <div className="px-3 py-2 text-sm hover:bg-gray-50 cursor-pointer">Michael May</div>
+                          <div className="px-3 py-2 text-sm bg-blue-100 text-blue-700 cursor-pointer">Tony Fletcher</div>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Relationship Status</label>
+                        <div className="border border-gray-200 rounded-lg h-32 overflow-y-auto">
+                          <div className="px-3 py-2 bg-blue-50 text-blue-700 text-sm border-b border-gray-100">No selection</div>
+                          <div className="px-3 py-2 text-sm hover:bg-gray-50 cursor-pointer">Priority</div>
+                          <div className="px-3 py-2 text-sm hover:bg-gray-50 cursor-pointer">Hot</div>
+                          <div className="px-3 py-2 text-sm hover:bg-gray-50 cursor-pointer">Warm</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* COMMUNICATION & INTERACTION */}
+              <div className="border border-gray-200 rounded-lg">
+                <button 
+                  onClick={() => toggleSection('communication')}
+                  className="w-full flex items-center justify-between px-4 py-3 text-left"
+                >
+                  <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Communication & Interaction</span>
+                  {expandedSections.communication ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
+                </button>
+                {expandedSections.communication && (
+                  <div className="px-4 pb-4 space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Last Communication Date Type</label>
+                        <select className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                          <option>Date Range</option>
+                          <option>Before</option>
+                          <option>After</option>
+                          <option>On</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Last Communication Date</label>
+                        <div className="relative">
+                          <input type="text" placeholder="Select date range" className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10" />
+                          <Calendar className="w-4 h-4 absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Follow Up</label>
+                      <div className="border border-gray-200 rounded-lg h-28 overflow-y-auto">
+                        <div className="px-3 py-2 bg-blue-50 text-blue-700 text-sm border-b border-gray-100">No selection</div>
+                        <div className="px-3 py-2 text-sm hover:bg-gray-50 cursor-pointer">Signed Up to Webinar</div>
+                        <div className="px-3 py-2 text-sm hover:bg-gray-50 cursor-pointer">FlipIQ Marketplace Member</div>
+                        <div className="px-3 py-2 text-sm hover:bg-gray-50 cursor-pointer">HWC Campaign</div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                        <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+                        Agents with reminders
+                      </label>
+                      <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                        <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+                        Agents with criticals
+                      </label>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* GROUPING & TARGETING */}
+              <div className="border border-gray-200 rounded-lg">
+                <button 
+                  onClick={() => toggleSection('grouping')}
+                  className="w-full flex items-center justify-between px-4 py-3 text-left"
+                >
+                  <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Grouping & Targeting</span>
+                  {expandedSections.grouping ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
+                </button>
+                {expandedSections.grouping && (
+                  <div className="px-4 pb-4 space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Groups</label>
+                        <div className="border border-gray-200 rounded-lg h-28 overflow-y-auto">
+                          <div className="px-3 py-2 bg-blue-50 text-blue-700 text-sm border-b border-gray-100">No selection</div>
+                          <div className="px-3 py-2 text-sm hover:bg-gray-50 cursor-pointer">Group 1*</div>
+                          <div className="px-3 py-2 text-sm hover:bg-gray-50 cursor-pointer">Group 2*</div>
+                          <div className="px-3 py-2 text-sm hover:bg-gray-50 cursor-pointer">Group 3*</div>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Sub Groups</label>
+                        <div className="border border-gray-200 rounded-lg h-28 overflow-y-auto">
+                          <div className="px-3 py-2 bg-blue-50 text-blue-700 text-sm border-b border-gray-100">No selection</div>
+                          <div className="px-3 py-2 text-sm hover:bg-gray-50 cursor-pointer">Group 1*</div>
+                          <div className="px-3 py-2 text-sm hover:bg-gray-50 cursor-pointer">Group 2*</div>
+                          <div className="px-3 py-2 text-sm hover:bg-gray-50 cursor-pointer">Group 3*</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Campaign Group</label>
+                      <div className="border border-gray-200 rounded-lg h-28 overflow-y-auto">
+                        <div className="px-3 py-2 bg-blue-50 text-blue-700 text-sm border-b border-gray-100">No selection</div>
+                        <div className="px-3 py-2 text-sm hover:bg-gray-50 cursor-pointer">IE</div>
+                        <div className="px-3 py-2 text-sm hover:bg-gray-50 cursor-pointer">LA</div>
+                        <div className="px-3 py-2 text-sm hover:bg-gray-50 cursor-pointer">OC</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+            </div>
+
+            {/* Sidebar Footer */}
+            <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 bg-gray-50 shrink-0">
+              <button className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition">
+                Reset All
+              </button>
+              <button 
+                onClick={() => setShowFilterModal(false)}
+                className="px-6 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition"
+              >
+                Apply
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <header className="bg-white border-b border-gray-200 py-4 px-6 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <h1 className="text-xl font-bold text-gray-900">Agent Search</h1>
@@ -300,7 +528,10 @@ function AgentSearchContent() {
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <button className="px-4 py-2 text-sm font-medium text-white bg-[#FF6600] hover:bg-[#e65c00] rounded-lg transition flex items-center gap-2">
+          <button 
+            onClick={() => setShowFilterModal(true)}
+            className="px-4 py-2 text-sm font-medium text-white bg-[#FF6600] hover:bg-[#e65c00] rounded-lg transition flex items-center gap-2"
+          >
             <Filter className="w-4 h-4" />
             Filters
           </button>
