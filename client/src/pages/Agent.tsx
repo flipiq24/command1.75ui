@@ -221,10 +221,13 @@ function AgentContent() {
                   <button className="p-1 hover:bg-gray-100 rounded transition">
                     <ExternalLink className="w-4 h-4 text-gray-400" />
                   </button>
+                  <button className="p-1 hover:bg-gray-100 rounded transition" data-testid="button-agent-menu">
+                    <MoreVertical className="w-4 h-4 text-gray-400" />
+                  </button>
                   <span className="text-gray-300">|</span>
                   <div className="flex items-center gap-4 text-sm">
                     <span className="text-gray-500">
-                      Active: <span className={activeInLast2Years ? "text-green-600 font-medium" : "text-gray-600"}>{activeInLast2Years ? 'Yes' : 'No'}</span>
+                      Active In Last 2 Years: <span className={activeInLast2Years ? "text-green-600 font-medium" : "text-gray-600"}>{activeInLast2Years ? 'True' : 'False'}</span>
                     </span>
                     <span className="text-gray-500">
                       Investor Source: {investorSourceCount > 0 ? (
@@ -248,8 +251,6 @@ function AgentContent() {
                   <div className="flex items-center gap-2 text-sm text-gray-600">
                     <Phone className="w-4 h-4 text-gray-400" />
                     <span>2135367426</span>
-                    <MessageSquare className="w-4 h-4 text-gray-400 ml-1 cursor-pointer hover:text-gray-600" />
-                    <Mail className="w-4 h-4 text-gray-400 cursor-pointer hover:text-gray-600" />
                   </div>
                   <div className="flex items-center gap-2 text-sm text-gray-600">
                     <Mail className="w-4 h-4 text-gray-400" />
@@ -294,8 +295,8 @@ function AgentContent() {
           </div>
         </div>
 
-        {/* Two Column Section */}
-        <div className="grid grid-cols-2 gap-6 mb-6">
+        {/* Three Column Section */}
+        <div className="grid grid-cols-3 gap-6 mb-6">
           {/* Agent Status */}
           <div className="bg-white rounded-lg border border-gray-200 p-5">
             <h4 className="text-sm font-semibold text-gray-900 mb-4">Agent Status</h4>
@@ -345,6 +346,46 @@ function AgentContent() {
                   <option>High Value</option>
                   <option>Clients</option>
                 </select>
+              </div>
+            </div>
+          </div>
+
+          {/* Last Communication Date */}
+          <div className="bg-white rounded-lg border border-gray-200 p-5">
+            <h4 className="text-sm font-semibold text-gray-900 mb-4">Last Communication Date</h4>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs text-gray-500 mb-1.5">Last Communication Date</label>
+                <input 
+                  type="text"
+                  defaultValue="-"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
+                  readOnly
+                  data-testid="input-last-comm-date"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-xs text-gray-500 mb-1.5">Last Address Discussed</label>
+                <input 
+                  type="text"
+                  defaultValue="-"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
+                  readOnly
+                  data-testid="input-last-address"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-xs text-gray-500 mb-1.5">Last Communicated AA</label>
+                <input 
+                  type="text"
+                  defaultValue="-"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
+                  readOnly
+                  data-testid="input-last-comm-aa"
+                />
               </div>
             </div>
           </div>
