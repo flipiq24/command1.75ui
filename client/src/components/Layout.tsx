@@ -32,17 +32,8 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-const getInitialIQState = () => {
-  const sessionStarted = sessionStorage.getItem('flipiq_session_started');
-  if (!sessionStarted) {
-    sessionStorage.setItem('flipiq_session_started', 'true');
-    return true;
-  }
-  return false;
-};
-
 export default function Layout({ children }: LayoutProps) {
-  const [isIQOpen, setIsIQOpen] = useState(getInitialIQState);
+  const [isIQOpen, setIsIQOpen] = useState(true);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [showDealComplete, setShowDealComplete] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
