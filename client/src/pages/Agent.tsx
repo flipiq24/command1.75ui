@@ -835,11 +835,11 @@ function AgentContent() {
             <div className="flex items-center gap-2">
               <button 
                 onClick={generateIQReport}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 rounded-lg transition"
-                data-testid="button-ai-connect"
+                className="flex items-center gap-1 px-3 py-1.5 text-sm font-semibold text-white bg-orange-500 hover:bg-orange-600 rounded-lg transition"
+                data-testid="button-iq-notes"
               >
                 <Lightbulb className="w-4 h-4" />
-                AI Connect
+                iQ
               </button>
               <button className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition" data-testid="button-cancel">
                 <X className="w-4 h-4" />
