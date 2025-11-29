@@ -22,7 +22,9 @@ import {
   Paperclip,
   ChevronRight,
   Voicemail,
-  Lightbulb
+  Lightbulb,
+  Mic,
+  Bot
 } from 'lucide-react';
 
 function AgentContent() {
@@ -44,6 +46,7 @@ function AgentContent() {
   const [followUpDate, setFollowUpDate] = useState('');
   const [assignedUser, setAssignedUser] = useState('Michael May');
   const [doNotCall, setDoNotCall] = useState(false);
+  const [showAgentMenu, setShowAgentMenu] = useState(false);
 
   const leftTabs = [
     { id: 'piq', label: 'PIQ' },
@@ -232,9 +235,39 @@ function AgentContent() {
                   <button className="p-1 hover:bg-gray-100 rounded transition">
                     <ExternalLink className="w-4 h-4 text-gray-400" />
                   </button>
-                  <button className="p-1 hover:bg-gray-100 rounded transition" data-testid="button-agent-menu">
-                    <MoreVertical className="w-4 h-4 text-red-500" />
-                  </button>
+                  <div className="relative">
+                    <button 
+                      className="p-1 hover:bg-gray-100 rounded transition" 
+                      data-testid="button-agent-menu"
+                      onClick={() => setShowAgentMenu(!showAgentMenu)}
+                    >
+                      <MoreVertical className="w-4 h-4 text-red-500" />
+                    </button>
+                    {showAgentMenu && (
+                      <div className="absolute top-8 right-0 bg-white border border-gray-200 rounded-lg shadow-lg py-2 min-w-[160px] z-50">
+                        <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-testid="menu-call">
+                          <Phone className="w-4 h-4" />
+                          Call
+                        </button>
+                        <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-testid="menu-text">
+                          <MessageSquare className="w-4 h-4" />
+                          Text
+                        </button>
+                        <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-testid="menu-email">
+                          <Mail className="w-4 h-4" />
+                          Email
+                        </button>
+                        <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-testid="menu-voicemail">
+                          <Mic className="w-4 h-4" />
+                          Text Voicemail
+                        </button>
+                        <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" data-testid="menu-ai-connect">
+                          <Bot className="w-4 h-4" />
+                          AI Connect
+                        </button>
+                      </div>
+                    )}
+                  </div>
                   <div className="grid grid-cols-2 gap-x-6 gap-y-0.5 text-xs text-gray-500 ml-4">
                     <span>Active In Last 2 Years: <span className={activeInLast2Years ? "text-green-600 font-medium" : "text-gray-400"}>{activeInLast2Years ? 'True' : 'False'}</span></span>
                     <span>Average Deals Per Year: <span className={averageDealsPerYear > 0 ? "text-blue-600 font-medium" : "text-gray-400"}>{averageDealsPerYear}</span></span>
