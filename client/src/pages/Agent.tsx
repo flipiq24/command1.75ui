@@ -605,7 +605,7 @@ function AgentContent() {
                 <select 
                   value={relationshipStatus}
                   onChange={(e) => setRelationshipStatus(e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
+                  className="w-full border-0 border-b border-gray-200 px-0 py-2 text-sm bg-transparent focus:border-orange-500 focus:ring-0 outline-none"
                   data-testid="select-relationship-status"
                 >
                   <option>Unknown</option>
@@ -621,7 +621,7 @@ function AgentContent() {
                 <select 
                   value={agentRating}
                   onChange={(e) => setAgentRating(e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
+                  className="w-full border-0 border-b border-gray-200 px-0 py-2 text-sm bg-transparent focus:border-orange-500 focus:ring-0 outline-none"
                   data-testid="select-agent-rating"
                 >
                   <option>Unknown</option>
@@ -637,7 +637,7 @@ function AgentContent() {
                 <select 
                   value={basket}
                   onChange={(e) => setBasket(e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
+                  className="w-full border-0 border-b border-gray-200 px-0 py-2 text-sm bg-transparent focus:border-orange-500 focus:ring-0 outline-none"
                   data-testid="select-basket"
                 >
                   <option>Low Value</option>
@@ -658,7 +658,7 @@ function AgentContent() {
                 <input 
                   type="text"
                   defaultValue="-"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
+                  className="w-full border-0 border-b border-gray-200 px-0 py-2 text-sm bg-transparent focus:border-orange-500 focus:ring-0 outline-none"
                   readOnly
                   data-testid="input-last-comm-date"
                 />
@@ -669,7 +669,7 @@ function AgentContent() {
                 <input 
                   type="text"
                   defaultValue="-"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
+                  className="w-full border-0 border-b border-gray-200 px-0 py-2 text-sm bg-transparent focus:border-orange-500 focus:ring-0 outline-none"
                   readOnly
                   data-testid="input-last-address"
                 />
@@ -680,7 +680,7 @@ function AgentContent() {
                 <input 
                   type="text"
                   defaultValue="-"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
+                  className="w-full border-0 border-b border-gray-200 px-0 py-2 text-sm bg-transparent focus:border-orange-500 focus:ring-0 outline-none"
                   readOnly
                   data-testid="input-last-comm-aa"
                 />
@@ -693,7 +693,7 @@ function AgentContent() {
             <div className="flex items-center justify-between mb-4">
               <h4 className="text-sm font-semibold text-gray-900">Follow Up</h4>
               <button 
-                className="px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded border border-orange-500 transition"
+                className="px-3 py-1.5 text-xs font-medium text-orange-600 bg-orange-50 hover:bg-orange-100 rounded-full transition"
                 data-testid="button-reminders"
               >
                 Set Reminder
@@ -706,7 +706,7 @@ function AgentContent() {
                 <select 
                   value={followUpStatus}
                   onChange={(e) => setFollowUpStatus(e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white"
+                  className="w-full border-0 border-b border-gray-200 px-0 py-2 text-sm bg-transparent focus:border-orange-500 focus:ring-0 outline-none"
                   data-testid="select-followup-status"
                 >
                   <option value="">Select...</option>
@@ -721,13 +721,13 @@ function AgentContent() {
               <div>
                 <label className="block text-xs text-gray-500 mb-1.5">Follow Up Status Date</label>
                 <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Calendar className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <input 
                     type="text"
                     placeholder="Select date"
                     value={followUpDate}
                     onChange={(e) => setFollowUpDate(e.target.value)}
-                    className="w-full border border-gray-300 rounded-lg pl-9 pr-3 py-2 text-sm bg-white"
+                    className="w-full border-0 border-b border-gray-200 pl-6 pr-0 py-2 text-sm bg-transparent focus:border-orange-500 focus:ring-0 outline-none"
                     data-testid="input-followup-date"
                   />
                 </div>
