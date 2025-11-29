@@ -12,6 +12,7 @@ import MyStats from "@/pages/MyStats";
 import Agent from "@/pages/Agent";
 import MyDeals from "@/pages/MyDeals";
 import MLSHotDeals from "@/pages/MLSHotDeals";
+import MLSSearch from "@/pages/MLSSearch";
 
 function Router() {
   return (
@@ -20,6 +21,7 @@ function Router() {
       <Route path="/daily-outreach" component={DailyOutreach} />
       <Route path="/my-deals" component={MyDeals} />
       <Route path="/mls-hot-deals" component={MLSHotDeals} />
+      <Route path="/mls-search" component={MLSSearch} />
       <Route path="/piq" component={PIQ} />
       <Route path="/piq/:id" component={PIQ} />
       <Route path="/agent/:id" component={Agent} />

@@ -190,14 +190,25 @@ export default function Sidebar({ onIQClick, onCloseIQ, isIQActive = false, onCo
                     </div>
                 </Link>
 
-                <a href="#" className={cn("group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg", isCollapsed && "justify-center")}>
-                     <div className="text-gray-500"><Search className="w-5 h-5 flex-shrink-0" /></div>
+                <Link 
+                  href="/mls-search" 
+                  onClick={() => onCloseIQ?.()}
+                  className={cn(
+                    "group relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg border transition",
+                    location === '/mls-search' && !isIQActive
+                      ? "bg-gray-100 text-gray-900 border-gray-200 hover:bg-gray-200"
+                      : "text-gray-600 hover:bg-gray-50 border-transparent hover:border-gray-100",
+                    isCollapsed && "justify-center"
+                  )}
+                  data-testid="link-mls-search"
+                >
+                    <div className="text-gray-500"><Search className="w-5 h-5 flex-shrink-0" /></div>
                     {!isCollapsed && "MLS Search"}
                     <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
                         <span className="font-bold text-[#FF6600]">MLS Search:</span><br/>
                         Use standard MLS filters to find any deal on the MLS.
                     </div>
-                </a>
+                </Link>
 
                 <a href="#" className={cn("group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg", isCollapsed && "justify-center")}>
                      <div className="text-gray-500"><Users className="w-5 h-5 flex-shrink-0" /></div>
