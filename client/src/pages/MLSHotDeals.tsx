@@ -453,35 +453,41 @@ function MLSHotDealsContent() {
                             </div>
                             
                             {/* Price / Propensity Column */}
-                            <div className="w-[180px] shrink-0 flex flex-col">
-                              <div className="text-xl font-bold text-gray-800 mb-1">{deal.price}</div>
-                              <div className="text-sm text-gray-500 mb-2">Propensity Score: <span className="text-blue-600 font-medium">{totalScore}</span></div>
-                              <div className="flex flex-col gap-1">
+                            <div className="w-[160px] shrink-0 flex flex-col">
+                              <div className="flex items-center gap-1 mb-1">
+                                <span className="text-lg font-bold text-gray-800">{deal.price}</span>
+                                <span className="text-sm text-gray-500">• BM</span>
+                              </div>
+                              <div className="text-sm text-gray-500 mb-2">Propensity Score: <span className="text-blue-600 font-medium">{totalScore || 'N/A'}</span></div>
+                              <div className="flex flex-col gap-0.5">
                                 {propensityArray.map((indicator: string, idx: number) => (
-                                  <span key={idx} className="text-sm font-medium text-red-600">
+                                  <span key={idx} className="text-xs font-medium text-red-600">
                                     {indicator}
                                   </span>
                                 ))}
                               </div>
                             </div>
                             
-                            {/* Last Open / Called Column */}
-                            <div className="w-[160px] shrink-0 flex flex-col">
-                              <div className="mb-2">
-                                <div className="text-sm text-gray-500">Last Open Date:</div>
-                                <div className="text-sm font-medium text-gray-800">{deal.lastOpen}</div>
-                              </div>
-                              <div>
-                                <div className="text-sm text-gray-500">Last Called Date:</div>
-                                <div className="text-sm font-medium text-gray-800">{deal.lastCalled}</div>
-                              </div>
+                            {/* Days / DOM Column */}
+                            <div className="w-[120px] shrink-0 flex flex-col text-sm">
+                              <div className="text-gray-800">109 Days /</div>
+                              <div className="text-gray-500">DOM: 109</div>
+                              <div className="text-gray-500">Created: 11/29/25</div>
+                              <div className="text-gray-500">Sale Type: Standard</div>
                             </div>
                             
-                            {/* Offer Status / Source Column */}
-                            <div className="w-[180px] shrink-0 flex flex-col">
-                              <div className="mb-3">
+                            {/* ARV Column */}
+                            <div className="w-[140px] shrink-0 flex flex-col text-sm">
+                              <div className="text-gray-800">Asking vs ARV: <span className="font-medium">92.16%</span></div>
+                              <div className="text-gray-800">ARV: <span className="font-medium">$1,180,544</span></div>
+                              <div className="text-gray-500">Comp Data: 5S, 0P, 0B, 3A</div>
+                            </div>
+                            
+                            {/* Source / Status Column */}
+                            <div className="w-[160px] shrink-0 flex flex-col">
+                              <div className="mb-1">
                                 <span className="text-sm text-gray-500">Source: </span>
-                                <span className="text-sm font-bold text-gray-800">{deal.source}</span>
+                                <span className="text-sm font-bold text-gray-800">MLS</span>
                               </div>
                               <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
@@ -518,6 +524,8 @@ function MLSHotDealsContent() {
                                   ))}
                                 </DropdownMenuContent>
                               </DropdownMenu>
+                              <div className="text-xs text-gray-500 mt-1">Assigned AA: Michael May</div>
+                              <div className="text-xs text-gray-400 mt-0.5">{deal.lastOpen}</div>
                             </div>
                           </div>
                         );
