@@ -207,10 +207,12 @@ export default function Sidebar({ onIQClick, onCloseIQ, isIQActive = false, onCo
               <div className="space-y-1">
                   <Link 
                     href="/my-stats" 
-                    onClick={() => onCloseIQ?.()}
+                    onClick={(e) => {
+                      onCloseIQ?.();
+                    }}
                     className={cn(
                       "group relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg",
-                      location === '/my-stats'
+                      location === '/my-stats' && !isIQActive
                         ? "bg-gray-100 text-gray-900 hover:bg-gray-200"
                         : "text-gray-600 hover:bg-gray-50",
                       isCollapsed && "justify-center"
