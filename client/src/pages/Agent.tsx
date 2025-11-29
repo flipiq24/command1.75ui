@@ -218,8 +218,9 @@ function AgentContent() {
           <div className="flex items-start justify-between">
             <div className="flex items-start gap-4">
               {/* IQ Icon */}
-              <div className="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center">
-                <Lightbulb className="w-8 h-8 text-orange-500" />
+              <div className="flex items-center gap-1 px-3 py-2 bg-orange-500 rounded-lg">
+                <Lightbulb className="w-5 h-5 text-white" />
+                <span className="text-white font-semibold text-sm">iQ</span>
               </div>
               
               {/* Agent Info */}
