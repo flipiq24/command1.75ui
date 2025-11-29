@@ -49,6 +49,22 @@ function AgentContent() {
   const [showAgentMenu, setShowAgentMenu] = useState(false);
   const [showAddStep, setShowAddStep] = useState(false);
   const [customStep, setCustomStep] = useState('');
+  const [nextSteps, setNextSteps] = useState([
+    { id: 1, text: 'Run agent IQ reports', completed: false },
+    { id: 2, text: 'Call Agent', completed: false },
+    { id: 3, text: 'Update Agent Status', completed: false },
+    { id: 4, text: 'Relationship Status -', completed: false },
+    { id: 5, text: 'Set reminder', completed: false },
+  ]);
+
+  const toggleStep = (id: number) => {
+    setNextSteps(prev => {
+      const updated = prev.map(step => 
+        step.id === id ? { ...step, completed: !step.completed } : step
+      );
+      return [...updated.filter(s => !s.completed), ...updated.filter(s => s.completed)];
+    });
+  };
 
   const leftTabs = [
     { id: 'piq', label: 'PIQ' },
@@ -409,27 +425,26 @@ function AgentContent() {
               )}
             </div>
           </div>
-          <div className="grid grid-cols-5 gap-4">
-            <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-gray-100 transition">
-              <Lightbulb className="w-4 h-4 text-orange-500" />
-              <span className="text-sm text-gray-700">Run agent IQ reports</span>
-            </div>
-            <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-gray-100 transition">
-              <Phone className="w-4 h-4 text-gray-500" />
-              <span className="text-sm text-gray-700">Call Agent</span>
-            </div>
-            <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-gray-100 transition">
-              <RefreshCw className="w-4 h-4 text-gray-500" />
-              <span className="text-sm text-gray-700">Update Agent Status</span>
-            </div>
-            <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-gray-100 transition">
-              <User className="w-4 h-4 text-gray-500" />
-              <span className="text-sm text-gray-700">Relationship Status -</span>
-            </div>
-            <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-100 cursor-pointer hover:bg-gray-100 transition border-orange-500">
-              <Calendar className="w-4 h-4 text-orange-500" />
-              <span className="text-sm text-gray-700">Set reminder</span>
-            </div>
+          <div className="space-y-2">
+            {nextSteps.map((step) => (
+              <label 
+                key={step.id}
+                className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer transition ${
+                  step.completed ? 'bg-gray-50 opacity-60' : 'hover:bg-gray-50'
+                }`}
+              >
+                <input 
+                  type="checkbox" 
+                  checked={step.completed}
+                  onChange={() => toggleStep(step.id)}
+                  className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  data-testid={`checkbox-step-${step.id}`}
+                />
+                <span className={`text-sm ${step.completed ? 'text-gray-400 line-through' : 'text-gray-700'}`}>
+                  {step.text}
+                </span>
+              </label>
+            ))}
           </div>
         </div>
 
