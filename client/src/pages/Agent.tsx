@@ -25,7 +25,10 @@ import {
   Lightbulb,
   Mic,
   Bot,
-  Clock
+  Clock,
+  Linkedin,
+  Facebook,
+  Instagram
 } from 'lucide-react';
 
 function AgentContent() {
@@ -389,6 +392,42 @@ function AgentContent() {
                   <div className="flex items-center gap-2 text-sm text-gray-600">
                     <Building2 className="w-4 h-4 text-gray-400" />
                     <span>ABC Realty</span>
+                  </div>
+                  
+                  {/* Social Media Icons */}
+                  <div className="flex items-center gap-3 mt-2">
+                    <button 
+                      onClick={() => window.open('https://www.linkedin.com/search/results/all/?keywords=Sarah%20Martinez%20Real%20Estate', '_blank')}
+                      className="p-1.5 rounded-full hover:bg-blue-50 transition group"
+                      title="Search on LinkedIn"
+                      data-testid="icon-linkedin"
+                    >
+                      <Linkedin className="w-4 h-4 text-gray-400 group-hover:text-blue-600" />
+                    </button>
+                    <button 
+                      onClick={() => window.open('https://www.facebook.com/search/top?q=Sarah%20Martinez%20Real%20Estate', '_blank')}
+                      className="p-1.5 rounded-full hover:bg-blue-50 transition group"
+                      title="Search on Facebook"
+                      data-testid="icon-facebook"
+                    >
+                      <Facebook className="w-4 h-4 text-gray-400 group-hover:text-blue-700" />
+                    </button>
+                    <button 
+                      onClick={() => window.open('https://www.instagram.com/explore/search/keyword/?q=Sarah%20Martinez%20Real%20Estate', '_blank')}
+                      className="p-1.5 rounded-full hover:bg-pink-50 transition group"
+                      title="Search on Instagram"
+                      data-testid="icon-instagram"
+                    >
+                      <Instagram className="w-4 h-4 text-gray-400 group-hover:text-pink-600" />
+                    </button>
+                    <button 
+                      onClick={() => window.open('https://www.google.com/search?q=Sarah%20Martinez%20Real%20Estate%20Agent', '_blank')}
+                      className="p-1.5 rounded-full hover:bg-gray-100 transition group"
+                      title="Search on Web"
+                      data-testid="icon-web"
+                    >
+                      <Globe className="w-4 h-4 text-gray-400 group-hover:text-gray-700" />
+                    </button>
                   </div>
                 </div>
               </div>
