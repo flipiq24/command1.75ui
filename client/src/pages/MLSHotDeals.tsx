@@ -365,13 +365,28 @@ function MLSHotDealsContent() {
                             key={deal.id} 
                             className="flex p-4 hover:bg-gray-50/50 transition cursor-pointer group gap-4"
                           >
-                            {/* Property Image */}
-                            <div className="w-[180px] h-[100px] shrink-0 rounded-lg overflow-hidden bg-gray-200">
-                              <img 
-                                src={`https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=300&fit=crop&auto=format`}
-                                alt="Property"
-                                className="w-full h-full object-cover"
-                              />
+                            {/* Property Image with Controls */}
+                            <div className="flex shrink-0 gap-1">
+                              {/* Left Controls */}
+                              <div className="flex flex-col gap-1">
+                                <button className="w-8 h-8 flex items-center justify-center bg-white border border-gray-200 rounded hover:bg-gray-50 transition">
+                                  <div className="w-4 h-4 border-2 border-gray-400 rounded-sm"></div>
+                                </button>
+                                <button className="w-8 h-8 flex items-center justify-center bg-white border border-gray-200 rounded hover:bg-gray-50 transition">
+                                  <Target className="w-4 h-4 text-gray-500" />
+                                </button>
+                                <button className="w-8 h-8 flex items-center justify-center bg-white border border-gray-200 rounded hover:bg-gray-50 transition">
+                                  <MoreVertical className="w-4 h-4 text-gray-500" />
+                                </button>
+                              </div>
+                              {/* Property Image */}
+                              <div className="w-[160px] h-[100px] rounded-lg overflow-hidden bg-gray-200">
+                                <img 
+                                  src={`https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=300&fit=crop&auto=format`}
+                                  alt="Property"
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
                             </div>
                             
                             {/* Property Details - Left Section */}
