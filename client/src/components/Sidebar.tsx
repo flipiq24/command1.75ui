@@ -12,7 +12,9 @@ import {
   BarChart2,
   FileText,
   Lightbulb,
-  Folder
+  Folder,
+  Megaphone,
+  Plus
 } from 'lucide-react';
 import { Link, useLocation } from "wouter";
 import logoUrl from '@assets/flipiQlogo_1764227557148.JPG';
@@ -286,6 +288,31 @@ export default function Sidebar({ onIQClick, onCloseIQ, isIQActive = false, onCo
                       <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
                           <span className="font-bold text-[#FF6600]">Pro Dashboard:</span><br/>
                           Full detailed dashboard for Pro users.
+                      </div>
+                  </a>
+
+                  <a href="#" className={cn("group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg", isCollapsed && "justify-center")}>
+                      <Megaphone className="w-4 h-4 text-gray-500 flex-shrink-0" />
+                      {!isCollapsed && "Campaigns"}
+                      <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                          <span className="font-bold text-[#FF6600]">Campaigns:</span><br/>
+                          Create and manage marketing campaigns for agents and properties.
+                      </div>
+                  </a>
+
+                  <a href="#" className={cn("group relative flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-gray-500 hover:text-gray-900 transition", isCollapsed ? "justify-center" : "pl-8 pr-3")}>
+                      {!isCollapsed && <span className="text-gray-400">└──</span>}
+                      {!isCollapsed && (
+                        <span className="flex items-center gap-1">
+                          Add Property
+                          <Plus className="w-3 h-3 text-[#FF6600]" />
+                        </span>
+                      )}
+                      {isCollapsed && <Plus className="w-3 h-3 text-[#FF6600]" />}
+                      
+                      <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                          <span className="font-bold text-[#FF6600]">Add Property:</span><br/>
+                          Manually add a new property to your pipeline.
                       </div>
                   </a>
               </div>
