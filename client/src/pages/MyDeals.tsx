@@ -1,8 +1,5 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { Link, useSearch } from "wouter";
+import React, { useState, useMemo } from 'react';
 import { cn } from "@/lib/utils";
-import ActionPlan, { DealType } from "@/components/ActionPlan";
-import { useLayout } from "@/components/Layout";
 import { 
   ChevronDown,
   MoreVertical,
@@ -94,24 +91,8 @@ const getPropensityColor = (text: string) => {
 };
 
 function MyDealsContent() {
-  const searchString = useSearch();
-  const [activeFilter, setActiveFilter] = useState<DealType | 'goal' | 'completed' | null>(null);
   const [selectedDealIds, setSelectedDealIds] = useState<number[]>([]);
-  const [completionPercent, setCompletionPercent] = useState(100);
   const queryClient = useQueryClient();
-  const { openIQWithDealComplete } = useLayout();
-
-  const handleMilestoneComplete = () => {
-    openIQWithDealComplete();
-  };
-
-  useEffect(() => {
-    const params = new URLSearchParams(searchString);
-    const filterParam = params.get('filter');
-    if (filterParam === 'hot' || filterParam === 'warm' || filterParam === 'cold' || filterParam === 'new') {
-      setActiveFilter(filterParam as DealType);
-    }
-  }, [searchString]);
 
   const { data: deals = [], isLoading } = useQuery({
     queryKey: ['deals'],
@@ -155,27 +136,11 @@ function MyDealsContent() {
     });
   }, [deals]);
 
-  const filteredDeals = useMemo(() => {
-    return sortedDeals.filter(deal => {
-      if (!activeFilter) return true;
-      
-      if (activeFilter === 'goal') {
-        return (deal.status === "Offer Terms Sent" || deal.status === "Contract Submitted");
-      }
-
-      if (activeFilter === 'completed') {
-        return (deal.type === 'hot' || deal.type === 'warm' || deal.type === 'cold') && deal.status !== 'None';
-      }
-
-      return deal.type === activeFilter;
-    });
-  }, [sortedDeals, activeFilter]);
-
   const [isBulkActionsOpen, setIsBulkActionsOpen] = useState(false);
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      setSelectedDealIds(filteredDeals.map(d => d.id));
+      setSelectedDealIds(sortedDeals.map(d => d.id));
       setIsBulkActionsOpen(true);
     } else {
       setSelectedDealIds([]);
@@ -216,15 +181,6 @@ function MyDealsContent() {
         </header>
 
         <main className="flex-1 overflow-y-auto p-6">
-            
-          {/* Action Plan Component */}
-          <ActionPlan 
-            activeFilter={activeFilter} 
-            onFilterChange={setActiveFilter}
-            completionPercent={completionPercent}
-            userName="Tony"
-            onMilestoneComplete={handleMilestoneComplete}
-          />
 
             {/* Current Task List - Reorganized Layout */}
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm flex-1 flex flex-col">
@@ -235,7 +191,7 @@ function MyDealsContent() {
                         <input 
                           type="checkbox" 
                           className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
-                          checked={filteredDeals.length > 0 && filteredDeals.every(d => selectedDealIds.includes(d.id))}
+                          checked={sortedDeals.length > 0 && sortedDeals.every(d => selectedDealIds.includes(d.id))}
                           onChange={(e) => handleSelectAll(e.target.checked)}
                           title="Select All Filtered Deals"
                         />
@@ -377,12 +333,12 @@ function MyDealsContent() {
                   <div className="p-8 text-center text-gray-500 text-sm">
                     Loading deals...
                   </div>
-                ) : filteredDeals.length === 0 ? (
+                ) : sortedDeals.length === 0 ? (
                   <div className="p-8 text-center text-gray-500 text-sm">
                     No deals found matching the selected filter.
                   </div>
                 ) : (
-                  filteredDeals.map((deal) => (
+                  sortedDeals.map((deal) => (
                     <div key={deal.id} className={cn("flex border-b border-gray-100 hover:bg-gray-50 transition group py-4", selectedDealIds.includes(deal.id) && "bg-blue-50/50 hover:bg-blue-50")}>
                         <div className="w-12 shrink-0 flex flex-col items-center gap-3 pt-1">
                             <input 
@@ -537,7 +493,7 @@ function MyDealsContent() {
 
                  {/* Footer Pagination */}
                 <div className="bg-white px-6 py-4 border-t border-gray-200 flex items-center justify-between">
-                    <div className="text-sm text-gray-500">Showing {filteredDeals.length} of {deals.length} entries</div>
+                    <div className="text-sm text-gray-500">Showing {sortedDeals.length} of {deals.length} entries</div>
                     <div className="flex items-center gap-2">
                         <button className="px-3 py-1 border border-gray-300 rounded text-sm text-gray-600 hover:bg-gray-50 flex items-center gap-2">
                             25 / page <ChevronDown className="w-3 h-3" />
