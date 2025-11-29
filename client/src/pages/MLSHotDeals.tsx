@@ -427,10 +427,17 @@ function MLSHotDealsContent() {
                               </div>
                               
                               {/* Address Row */}
-                              <div className="flex items-center gap-2 mb-1">
-                                <span className="font-bold text-gray-800">{deal.address}</span>
-                                <Globe className="w-4 h-4 text-gray-400" />
-                              </div>
+                              {(() => {
+                                const saleTypes = ['Standard', 'Short Sale', 'REO'];
+                                const saleType = saleTypes[deal.id % 3];
+                                return (
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <span className="font-bold text-gray-800">{deal.address}</span>
+                                    <Globe className="w-4 h-4 text-gray-400" />
+                                    <span className="text-sm text-gray-500">- {saleType}</span>
+                                  </div>
+                                );
+                              })()}
                               
                               {/* Specs Row */}
                               <div className="text-sm text-gray-500 mb-3">{deal.specs}</div>
@@ -478,7 +485,6 @@ function MLSHotDealsContent() {
                               <div className="text-gray-800">109 Days /</div>
                               <div className="text-gray-500">DOM: 109</div>
                               <div className="text-gray-500">Created: 11/29/25</div>
-                              <div className="text-gray-500">Sale Type: Standard</div>
                             </div>
                             
                             {/* ARV Column */}
