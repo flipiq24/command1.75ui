@@ -295,8 +295,9 @@ function AgentSearchContent() {
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <button className="p-1.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded transition">
+          <button className="px-4 py-2 text-sm font-medium text-white bg-[#FF6600] hover:bg-[#e65c00] rounded-lg transition flex items-center gap-2">
             <Filter className="w-4 h-4" />
+            Filters
           </button>
           <button className="p-1.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded transition">
             <ArrowUpDown className="w-4 h-4" />
@@ -304,9 +305,6 @@ function AgentSearchContent() {
           <button className="flex items-center gap-2 px-3 py-1.5 border border-gray-200 rounded text-sm font-medium hover:bg-gray-50 transition">
             Quick View
             <ChevronDown className="w-4 h-4" />
-          </button>
-          <button className="px-4 py-1.5 bg-blue-600 text-white rounded text-sm font-medium hover:bg-blue-700 transition">
-            Bulk Actions
           </button>
         </div>
       </header>
