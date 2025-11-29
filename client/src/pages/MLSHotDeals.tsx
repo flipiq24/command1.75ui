@@ -13,7 +13,11 @@ import {
   Search,
   Filter,
   ArrowUpDown,
-  Calendar
+  Calendar,
+  Plus,
+  Globe,
+  AlertCircle,
+  Bell
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -345,7 +349,7 @@ function MLSHotDealsContent() {
                     </div>
                 </div>
 
-                {/* Table Body */}
+                {/* Property Cards */}
                 <div className="divide-y divide-gray-100">
                     {isLoading ? (
                       <div className="py-8 text-center text-gray-500">Loading deals...</div>
@@ -354,110 +358,76 @@ function MLSHotDealsContent() {
                     ) : (
                       sortedDeals.map((deal) => {
                         const propensityArray = Array.isArray(deal.propensity) ? deal.propensity : [deal.propensity];
-                        const totalScore = getPropensityScore(deal.propensity);
                         
                         return (
                           <div 
                             key={deal.id} 
-                            className={cn(
-                              "flex items-center py-4 hover:bg-gray-50/50 transition cursor-pointer group",
-                              deal.isHot && "bg-orange-50/30"
-                            )}
+                            className="flex p-4 hover:bg-gray-50/50 transition cursor-pointer group gap-4"
                           >
-                            <div className="w-[48px] shrink-0 flex justify-center items-center">
-                              <input 
-                                type="checkbox" 
-                                className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
-                                checked={selectedDealIds.includes(deal.id)}
-                                onChange={(e) => handleSelectDeal(deal.id, e.target.checked)}
+                            {/* Property Image */}
+                            <div className="w-[180px] h-[100px] shrink-0 rounded-lg overflow-hidden bg-gray-200">
+                              <img 
+                                src={`https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=300&fit=crop&auto=format`}
+                                alt="Property"
+                                className="w-full h-full object-cover"
                               />
                             </div>
-                            <div className="flex-1 flex items-center">
-                              <div className="w-5/12 px-4">
-                                <div className="flex items-center gap-2">
-                                  <span className="font-bold text-gray-800 text-sm">{deal.address}</span>
-                                  {deal.isHot && (
-                                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-gradient-to-r from-orange-500 to-red-500 text-white text-[9px] font-bold rounded shadow-sm">
-                                      <Flame className="w-3 h-3" />
-                                      HOT
-                                    </span>
-                                  )}
-                                  {deal.type === 'warm' && (
-                                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-gradient-to-r from-yellow-400 to-orange-400 text-white text-[9px] font-bold rounded shadow-sm">
-                                      <Target className="w-3 h-3" />
-                                      WARM
-                                    </span>
-                                  )}
-                                  {deal.type === 'cold' && (
-                                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-gradient-to-r from-blue-400 to-blue-500 text-white text-[9px] font-bold rounded shadow-sm">
-                                      COLD
-                                    </span>
-                                  )}
-                                </div>
-                                <div className="text-xs text-gray-500 mt-0.5">{deal.specs}</div>
-                              </div>
-                              
-                              <div className="w-2/12 px-4">
-                                <div className="font-bold text-gray-800 text-sm">{deal.price}</div>
-                                <div className="flex flex-wrap gap-1 mt-1">
-                                  {propensityArray.map((p: string, idx: number) => (
-                                    <span key={idx} className={cn("text-[10px] font-medium", getPropensityColor(p))}>
-                                      {p}{idx < propensityArray.length - 1 ? ',' : ''}
-                                    </span>
-                                  ))}
-                                </div>
-                                {totalScore > 0 && (
-                                  <div className="text-[10px] text-gray-400 mt-0.5">Score: {totalScore}</div>
-                                )}
-                              </div>
-                              
-                              <div className="w-2/12 px-4">
-                                <div className="text-sm text-gray-700">{deal.lastOpen}</div>
-                                <div className="text-xs text-gray-500">{deal.lastCalled}</div>
-                              </div>
-                              
-                              <div className="w-3/12 px-4 flex items-center justify-between">
-                                <div className="flex-1">
-                                  <DropdownMenu>
-                                    <DropdownMenuTrigger asChild>
-                                      <button className="flex items-center gap-1 hover:bg-gray-100 px-2 py-1 rounded transition">
-                                        <span className={cn(
-                                          "text-sm font-medium",
-                                          deal.statusPercent === "100%" ? "text-green-600" :
-                                          deal.statusPercent === "0%" ? "text-gray-400" :
-                                          "text-blue-600"
-                                        )}>
-                                          {deal.statusPercent}
-                                        </span>
-                                        <span className="text-sm text-gray-700">{deal.status}</span>
-                                        <ChevronDown className="w-3 h-3 text-gray-400" />
-                                      </button>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent align="start" className="w-56 bg-white z-50 shadow-xl border-none">
-                                      {STATUS_OPTIONS.map((option, idx) => (
-                                        <DropdownMenuItem
-                                          key={idx}
-                                          className="flex items-center gap-2 px-3 py-2 cursor-pointer hover:bg-gray-50"
-                                          onClick={() => handleStatusChange(deal.id, option.label, option.percent)}
-                                        >
-                                          <span className={cn(
-                                            "text-sm font-medium w-12",
-                                            option.percent === "100%" ? "text-green-600" :
-                                            option.percent === "0%" ? "text-gray-400" :
-                                            "text-blue-600"
-                                          )}>
-                                            {option.percent}
-                                          </span>
-                                          <span className="text-sm text-gray-700">{option.label}</span>
-                                        </DropdownMenuItem>
-                                      ))}
-                                    </DropdownMenuContent>
-                                  </DropdownMenu>
-                                  <div className="text-xs text-gray-500 mt-0.5 pl-2">{deal.source}{deal.mlsStatus ? ` - ${deal.mlsStatus}` : ''}</div>
-                                </div>
-                                <button className="p-1 hover:bg-gray-100 rounded opacity-0 group-hover:opacity-100 transition">
-                                  <MoreVertical className="w-4 h-4 text-gray-400" />
+                            
+                            {/* Property Details */}
+                            <div className="flex-1 flex flex-col">
+                              {/* Top Row: New, Checkbox, To do, Critical, Reminders */}
+                              <div className="flex items-center gap-3 text-sm mb-2">
+                                <button className="flex items-center gap-1 text-gray-500 hover:text-gray-700 transition">
+                                  <Plus className="w-4 h-4" />
+                                  <span className="font-medium">New</span>
+                                  <ChevronDown className="w-3 h-3" />
                                 </button>
+                                <span className="text-gray-300">•</span>
+                                <input 
+                                  type="checkbox" 
+                                  className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                                  checked={selectedDealIds.includes(deal.id)}
+                                  onChange={(e) => handleSelectDeal(deal.id, e.target.checked)}
+                                />
+                                <button className="flex items-center gap-1 text-gray-500 hover:text-gray-700 transition">
+                                  <span>To do:</span>
+                                  <span className="text-gray-700">Not set</span>
+                                  <ChevronDown className="w-3 h-3" />
+                                </button>
+                                <span className="text-gray-300">•</span>
+                                <span className="text-gray-500">0 Critical</span>
+                                <span className="text-gray-300">•</span>
+                                <span className="text-gray-500">0 Reminders</span>
+                              </div>
+                              
+                              {/* Address Row */}
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="font-bold text-gray-800">{deal.address}</span>
+                                <Globe className="w-4 h-4 text-gray-400" />
+                              </div>
+                              
+                              {/* Specs Row */}
+                              <div className="text-sm text-gray-500 mb-3">{deal.specs}</div>
+                              
+                              {/* Keywords/Tags Row */}
+                              <div className="flex flex-wrap gap-2">
+                                {propensityArray.map((tag: string, idx: number) => {
+                                  const tagLower = tag.toLowerCase();
+                                  const isOrange = tagLower.includes("trustee") || tagLower.includes("default") || tagLower.includes("tax") || tagLower.includes("death") || tagLower.includes("bankruptcy") || tagLower.includes("motivated");
+                                  return (
+                                    <span 
+                                      key={idx} 
+                                      className={cn(
+                                        "px-3 py-1 rounded-full text-xs font-medium border",
+                                        isOrange 
+                                          ? "bg-orange-50 text-orange-600 border-orange-200" 
+                                          : "bg-gray-50 text-gray-600 border-gray-200"
+                                      )}
+                                    >
+                                      {tag}
+                                    </span>
+                                  );
+                                })}
                               </div>
                             </div>
                           </div>
