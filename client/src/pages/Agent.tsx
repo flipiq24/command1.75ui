@@ -360,7 +360,7 @@ function AgentContent() {
                       </div>
                     )}
                   </div>
-                  <div className="grid grid-cols-2 gap-x-8 gap-y-1.5 text-sm text-gray-600 ml-4">
+                  <div className="grid grid-cols-2 gap-x-8 gap-y-1.5 text-sm text-gray-600">
                     <span>Active In Last 2 Years: <span className={activeInLast2Years ? "text-green-600 font-semibold" : "text-gray-400"}>{activeInLast2Years ? 'True' : 'False'}</span></span>
                     <span>Average Deals Per Year: <span className={averageDealsPerYear > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{averageDealsPerYear}</span></span>
                     <span>Double Ended: <span className={doubleEnded > 0 ? "text-blue-600 font-semibold" : "text-gray-400"}>{doubleEnded}</span></span>
