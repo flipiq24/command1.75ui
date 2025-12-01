@@ -182,42 +182,40 @@ export default function PriorityAgentPanel({
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
       {/* Priority Agent Header with Navigation */}
       <div className="bg-gray-50 border-b border-gray-200 px-6 py-4">
-        <div className="flex flex-col items-center gap-3">
+        <div className="flex items-center justify-center gap-4">
+          <button 
+            onClick={onPrevious}
+            disabled={currentIndex === 0}
+            className={cn(
+              "flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition",
+              currentIndex === 0 
+                ? "bg-gray-200 text-gray-400 cursor-not-allowed" 
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+            )}
+            data-testid="button-prev-agent"
+          >
+            <ChevronLeft className="w-4 h-4" />
+            Previous Agent
+          </button>
+          
           <h3 className="text-lg font-bold text-gray-900">
             Priority Agent {currentIndex + 1} of {totalAgents}
           </h3>
           
-          <div className="flex items-center justify-center gap-4">
-            <button 
-              onClick={onPrevious}
-              disabled={currentIndex === 0}
-              className={cn(
-                "flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition",
-                currentIndex === 0 
-                  ? "bg-gray-200 text-gray-400 cursor-not-allowed" 
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              )}
-              data-testid="button-prev-agent"
-            >
-              <ChevronLeft className="w-4 h-4" />
-              Previous Agent
-            </button>
-            
-            <button 
-              onClick={onNext}
-              disabled={currentIndex === totalAgents - 1}
-              className={cn(
-                "flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition shadow-sm",
-                currentIndex === totalAgents - 1 
-                  ? "bg-gray-300 text-gray-500 cursor-not-allowed" 
-                  : "bg-orange-500 text-white hover:bg-orange-600 animate-pulse"
-              )}
-              data-testid="button-next-agent"
-            >
-              Next Agent
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
+          <button 
+            onClick={onNext}
+            disabled={currentIndex === totalAgents - 1}
+            className={cn(
+              "flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition shadow-sm",
+              currentIndex === totalAgents - 1 
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed" 
+                : "bg-orange-500 text-white hover:bg-orange-600 animate-pulse"
+            )}
+            data-testid="button-next-agent"
+          >
+            Next Agent
+            <ChevronRight className="w-4 h-4" />
+          </button>
         </div>
       </div>
 
