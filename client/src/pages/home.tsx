@@ -428,9 +428,16 @@ function HomeContent() {
                             <div className="w-5/12 px-4 flex flex-col justify-start gap-2">
                                 <div className="flex items-center gap-2 mt-1">
                                     {deal.isHot && (
-                                      <div className="bg-red-500 rounded-full px-2 py-0.5 border border-red-500 flex items-center gap-1 shadow-sm">
-                                          <Flame className="w-3 h-3 text-white" />
-                                          <span className="text-[10px] font-bold text-white uppercase">High</span>
+                                      <div className="relative group/priority">
+                                        <div className="bg-red-500 rounded-full px-2 py-0.5 border border-red-500 flex items-center gap-1 shadow-sm cursor-help">
+                                            <Flame className="w-3 h-3 text-white" />
+                                            <span className="text-[10px] font-bold text-white uppercase">High</span>
+                                        </div>
+                                        <div className="absolute bottom-full left-0 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover/priority:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                                          <div className="font-bold text-[#FF6600] mb-1">High Priority (Work First)</div>
+                                          <div className="mb-1"><span className="font-semibold">Logic:</span> High probability to close. The agent is responsive, or we are in active negotiations.</div>
+                                          <div><span className="font-semibold">Instruction:</span> These are your immediate money-making opportunities. Focus here first.</div>
+                                        </div>
                                       </div>
                                     )}
                                     {deal.isHot && <div className="w-1 h-1 rounded-full bg-gray-300"></div>}
