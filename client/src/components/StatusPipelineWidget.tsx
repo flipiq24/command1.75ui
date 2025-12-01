@@ -231,7 +231,7 @@ export default function StatusPipelineWidget({
                     )}
                     data-testid={`status-option-${item.percent}-${item.label.replace(/\s+/g, '-').toLowerCase()}`}
                   >
-                    <span className="w-8 text-right font-semibold text-gray-500">{item.percent}%</span>
+                    <span className="w-8 text-right font-semibold text-blue-600">{item.percent}%</span>
                     <span className="flex-1">{item.label}</span>
                     {isSelected && <Check className="w-4 h-4 text-orange-500" />}
                   </button>
