@@ -64,12 +64,68 @@ const statusData: StatusCategory[] = [
 ];
 
 const pipelineStages = [
-  { id: 'new-lead', name: 'New Lead', range: '(0-10%)' },
-  { id: 'working', name: 'Working / Nurture', range: '(20-30%)' },
-  { id: 'offer', name: 'Offer Sent', range: '(30-50%)' },
-  { id: 'negotiation', name: 'In Negotiation', range: '(60%)' },
-  { id: 'under-contract', name: 'Under Contract', range: '(80%)' },
-  { id: 'acquired', name: 'Acquired', range: '(100%)' },
+  { 
+    id: 'new-lead', 
+    name: 'New Lead', 
+    range: '(0-10%)',
+    items: [
+      { percent: 0, label: 'None' },
+      { percent: 10, label: 'Initial Contact Started' },
+    ]
+  },
+  { 
+    id: 'working', 
+    name: 'Working / Nurture', 
+    range: '(20-30%)',
+    items: [
+      { percent: 20, label: 'Continue to Follow Up' },
+      { percent: 30, label: 'Back Up' },
+    ]
+  },
+  { 
+    id: 'offer', 
+    name: 'Offer Sent', 
+    range: '(30-50%)',
+    items: [
+      { percent: 30, label: 'Offer Terms Sent' },
+      { percent: 50, label: 'Contract Submitted' },
+    ]
+  },
+  { 
+    id: 'negotiation', 
+    name: 'In Negotiation', 
+    range: '(60%)',
+    items: [
+      { percent: 60, label: 'In Negotiations' },
+    ]
+  },
+  { 
+    id: 'under-contract', 
+    name: 'Under Contract', 
+    range: '(80%)',
+    items: [
+      { percent: 80, label: 'Offer Accepted' },
+    ]
+  },
+  { 
+    id: 'acquired', 
+    name: 'Acquired', 
+    range: '(100%)',
+    items: [
+      { percent: 100, label: 'Acquired' },
+    ]
+  },
+  { 
+    id: 'lost', 
+    name: 'Lost / Do Not Pursue', 
+    range: '(0%)',
+    items: [
+      { percent: 0, label: 'Pass' },
+      { percent: 0, label: 'Sold Others/Closed' },
+      { percent: 0, label: 'Cancelled FEC' },
+      { percent: 0, label: 'DO NOT USE' },
+    ]
+  },
 ];
 
 function getCurrentStageIndex(percent: number, label: string): number {
@@ -170,11 +226,13 @@ export default function StatusPipelineWidget({
               {pipelineStages.map((stage, index) => {
                 const isCompleted = currentStageIndex > index;
                 const isCurrent = currentStageIndex === index;
-                const isChecked = isCompleted || isCurrent;
+                const isLost = stage.id === 'lost';
+                const isChecked = isLost ? currentStageIndex === -1 : (isCompleted || isCurrent);
                 const isLast = index === pipelineStages.length - 1;
 
                 return (
                   <div key={stage.id}>
+                    {/* Category Header with Checkbox */}
                     <div className="flex items-center gap-3 py-1.5">
                       <input
                         type="checkbox"
@@ -186,16 +244,36 @@ export default function StatusPipelineWidget({
                         )}
                       />
                       <span className={cn(
-                        "text-sm flex-1",
-                        isCurrent ? "font-medium text-blue-600" : "text-gray-600"
+                        "text-sm font-semibold flex-1",
+                        isCurrent ? "text-blue-600" : 
+                        (isLost && currentStageIndex === -1) ? "text-red-600" :
+                        "text-gray-700"
                       )}>
                         {stage.name} {stage.range}
                       </span>
                     </div>
                     
+                    {/* Sub-items */}
+                    <div className="ml-7 space-y-0.5 mb-1">
+                      {stage.items.map((item, itemIndex) => {
+                        const isItemCurrent = selectedPercent === item.percent && selectedLabel === item.label;
+                        return (
+                          <div 
+                            key={itemIndex}
+                            className={cn(
+                              "text-xs py-0.5 pl-2",
+                              isItemCurrent ? "text-blue-600 font-medium bg-blue-50 rounded px-2 py-1" : "text-gray-500"
+                            )}
+                          >
+                            <span className="text-blue-600 font-semibold">{item.percent}%</span> {item.label}
+                          </div>
+                        );
+                      })}
+                    </div>
+                    
                     {/* Current stage details */}
                     {isCurrent && (
-                      <div className="ml-7 py-2 px-3 bg-blue-50 rounded-md space-y-1 mb-1">
+                      <div className="ml-7 py-2 px-3 bg-blue-50 rounded-md space-y-1 mb-1 border-l-2 border-blue-400">
                         <p className="text-xs text-gray-700">
                           <span className="text-gray-500">Current Status:</span> {selectedPercent}% {selectedLabel}
                         </p>
