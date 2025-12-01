@@ -166,11 +166,12 @@ export default function StatusPipelineWidget({
             <div className="border-t border-gray-200"></div>
             
             {/* Pipeline Stages */}
-            <div className="p-4 space-y-1">
+            <div className="p-4">
               {pipelineStages.map((stage, index) => {
                 const isCompleted = currentStageIndex > index;
                 const isCurrent = currentStageIndex === index;
                 const isChecked = isCompleted || isCurrent;
+                const isLast = index === pipelineStages.length - 1;
 
                 return (
                   <div key={stage.id}>
@@ -201,6 +202,13 @@ export default function StatusPipelineWidget({
                         <p className="text-xs text-gray-700">
                           <span className="text-gray-500">Next Action:</span> {toDo}
                         </p>
+                      </div>
+                    )}
+                    
+                    {/* Downward Arrow between stages */}
+                    {!isLast && (
+                      <div className="flex items-center ml-1.5 py-0.5">
+                        <ChevronDown className="w-3 h-3 text-gray-300" />
                       </div>
                     )}
                   </div>
