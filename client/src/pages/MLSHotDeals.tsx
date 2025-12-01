@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { cn } from "@/lib/utils";
+import StatusPipelineWidget from "@/components/StatusPipelineWidget";
 import { 
   ChevronDown,
   MoreVertical,
@@ -598,41 +599,11 @@ function MLSHotDealsContent() {
                                     <span className="text-sm text-gray-500">Source: </span>
                                     <span className="text-sm font-bold text-gray-800">MLS</span>
                                   </div>
-                                  <DropdownMenu>
-                                    <DropdownMenuTrigger asChild>
-                                      <button className="flex items-center gap-1 hover:bg-gray-100 px-2 py-1 rounded transition w-fit">
-                                        <span className={cn(
-                                          "text-sm font-medium",
-                                          deal.statusPercent === "100%" ? "text-green-600" :
-                                          deal.statusPercent === "0%" ? "text-gray-400" :
-                                          "text-blue-600"
-                                        )}>
-                                          {deal.statusPercent}
-                                        </span>
-                                        <span className="text-sm text-gray-700">{deal.status}</span>
-                                        <ChevronDown className="w-3 h-3 text-gray-400" />
-                                      </button>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent align="end" className="w-56 bg-white z-50 shadow-xl border-none">
-                                      {STATUS_OPTIONS.map((option, idx) => (
-                                        <DropdownMenuItem
-                                          key={idx}
-                                          className="flex items-center gap-2 px-3 py-2 cursor-pointer hover:bg-gray-50"
-                                          onClick={() => handleStatusChange(deal.id, option.label, option.percent)}
-                                        >
-                                          <span className={cn(
-                                            "text-sm font-medium w-12",
-                                            option.percent === "100%" ? "text-green-600" :
-                                            option.percent === "0%" ? "text-gray-400" :
-                                            "text-blue-600"
-                                          )}>
-                                            {option.percent}
-                                          </span>
-                                          <span className="text-sm text-gray-700">{option.label}</span>
-                                        </DropdownMenuItem>
-                                      ))}
-                                    </DropdownMenuContent>
-                                  </DropdownMenu>
+                                  <StatusPipelineWidget
+                                    currentPercent={parseInt(deal.statusPercent) || 0}
+                                    currentLabel={deal.status}
+                                    onStatusChange={(percent, label) => handleStatusChange(deal.id, label, `${percent}%`)}
+                                  />
                                   {hasAssignedAA && (
                                     <div className="text-xs text-gray-500 mt-1">Assigned AA: Michael May</div>
                                   )}

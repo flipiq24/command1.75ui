@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import OutreachActionPlan, { OutreachType } from "@/components/OutreachActionPlan";
 import PriorityAgentPanel from "@/components/PriorityAgentPanel";
+import StatusPipelineWidget from "@/components/StatusPipelineWidget";
 import { useLayout } from "@/components/Layout";
 import { 
   ChevronDown,
@@ -1690,27 +1691,11 @@ function DailyOutreachContent() {
 
                             <div className="w-3/12 px-4 flex flex-col items-center justify-center gap-2">
                                 <div className="text-xs text-gray-500 font-medium">Source: <span className="font-bold text-gray-900">{currentDeal.source}</span>{currentDeal.mlsStatus && <span className={cn("font-bold ml-1", currentDeal.mlsStatus === 'Active' && "text-green-600", currentDeal.mlsStatus === 'Pending' && "text-amber-500", currentDeal.mlsStatus === 'Back Up Offer' && "text-blue-600", (currentDeal.mlsStatus === 'Closed' || currentDeal.mlsStatus === 'Sold') && "text-red-600")}> - {currentDeal.mlsStatus}</span>}</div>
-                                <DropdownMenu>
-                                  <DropdownMenuTrigger asChild>
-                                    <button className="flex items-center gap-2 text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 py-1.5 px-3 rounded-md transition-colors w-full justify-between max-w-[180px] whitespace-nowrap border border-transparent hover:border-gray-200" data-testid={`button-status-${currentDeal.id}`}>
-                                        <span className="font-bold text-[#4A90E2]">{currentDeal.statusPercent}</span> 
-                                        <span className="truncate">{currentDeal.status}</span>
-                                        <ChevronDown className="w-3 h-3 flex-shrink-0 text-gray-400" />
-                                    </button>
-                                  </DropdownMenuTrigger>
-                                  <DropdownMenuContent align="end" className="w-[200px] bg-white z-50">
-                                    {STATUS_OPTIONS.map((option) => (
-                                      <DropdownMenuItem 
-                                        key={option.label}
-                                        onClick={() => handleStatusChange(currentDeal.id, option.label, option.percent)}
-                                        className="flex items-center justify-between text-xs gap-2 cursor-pointer hover:bg-gray-50"
-                                      >
-                                        <span className="font-bold text-[#4A90E2] w-8 text-right flex-shrink-0">{option.percent}</span>
-                                        <span className="truncate flex-1">{option.label}</span>
-                                      </DropdownMenuItem>
-                                    ))}
-                                  </DropdownMenuContent>
-                                </DropdownMenu>
+                                <StatusPipelineWidget
+                                  currentPercent={parseInt(currentDeal.statusPercent) || 0}
+                                  currentLabel={currentDeal.status}
+                                  onStatusChange={(percent, label) => handleStatusChange(currentDeal.id, label, `${percent}%`)}
+                                />
                             </div>
 
                         </div>
