@@ -167,19 +167,20 @@ export default function StatusPipelineWidget({
               {pipelineStages.map((stage, index) => {
                 const isCompleted = currentStageIndex > index;
                 const isCurrent = currentStageIndex === index;
+                const isChecked = isCompleted || isCurrent;
 
                 return (
                   <div key={stage.id}>
                     <div className="flex items-center gap-3 py-1.5">
-                      {isCompleted ? (
-                        <Check className="w-4 h-4 text-gray-500 flex-shrink-0" />
-                      ) : isCurrent ? (
-                        <div className="w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
-                          <div className="w-2 h-2 bg-white rounded-full" />
-                        </div>
-                      ) : (
-                        <div className="w-4 h-4 rounded-full border-2 border-gray-300 flex-shrink-0" />
-                      )}
+                      <input
+                        type="checkbox"
+                        checked={isChecked}
+                        readOnly
+                        className={cn(
+                          "w-4 h-4 rounded border-gray-300 flex-shrink-0 cursor-default",
+                          isChecked ? "text-blue-600 bg-blue-600" : "text-gray-300"
+                        )}
+                      />
                       <span className={cn(
                         "text-sm flex-1",
                         isCurrent ? "font-medium text-blue-600" : "text-gray-600"
