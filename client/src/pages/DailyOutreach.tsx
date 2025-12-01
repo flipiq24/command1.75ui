@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect, useCallback, useLayoutEffect } fro
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import OutreachActionPlan, { OutreachType } from "@/components/OutreachActionPlan";
+import PriorityAgentPanel from "@/components/PriorityAgentPanel";
 import { useLayout } from "@/components/Layout";
 import { 
   ChevronDown,
@@ -78,21 +79,21 @@ interface Agent {
 const PRIORITY_AGENTS: Agent[] = [
   {
     id: 1,
-    agentName: "1213 Property Corp -",
-    officeName: "Flipiq",
-    phone: "7145817805",
-    email: "tony@flipiq.com",
-    assignedUser: "Josh Santos",
+    agentName: "Jeremy Flores",
+    officeName: "ABC Realty",
+    phone: "2135367426",
+    email: "jeremydtla@gmail.com",
+    assignedUser: "Michael May",
     relationshipStatus: "Priority",
     basket: "Clients",
     requiredAction: 0,
     followUpStatus: "Attempt 5",
     followUpDate: "11/27/2025",
-    investorSourceCount: 2,
-    activeInLastTwoYears: false,
+    investorSourceCount: 9,
+    activeInLastTwoYears: true,
     pending: 0,
     backup: 0,
-    sold: 0
+    sold: 6
   },
   {
     id: 2,
@@ -908,324 +909,37 @@ function DailyOutreachContent() {
             <>
             {activeFilter === 'priority' ? (
               <>
-                <div className="flex items-center justify-center px-4 py-3 mb-4">
-                  <div className="flex items-center gap-4">
-                    <span className="text-sm font-bold text-gray-500">Priority Agent {currentAgentIndex + 1} of {priorityAgents.length}</span>
-                    
-                    <div className="flex gap-3">
-                      <button 
-                        onClick={handlePrevAgent}
-                        disabled={currentAgentIndex === 0}
-                        className={cn(
-                          "flex items-center gap-1 px-4 py-2 border border-gray-300 rounded-lg text-xs font-bold text-gray-600 hover:bg-gray-50 transition",
-                          currentAgentIndex === 0 && "opacity-50 cursor-not-allowed"
-                        )} 
-                        data-testid="button-prev-agent"
-                      >
-                        <ChevronLeft className="w-4 h-4" />
-                        Previous Agent
-                      </button>
-                      
-                      <button 
-                        onClick={handleNextAgent}
-                        disabled={currentAgentIndex >= priorityAgents.length - 1}
-                        className={cn(
-                          "flex items-center gap-1 px-4 py-2 bg-[#FF6600] hover:bg-[#e65c00] text-white rounded-lg text-xs font-bold shadow-sm transition",
-                          currentAgentIndex >= priorityAgents.length - 1 ? "opacity-50 cursor-not-allowed" : "animate-pulse shadow-lg ring-2 ring-orange-200"
-                        )}
-                        data-testid="button-next-agent"
-                      >
-                        Next Agent
-                        <ChevronRight className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
-                  {currentAgent && (
-                    <div className="p-6">
-                      <div className="flex items-start justify-between mb-6 pb-6 border-b border-gray-100">
-                        <div className="flex items-start gap-4">
-                          <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
-                            <Users className="w-6 h-6 text-gray-400" />
-                          </div>
-                          <div>
-                            <h3 className="text-xl font-bold text-gray-900" data-testid={`text-agent-name-${currentAgent.id}`}>
-                              {currentAgent.agentName}
-                            </h3>
-                            <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
-                              <Phone className="w-4 h-4 text-gray-400" />
-                              <a href={`tel:${currentAgent.phone}`} className="hover:text-blue-600" data-testid={`link-phone-${currentAgent.id}`}>{currentAgent.phone}</a>
-                            </div>
-                            <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
-                              <Mail className="w-4 h-4 text-gray-400" />
-                              <a href={`mailto:${currentAgent.email}`} className="hover:text-blue-600" data-testid={`link-email-${currentAgent.id}`}>{currentAgent.email}</a>
-                            </div>
-                            <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
-                              <Building2 className="w-4 h-4 text-gray-400" />
-                              <span>{currentAgent.officeName}</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="text-right">
-                          <div className="text-xs text-gray-500 mb-1">Assigned User</div>
-                          <select className="text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-md px-3 py-1.5 cursor-pointer">
-                            <option>{currentAgent.assignedUser}</option>
-                          </select>
-                          <div className="flex items-center justify-end gap-2 mt-3">
-                            <div className="w-10 h-5 bg-gray-200 rounded-full relative cursor-pointer">
-                              <div className="w-4 h-4 bg-white rounded-full absolute left-0.5 top-0.5 shadow-sm"></div>
-                            </div>
-                            <span className="text-sm text-gray-600">Do Not Call</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-3 gap-8 mb-6">
-                        <div>
-                          <h4 className="text-sm font-bold text-gray-900 mb-4">Agent Status</h4>
-                          <div className="space-y-4">
-                            <div>
-                              <label className="text-xs text-gray-500 block mb-1">Relationship Status <span className="text-red-500">*</span></label>
-                              <select 
-                                value={getCurrentAgentFields()?.relationshipStatus || currentAgent.relationshipStatus}
-                                onChange={(e) => updateAgentFormField('relationshipStatus', e.target.value)}
-                                className="w-full text-sm text-gray-900 bg-white border border-gray-200 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent"
-                                data-testid="select-relationship-status"
-                              >
-                                <option value="Unknown">Unknown</option>
-                                <option value="Cold">Cold</option>
-                                <option value="Warm">Warm</option>
-                                <option value="Hot">Hot</option>
-                                <option value="Priority">Priority</option>
-                                <option value="Connected">Connected</option>
-                                <option value="No Contact">No Contact</option>
-                              </select>
-                            </div>
-                            <div>
-                              <label className="text-xs text-gray-500 block mb-1">Agent Rating</label>
-                              <select className="w-full text-sm text-gray-900 bg-white border border-gray-200 rounded-md px-3 py-2">
-                                <option>Unknown</option>
-                              </select>
-                            </div>
-                            <div>
-                              <label className="text-xs text-gray-500 block mb-1">Basket</label>
-                              <select className="w-full text-sm text-gray-900 bg-white border border-gray-200 rounded-md px-3 py-2">
-                                <option>{currentAgent.basket}</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div>
-                          <h4 className="text-sm font-bold text-gray-900 mb-4">Agent Profile</h4>
-                          <div className="space-y-4">
-                            <div>
-                              <label className="text-xs text-gray-500 block mb-1">Active In Last 2 Years</label>
-                              <select className="w-full text-sm text-gray-900 bg-white border border-gray-200 rounded-md px-3 py-2">
-                                <option>{currentAgent.activeInLastTwoYears ? 'True' : 'False'}</option>
-                              </select>
-                            </div>
-                            <div>
-                              <label className="text-xs text-gray-500 block mb-1">Investor Source Count</label>
-                              <div className="w-full text-sm text-gray-900 bg-gray-50 border border-gray-200 rounded-md px-3 py-2">
-                                {currentAgent.investorSourceCount !== null ? `${currentAgent.investorSourceCount} Match` : 'N/A'}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div>
-                          <h4 className="text-sm font-bold text-gray-900 mb-4">Follow Up</h4>
-                          <div className="space-y-4">
-                            <div>
-                              <label className="text-xs text-gray-500 block mb-1">Follow Up Status <span className="text-red-500">*</span></label>
-                              <select 
-                                value={getCurrentAgentFields()?.followUpStatus || ''}
-                                onChange={(e) => updateAgentFormField('followUpStatus', e.target.value)}
-                                className="w-full text-sm text-gray-900 bg-white border border-gray-200 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent"
-                                data-testid="select-follow-up-status"
-                              >
-                                <option value="">Select Status...</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Scheduled">Scheduled</option>
-                                <option value="Completed">Completed</option>
-                                <option value="No Answer">No Answer</option>
-                                <option value="Left Voicemail">Left Voicemail</option>
-                                <option value="Callback Requested">Callback Requested</option>
-                                <option value="Not Interested">Not Interested</option>
-                              </select>
-                            </div>
-                            <div>
-                              <label className="text-xs text-gray-500 block mb-1">Follow Up Status Date</label>
-                              <div className="w-full text-sm text-gray-900 bg-gray-50 border border-gray-200 rounded-md px-3 py-2 flex items-center gap-2">
-                                <Calendar className="w-4 h-4 text-gray-400" />
-                                {currentAgent.followUpDate}
-                              </div>
-                            </div>
-                            <div>
-                              <label className="text-xs text-gray-500 block mb-1">Last Communication Date</label>
-                              <div className="w-full text-sm text-gray-900 bg-gray-50 border border-gray-200 rounded-md px-3 py-2 flex items-center gap-2">
-                                <Calendar className="w-4 h-4 text-gray-400" />
-                                {currentAgent.followUpDate}
-                              </div>
-                            </div>
-                            <div>
-                              <label className="text-xs text-gray-500 block mb-1">Last Address Discussed</label>
-                              <div className="w-full text-sm text-gray-900 bg-gray-50 border border-gray-200 rounded-md px-3 py-2">
-                                7138 Lurline Ave, Winnetka, CA, 91306
-                              </div>
-                            </div>
-                            <div>
-                              <label className="text-xs text-gray-500 block mb-1">Last Communicated AA</label>
-                              <div className="w-full text-sm text-gray-900 bg-gray-50 border border-gray-200 rounded-md px-3 py-2">
-                                {currentAgent.assignedUser}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-100">
-                        <div className="bg-gray-50 rounded-lg p-4">
-                          <div className="flex items-center justify-between mb-2">
-                            <h5 className="text-sm font-medium text-gray-900">Notes <span className="text-red-500">*</span></h5>
-                          </div>
-                          <textarea 
-                            value={getCurrentAgentFields()?.notes || ''}
-                            onChange={(e) => updateAgentFormField('notes', e.target.value)}
-                            placeholder="Add notes about this call..."
-                            className="w-full text-sm text-gray-700 bg-white border border-gray-200 rounded-md px-3 py-2 min-h-[80px] resize-none focus:outline-none focus:ring-2 focus:ring-[#FF6600] focus:border-transparent"
-                            data-testid="input-agent-notes"
-                          />
-                        </div>
-                        <div className="bg-gray-50 rounded-lg p-4">
-                          <div className="flex items-center justify-between mb-2">
-                            <h5 className="text-sm font-medium text-gray-900">Note Dates</h5>
-                          </div>
-                          <p className="text-sm text-gray-500">{new Date().toLocaleDateString()}</p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                <div className="flex items-center justify-center gap-3 mt-6">
-                  <button
-                    onClick={handleCallNow}
-                    className="px-6 py-2.5 bg-[#FF6600] hover:bg-[#e65c00] text-white text-sm font-bold rounded-lg shadow-sm transition flex items-center gap-2"
-                    data-testid="button-call-now"
-                  >
-                    <Phone className="w-4 h-4" />
-                    Call Now
-                  </button>
-                  <button
-                    onClick={() => handleTextEmailClick('text')}
-                    className={cn(
-                      "px-6 py-2.5 text-sm font-medium rounded-lg border shadow-sm transition flex items-center gap-2",
-                      currentAgent && agentCallsMade[currentAgent.id]
-                        ? "bg-white hover:bg-gray-50 text-gray-700 border-gray-300 cursor-pointer"
-                        : "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
-                    )}
-                    data-testid="button-send-text"
-                  >
-                    <MessageSquare className="w-4 h-4" />
-                    Send Text
-                  </button>
-                  <button
-                    onClick={() => handleTextEmailClick('email')}
-                    className={cn(
-                      "px-6 py-2.5 text-sm font-medium rounded-lg border shadow-sm transition flex items-center gap-2",
-                      currentAgent && agentCallsMade[currentAgent.id]
-                        ? "bg-white hover:bg-gray-50 text-gray-700 border-gray-300 cursor-pointer"
-                        : "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
-                    )}
-                    data-testid="button-send-email"
-                  >
-                    <Mail className="w-4 h-4" />
-                    Send Email
-                  </button>
-                  <button
-                    onClick={handleGenerateAgentIQReport}
-                    className="px-6 py-2.5 bg-gradient-to-r from-[#FF6600] to-[#FF8533] hover:from-[#e65c00] hover:to-[#FF6600] text-white text-sm font-medium rounded-lg shadow-sm transition flex items-center gap-2"
-                    data-testid="button-agent-iq-report"
-                  >
-                    <Lightbulb className="w-4 h-4" />
-                    Agent iQ Report
-                  </button>
-                </div>
-
-                {/* Agent iQ Report - Inline Chat Section */}
-                {showAgentIQModal && (
-                  <div className="mt-6 border-t border-gray-200 pt-6">
-                    {/* Chat Content Area */}
-                    <div className="bg-gray-50 rounded-xl p-4 mb-4 max-h-[400px] overflow-y-auto">
-                      {isLoadingAgentIQ ? (
-                        <div className="flex items-start gap-3">
-                          <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#FF6600] to-[#FF8533] flex items-center justify-center flex-shrink-0">
-                            <Lightbulb className="w-4 h-4 text-white" />
-                          </div>
-                          <div className="flex-1 bg-white rounded-2xl rounded-tl-sm p-4 shadow-sm border border-gray-100">
-                            <div className="flex items-center gap-2">
-                              <div className="flex gap-1">
-                                <div className="w-2 h-2 bg-[#FF6600] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                                <div className="w-2 h-2 bg-[#FF6600] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                                <div className="w-2 h-2 bg-[#FF6600] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-                              </div>
-                              <span className="text-sm text-gray-500">Generating AI analysis...</span>
-                            </div>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="flex items-start gap-3">
-                          <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#FF6600] to-[#FF8533] flex items-center justify-center flex-shrink-0">
-                            <Lightbulb className="w-4 h-4 text-white" />
-                          </div>
-                          <div className="flex-1 bg-white rounded-2xl rounded-tl-sm p-4 shadow-sm border border-gray-100">
-                            <div className="prose prose-sm max-w-none">
-                              <div className="text-gray-700 leading-relaxed">
-                                {agentIQReport.split('\n').map((line, idx) => {
-                                  if (line.startsWith('# ') || line.startsWith('## ') || line.startsWith('### ')) {
-                                    const level = line.match(/^#+/)?.[0].length || 1;
-                                    const text = line.replace(/^#+\s*/, '');
-                                    if (level === 1) return <h1 key={idx} className="text-lg font-bold text-gray-900 mt-4 mb-2 first:mt-0">{text}</h1>;
-                                    if (level === 2) return <h2 key={idx} className="text-base font-bold text-[#FF6600] mt-3 mb-1">{text}</h2>;
-                                    return <h3 key={idx} className="text-sm font-semibold text-gray-800 mt-2 mb-1">{text}</h3>;
-                                  }
-                                  if (line.startsWith('**') && line.endsWith('**')) {
-                                    return <p key={idx} className="font-semibold text-gray-900 mt-2 text-sm">{line.replace(/\*\*/g, '')}</p>;
-                                  }
-                                  if (line.startsWith('- ')) {
-                                    return <li key={idx} className="ml-4 text-gray-600 text-sm">{line.substring(2)}</li>;
-                                  }
-                                  if (line.trim() === '') {
-                                    return <div key={idx} className="h-1"></div>;
-                                  }
-                                  return <p key={idx} className="text-gray-600 text-sm mb-1">{line}</p>;
-                                })}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                    
-                    {/* ChatGPT-style Input Bar */}
-                    <div className="flex items-center gap-3 bg-gray-100 rounded-full px-4 py-3">
-                      <input 
-                        type="text" 
-                        placeholder="Ask anything about this agent..." 
-                        className="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none"
-                        data-testid="input-agent-iq-chat"
-                      />
-                      <Mic className="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-600" />
-                      <div className="w-8 h-8 bg-[#FF6600] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#e65c00] transition">
-                        <MessageSquare className="w-4 h-4 text-white" />
-                      </div>
-                    </div>
-                  </div>
+                {currentAgent && (
+                  <PriorityAgentPanel
+                    agent={{
+                      id: String(currentAgent.id),
+                      name: currentAgent.agentName,
+                      phone: currentAgent.phone,
+                      email: currentAgent.email,
+                      company: currentAgent.officeName,
+                      assignedUser: currentAgent.assignedUser,
+                      lastCommunicationDate: currentAgent.followUpDate || '11/27/2025',
+                      lastAddressDiscussed: "2842 Rosarita St, San Bernardino",
+                      lastCommunicatedAA: currentAgent.assignedUser,
+                      activeInLast2Years: currentAgent.activeInLastTwoYears,
+                      averageDealsPerYear: currentAgent.sold || 6,
+                      doubleEnded: 0,
+                      investorSource: currentAgent.investorSourceCount ?? 0,
+                      relationshipStatus: currentAgent.relationshipStatus,
+                      agentRating: 'Unknown',
+                      basket: currentAgent.basket,
+                      followUpStatus: currentAgent.followUpStatus,
+                      followUpDate: currentAgent.followUpDate
+                    }}
+                    currentIndex={currentAgentIndex}
+                    totalAgents={priorityAgents.length}
+                    onPrevious={handlePrevAgent}
+                    onNext={handleNextAgent}
+                    onCallNow={handleCallNow}
+                    onSendText={() => handleTextEmailClick('text')}
+                    onSendEmail={() => handleTextEmailClick('email')}
+                    onAgentIQReport={handleGenerateAgentIQReport}
+                  />
                 )}
               </>
             ) : activeFilter === 'newRelationships' ? (
