@@ -145,13 +145,14 @@ function getDefaultNextAction(percent: number, label: string): string {
   if (label === 'Pass' || label === 'Sold Others/Closed' || label === 'Cancelled FEC' || label === 'DO NOT USE') {
     return 'Closed';
   }
+  if (percent === 0 && label === 'None') return 'Call agent and change status';
   if (percent <= 10) return 'Call and update offer status';
   if (percent >= 20 && percent <= 30 && (label === 'Continue to Follow Up' || label === 'Back Up')) return 'Follow up and send offer';
   if (percent >= 30 && percent <= 50) return 'Negotiate terms';
   if (percent === 60) return 'Finalize contract';
   if (percent === 80) return 'Complete acquisition';
   if (percent === 100) return 'Acquired - Complete';
-  return 'Call and update offer status';
+  return 'Call agent and change status';
 }
 
 interface StatusPipelineWidgetProps {
@@ -167,11 +168,12 @@ export default function StatusPipelineWidget({
   toDo,
   onStatusChange,
 }: StatusPipelineWidgetProps) {
-  const effectiveToDo = toDo ?? getDefaultNextAction(currentPercent, currentLabel);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   const [selectedPercent, setSelectedPercent] = useState(currentPercent);
   const [selectedLabel, setSelectedLabel] = useState(currentLabel);
+  
+  const effectiveToDo = toDo ?? getDefaultNextAction(selectedPercent, selectedLabel);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
@@ -279,7 +281,7 @@ export default function StatusPipelineWidget({
                           <span className="text-gray-500">Current Status:</span> {selectedPercent}% {selectedLabel}
                         </p>
                         <p className="text-xs text-gray-700">
-                          <span className="text-gray-500">Next Action:</span> {toDo}
+                          <span className="text-gray-500">Next Action:</span> {effectiveToDo}
                         </p>
                       </div>
                     )}
