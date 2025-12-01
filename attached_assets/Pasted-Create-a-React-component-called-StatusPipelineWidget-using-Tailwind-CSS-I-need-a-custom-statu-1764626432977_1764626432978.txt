@@ -1,0 +1,75 @@
+Create a React component called "StatusPipelineWidget" using Tailwind CSS. 
+
+I need a custom status selector that visualizes a real estate deal pipeline.
+IMPORTANT: The "Next Step" text shown in this widget is the primary "To Do" action for the deal and must correspond to the "To Do" pill found elsewhere in the UI.
+
+### 1. Data Structure
+Use this exact nested structure for the dropdown options. 
+- **Categories (Headers):** Bold, Gray text. These are NOT clickable and must NOT show percentages.
+- **Statuses (Items):** Normal text. These ARE clickable and represent the actual state.
+
+DATA MAPPING:
+- Category: New Lead
+  - 0% None
+  - 10% Initial Contact Started
+- Category: Working / Nurture
+  - 20% Continue to Follow Up
+  - 30% Back Up
+- Category: Offer Sent
+  - 30% Offer Terms Sent
+  - 50% Contract Submitted
+- Category: In Negotiation
+  - 60% In Negotiations
+- Category: Under Contract
+  - 80% Offer Accepted
+- Category: Acquired
+  - 100% Acquired
+- Category: Lost / Do Not Pursue
+  - 0% Pass
+  - 0% Sold Others/Closed
+  - 0% Cancelled FEC
+  - 0% DO NOT USE
+
+### 2. UI Layout
+The component has two distinct parts stacked vertically (right-aligned):
+
+**Part A: The Status Pill (Top)**
+- A rounded button displaying the currently selected status (e.g., "50% Contract Submitted").
+- Background: White with a gray border (clean look).
+- Icon: A downward chevron (▼) on the right.
+- Action: Clicking this opens the Dropdown Menu.
+
+**Part B: The Next Step / To-Do Indicator (Bottom)**
+- Location: Directly underneath the Status Pill, right-aligned or centered to the pill.
+- Text: "Next Step: [Dynamic To-Do Action]"
+- Style: Small text (text-xs or text-sm), Font color: Orange (text-orange-500).
+- Interaction: Hovering over this text triggers a Tooltip/Popover.
+
+### 3. Logic & Behavior
+
+**A. The "To Do" Mapping (Critical)**
+Create a helper function `getToDoAction(status)` that maps the status to the specific "To Do" text.
+*Example Mapping based on user requirements:*
+- IF 0-10% -> "Next Step: Review photos & comps"
+- IF 20-30% -> "Next Step: Calculate MAO (Max Allowable Offer)"
+- IF 50% (Contract Submitted) -> "Next Step: Await feedback"  <-- (Matches UI screenshot)
+- IF 60% -> "Next Step: Finalize terms or Counter"
+- IF 80% -> "Next Step: Open Escrow"
+- IF 100% -> "Next Step: Start Rehab"
+- IF Lost -> "Next Step: Archive File"
+
+**B. The Tooltip (Hover State)**
+- When hovering the Orange "Next Step" text, show a Popover Card.
+- The Card displays the pipeline stages (New Lead > Working > Offer > Negotiation > Under Contract > Acquired).
+- Highlight the current stage in Bold/Blue to show progress.
+- Mark previous stages as "Completed" (e.g. checkmark).
+
+**C. The Dropdown Menu**
+- When the main pill is clicked, show the dropdown.
+- Ensure only the specific statuses (the indented items) are clickable.
+- The Category headers should be visual separators only.
+
+### Visual Style
+- Use a modern, clean font (Inter or Roboto).
+- Ensure high contrast for readability.
+- The "Next Step" orange text should be prominent enough to be seen but secondary to the status pill.
