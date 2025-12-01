@@ -280,7 +280,7 @@ function PIQContent() {
             <div className="flex items-center gap-4 mt-3 text-sm">
               <div className="flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-medium">
                 <Snowflake className="w-3 h-3" />
-                <span>Cold</span>
+                <span>Low</span>
                 <ChevronDown className="w-3 h-3" />
               </div>
               <div className="flex items-center gap-2 text-gray-500">
