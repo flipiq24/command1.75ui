@@ -153,11 +153,20 @@ export default function StatusPipelineWidget({
           <span className="text-gray-600 ml-1">{toDo}</span>
         </span>
 
-        {/* Tooltip/Popover - Elongated */}
+        {/* Tooltip/Popover - Matching Status Pill Style */}
         {isTooltipOpen && (
-          <div className="absolute right-0 top-full mt-2 w-96 bg-white border border-gray-200 rounded-lg shadow-xl z-50 p-4">
+          <div className="absolute right-0 top-full mt-2 w-96 bg-white border border-gray-300 rounded-2xl shadow-xl z-50 overflow-hidden">
+            {/* Header */}
+            <div className="px-4 py-3 bg-gray-50">
+              <div className="text-sm font-semibold text-gray-700">Offer Status</div>
+              <div className="text-xs text-gray-500">Next Steps</div>
+            </div>
+            
+            {/* Faded Line Separator */}
+            <div className="border-t border-gray-200"></div>
+            
             {/* Pipeline Stages */}
-            <div className="space-y-1">
+            <div className="p-4 space-y-1">
               {pipelineStages.map((stage, index) => {
                 const isCompleted = currentStageIndex > index;
                 const isCurrent = currentStageIndex === index;
