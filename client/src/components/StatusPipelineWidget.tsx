@@ -261,8 +261,8 @@ export default function StatusPipelineWidget({
                       </div>
                     )}
                     
-                    {/* Downward Arrow between stages */}
-                    {!isLast && (
+                    {/* Downward Arrow - only from current stage to next */}
+                    {isCurrent && !isLast && (
                       <div className="flex items-center ml-1.5 py-0.5">
                         <ChevronDown className="w-3 h-3 text-blue-600" />
                       </div>
