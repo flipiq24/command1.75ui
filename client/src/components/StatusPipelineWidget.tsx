@@ -230,17 +230,26 @@ export default function StatusPipelineWidget({
                 const isLast = index === 5;
 
                 return (
-                  <div key={stage.id}>
+                  <div key={stage.id} className="relative">
                     <div className="flex items-center gap-3 py-1.5">
-                      <input
-                        type="checkbox"
-                        checked={isChecked}
-                        readOnly
-                        className={cn(
-                          "w-4 h-4 rounded border-gray-300 flex-shrink-0 cursor-default",
-                          isChecked ? "text-blue-600 bg-blue-600" : "text-gray-300"
+                      <div className="relative flex-shrink-0">
+                        <input
+                          type="checkbox"
+                          checked={isChecked}
+                          readOnly
+                          className={cn(
+                            "w-4 h-4 rounded border-gray-300 cursor-default",
+                            isChecked ? "text-blue-600 bg-blue-600" : "text-gray-300"
+                          )}
+                        />
+                        {/* Blue connecting line from current checkbox to next */}
+                        {isCurrent && !isLast && (
+                          <div className="absolute left-1/2 top-full -translate-x-1/2 flex flex-col items-center">
+                            <div className="w-0.5 h-8 bg-blue-600"></div>
+                            <ChevronDown className="w-3 h-3 text-blue-600 -mt-1.5" />
+                          </div>
                         )}
-                      />
+                      </div>
                       <span className={cn(
                         "text-sm flex-1",
                         isCurrent ? "font-medium text-blue-600" : "text-gray-600"
@@ -258,14 +267,6 @@ export default function StatusPipelineWidget({
                         <p className="text-xs text-gray-700">
                           <span className="text-gray-500">Next Action:</span> {toDo}
                         </p>
-                      </div>
-                    )}
-                    
-                    {/* Blue line with arrow - only from current stage to next */}
-                    {isCurrent && !isLast && (
-                      <div className="flex flex-col items-center ml-1.5">
-                        <div className="w-0.5 h-4 bg-blue-600"></div>
-                        <ChevronDown className="w-3 h-3 text-blue-600 -mt-1" />
                       </div>
                     )}
                   </div>
