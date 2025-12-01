@@ -434,10 +434,9 @@ function HomeContent() {
                     
                     <button 
                       onClick={openAddProperty}
-                      className="bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg flex items-center gap-2 transition-colors border border-gray-200"
+                      className="bg-[#0088CC] hover:bg-[#0077b3] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
                     >
                       Add Property
-                      <span className="text-[#FF6600] text-lg font-bold leading-none">+</span>
                     </button>
                     
                     <button className="bg-[#FF6600] hover:bg-[#e65c00] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
@@ -463,130 +462,44 @@ function HomeContent() {
                     </div> 
                     <div className="flex-1 flex items-center">
                     
-                        <div className="w-5/12 px-4 flex items-center gap-2 group relative">
+                        <div className="w-4/12 px-4 flex flex-col gap-0.5 group relative">
                             <div className="flex items-center gap-1 cursor-help">
                                 <span>Property</span>
                                 <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                
-                                <div className="absolute bottom-full left-0 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                                    Details include Address, Specs, Deal Tag (Hot/Warm/Cold), Next Actions (To-Do), and Notifications.
-                                </div>
                             </div>
-
-                            {selectedDealIds.length > 0 && (
-                              <DropdownMenu open={isBulkActionsOpen} onOpenChange={setIsBulkActionsOpen}>
-                                <DropdownMenuTrigger asChild>
-                                  <button className="bg-[#FF6600] hover:bg-[#e65c00] text-white text-[10px] font-bold px-3 py-1 rounded shadow-sm flex items-center gap-1 transition-colors ml-2 normal-case">
-                                    Bulk Actions
-                                  </button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="start" className="w-48 bg-white z-50 border-none shadow-xl">
-                                  <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
-                                    <Phone className="w-4 h-4" />
-                                    <span>Call</span>
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
-                                    <MessageSquare className="w-4 h-4" />
-                                    <span>Text</span>
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
-                                    <Mail className="w-4 h-4" />
-                                    <span>Email</span>
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
-                                    <Mic className="w-4 h-4" />
-                                    <span>Text Voicemail</span>
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
-                                    <Bot className="w-4 h-4" />
-                                    <span>AI Connect</span>
-                                  </DropdownMenuItem>
-                                </DropdownMenuContent>
-                              </DropdownMenu>
-                            )}
+                            <span className="text-[9px] text-gray-400 normal-case font-normal">Type / Br / Ba / Garage / Built / Ft² / Lot / Pool</span>
                         </div>
                         
-                        <div className="w-2/12 px-4 flex items-center gap-1 group relative cursor-help">
-                            <span>Price / Propensity</span>
-                            <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            
-                            <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-[800px] bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed border border-gray-700 max-h-[80vh] overflow-y-auto">
-                                <div className="font-bold text-[#FF6600] mb-3 text-sm border-b border-gray-700 pb-2">Propensity To Sell Indicators</div>
-                                <div className="grid grid-cols-[80px_1fr_100px_50px_1fr] gap-2 text-[10px] items-center">
-                                  <div className="font-bold text-gray-400 border-b border-gray-700 pb-1">Color</div>
-                                  <div className="font-bold text-gray-400 border-b border-gray-700 pb-1">Propensity Indicator</div>
-                                  <div className="font-bold text-gray-400 border-b border-gray-700 pb-1">Category</div>
-                                  <div className="font-bold text-gray-400 border-b border-gray-700 pb-1">Points</div>
-                                  <div className="font-bold text-gray-400 border-b border-gray-700 pb-1">PropertyRadar Data Source</div>
-
-                                  {PROPENSITY_LEGEND.map((item, idx) => (
-                                    <React.Fragment key={idx}>
-                                      <div className={cn("font-bold", item.color)}>{item.label}</div>
-                                      <div className="text-gray-300">{item.indicator}</div>
-                                      <div className="text-gray-400">{item.category}</div>
-                                      <div className="text-gray-300">{item.points}</div>
-                                      <div className="text-gray-500 italic">{item.source}</div>
-                                      <div className="col-span-5 h-[1px] bg-gray-800 my-1"></div>
-                                    </React.Fragment>
-                                  ))}
-                                </div>
+                        <div className="w-2/12 px-4 flex flex-col gap-0.5 group relative cursor-help">
+                            <div className="flex items-center gap-1">
+                                <span>List Price</span>
+                                <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </div>
+                            <span className="text-[9px] text-gray-400 normal-case font-normal">Propensity to sale score</span>
                         </div>
                         
-                        <div className="w-2/12 px-4 flex items-center gap-1 group relative cursor-help">
-                            <span>Last Open / Called</span>
-                            <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            
-                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                                Tracks the last time you manually opened this file or communicated (Call/Text/Email).<br/><br/><span className="italic text-gray-400">Excludes Auto-Trackers or AI Connect.</span>
+                        <div className="w-2/12 px-4 flex flex-col gap-0.5 group relative cursor-help">
+                            <div className="flex items-center gap-1">
+                                <span>Market Info</span>
+                                <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </div>
+                            <span className="text-[9px] text-gray-400 normal-case font-normal">Status / DOM / Created / Type</span>
                         </div>
                         
-                        <div className="w-3/12 px-4 flex items-center gap-1 group relative cursor-help">
-                            <span>Offer Status / Source</span>
-                            <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            
-                            <div className="absolute top-8 right-0 w-[400px] bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed max-h-[80vh] overflow-y-auto">
-                                <div className="font-bold text-[#FF6600] mb-3 text-sm border-b border-gray-700 pb-2">Offer Status Definitions & Tasks</div>
-                                <div className="mb-3 italic text-gray-400">Includes Lead Source.</div>
-                                
-                                <div className="mb-4 bg-gray-800/50 p-2 rounded border border-gray-700">
-                                  <div className="font-bold text-[#FF6600] mb-1.5 text-xs">Source Definitions</div>
-                                  <div className="space-y-1.5">
-                                    <div><span className="font-bold text-gray-300">MLS:</span> <span className="text-gray-400">Deals listed on the Multiple Listing Service.</span></div>
-                                    <div><span className="font-bold text-gray-300">Off Market:</span> <span className="text-gray-400">Deals manually added by an Acquisition Associate (AA).</span></div>
-                                    <div><span className="font-bold text-gray-300">Wholesaler:</span> <span className="text-gray-400">Deals emailed directly to Deals@youremail.com.</span></div>
-                                  </div>
-                                </div>
-
-                                <div className="space-y-3">
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">100% - Acquired</span> Closed Escrow. Make sure to update Agent 365 Report.</div>
-
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">80% - Offer Accepted</span> In Escrow. Make sure terms are correct in the contract.</div>
-
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">60% - In Negotiations</span> We are negotiating and agent is engaging/guiding us. Can be Hot/Warm/Cold. <span className="text-[#FF0000] font-bold">MUST CALL minimum once per day.</span> Do not rely on text and emails.</div>
-
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">50% - Contract Submitted</span> Self-represented RPA sent to listing agent. <span className="text-[#FF0000] font-bold">CALL to confirm receipt.</span> Ask when and how they are presenting offers.</div>
-
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">30% - Back Up</span> Pending with other buyer; we are backup. Use reminders to keep property out of Daily Tasks until the set reminder date.</div>
-
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">30% - Offer Terms Sent</span> Terms sent but receipt not confirmed. Use Reminders and Auto Trackers if agent is not responding.</div>
-
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">20% - Continue to Follow</span> Not ready to accept our price, but may sell later. Use reminders to keep property out of Daily Tasks until the set reminder date.</div>
-
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">10% - Initial Contact Started</span> Property is assigned to AA and under review. <span className="text-[#FF0000] font-bold">MUST CALL Agent.</span> Do not rely on text or emails. Turn on auto tracker if agent is not calling back.</div>
-
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">0% - Canceled FEC</span> Fully executed contract (FEC) was canceled. Update Agent 365 Report.</div>
-
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">0% - DO NOT USE</span> Reserve status. Do not use.</div>
-
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">0% - None</span> File needs attention. Update the status and set tag (Hot, Warm, Cold).</div>
-
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">0% - Pass</span> Does not qualify or offer not considered. Make sure to set a Pass Reason.</div>
-
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">0% - Sold Others / Closed</span> Sold to other buyer. Set reminder for 3 weeks out to see who purchased it and for how much.</div>
-                                </div>
+                        <div className="w-2/12 px-4 flex flex-col gap-0.5 group relative cursor-help">
+                            <div className="flex items-center gap-1">
+                                <span>Evaluation Metrics</span>
+                                <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </div>
+                            <span className="text-[9px] text-gray-400 normal-case font-normal">List to ARV / ARV / Comp Data</span>
+                        </div>
+                        
+                        <div className="w-2/12 px-4 flex flex-col gap-0.5 group relative cursor-help">
+                            <div className="flex items-center gap-1">
+                                <span>Offer Status</span>
+                                <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <span className="text-[9px] text-gray-400 normal-case font-normal">Last Open / Last Communication</span>
                         </div>
 
                     </div>
@@ -618,118 +531,67 @@ function HomeContent() {
                             </div>
                         </div>
 
-                        <div className="flex-1 flex flex-col md:flex-row">
+                        <div className="flex-1 flex items-start">
                             
-                            <div className="w-5/12 px-4 flex flex-col justify-start gap-2">
+                            {/* Property Column */}
+                            <div className="w-4/12 px-4 flex flex-col justify-start gap-2">
                                 <div className="flex items-center gap-2 mt-1">
-                                    {deal.isHot && (
-                                      <div className="bg-red-500 rounded-full px-2 py-0.5 border border-red-500 flex items-center gap-1 shadow-sm">
-                                          <Flame className="w-3 h-3 text-white" />
-                                          <span className="text-[10px] font-bold text-white uppercase">Hot</span>
-                                      </div>
-                                    )}
-                                    {deal.isHot && <div className="w-1 h-1 rounded-full bg-gray-300"></div>}
-                                    
-                                    <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
-                                    <div className="relative">
-                                        <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium py-1 px-2 rounded flex items-center gap-1 whitespace-nowrap">
-                                            To do: Not set <ChevronDown className="w-3 h-3" />
-                                        </button>
+                                    <div className={cn(
+                                      "rounded-full px-2 py-0.5 flex items-center gap-1 shadow-sm text-[10px] font-bold uppercase",
+                                      deal.type === 'hot' && "bg-red-500 text-white",
+                                      deal.type === 'warm' && "bg-amber-500 text-white",
+                                      deal.type === 'cold' && "bg-blue-500 text-white",
+                                      deal.type === 'new' && "bg-gray-400 text-white"
+                                    )}>
+                                      {deal.type === 'hot' && <Flame className="w-3 h-3" />}
+                                      {deal.type}
                                     </div>
-                                    <div className="text-xs text-gray-400 whitespace-nowrap">• 0 Critical • 0 Reminders</div>
+                                    <span className="text-gray-300">•</span>
+                                    <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
+                                    <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium py-1 px-2 rounded flex items-center gap-1 whitespace-nowrap">
+                                        To do: Not set <ChevronDown className="w-3 h-3" />
+                                    </button>
+                                    <span className="text-gray-300">•</span>
+                                    <span className="text-xs text-gray-400 whitespace-nowrap">0 Critical</span>
+                                    <span className="text-gray-300">•</span>
+                                    <span className="text-xs text-gray-400 whitespace-nowrap">0 Reminders</span>
                                 </div>
                                 
                                 <div>
-                                    <div className="font-bold text-gray-900 text-base mb-1">{deal.address}</div>
+                                    <div className="font-bold text-gray-900 text-sm mb-0.5">{deal.address}</div>
                                     <div className="text-xs text-gray-500">{deal.specs}</div>
                                 </div>
                             </div>
 
-                            <div className="w-2/12 px-4 flex flex-col items-center text-center">
-                                <div className="font-bold text-gray-900 text-base mb-1">{deal.price}</div>
-                                {Array.isArray(deal.propensity) ? (
-                                  <>
-                                    <div className="flex items-center gap-1 mb-0.5">
-                                      <span className="text-[10px] text-gray-400">Propensity Score:</span>
-                                      <span className={cn(
-                                        "text-[11px] font-medium",
-                                        getPropensityScore(deal.propensity) >= 6 ? "text-red-600" : 
-                                        getPropensityScore(deal.propensity) >= 3 ? "text-green-600" : "text-blue-600"
-                                      )}>
-                                        {getPropensityScore(deal.propensity)}
-                                      </span>
-                                    </div>
-                                    <div className="flex flex-wrap justify-center gap-x-1 gap-y-0.5 mb-1">
-                                      {deal.propensity.map((item: string, idx: number) => {
-                                        const indicatorData = PROPENSITY_LEGEND.find(l => l.indicator === item);
-                                        return (
-                                          <div key={idx} className="group/item relative cursor-help leading-none hover:z-50">
-                                            <span className={cn("text-[10px] font-bold inline-block opacity-80", 
-                                              indicatorData?.color || getPropensityColor(item)
-                                            )}>
-                                              {item}
-                                            </span>
-                                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-72 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover/item:opacity-100 pointer-events-none z-50 hidden group-hover/item:block border border-gray-700">
-                                              <div className="font-bold text-[#FF6600] mb-2">{item}</div>
-                                              {indicatorData && (
-                                                <>
-                                                  <div className="text-gray-300 mb-2 text-[11px] leading-relaxed">{indicatorData.explanation}</div>
-                                                  <div className="border-t border-gray-700 pt-2 space-y-1">
-                                                    <div className="text-gray-300"><span className="text-gray-400">Category:</span> {indicatorData.category}</div>
-                                                    <div className="text-gray-300"><span className="text-gray-400">Points:</span> {indicatorData.points}</div>
-                                                    <div className="text-gray-400 italic text-[10px]">Source: {indicatorData.source}</div>
-                                                  </div>
-                                                </>
-                                              )}
-                                            </div>
-                                          </div>
-                                        );
-                                      })}
-                                    </div>
-                                  </>
-                                ) : (
-                                  <div className="text-xs text-gray-400 mb-1">Propensity Score: {deal.propensity === 'N/A' ? '0' : deal.propensity}</div>
-                                )}
+                            {/* List Price Column */}
+                            <div className="w-2/12 px-4 flex flex-col">
+                                <div className="font-bold text-gray-900 text-sm">{deal.price}</div>
+                                <div className="text-xs text-gray-500">{deal.mlsStatus || ''}</div>
+                                <div className="text-xs text-gray-400 mt-1">Propensity Score:</div>
+                                <div className="text-xs text-gray-500">N/A</div>
                             </div>
 
-                            <div className="w-2/12 px-4 flex flex-col items-center">
-                                <div className="text-[11px] text-gray-400 space-y-1 text-left w-full max-w-[140px]">
-                                    <div className="flex flex-col group relative cursor-help">
-                                        <span className="font-medium text-gray-500">Last Open Date:</span>
-                                        <span className={cn(
-                                          "text-gray-900 font-medium", 
-                                          deal.lastOpen === 'N/A' && "bg-yellow-100 px-1.5 py-0.5 rounded font-bold w-fit"
-                                        )}>
-                                          {deal.lastOpen}
-                                        </span>
-                                        {deal.lastOpen === 'N/A' && (
-                                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
-                                            Needs attention: This deal hasn't been opened recently.
-                                          </div>
-                                        )}
-                                    </div>
-                                    <div className="flex flex-col group relative cursor-help">
-                                        <span className="font-medium text-gray-500">Last Called Date:</span>
-                                        <span className={cn(
-                                          "text-gray-900 font-medium", 
-                                          deal.lastCalled === 'N/A' && "bg-yellow-100 px-1.5 py-0.5 rounded font-bold w-fit"
-                                        )}>
-                                          {deal.lastCalled}
-                                        </span>
-                                        {deal.lastCalled === 'N/A' && (
-                                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
-                                            Needs attention: No recent call recorded.
-                                          </div>
-                                        )}
-                                    </div>
-                                </div>
+                            {/* Market Info Column */}
+                            <div className="w-2/12 px-4 flex flex-col text-xs text-gray-600">
+                                <div>8 Days / {deal.mlsStatus || 'Active'}</div>
+                                <div className="text-gray-400">DOM: 8 / CDOM: 8</div>
+                                <div className="text-gray-400">Created: 11/23/25</div>
+                                <div className="text-gray-400">Sale Type: Standard</div>
                             </div>
 
-                            <div className="w-3/12 px-4 flex flex-col items-center justify-center gap-2">
-                                <div className="text-xs text-gray-500 font-medium">Source: <span className="font-bold text-gray-900">{deal.source}</span>{deal.mlsStatus && <span className={cn("font-bold ml-1", deal.mlsStatus === 'Active' && "text-green-600", deal.mlsStatus === 'Pending' && "text-amber-500", deal.mlsStatus === 'Back Up Offer' && "text-blue-600", (deal.mlsStatus === 'Closed' || deal.mlsStatus === 'Sold') && "text-red-600")}> - {deal.mlsStatus}</span>}</div>
+                            {/* Evaluation Metrics Column */}
+                            <div className="w-2/12 px-4 flex flex-col text-xs">
+                                <div className="text-gray-600">Asking vs ARV: <span className="font-medium">151.59%</span></div>
+                                <div className="text-gray-600">ARV: <span className="font-medium">$643,184</span></div>
+                                <div className="text-gray-400">Comp Data: 1S, 0P, 0B, 0A</div>
+                            </div>
+
+                            {/* Offer Status Column */}
+                            <div className="w-2/12 px-4 flex flex-col gap-1">
+                                <div className="text-xs text-gray-500">Source: <span className="font-bold text-gray-900">{deal.source}</span></div>
                                 <DropdownMenu>
                                   <DropdownMenuTrigger asChild>
-                                    <button className="flex items-center gap-2 text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 py-1.5 px-3 rounded-md transition-colors w-full justify-between max-w-[180px] whitespace-nowrap border border-transparent hover:border-gray-200">
+                                    <button className="flex items-center gap-2 text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 py-1 px-2 rounded transition-colors justify-start whitespace-nowrap border border-transparent hover:border-gray-200">
                                         <span className="font-bold text-[#4A90E2]">{deal.statusPercent}</span> 
                                         <span className="truncate">{deal.status}</span>
                                         <ChevronDown className="w-3 h-3 flex-shrink-0 text-gray-400" />
@@ -748,6 +610,8 @@ function HomeContent() {
                                     ))}
                                   </DropdownMenuContent>
                                 </DropdownMenu>
+                                <div className="text-[10px] text-gray-400">LOD: {deal.lastOpen}</div>
+                                <div className="text-[10px] text-gray-400">LCD: {deal.lastCalled}</div>
                             </div>
 
                         </div>
