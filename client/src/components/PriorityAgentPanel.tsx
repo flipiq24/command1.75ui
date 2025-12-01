@@ -855,16 +855,16 @@ export default function PriorityAgentPanel({
             Call Now
           </button>
           <button 
-            onClick={onSendText}
-            className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition shadow-sm"
+            disabled
+            className="flex items-center gap-2 px-6 py-2.5 bg-gray-300 text-gray-500 font-medium rounded-lg cursor-not-allowed shadow-sm"
             data-testid="priority-button-send-text"
           >
             <MessageSquare className="w-4 h-4" />
             Send Text
           </button>
           <button 
-            onClick={onSendEmail}
-            className="flex items-center gap-2 px-6 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition shadow-sm"
+            disabled
+            className="flex items-center gap-2 px-6 py-2.5 bg-gray-300 text-gray-500 font-medium rounded-lg cursor-not-allowed shadow-sm"
             data-testid="priority-button-send-email"
           >
             <Mail className="w-4 h-4" />
