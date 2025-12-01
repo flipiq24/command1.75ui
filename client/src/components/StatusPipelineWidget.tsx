@@ -155,13 +155,7 @@ export default function StatusPipelineWidget({
 
         {/* Tooltip/Popover - Elongated */}
         {isTooltipOpen && (
-          <div className="absolute right-0 top-full mt-2 w-80 bg-white border border-gray-200 rounded-lg shadow-xl z-50 p-4">
-            {/* Current Status Display */}
-            <div className="mb-3 pb-3 border-b border-gray-100">
-              <div className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">Current Status</div>
-              <div className="text-sm font-semibold text-gray-900">{selectedPercent}% {selectedLabel}</div>
-            </div>
-            
+          <div className="absolute right-0 top-full mt-2 w-96 bg-white border border-gray-200 rounded-lg shadow-xl z-50 p-4">
             {/* Pipeline Stages */}
             <div className="space-y-1">
               {pipelineStages.map((stage, index) => {
