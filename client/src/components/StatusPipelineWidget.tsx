@@ -64,12 +64,12 @@ const statusData: StatusCategory[] = [
 ];
 
 const pipelineStages = [
-  { id: 'new-lead', name: 'New Lead', minPercent: 0, maxPercent: 10 },
-  { id: 'working', name: 'Working', minPercent: 20, maxPercent: 30 },
-  { id: 'offer', name: 'Offer', minPercent: 30, maxPercent: 50 },
-  { id: 'negotiation', name: 'Negotiation', minPercent: 60, maxPercent: 60 },
-  { id: 'under-contract', name: 'Under Contract', minPercent: 80, maxPercent: 80 },
-  { id: 'acquired', name: 'Acquired', minPercent: 100, maxPercent: 100 },
+  { id: 'new-lead', name: 'New Lead', range: '(0-10%)' },
+  { id: 'working', name: 'Working', range: '(20%)' },
+  { id: 'offer', name: 'Offer Sent', range: '(30-50%)' },
+  { id: 'negotiation', name: 'In Negotiation', range: '(60%)' },
+  { id: 'under-contract', name: 'Under Contract', range: '(80%)' },
+  { id: 'acquired', name: 'Acquired', range: '(100%)' },
 ];
 
 function getToDoAction(percent: number, label: string): string {
@@ -83,7 +83,7 @@ function getToDoAction(percent: number, label: string): string {
     return 'Calculate MAO (Max Allowable Offer)';
   }
   if (percent === 50) {
-    return 'Await feedback';
+    return 'Call agent to confirm receipt.';
   }
   if (percent === 60) {
     return 'Finalize terms or Counter';
@@ -101,11 +101,12 @@ function getCurrentStageIndex(percent: number, label: string): number {
   if (label === 'Pass' || label === 'Sold Others/Closed' || label === 'Cancelled FEC' || label === 'DO NOT USE') {
     return -1;
   }
-  for (let i = pipelineStages.length - 1; i >= 0; i--) {
-    if (percent >= pipelineStages[i].minPercent) {
-      return i;
-    }
-  }
+  if (percent <= 10) return 0;
+  if (percent === 20) return 1;
+  if (percent >= 30 && percent <= 50) return 2;
+  if (percent === 60) return 3;
+  if (percent === 80) return 4;
+  if (percent === 100) return 5;
   return 0;
 }
 
@@ -159,9 +160,9 @@ export default function StatusPipelineWidget({
         )}
         data-testid="status-pipeline-pill"
       >
-        <span className="text-gray-900 font-semibold">{selectedPercent}%</span>
-        <span>{selectedLabel}</span>
-        <ChevronDown className={cn("w-4 h-4 text-gray-500 transition-transform", isDropdownOpen && "rotate-180")} />
+        <span className="text-gray-500">{selectedPercent}%</span>
+        <span className="text-gray-700">{selectedLabel}</span>
+        <ChevronDown className={cn("w-4 h-4 text-gray-400 transition-transform", isDropdownOpen && "rotate-180")} />
       </button>
 
       {/* Next Step Indicator */}
@@ -171,68 +172,53 @@ export default function StatusPipelineWidget({
         onMouseLeave={() => setIsTooltipOpen(false)}
         ref={tooltipRef}
       >
-        <span className="text-xs text-orange-500 font-medium cursor-pointer hover:text-orange-600 transition">
-          Next Step: {toDoAction}
+        <span className="text-xs cursor-pointer transition">
+          <span className="text-orange-500 font-bold">Next Steps:</span>
+          <span className="text-gray-600 ml-1">{toDoAction}</span>
         </span>
 
         {/* Tooltip/Popover */}
         {isTooltipOpen && (
-          <div className="absolute right-0 top-full mt-2 w-72 bg-white border border-gray-200 rounded-lg shadow-xl z-50 p-4">
-            <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Pipeline Progress</h4>
-            <div className="space-y-2">
+          <div className="absolute right-0 top-full mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-xl z-50 p-3">
+            <div className="space-y-1">
               {pipelineStages.map((stage, index) => {
                 const isCompleted = currentStageIndex > index;
                 const isCurrent = currentStageIndex === index;
-                const isLost = currentStageIndex === -1;
 
                 return (
-                  <div
-                    key={stage.id}
-                    className={cn(
-                      "flex items-center gap-3 py-1.5 px-2 rounded",
-                      isCurrent && "bg-blue-50",
-                      isCompleted && "opacity-70"
-                    )}
-                  >
-                    <div className={cn(
-                      "flex items-center justify-center w-5 h-5 rounded-full border-2",
-                      isCompleted ? "bg-green-500 border-green-500" : 
-                      isCurrent ? "bg-blue-500 border-blue-500" : 
-                      "bg-white border-gray-300"
-                    )}>
-                      {isCompleted && <Check className="w-3 h-3 text-white" />}
-                      {isCurrent && <div className="w-2 h-2 bg-white rounded-full" />}
+                  <div key={stage.id}>
+                    <div className="flex items-center gap-2 py-1">
+                      {isCompleted ? (
+                        <Check className="w-4 h-4 text-gray-500 flex-shrink-0" />
+                      ) : isCurrent ? (
+                        <div className="w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
+                          <div className="w-2 h-2 bg-white rounded-full" />
+                        </div>
+                      ) : (
+                        <div className="w-4 h-4 rounded-full border-2 border-gray-300 flex-shrink-0" />
+                      )}
+                      <span className={cn(
+                        "text-sm",
+                        isCurrent ? "font-medium text-blue-600" : "text-gray-600"
+                      )}>
+                        {stage.name} {stage.range}
+                      </span>
                     </div>
-                    <span className={cn(
-                      "text-sm",
-                      isCurrent ? "font-bold text-blue-700" :
-                      isCompleted ? "text-gray-500 line-through" :
-                      "text-gray-600"
-                    )}>
-                      {stage.name}
-                    </span>
-                    {isCompleted && (
-                      <span className="ml-auto text-xs text-green-600 font-medium">Completed</span>
-                    )}
+                    
+                    {/* Current stage details */}
                     {isCurrent && (
-                      <span className="ml-auto text-xs text-blue-600 font-medium">Current</span>
+                      <div className="ml-6 pl-2 border-l-2 border-blue-200 py-1 space-y-0.5">
+                        <p className="text-xs text-gray-600">
+                          Current Status: {selectedPercent}% {selectedLabel}
+                        </p>
+                        <p className="text-xs text-gray-600">
+                          Next Action: {toDoAction}
+                        </p>
+                      </div>
                     )}
                   </div>
                 );
               })}
-              {currentStageIndex === -1 && (
-                <div className="flex items-center gap-3 py-1.5 px-2 rounded bg-red-50">
-                  <div className="flex items-center justify-center w-5 h-5 rounded-full bg-red-500 border-2 border-red-500">
-                    <span className="text-white text-xs font-bold">✕</span>
-                  </div>
-                  <span className="text-sm font-bold text-red-700">Lost / Do Not Pursue</span>
-                </div>
-              )}
-            </div>
-            <div className="mt-3 pt-3 border-t border-gray-100">
-              <p className="text-xs text-gray-500">
-                <span className="font-semibold text-orange-500">To Do:</span> {toDoAction}
-              </p>
             </div>
           </div>
         )}
