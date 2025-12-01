@@ -136,7 +136,7 @@ export default function StatusPipelineWidget({
         )}
         data-testid="status-pipeline-pill"
       >
-        <span className="text-gray-500">{selectedPercent}%</span>
+        <span className="text-blue-600 font-semibold">{selectedPercent}%</span>
         <span className="text-gray-700">{selectedLabel}</span>
         <ChevronDown className={cn("w-4 h-4 text-gray-400 transition-transform", isDropdownOpen && "rotate-180")} />
       </button>
