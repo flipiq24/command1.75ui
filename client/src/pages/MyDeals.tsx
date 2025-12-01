@@ -102,6 +102,7 @@ function MyDealsContent() {
   const [selectedDealIds, setSelectedDealIds] = useState<number[]>([]);
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [expandedSections, setExpandedSections] = useState({
+    priority: true,
     userAssignment: true,
     communication: true,
     dealInfo: true,
@@ -201,6 +202,55 @@ function MyDealsContent() {
               {/* Sidebar Body - Scrollable */}
               <div className="px-6 py-4 flex-1 overflow-y-auto space-y-4">
                 
+                {/* PRIORITY */}
+                <div className="border border-gray-200 rounded-lg">
+                  <button 
+                    onClick={() => toggleSection('priority')}
+                    className="w-full flex items-center justify-between px-4 py-3 text-left"
+                  >
+                    <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Priority</span>
+                    {expandedSections.priority ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
+                  </button>
+                  {expandedSections.priority && (
+                    <div className="px-4 pb-4 space-y-3">
+                      <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer group">
+                        <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-500" />
+                        <span className="flex items-center gap-2">
+                          <span className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
+                            <Flame className="w-3 h-3 text-white" />
+                          </span>
+                          High Priority
+                        </span>
+                        <span className="ml-auto text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition">Work First</span>
+                      </label>
+                      <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer group">
+                        <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-amber-600 focus:ring-amber-500" />
+                        <span className="flex items-center gap-2">
+                          <span className="w-5 h-5 bg-amber-500 rounded-full flex items-center justify-center text-[10px]">🌡️</span>
+                          Medium Priority
+                        </span>
+                        <span className="ml-auto text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition">Work Second</span>
+                      </label>
+                      <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer group">
+                        <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+                        <span className="flex items-center gap-2">
+                          <span className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center text-[10px]">❄️</span>
+                          Low Priority
+                        </span>
+                        <span className="ml-auto text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition">Work Last</span>
+                      </label>
+                      <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer group">
+                        <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-gray-600 focus:ring-gray-500" />
+                        <span className="flex items-center gap-2">
+                          <span className="w-5 h-5 bg-gray-400 rounded-full flex items-center justify-center text-[10px]">🆕</span>
+                          New
+                        </span>
+                        <span className="ml-auto text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition">Needs Review</span>
+                      </label>
+                    </div>
+                  )}
+                </div>
+
                 {/* USER ASSIGNMENT AND RESPONSIBILITIES */}
                 <div className="border border-gray-200 rounded-lg">
                   <button 
