@@ -427,20 +427,45 @@ function HomeContent() {
                             
                             <div className="w-5/12 px-4 flex flex-col justify-start gap-2">
                                 <div className="flex items-center gap-2 mt-1">
-                                    {deal.isHot && (
-                                      <div className="relative group/priority">
-                                        <div className="bg-red-500 rounded-full px-2 py-0.5 border border-red-500 flex items-center gap-1 shadow-sm cursor-help">
-                                            <Flame className="w-3 h-3 text-white" />
-                                            <span className="text-[10px] font-bold text-white uppercase">High</span>
+                                    <div className="relative group/priority">
+                                        <div className={cn(
+                                          "rounded-full px-2 py-0.5 border flex items-center gap-1 shadow-sm cursor-help",
+                                          deal.type === 'hot' ? "bg-red-500 border-red-500" :
+                                          deal.type === 'warm' ? "bg-amber-500 border-amber-500" :
+                                          deal.type === 'cold' ? "bg-blue-500 border-blue-500" :
+                                          "bg-gray-400 border-gray-400"
+                                        )}>
+                                            {deal.type === 'hot' && <Flame className="w-3 h-3 text-white" />}
+                                            <span className="text-[10px] font-bold text-white uppercase">
+                                              {deal.type === 'hot' ? 'High' : deal.type === 'warm' ? 'Med' : deal.type === 'cold' ? 'Low' : 'New'}
+                                            </span>
+                                            <ChevronDown className="w-3 h-3 text-white" />
                                         </div>
-                                        <div className="absolute bottom-full left-0 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover/priority:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                                          <div className="font-bold text-[#FF6600] mb-1">High Priority (Work First)</div>
-                                          <div className="mb-1"><span className="font-semibold">Logic:</span> High probability to close. The agent is responsive, or we are in active negotiations.</div>
-                                          <div><span className="font-semibold">Instruction:</span> These are your immediate money-making opportunities. Focus here first.</div>
+                                        <div className="absolute bottom-full left-0 mb-2 w-72 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover/priority:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                                          <div className="font-bold text-white mb-2">Property Priority</div>
+                                          
+                                          <div className={cn("p-2 rounded mb-2", deal.type === 'hot' ? "bg-red-900/50 border border-red-500" : "")}>
+                                            <div className="font-bold text-red-400 mb-1">🔥 High Priority (Work First)</div>
+                                            <div className="text-gray-300 text-[10px]">High probability to close. Agent is responsive or in active negotiations. Focus here first.</div>
+                                          </div>
+                                          
+                                          <div className={cn("p-2 rounded mb-2", deal.type === 'warm' ? "bg-amber-900/50 border border-amber-500" : "")}>
+                                            <div className="font-bold text-amber-400 mb-1">🌡️ Medium Priority (Work Second)</div>
+                                            <div className="text-gray-300 text-[10px]">Viable potential. Agent is engaged but deal requires nurturing. Focus after High Priority.</div>
+                                          </div>
+                                          
+                                          <div className={cn("p-2 rounded mb-2", deal.type === 'cold' ? "bg-blue-900/50 border border-blue-500" : "")}>
+                                            <div className="font-bold text-blue-400 mb-1">❄️ Low Priority (Work Last)</div>
+                                            <div className="text-gray-300 text-[10px]">Low probability right now. Agent unresponsive or wide price gap. Focus here last.</div>
+                                          </div>
+                                          
+                                          <div className={cn("p-2 rounded", deal.type === 'new' ? "bg-gray-700/50 border border-gray-500" : "")}>
+                                            <div className="font-bold text-gray-400 mb-1">🆕 New (Needs Review)</div>
+                                            <div className="text-gray-300 text-[10px]">New deal that needs to be reviewed and assigned a priority level.</div>
+                                          </div>
                                         </div>
                                       </div>
-                                    )}
-                                    {deal.isHot && <div className="w-1 h-1 rounded-full bg-gray-300"></div>}
+                                    <div className="w-1 h-1 rounded-full bg-gray-300"></div>
                                     
                                     <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
                                     <div className="relative">

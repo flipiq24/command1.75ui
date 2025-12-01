@@ -284,10 +284,28 @@ function PIQContent() {
                   <span>Low</span>
                   <ChevronDown className="w-3 h-3" />
                 </div>
-                <div className="absolute bottom-full left-0 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover/priority:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                  <div className="font-bold text-[#FF6600] mb-1">Low Priority (Work Last)</div>
-                  <div className="mb-1"><span className="font-semibold">Logic:</span> Low probability right now. The agent is unresponsive, or there is a wide price gap.</div>
-                  <div><span className="font-semibold">Instruction:</span> Keep these alive, but do not let them distract you. Focus here last or when time permits.</div>
+                <div className="absolute bottom-full left-0 mb-2 w-72 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover/priority:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                  <div className="font-bold text-white mb-2">Property Priority</div>
+                  
+                  <div className="p-2 rounded mb-2">
+                    <div className="font-bold text-red-400 mb-1">🔥 High Priority (Work First)</div>
+                    <div className="text-gray-300 text-[10px]">High probability to close. Agent is responsive or in active negotiations. Focus here first.</div>
+                  </div>
+                  
+                  <div className="p-2 rounded mb-2">
+                    <div className="font-bold text-amber-400 mb-1">🌡️ Medium Priority (Work Second)</div>
+                    <div className="text-gray-300 text-[10px]">Viable potential. Agent is engaged but deal requires nurturing. Focus after High Priority.</div>
+                  </div>
+                  
+                  <div className="p-2 rounded mb-2 bg-blue-900/50 border border-blue-500">
+                    <div className="font-bold text-blue-400 mb-1">❄️ Low Priority (Work Last)</div>
+                    <div className="text-gray-300 text-[10px]">Low probability right now. Agent unresponsive or wide price gap. Focus here last.</div>
+                  </div>
+                  
+                  <div className="p-2 rounded">
+                    <div className="font-bold text-gray-400 mb-1">🆕 New (Needs Review)</div>
+                    <div className="text-gray-300 text-[10px]">New deal that needs to be reviewed and assigned a priority level.</div>
+                  </div>
                 </div>
               </div>
               <div className="flex items-center gap-2 text-gray-500">
