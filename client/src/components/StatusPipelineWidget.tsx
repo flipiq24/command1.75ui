@@ -63,13 +63,69 @@ const statusData: StatusCategory[] = [
   },
 ];
 
-const pipelineStages = [
-  { id: 'new-lead', name: 'New Lead', range: '(0-10%)' },
-  { id: 'working', name: 'Working / Nurture', range: '(20-30%)' },
-  { id: 'offer', name: 'Offer Sent', range: '(30-50%)' },
-  { id: 'negotiation', name: 'In Negotiation', range: '(60%)' },
-  { id: 'under-contract', name: 'Under Contract', range: '(80%)' },
-  { id: 'acquired', name: 'Acquired', range: '(100%)' },
+const pipelineStagesWithItems = [
+  { 
+    id: 'new-lead', 
+    name: 'New Lead', 
+    range: '(0-10%)',
+    items: [
+      { percent: 0, label: 'None' },
+      { percent: 10, label: 'Initial Contact Started' },
+    ]
+  },
+  { 
+    id: 'working', 
+    name: 'Working / Nurture', 
+    range: '(20-30%)',
+    items: [
+      { percent: 20, label: 'Continue to Follow Up' },
+      { percent: 30, label: 'Back Up' },
+    ]
+  },
+  { 
+    id: 'offer', 
+    name: 'Offer Sent', 
+    range: '(30-50%)',
+    items: [
+      { percent: 30, label: 'Offer Terms Sent' },
+      { percent: 50, label: 'Contract Submitted' },
+    ]
+  },
+  { 
+    id: 'negotiation', 
+    name: 'In Negotiation', 
+    range: '(60%)',
+    items: [
+      { percent: 60, label: 'In Negotiations' },
+    ]
+  },
+  { 
+    id: 'under-contract', 
+    name: 'Under Contract', 
+    range: '(80%)',
+    items: [
+      { percent: 80, label: 'Offer Accepted' },
+    ]
+  },
+  { 
+    id: 'acquired', 
+    name: 'Acquired', 
+    range: '(100%)',
+    items: [
+      { percent: 100, label: 'Acquired' },
+    ]
+  },
+  { 
+    id: 'lost', 
+    name: 'Lost / Do Not Pursue', 
+    range: '(0%)',
+    items: [
+      { percent: 0, label: 'Pass' },
+      { percent: 0, label: 'Sold Others/Closed' },
+      { percent: 0, label: 'Cancelled FEC' },
+      { percent: 0, label: 'DO NOT USE' },
+    ]
+  },
 ];
 
 function getCurrentStageIndex(percent: number, label: string): number {
@@ -165,50 +221,57 @@ export default function StatusPipelineWidget({
             {/* Faded Line Separator */}
             <div className="border-t border-gray-200"></div>
             
-            {/* Pipeline Stages */}
-            <div className="p-4">
-              {pipelineStages.map((stage, index) => {
-                const isCompleted = currentStageIndex > index;
-                const isCurrent = currentStageIndex === index;
-                const isChecked = isCompleted || isCurrent;
-                const isLast = index === pipelineStages.length - 1;
-
+            {/* Pipeline Stages with Items */}
+            <div className="p-4 max-h-96 overflow-y-auto">
+              {pipelineStagesWithItems.map((stage, stageIndex) => {
+                const isLostCategory = stage.id === 'lost';
+                const isLastStage = stageIndex === pipelineStagesWithItems.length - 1;
+                
                 return (
                   <div key={stage.id}>
-                    <div className="flex items-center gap-3 py-1.5">
-                      <input
-                        type="checkbox"
-                        checked={isChecked}
-                        readOnly
-                        className={cn(
-                          "w-4 h-4 rounded border-gray-300 flex-shrink-0 cursor-default",
-                          isChecked ? "text-blue-600 bg-blue-600" : "text-gray-300"
-                        )}
-                      />
-                      <span className={cn(
-                        "text-sm flex-1",
-                        isCurrent ? "font-medium text-blue-600" : "text-gray-600"
-                      )}>
+                    {/* Category Header */}
+                    <div className="flex items-center gap-2 py-1.5">
+                      <span className="text-sm font-semibold text-gray-700">
                         {stage.name} {stage.range}
                       </span>
                     </div>
                     
-                    {/* Current stage details */}
-                    {isCurrent && (
-                      <div className="ml-7 py-2 px-3 bg-blue-50 rounded-md space-y-1 mb-1">
-                        <p className="text-xs text-gray-700">
-                          <span className="text-gray-500">Current Status:</span> {selectedPercent}% {selectedLabel}
-                        </p>
-                        <p className="text-xs text-gray-700">
-                          <span className="text-gray-500">Next Action:</span> {toDo}
-                        </p>
-                      </div>
-                    )}
+                    {/* Individual Status Items */}
+                    <div className="ml-4 space-y-0.5">
+                      {stage.items.map((item, itemIndex) => {
+                        const isCurrentItem = selectedPercent === item.percent && selectedLabel === item.label;
+                        const isItemCompleted = !isLostCategory && (
+                          (item.percent < selectedPercent) || 
+                          (item.percent === selectedPercent && stage.items.indexOf(item) < stage.items.findIndex(i => i.label === selectedLabel))
+                        );
+                        const isChecked = isCurrentItem || isItemCompleted;
+                        
+                        return (
+                          <div key={itemIndex} className="flex items-center gap-2 py-1">
+                            <input
+                              type="checkbox"
+                              checked={isChecked}
+                              readOnly
+                              className={cn(
+                                "w-3.5 h-3.5 rounded border-gray-300 flex-shrink-0 cursor-default",
+                                isChecked ? "text-blue-600 bg-blue-600" : "text-gray-300"
+                              )}
+                            />
+                            <span className={cn(
+                              "text-xs",
+                              isCurrentItem ? "font-medium text-blue-600" : "text-gray-500"
+                            )}>
+                              <span className="text-blue-600 font-medium">{item.percent}%</span> {item.label}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
                     
-                    {/* Downward Arrow between stages */}
-                    {!isLast && (
-                      <div className="flex items-center ml-1.5 py-0.5">
-                        <ChevronDown className="w-3 h-3 text-gray-300" />
+                    {/* Downward Arrow between categories */}
+                    {!isLastStage && (
+                      <div className="flex items-center justify-center py-1">
+                        <ChevronDown className="w-4 h-4 text-gray-300" />
                       </div>
                     )}
                   </div>
