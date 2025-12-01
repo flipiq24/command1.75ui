@@ -3,9 +3,9 @@ import { Link, useSearch } from "wouter";
 import { cn } from "@/lib/utils";
 import ActionPlan, { DealType } from "@/components/ActionPlan";
 import { useLayout } from "@/components/Layout";
+import { Plus } from 'lucide-react';
 import { 
   ChevronDown,
-  ChevronUp,
   MoreVertical,
   Target,
   Flame,
@@ -13,12 +13,7 @@ import {
   MessageSquare,
   Mail,
   Mic,
-  Bot,
-  Search,
-  Filter,
-  ArrowUpDown,
-  Calendar,
-  Copy
+  Bot
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -106,11 +101,6 @@ function HomeContent() {
   const [completionPercent, setCompletionPercent] = useState(100);
   const queryClient = useQueryClient();
   const { openIQWithDealComplete, openAddProperty } = useLayout();
-  
-  const [myStatsExpanded, setMyStatsExpanded] = useState(true);
-  const [actionPlanExpanded, setActionPlanExpanded] = useState(true);
-  const [propertiesExpanded, setPropertiesExpanded] = useState(true);
-  const [activePropertiesTab, setActivePropertiesTab] = useState<'mydeals' | 'mls' | 'agents' | 'campaigns'>('mydeals');
 
   const handleMilestoneComplete = () => {
     openIQWithDealComplete();
@@ -207,243 +197,30 @@ function HomeContent() {
         
         <header className="bg-white border-b border-gray-200 py-4 px-6 flex justify-between items-center">
           <div>
-            <div className="text-sm text-gray-500 font-medium mb-1">Sunday, November 30</div>
+            <div className="text-sm text-gray-500 font-medium mb-1">Saturday, November 29</div>
             <h1 className="text-xl font-bold text-gray-900">Welcome, Tony!</h1>
           </div>
           <div className="flex items-center gap-3">
-            <button className="p-2 hover:bg-gray-100 rounded-lg transition">
-              <Copy className="w-5 h-5 text-gray-400" />
+            <button 
+              onClick={openAddProperty}
+              className="bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium px-4 py-2.5 rounded-lg flex items-center gap-2 transition-colors border border-gray-200 shadow-sm"
+            >
+              Add Property
+              <span className="text-[#FF6600] text-lg font-bold leading-none">+</span>
             </button>
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-6 space-y-4">
-          
-          {/* My Stats Section */}
-          <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
-            <button 
-              onClick={() => setMyStatsExpanded(!myStatsExpanded)}
-              className="w-full flex justify-between items-center p-4 hover:bg-gray-50 transition"
-            >
-              <h2 className="text-lg font-bold text-gray-900">My Stats</h2>
-              {myStatsExpanded ? <ChevronUp className="w-5 h-5 text-gray-400" /> : <ChevronDown className="w-5 h-5 text-gray-400" />}
-            </button>
+        <main className="flex-1 overflow-y-auto p-6">
             
-            {myStatsExpanded && (
-              <div className="px-4 pb-4">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-sm font-bold text-gray-700">My Stats</h3>
-                  <div className="flex items-center gap-3 text-sm text-gray-500">
-                    <div className="flex items-center gap-2">
-                      <span>Weekly</span>
-                      <ChevronDown className="w-4 h-4" />
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4" />
-                      <span>Nov 17 - Nov 23, 2025</span>
-                    </div>
-                    <button className="text-blue-600 hover:underline">Open all stats</button>
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-4 gap-4">
-                  {/* Calls */}
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">
-                        <Phone className="w-5 h-5 text-gray-500" />
-                      </div>
-                      <div>
-                        <div className="text-xs text-gray-400">Calls</div>
-                        <div className="text-lg font-bold text-gray-900">0</div>
-                      </div>
-                      <span className="text-xs text-gray-400 ml-auto">0% than average</span>
-                    </div>
-                    <div className="h-12 flex items-end gap-0.5">
-                      {[0, 0, 0, 0, 0, 0, 0].map((_, i) => (
-                        <div key={i} className="flex-1 bg-gray-200 rounded-t" style={{ height: '2px' }}></div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  {/* Text */}
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">
-                        <MessageSquare className="w-5 h-5 text-gray-500" />
-                      </div>
-                      <div>
-                        <div className="text-xs text-gray-400">Text</div>
-                        <div className="text-lg font-bold text-gray-900">0</div>
-                      </div>
-                      <span className="text-xs text-gray-400 ml-auto">0% than average</span>
-                    </div>
-                    <div className="h-12 flex items-end gap-0.5">
-                      {[0, 0, 0, 0, 0, 0, 0].map((_, i) => (
-                        <div key={i} className="flex-1 bg-gray-200 rounded-t" style={{ height: '2px' }}></div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  {/* Offers */}
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
-                        <svg className="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                      </div>
-                      <div>
-                        <div className="text-xs text-gray-400">Offers</div>
-                        <div className="text-lg font-bold text-gray-900">7</div>
-                      </div>
-                      <span className="text-xs text-green-500 ml-auto">+7.7% than average</span>
-                    </div>
-                    <div className="h-12 flex items-end gap-0.5">
-                      {[20, 30, 25, 40, 35, 50, 45].map((h, i) => (
-                        <div key={i} className="flex-1 bg-blue-200 rounded-t" style={{ height: `${h}%` }}></div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  {/* Relationships */}
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">
-                        <svg className="w-5 h-5 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                      </div>
-                      <div>
-                        <div className="text-xs text-gray-400">Relationships</div>
-                        <div className="text-lg font-bold text-gray-900">3</div>
-                      </div>
-                      <span className="text-xs text-red-500 ml-auto">-94.3% than average</span>
-                    </div>
-                    <div className="h-12 flex items-end gap-0.5">
-                      {[60, 50, 40, 30, 20, 15, 10].map((h, i) => (
-                        <div key={i} className="flex-1 bg-blue-100 rounded-t" style={{ height: `${h}%` }}></div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-            
-          {/* Action Plan Section */}
-          <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
-            <button 
-              onClick={() => setActionPlanExpanded(!actionPlanExpanded)}
-              className="w-full flex justify-between items-center p-4 hover:bg-gray-50 transition"
-            >
-              <h2 className="text-lg font-bold text-gray-900">Action Plan</h2>
-              {actionPlanExpanded ? <ChevronUp className="w-5 h-5 text-gray-400" /> : <ChevronDown className="w-5 h-5 text-gray-400" />}
-            </button>
-            
-            {actionPlanExpanded && (
-              <div className="px-4 pb-4">
-                <ActionPlan 
-                  activeFilter={activeFilter} 
-                  onFilterChange={setActiveFilter}
-                  completionPercent={completionPercent}
-                  userName="Tony"
-                  onMilestoneComplete={handleMilestoneComplete}
-                />
-              </div>
-            )}
-          </div>
-          
-          {/* Properties Section */}
-          <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
-            <button 
-              onClick={() => setPropertiesExpanded(!propertiesExpanded)}
-              className="w-full flex justify-between items-center p-4 hover:bg-gray-50 transition"
-            >
-              <h2 className="text-lg font-bold text-gray-900">Properties</h2>
-              {propertiesExpanded ? <ChevronUp className="w-5 h-5 text-gray-400" /> : <ChevronDown className="w-5 h-5 text-gray-400" />}
-            </button>
-            
-            {propertiesExpanded && (
-              <div className="px-4 pb-4">
-                {/* Tabs and Toolbar */}
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-2">
-                    <button 
-                      onClick={() => setActivePropertiesTab('mydeals')}
-                      className={cn(
-                        "px-4 py-2 rounded-lg text-sm font-medium transition",
-                        activePropertiesTab === 'mydeals' 
-                          ? "bg-gray-100 text-gray-900" 
-                          : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
-                      )}
-                    >
-                      My Deals
-                    </button>
-                    <button 
-                      onClick={() => setActivePropertiesTab('mls')}
-                      className={cn(
-                        "px-4 py-2 rounded-lg text-sm font-medium transition",
-                        activePropertiesTab === 'mls' 
-                          ? "bg-gray-100 text-gray-900" 
-                          : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
-                      )}
-                    >
-                      MLS
-                    </button>
-                    <button 
-                      onClick={() => setActivePropertiesTab('agents')}
-                      className={cn(
-                        "px-4 py-2 rounded-lg text-sm font-medium transition",
-                        activePropertiesTab === 'agents' 
-                          ? "bg-gray-100 text-gray-900" 
-                          : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
-                      )}
-                    >
-                      Agents
-                    </button>
-                    <button 
-                      onClick={() => setActivePropertiesTab('campaigns')}
-                      className={cn(
-                        "px-4 py-2 rounded-lg text-sm font-medium transition",
-                        activePropertiesTab === 'campaigns' 
-                          ? "bg-gray-100 text-gray-900" 
-                          : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
-                      )}
-                    >
-                      Campaigns
-                    </button>
-                  </div>
-                  
-                  <div className="flex items-center gap-2">
-                    <button className="p-2 hover:bg-gray-100 rounded-lg transition">
-                      <Search className="w-4 h-4 text-gray-400" />
-                    </button>
-                    <button className="p-2 hover:bg-gray-100 rounded-lg transition">
-                      <Filter className="w-4 h-4 text-gray-400" />
-                    </button>
-                    <button className="p-2 hover:bg-gray-100 rounded-lg transition">
-                      <ArrowUpDown className="w-4 h-4 text-gray-400" />
-                    </button>
-                    
-                    <div className="flex items-center gap-2 px-3 py-1.5 border border-gray-200 rounded-lg bg-white">
-                      <span className="text-sm text-gray-700">11/24/2025</span>
-                      <Calendar className="w-4 h-4 text-gray-400" />
-                    </div>
-                    <span className="text-sm text-gray-500">to</span>
-                    <div className="flex items-center gap-2 px-3 py-1.5 border border-gray-200 rounded-lg bg-white">
-                      <span className="text-sm text-gray-700">11/29/2025</span>
-                      <Calendar className="w-4 h-4 text-gray-400" />
-                    </div>
-                    
-                    <button 
-                      onClick={openAddProperty}
-                      className="bg-[#0088CC] hover:bg-[#0077b3] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
-                    >
-                      Add Property
-                    </button>
-                    
-                    <button className="bg-[#FF6600] hover:bg-[#e65c00] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
-                      Bulk Actions
-                    </button>
-                  </div>
-                </div>
+          {/* Action Plan Component */}
+          <ActionPlan 
+            activeFilter={activeFilter} 
+            onFilterChange={setActiveFilter}
+            completionPercent={completionPercent}
+            userName="Tony"
+            onMilestoneComplete={handleMilestoneComplete}
+          />
 
             {/* Current Task List - Reorganized Layout */}
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm flex-1 flex flex-col">
@@ -462,44 +239,130 @@ function HomeContent() {
                     </div> 
                     <div className="flex-1 flex items-center">
                     
-                        <div className="w-4/12 px-4 flex flex-col gap-0.5 group relative">
+                        <div className="w-5/12 px-4 flex items-center gap-2 group relative">
                             <div className="flex items-center gap-1 cursor-help">
                                 <span>Property</span>
                                 <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                
+                                <div className="absolute bottom-full left-0 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                                    Details include Address, Specs, Deal Tag (Hot/Warm/Cold), Next Actions (To-Do), and Notifications.
+                                </div>
                             </div>
-                            <span className="text-[9px] text-gray-400 normal-case font-normal">Type / Br / Ba / Garage / Built / Ft² / Lot / Pool</span>
+
+                            {selectedDealIds.length > 0 && (
+                              <DropdownMenu open={isBulkActionsOpen} onOpenChange={setIsBulkActionsOpen}>
+                                <DropdownMenuTrigger asChild>
+                                  <button className="bg-[#FF6600] hover:bg-[#e65c00] text-white text-[10px] font-bold px-3 py-1 rounded shadow-sm flex items-center gap-1 transition-colors ml-2 normal-case">
+                                    Bulk Actions
+                                  </button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="start" className="w-48 bg-white z-50 border-none shadow-xl">
+                                  <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
+                                    <Phone className="w-4 h-4" />
+                                    <span>Call</span>
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
+                                    <MessageSquare className="w-4 h-4" />
+                                    <span>Text</span>
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
+                                    <Mail className="w-4 h-4" />
+                                    <span>Email</span>
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
+                                    <Mic className="w-4 h-4" />
+                                    <span>Text Voicemail</span>
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-50">
+                                    <Bot className="w-4 h-4" />
+                                    <span>AI Connect</span>
+                                  </DropdownMenuItem>
+                                </DropdownMenuContent>
+                              </DropdownMenu>
+                            )}
                         </div>
                         
-                        <div className="w-2/12 px-4 flex flex-col gap-0.5 group relative cursor-help">
-                            <div className="flex items-center gap-1">
-                                <span>List Price</span>
-                                <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <div className="w-2/12 px-4 flex items-center gap-1 group relative cursor-help">
+                            <span>Price / Propensity</span>
+                            <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            
+                            <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-[800px] bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed border border-gray-700 max-h-[80vh] overflow-y-auto">
+                                <div className="font-bold text-[#FF6600] mb-3 text-sm border-b border-gray-700 pb-2">Propensity To Sell Indicators</div>
+                                <div className="grid grid-cols-[80px_1fr_100px_50px_1fr] gap-2 text-[10px] items-center">
+                                  <div className="font-bold text-gray-400 border-b border-gray-700 pb-1">Color</div>
+                                  <div className="font-bold text-gray-400 border-b border-gray-700 pb-1">Propensity Indicator</div>
+                                  <div className="font-bold text-gray-400 border-b border-gray-700 pb-1">Category</div>
+                                  <div className="font-bold text-gray-400 border-b border-gray-700 pb-1">Points</div>
+                                  <div className="font-bold text-gray-400 border-b border-gray-700 pb-1">PropertyRadar Data Source</div>
+
+                                  {PROPENSITY_LEGEND.map((item, idx) => (
+                                    <React.Fragment key={idx}>
+                                      <div className={cn("font-bold", item.color)}>{item.label}</div>
+                                      <div className="text-gray-300">{item.indicator}</div>
+                                      <div className="text-gray-400">{item.category}</div>
+                                      <div className="text-gray-300">{item.points}</div>
+                                      <div className="text-gray-500 italic">{item.source}</div>
+                                      <div className="col-span-5 h-[1px] bg-gray-800 my-1"></div>
+                                    </React.Fragment>
+                                  ))}
+                                </div>
                             </div>
-                            <span className="text-[9px] text-gray-400 normal-case font-normal">Propensity to sale score</span>
                         </div>
                         
-                        <div className="w-2/12 px-4 flex flex-col gap-0.5 group relative cursor-help">
-                            <div className="flex items-center gap-1">
-                                <span>Market Info</span>
-                                <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <div className="w-2/12 px-4 flex items-center gap-1 group relative cursor-help">
+                            <span>Last Open / Called</span>
+                            <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            
+                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                                Tracks the last time you manually opened this file or communicated (Call/Text/Email).<br/><br/><span className="italic text-gray-400">Excludes Auto-Trackers or AI Connect.</span>
                             </div>
-                            <span className="text-[9px] text-gray-400 normal-case font-normal">Status / DOM / Created / Type</span>
                         </div>
                         
-                        <div className="w-2/12 px-4 flex flex-col gap-0.5 group relative cursor-help">
-                            <div className="flex items-center gap-1">
-                                <span>Evaluation Metrics</span>
-                                <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <div className="w-3/12 px-4 flex items-center gap-1 group relative cursor-help">
+                            <span>Offer Status / Source</span>
+                            <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            
+                            <div className="absolute top-8 right-0 w-[400px] bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed max-h-[80vh] overflow-y-auto">
+                                <div className="font-bold text-[#FF6600] mb-3 text-sm border-b border-gray-700 pb-2">Offer Status Definitions & Tasks</div>
+                                <div className="mb-3 italic text-gray-400">Includes Lead Source.</div>
+                                
+                                <div className="mb-4 bg-gray-800/50 p-2 rounded border border-gray-700">
+                                  <div className="font-bold text-[#FF6600] mb-1.5 text-xs">Source Definitions</div>
+                                  <div className="space-y-1.5">
+                                    <div><span className="font-bold text-gray-300">MLS:</span> <span className="text-gray-400">Deals listed on the Multiple Listing Service.</span></div>
+                                    <div><span className="font-bold text-gray-300">Off Market:</span> <span className="text-gray-400">Deals manually added by an Acquisition Associate (AA).</span></div>
+                                    <div><span className="font-bold text-gray-300">Wholesaler:</span> <span className="text-gray-400">Deals emailed directly to Deals@youremail.com.</span></div>
+                                  </div>
+                                </div>
+
+                                <div className="space-y-3">
+                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">100% - Acquired</span> Closed Escrow. Make sure to update Agent 365 Report.</div>
+
+                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">80% - Offer Accepted</span> In Escrow. Make sure terms are correct in the contract.</div>
+
+                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">60% - In Negotiations</span> We are negotiating and agent is engaging/guiding us. Can be Hot/Warm/Cold. <span className="text-[#FF0000] font-bold">MUST CALL minimum once per day.</span> Do not rely on text and emails.</div>
+
+                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">50% - Contract Submitted</span> Self-represented RPA sent to listing agent. <span className="text-[#FF0000] font-bold">CALL to confirm receipt.</span> Ask when and how they are presenting offers.</div>
+
+                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">30% - Back Up</span> Pending with other buyer; we are backup. Use reminders to keep property out of Daily Tasks until the set reminder date.</div>
+
+                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">30% - Offer Terms Sent</span> Terms sent but receipt not confirmed. Use Reminders and Auto Trackers if agent is not responding.</div>
+
+                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">20% - Continue to Follow</span> Not ready to accept our price, but may sell later. Use reminders to keep property out of Daily Tasks until the set reminder date.</div>
+
+                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">10% - Initial Contact Started</span> Property is assigned to AA and under review. <span className="text-[#FF0000] font-bold">MUST CALL Agent.</span> Do not rely on text or emails. Turn on auto tracker if agent is not calling back.</div>
+
+                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">0% - Canceled FEC</span> Fully executed contract (FEC) was canceled. Update Agent 365 Report.</div>
+
+                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">0% - DO NOT USE</span> Reserve status. Do not use.</div>
+
+                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">0% - None</span> File needs attention. Update the status and set tag (Hot, Warm, Cold).</div>
+
+                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">0% - Pass</span> Does not qualify or offer not considered. Make sure to set a Pass Reason.</div>
+
+                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">0% - Sold Others / Closed</span> Sold to other buyer. Set reminder for 3 weeks out to see who purchased it and for how much.</div>
+                                </div>
                             </div>
-                            <span className="text-[9px] text-gray-400 normal-case font-normal">List to ARV / ARV / Comp Data</span>
-                        </div>
-                        
-                        <div className="w-2/12 px-4 flex flex-col gap-0.5 group relative cursor-help">
-                            <div className="flex items-center gap-1">
-                                <span>Offer Status</span>
-                                <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            </div>
-                            <span className="text-[9px] text-gray-400 normal-case font-normal">Last Open / Last Communication</span>
                         </div>
 
                     </div>
@@ -531,67 +394,118 @@ function HomeContent() {
                             </div>
                         </div>
 
-                        <div className="flex-1 flex items-start">
+                        <div className="flex-1 flex flex-col md:flex-row">
                             
-                            {/* Property Column */}
-                            <div className="w-4/12 px-4 flex flex-col justify-start gap-2">
+                            <div className="w-5/12 px-4 flex flex-col justify-start gap-2">
                                 <div className="flex items-center gap-2 mt-1">
-                                    <div className={cn(
-                                      "rounded-full px-2 py-0.5 flex items-center gap-1 shadow-sm text-[10px] font-bold uppercase",
-                                      deal.type === 'hot' && "bg-red-500 text-white",
-                                      deal.type === 'warm' && "bg-amber-500 text-white",
-                                      deal.type === 'cold' && "bg-blue-500 text-white",
-                                      deal.type === 'new' && "bg-gray-400 text-white"
-                                    )}>
-                                      {deal.type === 'hot' && <Flame className="w-3 h-3" />}
-                                      {deal.type}
-                                    </div>
-                                    <span className="text-gray-300">•</span>
+                                    {deal.isHot && (
+                                      <div className="bg-red-500 rounded-full px-2 py-0.5 border border-red-500 flex items-center gap-1 shadow-sm">
+                                          <Flame className="w-3 h-3 text-white" />
+                                          <span className="text-[10px] font-bold text-white uppercase">Hot</span>
+                                      </div>
+                                    )}
+                                    {deal.isHot && <div className="w-1 h-1 rounded-full bg-gray-300"></div>}
+                                    
                                     <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
-                                    <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium py-1 px-2 rounded flex items-center gap-1 whitespace-nowrap">
-                                        To do: Not set <ChevronDown className="w-3 h-3" />
-                                    </button>
-                                    <span className="text-gray-300">•</span>
-                                    <span className="text-xs text-gray-400 whitespace-nowrap">0 Critical</span>
-                                    <span className="text-gray-300">•</span>
-                                    <span className="text-xs text-gray-400 whitespace-nowrap">0 Reminders</span>
+                                    <div className="relative">
+                                        <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium py-1 px-2 rounded flex items-center gap-1 whitespace-nowrap">
+                                            To do: Not set <ChevronDown className="w-3 h-3" />
+                                        </button>
+                                    </div>
+                                    <div className="text-xs text-gray-400 whitespace-nowrap">• 0 Critical • 0 Reminders</div>
                                 </div>
                                 
                                 <div>
-                                    <div className="font-bold text-gray-900 text-sm mb-0.5">{deal.address}</div>
+                                    <div className="font-bold text-gray-900 text-base mb-1">{deal.address}</div>
                                     <div className="text-xs text-gray-500">{deal.specs}</div>
                                 </div>
                             </div>
 
-                            {/* List Price Column */}
-                            <div className="w-2/12 px-4 flex flex-col">
-                                <div className="font-bold text-gray-900 text-sm">{deal.price}</div>
-                                <div className="text-xs text-gray-500">{deal.mlsStatus || ''}</div>
-                                <div className="text-xs text-gray-400 mt-1">Propensity Score:</div>
-                                <div className="text-xs text-gray-500">N/A</div>
+                            <div className="w-2/12 px-4 flex flex-col items-center text-center">
+                                <div className="font-bold text-gray-900 text-base mb-1">{deal.price}</div>
+                                {Array.isArray(deal.propensity) ? (
+                                  <>
+                                    <div className="flex items-center gap-1 mb-0.5">
+                                      <span className="text-[10px] text-gray-400">Propensity Score:</span>
+                                      <span className={cn(
+                                        "text-[11px] font-medium",
+                                        getPropensityScore(deal.propensity) >= 6 ? "text-red-600" : 
+                                        getPropensityScore(deal.propensity) >= 3 ? "text-green-600" : "text-blue-600"
+                                      )}>
+                                        {getPropensityScore(deal.propensity)}
+                                      </span>
+                                    </div>
+                                    <div className="flex flex-wrap justify-center gap-x-1 gap-y-0.5 mb-1">
+                                      {deal.propensity.map((item: string, idx: number) => {
+                                        const indicatorData = PROPENSITY_LEGEND.find(l => l.indicator === item);
+                                        return (
+                                          <div key={idx} className="group/item relative cursor-help leading-none hover:z-50">
+                                            <span className={cn("text-[10px] font-bold inline-block opacity-80", 
+                                              indicatorData?.color || getPropensityColor(item)
+                                            )}>
+                                              {item}
+                                            </span>
+                                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-72 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover/item:opacity-100 pointer-events-none z-50 hidden group-hover/item:block border border-gray-700">
+                                              <div className="font-bold text-[#FF6600] mb-2">{item}</div>
+                                              {indicatorData && (
+                                                <>
+                                                  <div className="text-gray-300 mb-2 text-[11px] leading-relaxed">{indicatorData.explanation}</div>
+                                                  <div className="border-t border-gray-700 pt-2 space-y-1">
+                                                    <div className="text-gray-300"><span className="text-gray-400">Category:</span> {indicatorData.category}</div>
+                                                    <div className="text-gray-300"><span className="text-gray-400">Points:</span> {indicatorData.points}</div>
+                                                    <div className="text-gray-400 italic text-[10px]">Source: {indicatorData.source}</div>
+                                                  </div>
+                                                </>
+                                              )}
+                                            </div>
+                                          </div>
+                                        );
+                                      })}
+                                    </div>
+                                  </>
+                                ) : (
+                                  <div className="text-xs text-gray-400 mb-1">Propensity Score: {deal.propensity === 'N/A' ? '0' : deal.propensity}</div>
+                                )}
                             </div>
 
-                            {/* Market Info Column */}
-                            <div className="w-2/12 px-4 flex flex-col text-xs text-gray-600">
-                                <div>8 Days / {deal.mlsStatus || 'Active'}</div>
-                                <div className="text-gray-400">DOM: 8 / CDOM: 8</div>
-                                <div className="text-gray-400">Created: 11/23/25</div>
-                                <div className="text-gray-400">Sale Type: Standard</div>
+                            <div className="w-2/12 px-4 flex flex-col items-center">
+                                <div className="text-[11px] text-gray-400 space-y-1 text-left w-full max-w-[140px]">
+                                    <div className="flex flex-col group relative cursor-help">
+                                        <span className="font-medium text-gray-500">Last Open Date:</span>
+                                        <span className={cn(
+                                          "text-gray-900 font-medium", 
+                                          deal.lastOpen === 'N/A' && "bg-yellow-100 px-1.5 py-0.5 rounded font-bold w-fit"
+                                        )}>
+                                          {deal.lastOpen}
+                                        </span>
+                                        {deal.lastOpen === 'N/A' && (
+                                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
+                                            Needs attention: This deal hasn't been opened recently.
+                                          </div>
+                                        )}
+                                    </div>
+                                    <div className="flex flex-col group relative cursor-help">
+                                        <span className="font-medium text-gray-500">Last Called Date:</span>
+                                        <span className={cn(
+                                          "text-gray-900 font-medium", 
+                                          deal.lastCalled === 'N/A' && "bg-yellow-100 px-1.5 py-0.5 rounded font-bold w-fit"
+                                        )}>
+                                          {deal.lastCalled}
+                                        </span>
+                                        {deal.lastCalled === 'N/A' && (
+                                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
+                                            Needs attention: No recent call recorded.
+                                          </div>
+                                        )}
+                                    </div>
+                                </div>
                             </div>
 
-                            {/* Evaluation Metrics Column */}
-                            <div className="w-2/12 px-4 flex flex-col text-xs">
-                                <div className="text-gray-600">Asking vs ARV: <span className="font-medium">151.59%</span></div>
-                                <div className="text-gray-600">ARV: <span className="font-medium">$643,184</span></div>
-                                <div className="text-gray-400">Comp Data: 1S, 0P, 0B, 0A</div>
-                            </div>
-
-                            {/* Offer Status Column */}
-                            <div className="w-2/12 px-4 flex flex-col gap-1">
-                                <div className="text-xs text-gray-500">Source: <span className="font-bold text-gray-900">{deal.source}</span></div>
+                            <div className="w-3/12 px-4 flex flex-col items-center justify-center gap-2">
+                                <div className="text-xs text-gray-500 font-medium">Source: <span className="font-bold text-gray-900">{deal.source}</span>{deal.mlsStatus && <span className={cn("font-bold ml-1", deal.mlsStatus === 'Active' && "text-green-600", deal.mlsStatus === 'Pending' && "text-amber-500", deal.mlsStatus === 'Back Up Offer' && "text-blue-600", (deal.mlsStatus === 'Closed' || deal.mlsStatus === 'Sold') && "text-red-600")}> - {deal.mlsStatus}</span>}</div>
                                 <DropdownMenu>
                                   <DropdownMenuTrigger asChild>
-                                    <button className="flex items-center gap-2 text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 py-1 px-2 rounded transition-colors justify-start whitespace-nowrap border border-transparent hover:border-gray-200">
+                                    <button className="flex items-center gap-2 text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 py-1.5 px-3 rounded-md transition-colors w-full justify-between max-w-[180px] whitespace-nowrap border border-transparent hover:border-gray-200">
                                         <span className="font-bold text-[#4A90E2]">{deal.statusPercent}</span> 
                                         <span className="truncate">{deal.status}</span>
                                         <ChevronDown className="w-3 h-3 flex-shrink-0 text-gray-400" />
@@ -610,8 +524,6 @@ function HomeContent() {
                                     ))}
                                   </DropdownMenuContent>
                                 </DropdownMenu>
-                                <div className="text-[10px] text-gray-400">LOD: {deal.lastOpen}</div>
-                                <div className="text-[10px] text-gray-400">LCD: {deal.lastCalled}</div>
                             </div>
 
                         </div>
@@ -639,9 +551,6 @@ function HomeContent() {
                 </div>
 
             </div>
-              </div>
-            )}
-          </div>
 
         </main>
       </div>
