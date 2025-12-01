@@ -203,6 +203,15 @@ export default function PriorityAgentPanel({
           </h3>
           
           <button 
+            onClick={onCallNow}
+            className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition shadow-sm"
+            data-testid="button-header-call"
+          >
+            <Phone className="w-4 h-4" />
+            Call
+          </button>
+          
+          <button 
             onClick={onNext}
             disabled={currentIndex === totalAgents - 1}
             className={cn(
@@ -225,6 +234,14 @@ export default function PriorityAgentPanel({
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
             <h3 className="text-lg font-semibold text-gray-900">{agent.name}</h3>
+            <button 
+              onClick={() => { onAgentIQReport?.(); runIQReport(); }}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-xs font-medium rounded-lg transition shadow-sm"
+              data-testid="button-agent-name-iq"
+            >
+              <Lightbulb className="w-3.5 h-3.5" />
+              iQ
+            </button>
             <button className="p-1 hover:bg-gray-100 rounded transition">
               <ExternalLink className="w-4 h-4 text-gray-400" />
             </button>
