@@ -24,9 +24,10 @@ interface SidebarProps {
   onCloseIQ?: () => void;
   isIQActive?: boolean;
   onCollapseChange?: (collapsed: boolean) => void;
+  onAddPropertyClick?: () => void;
 }
 
-export default function Sidebar({ onIQClick, onCloseIQ, isIQActive = false, onCollapseChange }: SidebarProps) {
+export default function Sidebar({ onIQClick, onCloseIQ, isIQActive = false, onCollapseChange, onAddPropertyClick }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [location] = useLocation();
 
@@ -290,7 +291,10 @@ export default function Sidebar({ onIQClick, onCloseIQ, isIQActive = false, onCo
                       </div>
                   </a>
 
-                  <a href="#" className={cn("group relative flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-gray-500 hover:text-gray-900 transition", isCollapsed ? "justify-center" : "pl-8 pr-3")}>
+                  <button 
+                    onClick={onAddPropertyClick}
+                    className={cn("group relative flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-gray-500 hover:text-gray-900 transition w-full", isCollapsed ? "justify-center" : "pl-8 pr-3")}
+                  >
                       {!isCollapsed && <span className="text-gray-400">└──</span>}
                       {!isCollapsed && (
                         <span className="flex items-center gap-1">
@@ -304,7 +308,7 @@ export default function Sidebar({ onIQClick, onCloseIQ, isIQActive = false, onCo
                           <span className="font-bold text-[#FF6600]">Add Property:</span><br/>
                           Manually add a new property to your pipeline.
                       </div>
-                  </a>
+                  </button>
               </div>
           </div>
 

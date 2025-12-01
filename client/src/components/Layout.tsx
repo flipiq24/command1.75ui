@@ -1,6 +1,7 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import IQOverlay from './IQOverlay';
+import AddPropertyModal from './AddPropertyModal';
 
 interface LayoutContextType {
   isIQOpen: boolean;
@@ -12,6 +13,9 @@ interface LayoutContextType {
   resetCelebration: () => void;
   showDealComplete: boolean;
   showCelebration: boolean;
+  isAddPropertyOpen: boolean;
+  openAddProperty: () => void;
+  closeAddProperty: () => void;
 }
 
 const LayoutContext = createContext<LayoutContextType>({
@@ -23,7 +27,10 @@ const LayoutContext = createContext<LayoutContextType>({
   resetDealComplete: () => {},
   resetCelebration: () => {},
   showDealComplete: false,
-  showCelebration: false
+  showCelebration: false,
+  isAddPropertyOpen: false,
+  openAddProperty: () => {},
+  closeAddProperty: () => {}
 });
 
 export const useLayout = () => useContext(LayoutContext);
@@ -37,6 +44,7 @@ export default function Layout({ children }: LayoutProps) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [showDealComplete, setShowDealComplete] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
+  const [isAddPropertyOpen, setIsAddPropertyOpen] = useState(false);
 
   const openIQ = () => setIsIQOpen(true);
   const closeIQ = () => {
@@ -54,15 +62,19 @@ export default function Layout({ children }: LayoutProps) {
   };
   const resetDealComplete = () => setShowDealComplete(false);
   const resetCelebration = () => setShowCelebration(false);
+  
+  const openAddProperty = () => setIsAddPropertyOpen(true);
+  const closeAddProperty = () => setIsAddPropertyOpen(false);
 
   return (
-    <LayoutContext.Provider value={{ isIQOpen, openIQ, closeIQ, openIQWithDealComplete, openIQWithCelebration, resetDealComplete, resetCelebration, showDealComplete, showCelebration }}>
+    <LayoutContext.Provider value={{ isIQOpen, openIQ, closeIQ, openIQWithDealComplete, openIQWithCelebration, resetDealComplete, resetCelebration, showDealComplete, showCelebration, isAddPropertyOpen, openAddProperty, closeAddProperty }}>
       <div className="min-h-screen flex bg-gray-100">
         <Sidebar 
           onIQClick={openIQ} 
           onCloseIQ={closeIQ}
           isIQActive={isIQOpen} 
           onCollapseChange={setIsSidebarCollapsed}
+          onAddPropertyClick={openAddProperty}
         />
         
         <main className="flex-1 relative">
@@ -78,6 +90,11 @@ export default function Layout({ children }: LayoutProps) {
           showCelebration={showCelebration}
           onDealCompleteFinished={resetDealComplete}
           onCelebrationFinished={resetCelebration}
+        />
+        
+        <AddPropertyModal 
+          isOpen={isAddPropertyOpen}
+          onClose={closeAddProperty}
         />
       </div>
     </LayoutContext.Provider>
