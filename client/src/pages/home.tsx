@@ -3,9 +3,9 @@ import { Link, useSearch } from "wouter";
 import { cn } from "@/lib/utils";
 import ActionPlan, { DealType } from "@/components/ActionPlan";
 import { useLayout } from "@/components/Layout";
-import { Plus } from 'lucide-react';
 import { 
   ChevronDown,
+  ChevronUp,
   MoreVertical,
   Target,
   Flame,
@@ -13,7 +13,12 @@ import {
   MessageSquare,
   Mail,
   Mic,
-  Bot
+  Bot,
+  Search,
+  Filter,
+  ArrowUpDown,
+  Calendar,
+  Copy
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -101,6 +106,11 @@ function HomeContent() {
   const [completionPercent, setCompletionPercent] = useState(100);
   const queryClient = useQueryClient();
   const { openIQWithDealComplete, openAddProperty } = useLayout();
+  
+  const [myStatsExpanded, setMyStatsExpanded] = useState(true);
+  const [actionPlanExpanded, setActionPlanExpanded] = useState(true);
+  const [propertiesExpanded, setPropertiesExpanded] = useState(true);
+  const [activePropertiesTab, setActivePropertiesTab] = useState<'mydeals' | 'mls' | 'agents' | 'campaigns'>('mydeals');
 
   const handleMilestoneComplete = () => {
     openIQWithDealComplete();
@@ -197,30 +207,244 @@ function HomeContent() {
         
         <header className="bg-white border-b border-gray-200 py-4 px-6 flex justify-between items-center">
           <div>
-            <div className="text-sm text-gray-500 font-medium mb-1">Saturday, November 29</div>
+            <div className="text-sm text-gray-500 font-medium mb-1">Sunday, November 30</div>
             <h1 className="text-xl font-bold text-gray-900">Welcome, Tony!</h1>
           </div>
           <div className="flex items-center gap-3">
-            <button 
-              onClick={openAddProperty}
-              className="bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium px-4 py-2.5 rounded-lg flex items-center gap-2 transition-colors border border-gray-200 shadow-sm"
-            >
-              Add Property
-              <span className="text-[#FF6600] text-lg font-bold leading-none">+</span>
+            <button className="p-2 hover:bg-gray-100 rounded-lg transition">
+              <Copy className="w-5 h-5 text-gray-400" />
             </button>
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className="flex-1 overflow-y-auto p-6 space-y-4">
+          
+          {/* My Stats Section */}
+          <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
+            <button 
+              onClick={() => setMyStatsExpanded(!myStatsExpanded)}
+              className="w-full flex justify-between items-center p-4 hover:bg-gray-50 transition"
+            >
+              <h2 className="text-lg font-bold text-gray-900">My Stats</h2>
+              {myStatsExpanded ? <ChevronUp className="w-5 h-5 text-gray-400" /> : <ChevronDown className="w-5 h-5 text-gray-400" />}
+            </button>
             
-          {/* Action Plan Component */}
-          <ActionPlan 
-            activeFilter={activeFilter} 
-            onFilterChange={setActiveFilter}
-            completionPercent={completionPercent}
-            userName="Tony"
-            onMilestoneComplete={handleMilestoneComplete}
-          />
+            {myStatsExpanded && (
+              <div className="px-4 pb-4">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-sm font-bold text-gray-700">My Stats</h3>
+                  <div className="flex items-center gap-3 text-sm text-gray-500">
+                    <div className="flex items-center gap-2">
+                      <span>Weekly</span>
+                      <ChevronDown className="w-4 h-4" />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4" />
+                      <span>Nov 17 - Nov 23, 2025</span>
+                    </div>
+                    <button className="text-blue-600 hover:underline">Open all stats</button>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-4 gap-4">
+                  {/* Calls */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">
+                        <Phone className="w-5 h-5 text-gray-500" />
+                      </div>
+                      <div>
+                        <div className="text-xs text-gray-400">Calls</div>
+                        <div className="text-lg font-bold text-gray-900">0</div>
+                      </div>
+                      <span className="text-xs text-gray-400 ml-auto">0% than average</span>
+                    </div>
+                    <div className="h-12 flex items-end gap-0.5">
+                      {[0, 0, 0, 0, 0, 0, 0].map((_, i) => (
+                        <div key={i} className="flex-1 bg-gray-200 rounded-t" style={{ height: '2px' }}></div>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Text */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">
+                        <MessageSquare className="w-5 h-5 text-gray-500" />
+                      </div>
+                      <div>
+                        <div className="text-xs text-gray-400">Text</div>
+                        <div className="text-lg font-bold text-gray-900">0</div>
+                      </div>
+                      <span className="text-xs text-gray-400 ml-auto">0% than average</span>
+                    </div>
+                    <div className="h-12 flex items-end gap-0.5">
+                      {[0, 0, 0, 0, 0, 0, 0].map((_, i) => (
+                        <div key={i} className="flex-1 bg-gray-200 rounded-t" style={{ height: '2px' }}></div>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Offers */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
+                        <svg className="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      </div>
+                      <div>
+                        <div className="text-xs text-gray-400">Offers</div>
+                        <div className="text-lg font-bold text-gray-900">7</div>
+                      </div>
+                      <span className="text-xs text-green-500 ml-auto">+7.7% than average</span>
+                    </div>
+                    <div className="h-12 flex items-end gap-0.5">
+                      {[20, 30, 25, 40, 35, 50, 45].map((h, i) => (
+                        <div key={i} className="flex-1 bg-blue-200 rounded-t" style={{ height: `${h}%` }}></div>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Relationships */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">
+                        <svg className="w-5 h-5 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                      </div>
+                      <div>
+                        <div className="text-xs text-gray-400">Relationships</div>
+                        <div className="text-lg font-bold text-gray-900">3</div>
+                      </div>
+                      <span className="text-xs text-red-500 ml-auto">-94.3% than average</span>
+                    </div>
+                    <div className="h-12 flex items-end gap-0.5">
+                      {[60, 50, 40, 30, 20, 15, 10].map((h, i) => (
+                        <div key={i} className="flex-1 bg-blue-100 rounded-t" style={{ height: `${h}%` }}></div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+            
+          {/* Action Plan Section */}
+          <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
+            <button 
+              onClick={() => setActionPlanExpanded(!actionPlanExpanded)}
+              className="w-full flex justify-between items-center p-4 hover:bg-gray-50 transition"
+            >
+              <h2 className="text-lg font-bold text-gray-900">Action Plan</h2>
+              {actionPlanExpanded ? <ChevronUp className="w-5 h-5 text-gray-400" /> : <ChevronDown className="w-5 h-5 text-gray-400" />}
+            </button>
+            
+            {actionPlanExpanded && (
+              <div className="px-4 pb-4">
+                <ActionPlan 
+                  activeFilter={activeFilter} 
+                  onFilterChange={setActiveFilter}
+                  completionPercent={completionPercent}
+                  userName="Tony"
+                  onMilestoneComplete={handleMilestoneComplete}
+                />
+              </div>
+            )}
+          </div>
+          
+          {/* Properties Section */}
+          <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
+            <button 
+              onClick={() => setPropertiesExpanded(!propertiesExpanded)}
+              className="w-full flex justify-between items-center p-4 hover:bg-gray-50 transition"
+            >
+              <h2 className="text-lg font-bold text-gray-900">Properties</h2>
+              {propertiesExpanded ? <ChevronUp className="w-5 h-5 text-gray-400" /> : <ChevronDown className="w-5 h-5 text-gray-400" />}
+            </button>
+            
+            {propertiesExpanded && (
+              <div className="px-4 pb-4">
+                {/* Tabs and Toolbar */}
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <button 
+                      onClick={() => setActivePropertiesTab('mydeals')}
+                      className={cn(
+                        "px-4 py-2 rounded-lg text-sm font-medium transition",
+                        activePropertiesTab === 'mydeals' 
+                          ? "bg-gray-100 text-gray-900" 
+                          : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+                      )}
+                    >
+                      My Deals
+                    </button>
+                    <button 
+                      onClick={() => setActivePropertiesTab('mls')}
+                      className={cn(
+                        "px-4 py-2 rounded-lg text-sm font-medium transition",
+                        activePropertiesTab === 'mls' 
+                          ? "bg-gray-100 text-gray-900" 
+                          : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+                      )}
+                    >
+                      MLS
+                    </button>
+                    <button 
+                      onClick={() => setActivePropertiesTab('agents')}
+                      className={cn(
+                        "px-4 py-2 rounded-lg text-sm font-medium transition",
+                        activePropertiesTab === 'agents' 
+                          ? "bg-gray-100 text-gray-900" 
+                          : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+                      )}
+                    >
+                      Agents
+                    </button>
+                    <button 
+                      onClick={() => setActivePropertiesTab('campaigns')}
+                      className={cn(
+                        "px-4 py-2 rounded-lg text-sm font-medium transition",
+                        activePropertiesTab === 'campaigns' 
+                          ? "bg-gray-100 text-gray-900" 
+                          : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+                      )}
+                    >
+                      Campaigns
+                    </button>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <button className="p-2 hover:bg-gray-100 rounded-lg transition">
+                      <Search className="w-4 h-4 text-gray-400" />
+                    </button>
+                    <button className="p-2 hover:bg-gray-100 rounded-lg transition">
+                      <Filter className="w-4 h-4 text-gray-400" />
+                    </button>
+                    <button className="p-2 hover:bg-gray-100 rounded-lg transition">
+                      <ArrowUpDown className="w-4 h-4 text-gray-400" />
+                    </button>
+                    
+                    <div className="flex items-center gap-2 px-3 py-1.5 border border-gray-200 rounded-lg bg-white">
+                      <span className="text-sm text-gray-700">11/24/2025</span>
+                      <Calendar className="w-4 h-4 text-gray-400" />
+                    </div>
+                    <span className="text-sm text-gray-500">to</span>
+                    <div className="flex items-center gap-2 px-3 py-1.5 border border-gray-200 rounded-lg bg-white">
+                      <span className="text-sm text-gray-700">11/29/2025</span>
+                      <Calendar className="w-4 h-4 text-gray-400" />
+                    </div>
+                    
+                    <button 
+                      onClick={openAddProperty}
+                      className="bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg flex items-center gap-2 transition-colors border border-gray-200"
+                    >
+                      Add Property
+                      <span className="text-[#FF6600] text-lg font-bold leading-none">+</span>
+                    </button>
+                    
+                    <button className="bg-[#FF6600] hover:bg-[#e65c00] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+                      Bulk Actions
+                    </button>
+                  </div>
+                </div>
 
             {/* Current Task List - Reorganized Layout */}
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm flex-1 flex flex-col">
@@ -551,6 +775,9 @@ function HomeContent() {
                 </div>
 
             </div>
+              </div>
+            )}
+          </div>
 
         </main>
       </div>
