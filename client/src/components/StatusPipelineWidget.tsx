@@ -221,57 +221,50 @@ export default function StatusPipelineWidget({
             {/* Faded Line Separator */}
             <div className="border-t border-gray-200"></div>
             
-            {/* Pipeline Stages with Items */}
-            <div className="p-4 max-h-96 overflow-y-auto">
-              {pipelineStagesWithItems.map((stage, stageIndex) => {
-                const isLostCategory = stage.id === 'lost';
-                const isLastStage = stageIndex === pipelineStagesWithItems.length - 1;
-                
+            {/* Pipeline Stages */}
+            <div className="p-4">
+              {pipelineStagesWithItems.slice(0, 6).map((stage, index) => {
+                const isCompleted = currentStageIndex > index;
+                const isCurrent = currentStageIndex === index;
+                const isChecked = isCompleted || isCurrent;
+                const isLast = index === 5;
+
                 return (
                   <div key={stage.id}>
-                    {/* Category Header */}
-                    <div className="flex items-center gap-2 py-1.5">
-                      <span className="text-sm font-semibold text-gray-700">
+                    <div className="flex items-center gap-3 py-1.5">
+                      <input
+                        type="checkbox"
+                        checked={isChecked}
+                        readOnly
+                        className={cn(
+                          "w-4 h-4 rounded border-gray-300 flex-shrink-0 cursor-default",
+                          isChecked ? "text-blue-600 bg-blue-600" : "text-gray-300"
+                        )}
+                      />
+                      <span className={cn(
+                        "text-sm flex-1",
+                        isCurrent ? "font-medium text-blue-600" : "text-gray-600"
+                      )}>
                         {stage.name} {stage.range}
                       </span>
                     </div>
                     
-                    {/* Individual Status Items */}
-                    <div className="ml-4 space-y-0.5">
-                      {stage.items.map((item, itemIndex) => {
-                        const isCurrentItem = selectedPercent === item.percent && selectedLabel === item.label;
-                        const isItemCompleted = !isLostCategory && (
-                          (item.percent < selectedPercent) || 
-                          (item.percent === selectedPercent && stage.items.indexOf(item) < stage.items.findIndex(i => i.label === selectedLabel))
-                        );
-                        const isChecked = isCurrentItem || isItemCompleted;
-                        
-                        return (
-                          <div key={itemIndex} className="flex items-center gap-2 py-1">
-                            <input
-                              type="checkbox"
-                              checked={isChecked}
-                              readOnly
-                              className={cn(
-                                "w-3.5 h-3.5 rounded border-gray-300 flex-shrink-0 cursor-default",
-                                isChecked ? "text-blue-600 bg-blue-600" : "text-gray-300"
-                              )}
-                            />
-                            <span className={cn(
-                              "text-xs",
-                              isCurrentItem ? "font-medium text-blue-600" : "text-gray-500"
-                            )}>
-                              <span className="text-blue-600 font-medium">{item.percent}%</span> {item.label}
-                            </span>
-                          </div>
-                        );
-                      })}
-                    </div>
+                    {/* Current stage details */}
+                    {isCurrent && (
+                      <div className="ml-7 py-2 px-3 bg-blue-50 rounded-md space-y-1 mb-1">
+                        <p className="text-xs text-gray-700">
+                          <span className="text-gray-500">Current Status:</span> {selectedPercent}% {selectedLabel}
+                        </p>
+                        <p className="text-xs text-gray-700">
+                          <span className="text-gray-500">Next Action:</span> {toDo}
+                        </p>
+                      </div>
+                    )}
                     
-                    {/* Downward Arrow between categories */}
-                    {!isLastStage && (
-                      <div className="flex items-center justify-center py-1">
-                        <ChevronDown className="w-4 h-4 text-gray-300" />
+                    {/* Downward Arrow between stages */}
+                    {!isLast && (
+                      <div className="flex items-center ml-1.5 py-0.5">
+                        <ChevronDown className="w-3 h-3 text-gray-300" />
                       </div>
                     )}
                   </div>

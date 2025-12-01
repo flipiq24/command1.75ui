@@ -338,32 +338,60 @@ function MLSHotDealsContent() {
                                   </div>
                                 </div>
 
-                                <div className="space-y-3">
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">100% - Acquired</span> Closed Escrow. Make sure to update Agent 365 Report.</div>
+                                <div className="space-y-2">
+                                    {/* New Lead (0-10%) */}
+                                    <div className="font-bold text-gray-300 text-xs">New Lead (0–10%)</div>
+                                    <div className="ml-3 space-y-2">
+                                        <div><span className="font-bold text-[#FF6600]">0% - None</span><br/><span className="text-gray-400">File needs attention. Update the status and set tag (Hot, Warm, Cold).</span></div>
+                                        <div><span className="font-bold text-[#FF6600]">10% - Initial Contact Started</span><br/><span className="text-gray-400">Property is assigned to AA and under review. <span className="text-[#FF0000] font-bold">MUST CALL Agent.</span> Do not rely on text or emails. Turn on auto tracker if agent is not calling back.</span></div>
+                                    </div>
+                                    <div className="flex justify-center py-1"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg></div>
 
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">80% - Offer Accepted</span> In Escrow. Make sure terms are correct in the contract.</div>
+                                    {/* Working / Nurture (20-30%) */}
+                                    <div className="font-bold text-gray-300 text-xs">Working / Nurture (20–30%)</div>
+                                    <div className="ml-3 space-y-2">
+                                        <div><span className="font-bold text-[#FF6600]">20% - Continue to Follow</span><br/><span className="text-gray-400">Not ready to accept our price, but may sell later. Use reminders to keep property out of Daily Tasks until the set reminder date.</span></div>
+                                        <div><span className="font-bold text-[#FF6600]">30% - Back Up</span><br/><span className="text-gray-400">Pending with other buyer; we are backup. Use reminders to keep property out of Daily Tasks until the set reminder date.</span></div>
+                                    </div>
+                                    <div className="flex justify-center py-1"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg></div>
 
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">60% - In Negotiations</span> We are negotiating and agent is engaging/guiding us. Can be Hot/Warm/Cold. <span className="text-[#FF0000] font-bold">MUST CALL minimum once per day.</span> Do not rely on text and emails.</div>
+                                    {/* Offer Sent (30-50%) */}
+                                    <div className="font-bold text-gray-300 text-xs">Offer Sent (30–50%)</div>
+                                    <div className="ml-3 space-y-2">
+                                        <div><span className="font-bold text-[#FF6600]">30% - Offer Terms Sent</span><br/><span className="text-gray-400">Terms sent but receipt not confirmed. Use Reminders and Auto Trackers if agent is not responding.</span></div>
+                                        <div><span className="font-bold text-[#FF6600]">50% - Contract Submitted</span><br/><span className="text-gray-400">Self-represented RPA sent to listing agent. <span className="text-[#FF0000] font-bold">CALL to confirm receipt.</span> Ask when and how they are presenting offers.</span></div>
+                                    </div>
+                                    <div className="flex justify-center py-1"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg></div>
 
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">50% - Contract Submitted</span> Self-represented RPA sent to listing agent. <span className="text-[#FF0000] font-bold">CALL to confirm receipt.</span> Ask when and how they are presenting offers.</div>
+                                    {/* In Negotiation (60%) */}
+                                    <div className="font-bold text-gray-300 text-xs">In Negotiation (60%)</div>
+                                    <div className="ml-3 space-y-2">
+                                        <div><span className="font-bold text-[#FF6600]">60% - In Negotiations</span><br/><span className="text-gray-400">We are negotiating and agent is engaging/guiding us. Can be Hot/Warm/Cold. <span className="text-[#FF0000] font-bold">MUST CALL minimum once per day.</span> Do not rely on text and emails.</span></div>
+                                    </div>
+                                    <div className="flex justify-center py-1"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg></div>
 
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">30% - Back Up</span> Pending with other buyer; we are backup. Use reminders to keep property out of Daily Tasks until the set reminder date.</div>
+                                    {/* Under Contract (80%) */}
+                                    <div className="font-bold text-gray-300 text-xs">Under Contract (80%)</div>
+                                    <div className="ml-3 space-y-2">
+                                        <div><span className="font-bold text-[#FF6600]">80% - Offer Accepted</span><br/><span className="text-gray-400">In Escrow. Make sure terms are correct in the contract.</span></div>
+                                    </div>
+                                    <div className="flex justify-center py-1"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg></div>
 
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">30% - Offer Terms Sent</span> Terms sent but receipt not confirmed. Use Reminders and Auto Trackers if agent is not responding.</div>
+                                    {/* Acquired (100%) */}
+                                    <div className="font-bold text-gray-300 text-xs">Acquired (100%)</div>
+                                    <div className="ml-3 space-y-2">
+                                        <div><span className="font-bold text-[#FF6600]">100% - Acquired</span><br/><span className="text-gray-400">Closed Escrow. Make sure to update Agent 365 Report.</span></div>
+                                    </div>
+                                    <div className="flex justify-center py-1"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg></div>
 
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">20% - Continue to Follow</span> Not ready to accept our price, but may sell later. Use reminders to keep property out of Daily Tasks until the set reminder date.</div>
-
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">10% - Initial Contact Started</span> Property is assigned to AA and under review. <span className="text-[#FF0000] font-bold">MUST CALL Agent.</span> Do not rely on text or emails. Turn on auto tracker if agent is not calling back.</div>
-
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">0% - Canceled FEC</span> Fully executed contract (FEC) was canceled. Update Agent 365 Report.</div>
-
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">0% - DO NOT USE</span> Reserve status. Do not use.</div>
-
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">0% - None</span> File needs attention. Update the status and set tag (Hot, Warm, Cold).</div>
-
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">0% - Pass</span> Does not qualify or offer not considered. Make sure to set a Pass Reason.</div>
-
-                                    <div><span className="font-bold text-[#FF6600] block mb-0.5">0% - Sold Others / Closed</span> Sold to other buyer. Set reminder for 3 weeks out to see who purchased it and for how much.</div>
+                                    {/* Lost / Do Not Pursue (0%) */}
+                                    <div className="font-bold text-gray-300 text-xs">Lost / Do Not Pursue (0%) – terminal states</div>
+                                    <div className="ml-3 space-y-2">
+                                        <div><span className="font-bold text-[#FF6600]">0% - Pass</span><br/><span className="text-gray-400">Does not qualify or offer not considered. Make sure to set a Pass Reason.</span></div>
+                                        <div><span className="font-bold text-[#FF6600]">0% - Sold Others/Closed</span><br/><span className="text-gray-400">Sold to other buyer. Set reminder for 3 weeks out to see who purchased it and for how much.</span></div>
+                                        <div><span className="font-bold text-[#FF6600]">0% - Cancelled FEC</span><br/><span className="text-gray-400">Fully executed contract (FEC) was canceled. Update Agent 365 Report.</span></div>
+                                        <div><span className="font-bold text-[#FF6600]">0% - DO NOT USE</span><br/><span className="text-gray-400">Reserve status. Do not use.</span></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
