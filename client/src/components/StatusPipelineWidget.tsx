@@ -72,31 +72,6 @@ const pipelineStages = [
   { id: 'acquired', name: 'Acquired', range: '(100%)' },
 ];
 
-function getToDoAction(percent: number, label: string): string {
-  if (label === 'Pass' || label === 'Sold Others/Closed' || label === 'Cancelled FEC' || label === 'DO NOT USE') {
-    return 'Archive File';
-  }
-  if (percent <= 10) {
-    return 'Review photos & comps';
-  }
-  if (percent <= 30) {
-    return 'Calculate MAO (Max Allowable Offer)';
-  }
-  if (percent === 50) {
-    return 'Call agent to confirm receipt.';
-  }
-  if (percent === 60) {
-    return 'Finalize terms or Counter';
-  }
-  if (percent === 80) {
-    return 'Open Escrow';
-  }
-  if (percent === 100) {
-    return 'Start Rehab';
-  }
-  return 'Review deal status';
-}
-
 function getCurrentStageIndex(percent: number, label: string): number {
   if (label === 'Pass' || label === 'Sold Others/Closed' || label === 'Cancelled FEC' || label === 'DO NOT USE') {
     return -1;
@@ -113,12 +88,14 @@ function getCurrentStageIndex(percent: number, label: string): number {
 interface StatusPipelineWidgetProps {
   currentPercent?: number;
   currentLabel?: string;
+  toDo?: string;
   onStatusChange?: (percent: number, label: string) => void;
 }
 
 export default function StatusPipelineWidget({
   currentPercent = 0,
   currentLabel = 'None',
+  toDo = 'Not set',
   onStatusChange,
 }: StatusPipelineWidgetProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -145,7 +122,6 @@ export default function StatusPipelineWidget({
     onStatusChange?.(percent, label);
   };
 
-  const toDoAction = getToDoAction(selectedPercent, selectedLabel);
   const currentStageIndex = getCurrentStageIndex(selectedPercent, selectedLabel);
 
   return (
@@ -174,12 +150,19 @@ export default function StatusPipelineWidget({
       >
         <span className="text-xs cursor-pointer transition">
           <span className="text-orange-500 font-bold">Next Steps:</span>
-          <span className="text-gray-600 ml-1">{toDoAction}</span>
+          <span className="text-gray-600 ml-1">{toDo}</span>
         </span>
 
-        {/* Tooltip/Popover */}
+        {/* Tooltip/Popover - Elongated */}
         {isTooltipOpen && (
-          <div className="absolute right-0 top-full mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-xl z-50 p-3">
+          <div className="absolute right-0 top-full mt-2 w-80 bg-white border border-gray-200 rounded-lg shadow-xl z-50 p-4">
+            {/* Current Status Display */}
+            <div className="mb-3 pb-3 border-b border-gray-100">
+              <div className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">Current Status</div>
+              <div className="text-sm font-semibold text-gray-900">{selectedPercent}% {selectedLabel}</div>
+            </div>
+            
+            {/* Pipeline Stages */}
             <div className="space-y-1">
               {pipelineStages.map((stage, index) => {
                 const isCompleted = currentStageIndex > index;
@@ -187,7 +170,7 @@ export default function StatusPipelineWidget({
 
                 return (
                   <div key={stage.id}>
-                    <div className="flex items-center gap-2 py-1">
+                    <div className="flex items-center gap-3 py-1.5">
                       {isCompleted ? (
                         <Check className="w-4 h-4 text-gray-500 flex-shrink-0" />
                       ) : isCurrent ? (
@@ -198,7 +181,7 @@ export default function StatusPipelineWidget({
                         <div className="w-4 h-4 rounded-full border-2 border-gray-300 flex-shrink-0" />
                       )}
                       <span className={cn(
-                        "text-sm",
+                        "text-sm flex-1",
                         isCurrent ? "font-medium text-blue-600" : "text-gray-600"
                       )}>
                         {stage.name} {stage.range}
@@ -207,12 +190,12 @@ export default function StatusPipelineWidget({
                     
                     {/* Current stage details */}
                     {isCurrent && (
-                      <div className="ml-6 pl-2 border-l-2 border-blue-200 py-1 space-y-0.5">
-                        <p className="text-xs text-gray-600">
-                          Current Status: {selectedPercent}% {selectedLabel}
+                      <div className="ml-7 py-2 px-3 bg-blue-50 rounded-md space-y-1 mb-1">
+                        <p className="text-xs text-gray-700">
+                          <span className="text-gray-500">Current Status:</span> {selectedPercent}% {selectedLabel}
                         </p>
-                        <p className="text-xs text-gray-600">
-                          Next Action: {toDoAction}
+                        <p className="text-xs text-gray-700">
+                          <span className="text-gray-500">Next Action:</span> {toDo}
                         </p>
                       </div>
                     )}

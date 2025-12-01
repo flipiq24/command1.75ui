@@ -666,6 +666,7 @@ function MyDealsContent() {
                                 <StatusPipelineWidget
                                   currentPercent={parseInt(deal.statusPercent) || 0}
                                   currentLabel={deal.status}
+                                  toDo="Not set"
                                   onStatusChange={(percent, label) => handleStatusChange(deal.id, label, `${percent}%`)}
                                 />
                             </div>
