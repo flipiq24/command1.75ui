@@ -9,7 +9,7 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
-  MoreVertical,
+  MessagesSquare,
   Target,
   Flame,
   Phone,
@@ -1097,7 +1097,7 @@ function DailyOutreachContent() {
                       <div className="col-span-1 flex items-start gap-2">
                         <input type="checkbox" className="w-4 h-4 rounded border-gray-300 mt-1" />
                         <button className="text-gray-400 hover:text-gray-600">
-                          <MoreVertical className="w-4 h-4" />
+                          <MessagesSquare className="w-4 h-4" />
                         </button>
                       </div>
 
@@ -1571,7 +1571,7 @@ function DailyOutreachContent() {
                             <div className="bg-gray-100 rounded-lg p-1 flex flex-col items-center gap-2 w-8">
                                 <Target className="w-4 h-4 text-gray-500 hover:text-gray-800 cursor-pointer" />
                                 <div className="w-4 h-[1px] bg-gray-300"></div>
-                                <MoreVertical className="w-4 h-4 text-gray-500 hover:text-gray-800 cursor-pointer" />
+                                <MessagesSquare className="w-4 h-4 text-gray-500 hover:text-gray-800 cursor-pointer" />
                             </div>
                         </div>
 

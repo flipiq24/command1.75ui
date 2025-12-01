@@ -5,7 +5,7 @@ import {
   ChevronRight,
   ChevronDown,
   ExternalLink,
-  MoreVertical,
+  MessagesSquare,
   Phone,
   Mail,
   Calendar,
@@ -234,7 +234,7 @@ export default function PriorityAgentPanel({
                 data-testid="button-priority-agent-menu"
                 onClick={() => setShowAgentMenu(!showAgentMenu)}
               >
-                <MoreVertical className="w-4 h-4 text-red-500" />
+                <MessagesSquare className="w-4 h-4 text-red-500" />
               </button>
               {showAgentMenu && (
                 <div className="absolute top-8 right-0 bg-white border border-gray-200 rounded-lg shadow-lg py-2 min-w-[160px] z-50">

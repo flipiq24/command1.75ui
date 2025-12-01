@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { 
   ChevronDown,
   ChevronUp,
-  MoreVertical,
+  MessagesSquare,
   Target,
   Flame,
   Phone,
@@ -578,7 +578,7 @@ function MyDealsContent() {
                             <div className="bg-gray-100 rounded-lg p-1 flex flex-col items-center gap-2 w-8">
                                 <Target className="w-4 h-4 text-gray-500 hover:text-gray-800 cursor-pointer" />
                                 <div className="w-4 h-[1px] bg-gray-300"></div>
-                                <MoreVertical className="w-4 h-4 text-gray-500 hover:text-gray-800 cursor-pointer" />
+                                <MessagesSquare className="w-4 h-4 text-gray-500 hover:text-gray-800 cursor-pointer" />
                             </div>
                         </div>
 

@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { 
   ChevronDown,
   ChevronUp,
-  MoreVertical,
+  MessagesSquare,
   Search,
   Filter,
   ArrowUpDown,
@@ -618,7 +618,7 @@ function AgentSearchContent() {
                     onChange={(e) => handleSelectAgent(agent.id, e.target.checked)}
                   />
                   <button className="text-gray-400 hover:text-gray-600">
-                    <MoreVertical className="w-4 h-4" />
+                    <MessagesSquare className="w-4 h-4" />
                   </button>
                 </div>
 

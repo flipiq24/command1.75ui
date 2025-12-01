@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import StatusPipelineWidget from "@/components/StatusPipelineWidget";
 import { 
   ChevronDown,
-  MoreVertical,
+  MessagesSquare,
   Target,
   Flame,
   Phone,
@@ -760,7 +760,7 @@ function MLSSearchContent() {
                                   <Target className="w-4 h-4 text-gray-500" />
                                 </button>
                                 <button className="w-8 h-8 flex items-center justify-center bg-white border border-gray-200 rounded hover:bg-gray-50 transition">
-                                  <MoreVertical className="w-4 h-4 text-gray-500" />
+                                  <MessagesSquare className="w-4 h-4 text-gray-500" />
                                 </button>
                               </div>
                               {/* Property Image */}

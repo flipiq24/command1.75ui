@@ -6,7 +6,7 @@ import {
   ChevronDown,
   Globe,
   ExternalLink,
-  MoreVertical,
+  MessagesSquare,
   Phone,
   Mail,
   User,
@@ -204,7 +204,7 @@ function AgentContent() {
               </select>
             </div>
             <button className="p-2 hover:bg-gray-100 rounded-lg transition">
-              <MoreVertical className="w-5 h-5 text-gray-500" />
+              <MessagesSquare className="w-5 h-5 text-gray-500" />
             </button>
           </div>
         </div>
@@ -334,7 +334,7 @@ function AgentContent() {
                   data-testid="button-agent-menu"
                   onClick={() => setShowAgentMenu(!showAgentMenu)}
                 >
-                  <MoreVertical className="w-4 h-4 text-red-500" />
+                  <MessagesSquare className="w-4 h-4 text-red-500" />
                 </button>
                 {showAgentMenu && (
                   <div className="absolute top-8 right-0 bg-white border border-gray-200 rounded-lg shadow-lg py-2 min-w-[160px] z-50">

@@ -12,7 +12,7 @@ import {
   RefreshCw,
   Globe,
   Edit,
-  MoreVertical,
+  MessagesSquare,
   MessageSquare,
   Lightbulb,
   Plus,
@@ -272,7 +272,7 @@ function PIQContent() {
                   <ChevronDown className="w-4 h-4" />
                 </div>
                 <button className="p-2 hover:bg-gray-100 rounded-lg">
-                  <MoreVertical className="w-5 h-5 text-gray-500" />
+                  <MessagesSquare className="w-5 h-5 text-gray-500" />
                 </button>
               </div>
             </div>
