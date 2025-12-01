@@ -470,9 +470,9 @@ Great work today, ${userName}! Here's what you accomplished:
 
 📊 **Deal Activity**
 • Processed ${completedStats.dealsProcessed} total deals
-• Hot Deals: ${completedStats.hotDeals} reviewed
-• Warm Deals: ${completedStats.warmDeals} reviewed
-• Cold Deals: ${completedStats.coldDeals} reviewed
+• High Priority: ${completedStats.hotDeals} reviewed
+• Medium Priority: ${completedStats.warmDeals} reviewed
+• Low Priority: ${completedStats.coldDeals} reviewed
 • New Deals: ${completedStats.newDeals} categorized
 
 📝 **Offers**
@@ -914,7 +914,7 @@ Let's debrief and see how you did today!`;
     setCurrentPhase('dealreview');
     setMessages(prev => prev.filter(m => m.id !== 'start-review-button'));
     
-    await streamMessage(`Loading your Deal Review...\n\nStarting with your Hot deals first, then we'll work through Warm, Cold, and New.\n\nYou have ${pipelineStats.hot} hot properties that need immediate attention today. Click the link below to start reviewing them.`);
+    await streamMessage(`Loading your Deal Review...\n\nStarting with your High Priority deals first, then we'll work through Medium Priority, Low Priority, and New.\n\nYou have ${pipelineStats.hot} high priority properties that need immediate attention today. Click the link below to start reviewing them.`);
     
     setTimeout(() => {
       setMessages(prev => [...prev, {
@@ -928,7 +928,7 @@ Let's debrief and see how you did today!`;
             data-testid="button-go-to-deal-review"
           >
             <Flame className="w-5 h-5" />
-            <span>Go to Deal Review — Hot Deals</span>
+            <span>Go to Deal Review — High Priority</span>
             <ExternalLink className="w-4 h-4" />
           </button>
         )

@@ -18,36 +18,36 @@ interface ActionItem {
 const ACTION_ITEMS: ActionItem[] = [
   {
     id: "hot",
-    label: "Hot Deals",
+    label: "High Priority",
     count: 0,
     total: 2,
     color: "#ef4444", // red-500
-    buttonText: "Call Hot Deals",
-    tooltipTitle: "Hot Deals",
+    buttonText: "Call High Priority",
+    tooltipTitle: "High Priority (Work First)",
     tooltipText:
-      "These deals require immediate follow-up. 0 completed out of 1. Total: 1.",
+      "Logic: High probability to close. The agent is responsive, or we are in active negotiations.\n\nInstruction: These are your immediate money-making opportunities. Focus here first.",
   },
   {
     id: "warm",
-    label: "Warm Deals",
+    label: "Medium Priority",
     count: 1,
     total: 1,
     color: "#f59e0b", // amber-500
-    buttonText: "Review Warm Deals",
-    tooltipTitle: "Warm Deals",
+    buttonText: "Review Medium Priority",
+    tooltipTitle: "Medium Priority (Work Second)",
     tooltipText:
-      "Warm leads showing moderate engagement. 1 completed out of 1. Total: 1.",
+      "Logic: Viable potential. The agent is engaged, but the deal requires nurturing, feedback, or time.\n\nInstruction: These are your pipeline builders. Focus here after clearing High Priority items.",
   },
   {
     id: "cold",
-    label: "Cold Deals",
+    label: "Low Priority",
     count: 0,
     total: 1,
     color: "#3b82f6", // blue-500
-    buttonText: "Open Cold Deals",
-    tooltipTitle: "Cold Deals",
+    buttonText: "Open Low Priority",
+    tooltipTitle: "Low Priority (Work Last)",
     tooltipText:
-      "Cold leads with low recent engagement. 0 completed out of 5. Total: 5.",
+      "Logic: Low probability right now. The agent is unresponsive, or there is a wide price gap.\n\nInstruction: Keep these alive, but do not let them distract you. Focus here last or when time permits.",
   },
   {
     id: "new",
@@ -58,7 +58,7 @@ const ACTION_ITEMS: ActionItem[] = [
     buttonText: "Process New Deals",
     tooltipTitle: "New Deals",
     tooltipText:
-      'These are new incoming deals that do not have a temperature assigned yet (Hot, Warm, Cold) or are offer status "None"  They need to be reviewed and categorized.',
+      'These are new incoming deals that do not have a priority assigned yet (High, Medium, Low) or are offer status "None". They need to be reviewed and categorized.',
   },
 ];
 
