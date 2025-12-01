@@ -246,7 +246,7 @@ const SAMPLE_AGENTS: Agent[] = [
 function AgentSearchContent() {
   const [selectedAgentIds, setSelectedAgentIds] = useState<number[]>([]);
   const [isBulkActionsOpen, setIsBulkActionsOpen] = useState(false);
-  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [showFilterModal, setShowFilterModal] = useState(true);
   
   const [expandedSections, setExpandedSections] = useState({
     personal: true,
