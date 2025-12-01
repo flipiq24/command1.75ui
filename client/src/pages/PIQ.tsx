@@ -3,6 +3,7 @@ import { useLocation, useSearch } from 'wouter';
 import { cn } from "@/lib/utils";
 import { useLayout } from '@/components/Layout';
 import MilestoneCompletionModal from '@/components/MilestoneCompletionModal';
+import StatusPipelineWidget from '@/components/StatusPipelineWidget';
 import { 
   ArrowLeft,
   Snowflake,
@@ -266,11 +267,11 @@ function PIQContent() {
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-sm font-medium">
-                  <span>10%</span>
-                  <span>Initial Contact Started</span>
-                  <ChevronDown className="w-4 h-4" />
-                </div>
+                <StatusPipelineWidget 
+                  currentPercent={10}
+                  currentLabel="Initial Contact Started"
+                  toDo="Not set"
+                />
                 <button className="p-2 hover:bg-gray-100 rounded-lg">
                   <MessagesSquare className="w-5 h-5 text-gray-500" />
                 </button>
