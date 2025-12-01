@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useLayout } from "@/components/Layout";
+import StatusPipelineWidget from "@/components/StatusPipelineWidget";
 
 interface Deal {
   id: number;
@@ -660,29 +661,13 @@ function MyDealsContent() {
                                 </div>
                             </div>
 
-                            <div className="w-3/12 px-4 flex flex-col items-center justify-center gap-2">
+                            <div className="w-3/12 px-4 flex flex-col items-end justify-center gap-2">
                                 <div className="text-xs text-gray-500 font-medium">Source: <span className="font-bold text-gray-900">{deal.source}</span>{deal.mlsStatus && <span className={cn("font-bold ml-1", deal.mlsStatus === 'Active' && "text-green-600", deal.mlsStatus === 'Pending' && "text-amber-500", deal.mlsStatus === 'Back Up Offer' && "text-blue-600", (deal.mlsStatus === 'Closed' || deal.mlsStatus === 'Sold') && "text-red-600")}> - {deal.mlsStatus}</span>}</div>
-                                <DropdownMenu>
-                                  <DropdownMenuTrigger asChild>
-                                    <button className="flex items-center gap-2 text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 py-1.5 px-3 rounded-md transition-colors w-full justify-between max-w-[180px] whitespace-nowrap border border-transparent hover:border-gray-200">
-                                        <span className="font-bold text-[#4A90E2]">{deal.statusPercent}</span> 
-                                        <span className="truncate">{deal.status}</span>
-                                        <ChevronDown className="w-3 h-3 flex-shrink-0 text-gray-400" />
-                                    </button>
-                                  </DropdownMenuTrigger>
-                                  <DropdownMenuContent align="end" className="w-[200px] bg-white z-50">
-                                    {STATUS_OPTIONS.map((option) => (
-                                      <DropdownMenuItem 
-                                        key={option.label}
-                                        onClick={() => handleStatusChange(deal.id, option.label, option.percent)}
-                                        className="flex items-center justify-between text-xs gap-2 cursor-pointer hover:bg-gray-50"
-                                      >
-                                        <span className="font-bold text-[#4A90E2] w-8 text-right flex-shrink-0">{option.percent}</span>
-                                        <span className="truncate flex-1">{option.label}</span>
-                                      </DropdownMenuItem>
-                                    ))}
-                                  </DropdownMenuContent>
-                                </DropdownMenu>
+                                <StatusPipelineWidget
+                                  currentPercent={parseInt(deal.statusPercent) || 0}
+                                  currentLabel={deal.status}
+                                  onStatusChange={(percent, label) => handleStatusChange(deal.id, label, `${percent}%`)}
+                                />
                             </div>
 
                         </div>
