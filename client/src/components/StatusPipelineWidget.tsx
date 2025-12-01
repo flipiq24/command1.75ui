@@ -65,7 +65,7 @@ const statusData: StatusCategory[] = [
 
 const pipelineStages = [
   { id: 'new-lead', name: 'New Lead', range: '(0-10%)' },
-  { id: 'working', name: 'Working', range: '(20%)' },
+  { id: 'working', name: 'Working / Nurture', range: '(20-30%)' },
   { id: 'offer', name: 'Offer Sent', range: '(30-50%)' },
   { id: 'negotiation', name: 'In Negotiation', range: '(60%)' },
   { id: 'under-contract', name: 'Under Contract', range: '(80%)' },
@@ -77,7 +77,7 @@ function getCurrentStageIndex(percent: number, label: string): number {
     return -1;
   }
   if (percent <= 10) return 0;
-  if (percent === 20) return 1;
+  if (percent >= 20 && percent <= 30 && (label === 'Continue to Follow Up' || label === 'Back Up')) return 1;
   if (percent >= 30 && percent <= 50) return 2;
   if (percent === 60) return 3;
   if (percent === 80) return 4;
