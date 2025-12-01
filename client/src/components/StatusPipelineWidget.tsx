@@ -145,14 +145,14 @@ function getDefaultNextAction(percent: number, label: string): string {
   if (label === 'Pass' || label === 'Sold Others/Closed' || label === 'Cancelled FEC' || label === 'DO NOT USE') {
     return 'Closed';
   }
-  if (percent === 0 && label === 'None') return 'Call agent and change status';
+  if (percent === 0 && label === 'None') return 'Call agent';
   if (percent <= 10) return 'Call and update offer status';
   if (percent >= 20 && percent <= 30 && (label === 'Continue to Follow Up' || label === 'Back Up')) return 'Follow up and send offer';
   if (percent >= 30 && percent <= 50) return 'Negotiate terms';
   if (percent === 60) return 'Finalize contract';
   if (percent === 80) return 'Complete acquisition';
   if (percent === 100) return 'Acquired - Complete';
-  return 'Call agent and change status';
+  return 'Call agent';
 }
 
 interface StatusPipelineWidgetProps {
