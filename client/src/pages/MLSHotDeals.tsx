@@ -249,7 +249,7 @@ function MLSHotDealsContent() {
                                 <svg className="w-3.5 h-3.5 text-gray-300 hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 
                                 <div className="absolute bottom-full left-0 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                                    Details include Address, Specs, Deal Tag (Hot/Warm/Cold), Next Actions (To-Do), and Notifications.
+                                    Details include Address, Specs, Priority Tag (High/Medium/Low), Next Actions (To-Do), and Notifications.
                                 </div>
                             </div>
 
@@ -343,7 +343,7 @@ function MLSHotDealsContent() {
                                     {/* New Lead (0-10%) */}
                                     <div className="font-bold text-gray-300 text-xs">New Lead (0–10%)</div>
                                     <div className="ml-3 space-y-2">
-                                        <div><span className="font-bold text-[#FF6600]">0% - None</span><br/><span className="text-gray-400">File needs attention. Update the status and set tag (Hot, Warm, Cold).</span></div>
+                                        <div><span className="font-bold text-[#FF6600]">0% - None</span><br/><span className="text-gray-400">File needs attention. Update the status and set priority (High, Medium, Low).</span></div>
                                         <div><span className="font-bold text-[#FF6600]">10% - Initial Contact Started</span><br/><span className="text-gray-400">Property is assigned to AA and under review. <span className="text-[#FF0000] font-bold">MUST CALL Agent.</span> Do not rely on text or emails. Turn on auto tracker if agent is not calling back.</span></div>
                                     </div>
                                     <div className="flex justify-center py-1"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg></div>
@@ -367,7 +367,7 @@ function MLSHotDealsContent() {
                                     {/* In Negotiation (60%) */}
                                     <div className="font-bold text-gray-300 text-xs">In Negotiation (60%)</div>
                                     <div className="ml-3 space-y-2">
-                                        <div><span className="font-bold text-[#FF6600]">60% - In Negotiations</span><br/><span className="text-gray-400">We are negotiating and agent is engaging/guiding us. Can be Hot/Warm/Cold. <span className="text-[#FF0000] font-bold">MUST CALL minimum once per day.</span> Do not rely on text and emails.</span></div>
+                                        <div><span className="font-bold text-[#FF6600]">60% - In Negotiations</span><br/><span className="text-gray-400">We are negotiating and agent is engaging/guiding us. Can be High/Medium/Low Priority. <span className="text-[#FF0000] font-bold">MUST CALL minimum once per day.</span> Do not rely on text and emails.</span></div>
                                     </div>
                                     <div className="flex justify-center py-1"><svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg></div>
 

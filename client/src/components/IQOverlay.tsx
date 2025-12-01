@@ -526,7 +526,7 @@ Let's debrief and see how you did today!`;
   }, [userName, onClose, setLocation]);
 
   const addPropertyCard = useCallback((property: PropertyCard) => {
-    const typeEmoji = property.type === 'hot' ? '🔥 HOT' : property.type === 'warm' ? '🌡️ WARM' : property.type === 'cold' ? '❄️ COLD' : '🆕 NEW';
+    const typeEmoji = property.type === 'hot' ? '🔥 HIGH PRIORITY' : property.type === 'warm' ? '🌡️ MEDIUM PRIORITY' : property.type === 'cold' ? '❄️ LOW PRIORITY' : '🆕 NEW';
     const typeColor = property.type === 'hot' ? 'border-orange-400 bg-orange-50' : property.type === 'warm' ? 'border-amber-400 bg-amber-50' : property.type === 'cold' ? 'border-blue-400 bg-blue-50' : 'border-gray-400 bg-gray-50';
     
     setMessages(prev => [...prev, {
