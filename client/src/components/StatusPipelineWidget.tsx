@@ -141,6 +141,19 @@ function getCurrentStageIndex(percent: number, label: string): number {
   return 0;
 }
 
+function getDefaultNextAction(percent: number, label: string): string {
+  if (label === 'Pass' || label === 'Sold Others/Closed' || label === 'Cancelled FEC' || label === 'DO NOT USE') {
+    return 'Closed';
+  }
+  if (percent <= 10) return 'Call and update offer status';
+  if (percent >= 20 && percent <= 30 && (label === 'Continue to Follow Up' || label === 'Back Up')) return 'Follow up and send offer';
+  if (percent >= 30 && percent <= 50) return 'Negotiate terms';
+  if (percent === 60) return 'Finalize contract';
+  if (percent === 80) return 'Complete acquisition';
+  if (percent === 100) return 'Acquired - Complete';
+  return 'Call and update offer status';
+}
+
 interface StatusPipelineWidgetProps {
   currentPercent?: number;
   currentLabel?: string;
@@ -151,9 +164,10 @@ interface StatusPipelineWidgetProps {
 export default function StatusPipelineWidget({
   currentPercent = 0,
   currentLabel = 'None',
-  toDo = 'Not set',
+  toDo,
   onStatusChange,
 }: StatusPipelineWidgetProps) {
+  const effectiveToDo = toDo ?? getDefaultNextAction(currentPercent, currentLabel);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   const [selectedPercent, setSelectedPercent] = useState(currentPercent);
@@ -206,7 +220,7 @@ export default function StatusPipelineWidget({
       >
         <span className="text-xs cursor-pointer transition">
           <span className="text-orange-500 font-bold">Next Steps:</span>
-          <span className="text-gray-600 ml-1">{toDo}</span>
+          <span className="text-gray-600 ml-1">{effectiveToDo}</span>
         </span>
 
         {/* Tooltip/Popover - Matching Status Pill Style */}
