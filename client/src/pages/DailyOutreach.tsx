@@ -1960,21 +1960,21 @@ function DailyOutreachContent() {
                         </div>
 
                         {/* Floating ChatGPT-style Ask Anything Bar */}
-                        <div className="absolute bottom-4 left-4 right-4">
-                          <div className="bg-white rounded-full px-4 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.1),0_4px_20px_rgba(0,0,0,0.15)] border border-gray-200 flex items-center gap-3">
-                            <div className="w-8 h-8 bg-gradient-to-br from-[#FF6600] to-[#FF8533] rounded-full flex items-center justify-center shrink-0">
-                              <Sparkles className="w-4 h-4 text-white" />
-                            </div>
+                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-white via-white to-transparent pt-8">
+                          <div className="bg-gray-100 rounded-full px-4 py-3 shadow-[0_-2px_15px_rgba(0,0,0,0.08),0_4px_15px_rgba(0,0,0,0.12)] border border-gray-200 flex items-center gap-3">
+                            <Plus className="w-5 h-5 text-gray-400 shrink-0" />
                             <input 
                               type="text" 
-                              placeholder="Ask anything about this property..." 
-                              className="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none"
+                              placeholder="Ask anything" 
+                              className="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-500 outline-none"
                               data-testid="input-ask-iq"
                             />
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-3">
                               <Mic className="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-600 transition" />
-                              <button className="w-9 h-9 bg-[#FF6600] hover:bg-[#E55A00] rounded-full flex items-center justify-center transition shadow-md">
-                                <Send className="w-4 h-4 text-white" />
+                              <button className="w-9 h-9 bg-gray-800 hover:bg-gray-900 rounded-full flex items-center justify-center transition shadow-md">
+                                <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <path d="M12 3v18M3 12h3M6 6l2 2M6 18l2-2M18 6l-2 2M18 18l-2-2M21 12h-3" />
+                                </svg>
                               </button>
                             </div>
                           </div>
