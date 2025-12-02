@@ -820,32 +820,7 @@ export default function PriorityAgentPanel({
           </div>
         </div>
         
-        {/* Note Entry */}
-        <div className="p-4 border-b border-gray-100">
-          <div className="flex items-start gap-3">
-            <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-medium">
-              MM
-            </div>
-            <div className="flex-1">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-900">Michael May</span>
-                <span className="text-xs text-gray-400">33s</span>
-              </div>
-              <p className="text-sm text-gray-600 mt-1">Notes</p>
-            </div>
-          </div>
-          <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
-            <button className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700">
-              <ChevronRight className="w-4 h-4" />
-              0 Replies
-            </button>
-            <button className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700">
-              <Mail className="w-4 h-4" />
-              Email
-            </button>
-          </div>
         </div>
-      </div>
 
       </div>
   );
