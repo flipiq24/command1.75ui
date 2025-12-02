@@ -282,7 +282,7 @@ const useTypingEffect = (lines: StreamingLine[], triggerKey: number) => {
     }
 
     if (currentCharIndex >= fullText.length) {
-      const pauseTime = currentLine.type === 'header' ? 400 : 150;
+      const pauseTime = currentLine.type === 'header' ? 80 : 40;
       const timeout = setTimeout(() => {
         setCurrentLineIndex(prev => prev + 1);
         setCurrentCharIndex(0);
@@ -290,7 +290,7 @@ const useTypingEffect = (lines: StreamingLine[], triggerKey: number) => {
       return () => clearTimeout(timeout);
     }
 
-    const randomDelay = Math.floor(Math.random() * 6) + 4;
+    const randomDelay = Math.floor(Math.random() * 2) + 1;
     const timeout = setTimeout(() => {
       setDisplayedLines(prev => {
         const newMap = new Map(prev);
