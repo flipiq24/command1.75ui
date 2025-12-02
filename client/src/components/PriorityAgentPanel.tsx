@@ -856,43 +856,6 @@ export default function PriorityAgentPanel({
         </div>
       </div>
 
-      {/* Action Buttons at Bottom */}
-      <div className="bg-gray-50 border-t border-gray-200 px-6 py-4">
-        <div className="flex items-center justify-center gap-4">
-          <button 
-            onClick={onCallNow}
-            className="flex items-center gap-2 px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition shadow-sm"
-            data-testid="priority-button-call-now"
-          >
-            <Phone className="w-4 h-4" />
-            Call Now
-          </button>
-          <button 
-            disabled
-            className="flex items-center gap-2 px-6 py-2.5 bg-gray-300 text-gray-500 font-medium rounded-lg cursor-not-allowed shadow-sm"
-            data-testid="priority-button-send-text"
-          >
-            <MessageSquare className="w-4 h-4" />
-            Send Text
-          </button>
-          <button 
-            disabled
-            className="flex items-center gap-2 px-6 py-2.5 bg-gray-300 text-gray-500 font-medium rounded-lg cursor-not-allowed shadow-sm"
-            data-testid="priority-button-send-email"
-          >
-            <Mail className="w-4 h-4" />
-            Send Email
-          </button>
-          <button 
-            onClick={() => { onAgentIQReport?.(); runIQReport(); }}
-            className="flex items-center gap-2 px-6 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-lg transition shadow-sm"
-            data-testid="priority-button-agent-iq"
-          >
-            <Lightbulb className="w-4 h-4" />
-            Agent iQ Report
-          </button>
-        </div>
       </div>
-    </div>
   );
 }
