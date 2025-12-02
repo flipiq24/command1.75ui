@@ -1722,13 +1722,38 @@ function DailyOutreachContent() {
                         
                         {/* Header with Toggle */}
                         <div className="border-b border-gray-200 p-4 flex items-center justify-between">
-                          <h2 className="text-lg font-bold text-[#FF6600]">iQ Property Intelligence</h2>
-                          <button
-                            onClick={() => setIQViewMode(iQViewMode === 'stats' ? 'description' : 'stats')}
-                            className="text-sm font-medium text-gray-500 hover:text-gray-700 transition"
-                          >
-                            {iQViewMode === 'stats' ? 'Full Report' : 'Summary'}
-                          </button>
+                          <div className="flex items-center gap-3">
+                            <button
+                              onClick={() => setIQViewMode(iQViewMode === 'stats' ? 'description' : 'stats')}
+                              className="text-sm font-medium text-gray-500 hover:text-gray-700 transition"
+                            >
+                              {iQViewMode === 'stats' ? 'Full Report' : 'Summary'}
+                            </button>
+                            <div className="w-px h-5 bg-gray-200"></div>
+                            <div className="flex items-center gap-2">
+                              <div className="w-8 h-8 bg-gradient-to-br from-[#FF6600] to-[#FF8533] rounded-lg flex items-center justify-center">
+                                <Lightbulb className="w-4 h-4 text-white" />
+                              </div>
+                              <h2 className="text-lg font-bold text-gray-900">Property Intelligence</h2>
+                            </div>
+                          </div>
+                          <div className="relative group">
+                            <div className="text-xs text-gray-500 cursor-help flex items-center gap-1">
+                              <Info className="w-3.5 h-3.5" />
+                              <span>Propensity Scoring</span>
+                            </div>
+                            <div className="absolute right-0 top-full mt-2 w-80 bg-gray-900 text-white text-xs p-4 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
+                              <p className="font-bold mb-2 text-[#FF6600]">Propensity To Sell Indicators</p>
+                              <div className="space-y-1.5">
+                                <div className="flex items-center gap-2"><span className="w-2 h-2 bg-red-500 rounded-full"></span><span className="text-red-400 font-medium">RED</span><span className="text-gray-300">= High Distress (4-8 pts)</span></div>
+                                <div className="flex items-center gap-2"><span className="w-2 h-2 bg-green-500 rounded-full"></span><span className="text-green-400 font-medium">GREEN</span><span className="text-gray-300">= Moderate Signals (2-3 pts)</span></div>
+                                <div className="flex items-center gap-2"><span className="w-2 h-2 bg-blue-500 rounded-full"></span><span className="text-blue-400 font-medium">BLUE</span><span className="text-gray-300">= Low Priority (0-1 pts)</span></div>
+                              </div>
+                              <div className="border-t border-gray-700 mt-3 pt-3 text-gray-400 text-[10px]">
+                                Higher scores indicate greater seller motivation
+                              </div>
+                            </div>
+                          </div>
                         </div>
 
                         {/* Content Area */}
@@ -1752,11 +1777,26 @@ function DailyOutreachContent() {
                                 <p className="text-sm text-gray-600 mt-2"><span className="font-medium">Why it Matters:</span> Seller's losing equity every day. Foreclosure and tax penalties are stacking. Death in title adds urgency — the estate must close fast.</p>
                                 <div className="mt-3 pt-3 border-t border-gray-100">
                                   <p className="text-sm font-medium text-gray-700 mb-2">Propensity Score: <span className="font-bold text-red-600">11</span></p>
-                                  <ul className="text-sm text-gray-600 space-y-1 ml-4">
-                                    <li>• Bankruptcy / Judgment</li>
-                                    <li>• High Mortgage / Debt</li>
-                                    <li>• Affidavit of Death</li>
-                                  </ul>
+                                  <div className="space-y-1.5">
+                                    <div className="flex items-center gap-2 text-sm">
+                                      <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+                                      <span className="text-red-600 font-medium text-xs uppercase">RED</span>
+                                      <span className="text-gray-700">Bankruptcy / Judgment</span>
+                                      <span className="text-gray-400 text-xs">(4 pts)</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-sm">
+                                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                                      <span className="text-green-600 font-medium text-xs uppercase">GREEN</span>
+                                      <span className="text-gray-700">High Mortgage / Debt</span>
+                                      <span className="text-gray-400 text-xs">(2 pts)</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-sm">
+                                      <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+                                      <span className="text-red-600 font-medium text-xs uppercase">RED</span>
+                                      <span className="text-gray-700">Affidavit of Death</span>
+                                      <span className="text-gray-400 text-xs">(5 pts)</span>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
 
@@ -1825,28 +1865,66 @@ function DailyOutreachContent() {
                               {/* AGENT */}
                               <div className="border-b border-gray-100 pb-5">
                                 <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-3">AGENT – AARON MILLS</h3>
-                                <ul className="text-sm text-gray-700 space-y-2">
-                                  <li><span className="font-medium">Classification:</span> Tier 2 — Mid-Value Agent / Investor Networked</li>
-                                  <li><span className="font-medium">Role Combination:</span> 4 (Regional focus + Investor clients)</li>
-                                  <li><span className="font-medium">Production Level:</span> Low volume / High relevance</li>
-                                </ul>
-                                <div className="mt-3 pt-3 border-t border-gray-100">
-                                  <p className="text-sm font-medium text-gray-700 mb-2">Performance</p>
-                                  <ul className="text-sm text-gray-600 space-y-1">
-                                    <li><span className="text-gray-500">Active In Last 2 Years:</span> <span className="font-medium text-green-600">True</span></li>
-                                    <li><span className="text-gray-500">Average Deals Per Year:</span> <span className="font-medium text-gray-900">6</span></li>
-                                    <li><span className="text-gray-500">Double Ended:</span> <span className="font-medium text-gray-900">0</span></li>
-                                    <li><span className="text-gray-500">Investor Source:</span> <a href="#" className="font-medium text-blue-600 hover:underline">9</a></li>
+                                
+                                {/* Performance Stats */}
+                                <div className="bg-gray-50 rounded-lg p-3 mb-4">
+                                  <p className="text-xs font-bold text-gray-500 uppercase mb-2">Performance</p>
+                                  <div className="grid grid-cols-4 gap-3 text-sm">
+                                    <div><span className="text-gray-500 text-xs block">Production Level</span><span className="font-medium text-gray-900">Low</span></div>
+                                    <div><span className="text-gray-500 text-xs block">Role Combination</span><span className="font-medium text-gray-900">4</span></div>
+                                    <div><span className="text-gray-500 text-xs block">Double Ended</span><span className="font-medium text-gray-900">0</span></div>
+                                    <div><span className="text-gray-500 text-xs block">Investor Source</span><a href="#" className="font-medium text-blue-600 hover:underline">9</a></div>
+                                  </div>
+                                </div>
+
+                                {/* Tier Classification */}
+                                <div className="mb-4">
+                                  <p className="text-sm font-medium text-gray-700 mb-1">Tier Classification</p>
+                                  <p className="text-sm"><span className="font-medium">Classification:</span> Tier 2 — Mid-Value Agent</p>
+                                  <p className="text-sm text-gray-600 mt-1">Given Aaron Mills has completed transactions with 4 different investors and has a total of 4 transactions listed, he falls into the Tier 2 category. His activity shows he is regionally focused and has a few one-off LLCs. Though not institutional, Aaron is active in the investor space.</p>
+                                </div>
+
+                                {/* Market Footprint */}
+                                <div className="mb-4 pt-3 border-t border-gray-100">
+                                  <p className="text-sm font-medium text-gray-700 mb-2">Market Footprint</p>
+                                  <p className="text-sm"><span className="text-gray-500">Markets:</span> Los Angeles County, Huntington Beach, Ontario, La Mirada</p>
+                                  <p className="text-sm mt-1"><span className="text-gray-500">Price Lanes:</span> $555,000 – $1,950,000</p>
+                                </div>
+
+                                {/* Buyer's Ecosystem */}
+                                <div className="mb-4 pt-3 border-t border-gray-100">
+                                  <p className="text-sm font-medium text-gray-700 mb-2">Buyer's Ecosystem</p>
+                                  <p className="text-xs text-gray-500 uppercase mb-1">Top Investors:</p>
+                                  <ul className="text-sm text-gray-700 space-y-1 ml-4">
+                                    <li>• <span className="font-medium">LA21G LLC</span> – Huntington Beach, high-value acquisitions ~$1,950,000</li>
+                                    <li>• <span className="font-medium">MA GROUP LLC</span> – Los Angeles, purchases ~$1,050,000</li>
+                                    <li>• <span className="font-medium">CONSTAR INTERNATIONAL LLC</span> – Lower price points, significant volume</li>
+                                    <li>• <span className="font-medium">BDI ENTERPRISE LLC</span> – Lower price points, significant volume</li>
                                   </ul>
                                 </div>
-                                <p className="text-sm font-medium text-gray-700 mt-3 mb-2">Investor Clients:</p>
-                                <ul className="text-sm text-gray-700 space-y-1 ml-4">
-                                  <li>• LA21G LLC – $1.95M (High-value acquisition)</li>
-                                  <li>• MA Group LLC – $1.05M (Mid-range investment)</li>
-                                  <li>• Constar International / BDI Enterprise – Smaller plays</li>
-                                </ul>
-                                <p className="text-sm text-gray-700 mt-2"><span className="font-medium">Partners:</span> Goldman Sachs Bank USA (lender), First American Title</p>
-                                <p className="text-sm text-gray-600 mt-3"><span className="font-medium">Insight:</span> Understands investor structure, funding timelines, and double-end value. Speaks deal fluently — talk performance, not process.</p>
+
+                                {/* Lenders and Title Companies */}
+                                <div className="pt-3 border-t border-gray-100">
+                                  <p className="text-sm font-medium text-gray-700 mb-2">Lenders & Title Companies</p>
+                                  <div className="grid grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                      <p className="text-xs text-gray-500 uppercase mb-1">Lenders</p>
+                                      <ul className="text-gray-700 space-y-0.5">
+                                        <li>• Goldman Sachs Bank USA</li>
+                                        <li>• Prideco Loans Inc</li>
+                                      </ul>
+                                    </div>
+                                    <div>
+                                      <p className="text-xs text-gray-500 uppercase mb-1">Title Companies</p>
+                                      <ul className="text-gray-700 space-y-0.5">
+                                        <li>• First American Title</li>
+                                        <li>• Chicago Title Company</li>
+                                        <li>• Ticor Title</li>
+                                        <li>• Fidelity National Title</li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
 
                               {/* APPROACH - SCRIPTS */}
