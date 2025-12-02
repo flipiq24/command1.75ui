@@ -1723,37 +1723,17 @@ function DailyOutreachContent() {
                         {/* Header with Toggle */}
                         <div className="border-b border-gray-200 p-4 flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <button
-                              onClick={() => setIQViewMode(iQViewMode === 'stats' ? 'description' : 'stats')}
-                              className="text-sm font-medium text-gray-500 hover:text-gray-700 transition"
-                            >
-                              {iQViewMode === 'stats' ? 'Full Report' : 'Summary'}
-                            </button>
-                            <div className="w-px h-5 bg-gray-200"></div>
-                            <div className="flex items-center gap-2">
-                              <div className="w-8 h-8 bg-gradient-to-br from-[#FF6600] to-[#FF8533] rounded-lg flex items-center justify-center">
-                                <Lightbulb className="w-4 h-4 text-white" />
-                              </div>
-                              <h2 className="text-lg font-bold text-gray-900">Property Intelligence</h2>
+                            <div className="w-8 h-8 bg-gradient-to-br from-[#FF6600] to-[#FF8533] rounded-lg flex items-center justify-center">
+                              <Lightbulb className="w-4 h-4 text-white" />
                             </div>
+                            <h2 className="text-lg font-bold text-[#FF6600]">IQ Property Intelligence</h2>
                           </div>
-                          <div className="relative group">
-                            <div className="text-xs text-gray-500 cursor-help flex items-center gap-1">
-                              <Info className="w-3.5 h-3.5" />
-                              <span>Propensity Scoring</span>
-                            </div>
-                            <div className="absolute right-0 top-full mt-2 w-80 bg-gray-900 text-white text-xs p-4 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
-                              <p className="font-bold mb-2 text-[#FF6600]">Propensity To Sell Indicators</p>
-                              <div className="space-y-1.5">
-                                <div className="flex items-center gap-2"><span className="w-2 h-2 bg-red-500 rounded-full"></span><span className="text-red-400 font-medium">RED</span><span className="text-gray-300">= High Distress (4-8 pts)</span></div>
-                                <div className="flex items-center gap-2"><span className="w-2 h-2 bg-green-500 rounded-full"></span><span className="text-green-400 font-medium">GREEN</span><span className="text-gray-300">= Moderate Signals (2-3 pts)</span></div>
-                                <div className="flex items-center gap-2"><span className="w-2 h-2 bg-blue-500 rounded-full"></span><span className="text-blue-400 font-medium">BLUE</span><span className="text-gray-300">= Low Priority (0-1 pts)</span></div>
-                              </div>
-                              <div className="border-t border-gray-700 mt-3 pt-3 text-gray-400 text-[10px]">
-                                Higher scores indicate greater seller motivation
-                              </div>
-                            </div>
-                          </div>
+                          <button
+                            onClick={() => setIQViewMode(iQViewMode === 'stats' ? 'description' : 'stats')}
+                            className="px-4 py-1.5 text-sm font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition"
+                          >
+                            {iQViewMode === 'stats' ? 'Full Report' : 'Summary'}
+                          </button>
                         </div>
 
                         {/* Content Area */}
@@ -1777,24 +1757,18 @@ function DailyOutreachContent() {
                                 <p className="text-sm text-gray-600 mt-2"><span className="font-medium">Why it Matters:</span> Seller's losing equity every day. Foreclosure and tax penalties are stacking. Death in title adds urgency — the estate must close fast.</p>
                                 <div className="mt-3 pt-3 border-t border-gray-100">
                                   <p className="text-sm font-medium text-gray-700 mb-2">Propensity Score: <span className="font-bold text-red-600">11</span></p>
-                                  <div className="space-y-1.5">
+                                  <div className="space-y-1">
                                     <div className="flex items-center gap-2 text-sm">
-                                      <span className="w-2 h-2 bg-red-500 rounded-full"></span>
-                                      <span className="text-red-600 font-medium text-xs uppercase">RED</span>
-                                      <span className="text-gray-700">Bankruptcy / Judgment</span>
+                                      <span className="text-red-600 font-medium">Bankruptcy / Judgment</span>
                                       <span className="text-gray-400 text-xs">(4 pts)</span>
                                     </div>
                                     <div className="flex items-center gap-2 text-sm">
-                                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                                      <span className="text-green-600 font-medium text-xs uppercase">GREEN</span>
-                                      <span className="text-gray-700">High Mortgage / Debt</span>
-                                      <span className="text-gray-400 text-xs">(2 pts)</span>
+                                      <span className="text-red-600 font-medium">Affidavit of Death</span>
+                                      <span className="text-gray-400 text-xs">(5 pts)</span>
                                     </div>
                                     <div className="flex items-center gap-2 text-sm">
-                                      <span className="w-2 h-2 bg-red-500 rounded-full"></span>
-                                      <span className="text-red-600 font-medium text-xs uppercase">RED</span>
-                                      <span className="text-gray-700">Affidavit of Death</span>
-                                      <span className="text-gray-400 text-xs">(5 pts)</span>
+                                      <span className="text-green-600 font-medium">High Mortgage / Debt</span>
+                                      <span className="text-gray-400 text-xs">(2 pts)</span>
                                     </div>
                                   </div>
                                 </div>
@@ -1866,19 +1840,19 @@ function DailyOutreachContent() {
                               <div className="border-b border-gray-100 pb-5">
                                 <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-3">AGENT – AARON MILLS</h3>
                                 
-                                {/* Performance Stats */}
-                                <div className="bg-gray-50 rounded-lg p-3 mb-4">
-                                  <p className="text-xs font-bold text-gray-500 uppercase mb-2">Performance</p>
-                                  <div className="grid grid-cols-4 gap-3 text-sm">
-                                    <div><span className="text-gray-500 text-xs block">Production Level</span><span className="font-medium text-gray-900">Low</span></div>
-                                    <div><span className="text-gray-500 text-xs block">Role Combination</span><span className="font-medium text-gray-900">4</span></div>
-                                    <div><span className="text-gray-500 text-xs block">Double Ended</span><span className="font-medium text-gray-900">0</span></div>
-                                    <div><span className="text-gray-500 text-xs block">Investor Source</span><a href="#" className="font-medium text-blue-600 hover:underline">9</a></div>
-                                  </div>
+                                {/* Performance */}
+                                <div className="mb-4">
+                                  <p className="text-sm font-medium text-gray-700 mb-2">Performance</p>
+                                  <ul className="text-sm text-gray-600 space-y-1">
+                                    <li><span className="text-gray-500">Active In Last 2 Years:</span> <span className="font-medium text-green-600">True</span></li>
+                                    <li><span className="text-gray-500">Average Deals Per Year:</span> <span className="font-medium text-gray-900">6</span></li>
+                                    <li><span className="text-gray-500">Double Ended:</span> <span className="font-medium text-gray-900">0</span></li>
+                                    <li><span className="text-gray-500">Investor Source:</span> <a href="#" className="font-medium text-blue-600 hover:underline">9</a></li>
+                                  </ul>
                                 </div>
 
                                 {/* Tier Classification */}
-                                <div className="mb-4">
+                                <div className="mb-4 pt-3 border-t border-gray-100">
                                   <p className="text-sm font-medium text-gray-700 mb-1">Tier Classification</p>
                                   <p className="text-sm"><span className="font-medium">Classification:</span> Tier 2 — Mid-Value Agent</p>
                                   <p className="text-sm text-gray-600 mt-1">Given Aaron Mills has completed transactions with 4 different investors and has a total of 4 transactions listed, he falls into the Tier 2 category. His activity shows he is regionally focused and has a few one-off LLCs. Though not institutional, Aaron is active in the investor space.</p>
@@ -1927,24 +1901,57 @@ function DailyOutreachContent() {
                                 </div>
                               </div>
 
-                              {/* APPROACH - SCRIPTS */}
+                              {/* APPROACH - SCRIPTS WITH YES/NO SCENARIOS */}
                               <div>
                                 <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-3">APPROACH – EXECUTION SCRIPTS</h3>
                                 
                                 <div className="space-y-4">
+                                  {/* Script 1: Active */}
                                   <div className="bg-gray-50 rounded-lg p-4">
                                     <p className="text-xs font-bold text-gray-500 uppercase mb-2">1. Active (New Listing / Just Hit Market)</p>
-                                    <p className="text-sm text-gray-700 italic">"Hey Aaron, saw you just listed that fixer. I know you work with LA21G and MA Group — we're in that same lane. Since it's Strictly AS-IS, if I bring a clean cash offer today, can you represent me (double-end) and meet me at the property? If not, what's the seller's plan — Best and Final date or first solid offer wins?"</p>
+                                    <p className="text-sm text-gray-700 italic mb-3">"Hey Aaron, saw you just listed that fixer. I know you work with LA21G and MA Group — we're in that same lane. Since it's Strictly AS-IS, if I bring a clean cash offer today, can you represent me (double-end) and meet me at the property?"</p>
+                                    <div className="grid grid-cols-2 gap-3 mt-2">
+                                      <div className="bg-green-50 border border-green-200 rounded p-2">
+                                        <p className="text-xs font-bold text-green-700 mb-1">IF YES:</p>
+                                        <p className="text-xs text-gray-600">"Great. I'll have proof of funds over in the next hour. What time works for a walkthrough today?"</p>
+                                      </div>
+                                      <div className="bg-red-50 border border-red-200 rounded p-2">
+                                        <p className="text-xs font-bold text-red-700 mb-1">IF NO:</p>
+                                        <p className="text-xs text-gray-600">"No problem. What's the seller's plan — Best and Final date or first solid offer wins? I want to make sure my offer lands right."</p>
+                                      </div>
+                                    </div>
                                   </div>
                                   
+                                  {/* Script 2: Pending */}
                                   <div className="bg-gray-50 rounded-lg p-4">
                                     <p className="text-xs font-bold text-gray-500 uppercase mb-2">2. Pending / Backup (Deposit Check)</p>
-                                    <p className="text-sm text-gray-700 italic">"Hey Aaron, congrats on pending the deal. Given the NOD and tax delinquency, timing's tight. Has your buyer actually dropped their hard deposit yet or still verbal? If they stall, I can step in with a hard offer today so you don't lose momentum."</p>
+                                    <p className="text-sm text-gray-700 italic mb-3">"Hey Aaron, congrats on pending the deal. Given the NOD and tax delinquency, timing's tight. Has your buyer actually dropped their hard deposit yet?"</p>
+                                    <div className="grid grid-cols-2 gap-3 mt-2">
+                                      <div className="bg-green-50 border border-green-200 rounded p-2">
+                                        <p className="text-xs font-bold text-green-700 mb-1">IF YES (Hard Deposit):</p>
+                                        <p className="text-xs text-gray-600">"Good to hear. Mind if I stay in touch as backup? If anything changes, I can move same-day with hard funds."</p>
+                                      </div>
+                                      <div className="bg-red-50 border border-red-200 rounded p-2">
+                                        <p className="text-xs font-bold text-red-700 mb-1">IF NO (Still Verbal):</p>
+                                        <p className="text-xs text-gray-600">"That's risky with the timeline. I can step in with a hard offer today so you don't lose momentum. Want me to send it over?"</p>
+                                      </div>
+                                    </div>
                                   </div>
                                   
+                                  {/* Script 3: Aged */}
                                   <div className="bg-gray-50 rounded-lg p-4">
                                     <p className="text-xs font-bold text-gray-500 uppercase mb-2">3. Aged (70+ Days / Expiration Pressure)</p>
-                                    <p className="text-sm text-gray-700 italic">"Hey Aaron, this one's been sitting since [Date]. With the NOD and tax issues, the seller's bleeding equity every day. Why hasn't it moved? Would they consider a quick cash exit before the listing expires?"</p>
+                                    <p className="text-sm text-gray-700 italic mb-3">"Hey Aaron, this one's been sitting since [Date]. With the NOD and tax issues, the seller's bleeding equity every day. Why hasn't it moved?"</p>
+                                    <div className="grid grid-cols-2 gap-3 mt-2">
+                                      <div className="bg-green-50 border border-green-200 rounded p-2">
+                                        <p className="text-xs font-bold text-green-700 mb-1">IF OPEN TO OFFERS:</p>
+                                        <p className="text-xs text-gray-600">"Perfect. What's the real number they need to make this work? I can close in 14 days, cash, no contingencies."</p>
+                                      </div>
+                                      <div className="bg-red-50 border border-red-200 rounded p-2">
+                                        <p className="text-xs font-bold text-red-700 mb-1">IF RESISTANT:</p>
+                                        <p className="text-xs text-gray-600">"I get it. But with the listing about to expire and penalties stacking, would they rather relist or take a quick cash exit now?"</p>
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
