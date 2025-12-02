@@ -1750,6 +1750,14 @@ function DailyOutreachContent() {
                                 <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-2">SELLER</h3>
                                 <p className="text-sm"><span className="font-bold">Status:</span> Critical Distress (NOD + Tax + Death)</p>
                                 <p className="text-sm text-gray-600 mt-2"><span className="font-medium">Why it Matters:</span> Seller's losing equity every day. Foreclosure and tax penalties are stacking. Death in title adds urgency — the estate must close fast.</p>
+                                <div className="mt-3 pt-3 border-t border-gray-100">
+                                  <p className="text-sm font-medium text-gray-700 mb-2">Propensity Score: <span className="font-bold text-red-600">11</span></p>
+                                  <ul className="text-sm text-gray-600 space-y-1 ml-4">
+                                    <li>• Bankruptcy / Judgment</li>
+                                    <li>• High Mortgage / Debt</li>
+                                    <li>• Affidavit of Death</li>
+                                  </ul>
+                                </div>
                               </div>
 
                               {/* AGENT */}
@@ -1757,6 +1765,15 @@ function DailyOutreachContent() {
                                 <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-2">AGENT</h3>
                                 <p className="text-sm"><span className="font-bold">Status:</span> Aaron Mills – Tier 2 (Investor-Friendly)</p>
                                 <p className="text-sm text-gray-600 mt-2"><span className="font-medium">Why it Matters:</span> He already works with LLC buyers (LA21G $1.95M / MA Group $1.05M). He doesn't need education — he needs confidence you'll perform.</p>
+                                <div className="mt-3 pt-3 border-t border-gray-100">
+                                  <p className="text-sm font-medium text-gray-700 mb-2">Performance</p>
+                                  <ul className="text-sm text-gray-600 space-y-1">
+                                    <li><span className="text-gray-500">Active In Last 2 Years:</span> <span className="font-medium text-green-600">True</span></li>
+                                    <li><span className="text-gray-500">Average Deals Per Year:</span> <span className="font-medium text-gray-900">6</span></li>
+                                    <li><span className="text-gray-500">Double Ended:</span> <span className="font-medium text-gray-900">0</span></li>
+                                    <li><span className="text-gray-500">Investor Source:</span> <a href="#" className="font-medium text-blue-600 hover:underline">9</a></li>
+                                  </ul>
+                                </div>
                               </div>
 
                               {/* APPROACH */}
@@ -1788,7 +1805,13 @@ function DailyOutreachContent() {
                               {/* SELLER */}
                               <div className="border-b border-gray-100 pb-5">
                                 <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-3">SELLER</h3>
-                                <p className="text-sm font-medium text-gray-700 mb-2">Distress Indicators:</p>
+                                <p className="text-sm font-medium text-gray-700 mb-2">Propensity Score: <span className="font-bold text-red-600">11</span></p>
+                                <ul className="text-sm text-gray-700 space-y-1 ml-4">
+                                  <li>• Bankruptcy / Judgment</li>
+                                  <li>• High Mortgage / Debt</li>
+                                  <li>• Affidavit of Death</li>
+                                </ul>
+                                <p className="text-sm font-medium text-gray-700 mt-3 mb-2">Distress Indicators:</p>
                                 <ul className="text-sm text-gray-700 space-y-1 ml-4">
                                   <li>• Notice of Trustee Sale (8 pts)</li>
                                   <li>• Notice of Default (6 pts)</li>
@@ -1807,6 +1830,15 @@ function DailyOutreachContent() {
                                   <li><span className="font-medium">Role Combination:</span> 4 (Regional focus + Investor clients)</li>
                                   <li><span className="font-medium">Production Level:</span> Low volume / High relevance</li>
                                 </ul>
+                                <div className="mt-3 pt-3 border-t border-gray-100">
+                                  <p className="text-sm font-medium text-gray-700 mb-2">Performance</p>
+                                  <ul className="text-sm text-gray-600 space-y-1">
+                                    <li><span className="text-gray-500">Active In Last 2 Years:</span> <span className="font-medium text-green-600">True</span></li>
+                                    <li><span className="text-gray-500">Average Deals Per Year:</span> <span className="font-medium text-gray-900">6</span></li>
+                                    <li><span className="text-gray-500">Double Ended:</span> <span className="font-medium text-gray-900">0</span></li>
+                                    <li><span className="text-gray-500">Investor Source:</span> <a href="#" className="font-medium text-blue-600 hover:underline">9</a></li>
+                                  </ul>
+                                </div>
                                 <p className="text-sm font-medium text-gray-700 mt-3 mb-2">Investor Clients:</p>
                                 <ul className="text-sm text-gray-700 space-y-1 ml-4">
                                   <li>• LA21G LLC – $1.95M (High-value acquisition)</li>
