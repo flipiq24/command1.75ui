@@ -233,7 +233,6 @@ export default function PriorityAgentPanel({
         {/* Top Row - Name, buttons, assigned user, do not call */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <h3 className="text-lg font-semibold text-gray-900">{agent.name}</h3>
             <button 
               onClick={() => { onAgentIQReport?.(); runIQReport(); }}
               className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-xs font-medium rounded-lg transition shadow-sm"
@@ -242,6 +241,7 @@ export default function PriorityAgentPanel({
               <Lightbulb className="w-3.5 h-3.5" />
               iQ
             </button>
+            <h3 className="text-lg font-semibold text-gray-900">{agent.name}</h3>
             <button className="p-1 hover:bg-gray-100 rounded transition">
               <ExternalLink className="w-4 h-4 text-gray-400" />
             </button>
