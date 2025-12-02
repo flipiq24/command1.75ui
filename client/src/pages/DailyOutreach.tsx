@@ -787,33 +787,15 @@ function DailyOutreachContent() {
   };
 
   const streamingLines: StreamingLine[] = useMemo(() => {
-    const activeIndicators = getActiveIndicators();
-    const indicatorBullets: StreamingLine[] = activeIndicators.map(ind => ({
-      type: 'bullet' as const,
-      value: `${ind.indicator} (+${ind.points} pts)`,
-      color: ind.color
-    }));
-
     return [
-      { type: 'stat', label: 'Status', value: currentDeal?.mlsStatus || 'Active' },
-      { type: 'stat', label: 'Days on Market', value: '45' },
-      { type: 'stat', label: 'Price to Future Value', value: '82%' },
-      { type: 'stat', label: 'Propensity Score', value: `${propensityScore} / ${maxPropensityScore}`, color: getPropensityScoreColor(propensityScore) },
-      { type: 'stat', label: 'Agent', value: 'Sarah Johnson (Unassigned)' },
-      { type: 'stat', label: 'Relationship Status', value: 'Warm' },
-      { type: 'stat', label: 'Investor Source Count', value: '[View Agent]', isLink: true, linkUrl: 'https://nextjs-flipiq-agent.vercel.app/agents/AaronMills' },
-      { type: 'stat', label: 'Last Communication Date', value: '11/15/2025' },
-      { type: 'stat', label: 'Last Address Discussed', value: '1234 Oak Street, Phoenix AZ' },
-      { type: 'header', value: 'Why this Property' },
-      ...(indicatorBullets.length > 0 ? indicatorBullets : [
-        { type: 'bullet' as const, value: 'No propensity indicators detected for this property.' }
-      ]),
-      { type: 'bullet', value: 'Aged listing (≥70 DOM) with strong discount potential.' },
-      { type: 'bullet', value: 'Price-to-value ratio suggests room for negotiation.' },
-      { type: 'action', value: 'Would you like me to run a detailed AI report?' },
-      { type: 'action', value: "Let's dive into the property —", isDiveIn: true },
+      { type: 'header', value: 'The "Why"' },
+      { type: 'bullet', value: 'Headline: This is a High-Motivation seller scenario (Death & Debt) paired with an Investor-Friendly Agent.', color: 'text-red-600' },
+      { type: 'header', value: 'The Narrative' },
+      { type: 'bullet', value: 'The owner is under extreme pressure to sell due to bankruptcy, high debt, and an affidavit of death (The "4 D\'s").' },
+      { type: 'bullet', value: 'The property is an aging listing on a massive 36,600 sq ft lot, priced at ~82% of future value, leaving significant room for a discount.' },
+      { type: 'bullet', value: 'The agent, Aaron Mills, is "Tier 2" and actively sells to investors, meaning he will understand a clean, fast close.' },
     ];
-  }, [currentDeal, iqRevealKey, propensityScore]);
+  }, [currentDeal, iqRevealKey]);
 
   const { displayedLines, currentLineIndex, isComplete: isTypingComplete, showCursor } = useTypingEffect(streamingLines, iqRevealKey);
 
