@@ -1721,19 +1721,19 @@ function DailyOutreachContent() {
                     <div className="bg-white border border-gray-200 rounded-xl mt-4 shadow-sm overflow-hidden">
                         
                         {/* Header with Toggle */}
-                        <div className="border-b border-gray-200 p-4 flex items-center justify-between">
+                        <div className="border-b border-gray-200 p-4">
                           <div className="flex items-center gap-3">
                             <div className="w-8 h-8 bg-gradient-to-br from-[#FF6600] to-[#FF8533] rounded-lg flex items-center justify-center">
                               <Lightbulb className="w-4 h-4 text-white" />
                             </div>
                             <h2 className="text-lg font-bold text-[#FF6600]">IQ Property Intelligence</h2>
+                            <button
+                              onClick={() => setIQViewMode(iQViewMode === 'stats' ? 'description' : 'stats')}
+                              className="px-4 py-1.5 text-sm font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition"
+                            >
+                              {iQViewMode === 'stats' ? 'Full Report' : 'Summary'}
+                            </button>
                           </div>
-                          <button
-                            onClick={() => setIQViewMode(iQViewMode === 'stats' ? 'description' : 'stats')}
-                            className="px-4 py-1.5 text-sm font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition"
-                          >
-                            {iQViewMode === 'stats' ? 'Full Report' : 'Summary'}
-                          </button>
                         </div>
 
                         {/* Content Area */}
