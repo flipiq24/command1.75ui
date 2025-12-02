@@ -1,0 +1,101 @@
+SUMMARY VIEW
+
+(Quick-scan — what matters and why)
+
+PROPERTY
+Status: True Fixer / Strictly AS-IS
+Why it Matters: The “No Repairs / Credits” term eliminates all retail buyers. Only investors or cash players qualify. The play here is speed and certainty — whoever moves first wins.
+
+SELLER
+Status: Critical Distress (NOD + Tax + Death)
+Why it Matters: Seller’s losing equity every day. Foreclosure and tax penalties are stacking. Death in title adds urgency — the estate must close fast.
+
+AGENT
+Status: Aaron Mills – Tier 2 (Investor-Friendly)
+Why it Matters: He already works with LLC buyers (LA21G $1.95M / MA Group $1.05M). He doesn’t need education — he needs confidence you’ll perform.
+
+APPROACH
+Status: Status-Based Pressure
+Why it Matters:
+• If Active → Offer double-end, push immediate access.
+• If Pending → Question buyer’s deposit / performance.
+• If Aged → Use “expiration pressure” and unpaid taxes to trigger movement.
+
+FULL REPORT VIEW
+
+(Deep dive — all execution data, no fluff)
+
+PROPERTY
+
+Terms: “Strictly AS-IS.” No repairs / credits / allowances.
+
+Condition: Non-financeable fixer; full renovation required.
+
+Strategy: Price must be set upfront based on current condition — no re-trade later. Compete on speed, not dollars.
+
+SELLER
+
+Distress Indicators:
+• Notice of Trustee Sale (8 pts)
+• Notice of Default (6 pts)
+• Tax Delinquency (5 pts)
+• Affidavit of Death (5 pts)
+• Bankruptcy / Judgment (4 pts)
+
+Strategic Insight: Seller has zero holding power. Every delay compounds debt. They’ll take certainty over top-price — deliver proof of funds and a tight timeline.
+
+AGENT – AARON MILLS (Full Alignment Data)
+
+Classification: Tier 2 — Mid-Value Agent / Investor Networked
+
+Role Combination: 4 (Regional focus + Investor clients)
+
+Production Level: Low volume / High relevance
+
+Investor Clients:
+• LA21G LLC – $1.95M (High-value acquisition)
+• MA Group LLC – $1.05M (Mid-range investment)
+• Constar International / BDI Enterprise – Smaller plays
+
+Partners: Goldman Sachs Bank USA (lender), First American Title
+
+Insight: Understands investor structure, funding timelines, and double-end value. Speaks deal fluently — talk performance, not process.
+
+APPROACH – EXECUTION SCRIPTS
+
+1. Active (New Listing / Just Hit Market)
+“Hey Aaron, saw you just listed that fixer. I know you work with LA21G and MA Group — we’re in that same lane. Since it’s Strictly AS-IS, if I bring a clean cash offer today, can you represent me (double-end) and meet me at the property?
+If not, what’s the seller’s plan — Best and Final date or first solid offer wins?”
+
+2. Pending / Backup (Deposit Check)
+“Hey Aaron, congrats on pending the deal. Given the NOD and tax delinquency, timing’s tight. Has your buyer actually dropped their hard deposit yet or still verbal? If they stall, I can step in with a hard offer today so you don’t lose momentum.”
+
+3. Aged (70+ Days / Expiration Pressure)
+“Hey Aaron, this one’s been sitting since [Date]. With the NOD and tax issues, the seller’s bleeding equity every day. Why hasn’t it moved? Would they consider a quick cash exit before the listing expires?”
+
+REPLIT PROMPT
+
+Copy this exactly to generate the interface.
+
+Build a React component named "DealDossier" using Tailwind CSS.
+
+Requirements:
+• Two toggle buttons at top: [SUMMARY] [FULL REPORT].
+• Monochrome style (black/white/gray), no icons, no graphics.
+
+VIEW 1 – SUMMARY:
+Display four blocks with headings:
+PROPERTY, SELLER, AGENT, APPROACH.
+Each block shows:
+  • Status (bold)  
+  • Why it Matters (2-3 sentences)
+
+VIEW 2 – FULL REPORT:
+Four sections stacked vertically in this order:
+1. PROPERTY – bullet points for terms/condition/strategy.  
+2. SELLER – bullet list of distress flags (NTS 8, NOD 6, Tax 5, Death 5, Bankruptcy 4).  
+3. AGENT – full alignment report (Aaron Mills Tier 2, buyers LA21G, MA Group, Constar, partners Goldman/First American).  
+4. APPROACH – three text blocks for Active, Pending, Aged scripts.
+
+State variable: `viewMode` toggles between "SUMMARY" and "FULL_REPORT".  
+Hardcode all text exactly as provided above.

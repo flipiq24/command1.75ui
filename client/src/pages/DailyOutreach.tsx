@@ -1717,185 +1717,146 @@ function DailyOutreachContent() {
                         </div>
                     </div>
 
-                    {/* Deal Narrative Dashboard */}
+                    {/* Deal Dossier - ChatGPT Style Report */}
                     <div className="bg-white border border-gray-200 rounded-xl mt-4 shadow-sm overflow-hidden">
                         
-                        {/* HEADER SECTION - Executive Summary */}
-                        <div className="bg-gradient-to-r from-orange-50 to-amber-50 border-b border-gray-200 p-6">
-                          <div className="flex items-center justify-between mb-4">
-                            <h2 className="text-xl font-bold text-gray-900">Deal Narrative: {currentDeal.address.split(',')[0]}</h2>
-                            <div className="flex items-center gap-2">
-                              <span className="px-2 py-1 bg-red-100 text-red-700 text-xs font-bold rounded">Bankruptcy</span>
-                              <span className="px-2 py-1 bg-red-100 text-red-700 text-xs font-bold rounded">Affidavit of Death</span>
-                              <span className="px-2 py-1 bg-orange-100 text-orange-700 text-xs font-bold rounded">Tier 2 Agent</span>
-                              <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded">Huge Lot</span>
-                            </div>
-                          </div>
-                          
-                          <div className="bg-white rounded-lg border border-orange-200 p-4 shadow-sm">
-                            <div className="flex items-start gap-3">
-                              <div className="w-10 h-10 bg-gradient-to-br from-[#FF6600] to-[#FF8533] rounded-xl flex items-center justify-center shadow-sm shrink-0">
-                                <Lightbulb className="w-5 h-5 text-white" />
-                              </div>
-                              <div>
-                                <h3 className="font-bold text-gray-900 mb-1">High-Distress "4-D" Scenario + Investor-Friendly Agent</h3>
-                                <p className="text-sm text-gray-600">Driven by Death and Debt (Bankruptcy + Affidavit). Agent is Tier 2 and has closed 4+ investor deals. Asset has massive lot value ignored by retail market.</p>
-                              </div>
-                            </div>
-                          </div>
+                        {/* Toggle Header */}
+                        <div className="border-b border-gray-200 p-4 flex items-center gap-2">
+                          <button
+                            onClick={() => setIQViewMode('stats')}
+                            className={cn(
+                              "px-4 py-2 text-sm font-bold rounded transition",
+                              iQViewMode === 'stats' 
+                                ? "bg-gray-900 text-white" 
+                                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                            )}
+                          >
+                            SUMMARY
+                          </button>
+                          <button
+                            onClick={() => setIQViewMode('description')}
+                            className={cn(
+                              "px-4 py-2 text-sm font-bold rounded transition",
+                              iQViewMode === 'description' 
+                                ? "bg-gray-900 text-white" 
+                                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                            )}
+                          >
+                            FULL REPORT
+                          </button>
                         </div>
 
-                        {/* MAIN CONTENT - 3-Column Intelligence Grid */}
-                        <div className="grid grid-cols-3 divide-x divide-gray-200">
+                        {/* Content Area */}
+                        <div className="p-6">
                           
-                          {/* Column 1: Seller Intelligence */}
-                          <div className="p-5">
-                            <div className="flex items-center gap-2 mb-4">
-                              <div className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
-                                <AlertTriangle className="w-4 h-4 text-red-600" />
+                          {iQViewMode === 'stats' ? (
+                            /* SUMMARY VIEW */
+                            <div className="space-y-6">
+                              <p className="text-xs text-gray-500 uppercase tracking-wide mb-4">Quick-scan — what matters and why</p>
+                              
+                              {/* PROPERTY */}
+                              <div className="border-b border-gray-100 pb-5">
+                                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-2">PROPERTY</h3>
+                                <p className="text-sm"><span className="font-bold">Status:</span> True Fixer / Strictly AS-IS</p>
+                                <p className="text-sm text-gray-600 mt-2"><span className="font-medium">Why it Matters:</span> The "No Repairs / Credits" term eliminates all retail buyers. Only investors or cash players qualify. The play here is speed and certainty — whoever moves first wins.</p>
                               </div>
+
+                              {/* SELLER */}
+                              <div className="border-b border-gray-100 pb-5">
+                                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-2">SELLER</h3>
+                                <p className="text-sm"><span className="font-bold">Status:</span> Critical Distress (NOD + Tax + Death)</p>
+                                <p className="text-sm text-gray-600 mt-2"><span className="font-medium">Why it Matters:</span> Seller's losing equity every day. Foreclosure and tax penalties are stacking. Death in title adds urgency — the estate must close fast.</p>
+                              </div>
+
+                              {/* AGENT */}
+                              <div className="border-b border-gray-100 pb-5">
+                                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-2">AGENT</h3>
+                                <p className="text-sm"><span className="font-bold">Status:</span> Aaron Mills – Tier 2 (Investor-Friendly)</p>
+                                <p className="text-sm text-gray-600 mt-2"><span className="font-medium">Why it Matters:</span> He already works with LLC buyers (LA21G $1.95M / MA Group $1.05M). He doesn't need education — he needs confidence you'll perform.</p>
+                              </div>
+
+                              {/* APPROACH */}
                               <div>
-                                <h4 className="font-bold text-gray-900 text-sm">Seller Intelligence</h4>
-                                <span className="text-xs text-red-600 font-medium">The Pressure</span>
+                                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-2">APPROACH</h3>
+                                <p className="text-sm"><span className="font-bold">Status:</span> Status-Based Pressure</p>
+                                <p className="text-sm text-gray-600 mt-2"><span className="font-medium">Why it Matters:</span></p>
+                                <ul className="text-sm text-gray-600 mt-1 space-y-1 ml-4">
+                                  <li>• If Active → Offer double-end, push immediate access.</li>
+                                  <li>• If Pending → Question buyer's deposit / performance.</li>
+                                  <li>• If Aged → Use "expiration pressure" and unpaid taxes to trigger movement.</li>
+                                </ul>
                               </div>
                             </div>
-                            
-                            <div className="space-y-3">
-                              <div className="flex justify-between items-center">
-                                <span className="text-xs text-gray-500">Propensity Score</span>
-                                <span className="text-sm font-bold text-red-600">11 / 8</span>
-                              </div>
-                              <div className="flex justify-between items-center">
-                                <span className="text-xs text-gray-500">Motivation Level</span>
-                                <span className="px-2 py-0.5 bg-red-100 text-red-700 text-xs font-bold rounded">CRITICAL</span>
-                              </div>
+                          ) : (
+                            /* FULL REPORT VIEW */
+                            <div className="space-y-6">
+                              <p className="text-xs text-gray-500 uppercase tracking-wide mb-4">Deep dive — all execution data, no fluff</p>
                               
-                              <div className="pt-2 border-t border-gray-100">
-                                <span className="text-xs text-gray-500 block mb-2">Distress Flags</span>
-                                <div className="space-y-1.5">
-                                  <div className="flex items-center gap-2 text-xs">
-                                    <span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span>
-                                    <span className="text-gray-700">Bankruptcy / Judgment</span>
+                              {/* PROPERTY */}
+                              <div className="border-b border-gray-100 pb-5">
+                                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-3">PROPERTY</h3>
+                                <ul className="text-sm text-gray-700 space-y-2">
+                                  <li><span className="font-medium">Terms:</span> "Strictly AS-IS." No repairs / credits / allowances.</li>
+                                  <li><span className="font-medium">Condition:</span> Non-financeable fixer; full renovation required.</li>
+                                  <li><span className="font-medium">Strategy:</span> Price must be set upfront based on current condition — no re-trade later. Compete on speed, not dollars.</li>
+                                </ul>
+                              </div>
+
+                              {/* SELLER */}
+                              <div className="border-b border-gray-100 pb-5">
+                                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-3">SELLER</h3>
+                                <p className="text-sm font-medium text-gray-700 mb-2">Distress Indicators:</p>
+                                <ul className="text-sm text-gray-700 space-y-1 ml-4">
+                                  <li>• Notice of Trustee Sale (8 pts)</li>
+                                  <li>• Notice of Default (6 pts)</li>
+                                  <li>• Tax Delinquency (5 pts)</li>
+                                  <li>• Affidavit of Death (5 pts)</li>
+                                  <li>• Bankruptcy / Judgment (4 pts)</li>
+                                </ul>
+                                <p className="text-sm text-gray-600 mt-3"><span className="font-medium">Strategic Insight:</span> Seller has zero holding power. Every delay compounds debt. They'll take certainty over top-price — deliver proof of funds and a tight timeline.</p>
+                              </div>
+
+                              {/* AGENT */}
+                              <div className="border-b border-gray-100 pb-5">
+                                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-3">AGENT – AARON MILLS</h3>
+                                <ul className="text-sm text-gray-700 space-y-2">
+                                  <li><span className="font-medium">Classification:</span> Tier 2 — Mid-Value Agent / Investor Networked</li>
+                                  <li><span className="font-medium">Role Combination:</span> 4 (Regional focus + Investor clients)</li>
+                                  <li><span className="font-medium">Production Level:</span> Low volume / High relevance</li>
+                                </ul>
+                                <p className="text-sm font-medium text-gray-700 mt-3 mb-2">Investor Clients:</p>
+                                <ul className="text-sm text-gray-700 space-y-1 ml-4">
+                                  <li>• LA21G LLC – $1.95M (High-value acquisition)</li>
+                                  <li>• MA Group LLC – $1.05M (Mid-range investment)</li>
+                                  <li>• Constar International / BDI Enterprise – Smaller plays</li>
+                                </ul>
+                                <p className="text-sm text-gray-700 mt-2"><span className="font-medium">Partners:</span> Goldman Sachs Bank USA (lender), First American Title</p>
+                                <p className="text-sm text-gray-600 mt-3"><span className="font-medium">Insight:</span> Understands investor structure, funding timelines, and double-end value. Speaks deal fluently — talk performance, not process.</p>
+                              </div>
+
+                              {/* APPROACH - SCRIPTS */}
+                              <div>
+                                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-3">APPROACH – EXECUTION SCRIPTS</h3>
+                                
+                                <div className="space-y-4">
+                                  <div className="bg-gray-50 rounded-lg p-4">
+                                    <p className="text-xs font-bold text-gray-500 uppercase mb-2">1. Active (New Listing / Just Hit Market)</p>
+                                    <p className="text-sm text-gray-700 italic">"Hey Aaron, saw you just listed that fixer. I know you work with LA21G and MA Group — we're in that same lane. Since it's Strictly AS-IS, if I bring a clean cash offer today, can you represent me (double-end) and meet me at the property? If not, what's the seller's plan — Best and Final date or first solid offer wins?"</p>
                                   </div>
-                                  <div className="flex items-center gap-2 text-xs">
-                                    <span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span>
-                                    <span className="text-gray-700">Affidavit of Death</span>
+                                  
+                                  <div className="bg-gray-50 rounded-lg p-4">
+                                    <p className="text-xs font-bold text-gray-500 uppercase mb-2">2. Pending / Backup (Deposit Check)</p>
+                                    <p className="text-sm text-gray-700 italic">"Hey Aaron, congrats on pending the deal. Given the NOD and tax delinquency, timing's tight. Has your buyer actually dropped their hard deposit yet or still verbal? If they stall, I can step in with a hard offer today so you don't lose momentum."</p>
                                   </div>
-                                  <div className="flex items-center gap-2 text-xs">
-                                    <span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span>
-                                    <span className="text-gray-700">High Mortgage Debt</span>
+                                  
+                                  <div className="bg-gray-50 rounded-lg p-4">
+                                    <p className="text-xs font-bold text-gray-500 uppercase mb-2">3. Aged (70+ Days / Expiration Pressure)</p>
+                                    <p className="text-sm text-gray-700 italic">"Hey Aaron, this one's been sitting since [Date]. With the NOD and tax issues, the seller's bleeding equity every day. Why hasn't it moved? Would they consider a quick cash exit before the listing expires?"</p>
                                   </div>
                                 </div>
                               </div>
-                              
-                              <div className="pt-2 border-t border-gray-100">
-                                <p className="text-xs text-gray-600 italic">"Legal pressure creates non-negotiable timeline."</p>
-                              </div>
                             </div>
-                          </div>
-
-                          {/* Column 2: Property Intelligence */}
-                          <div className="p-5">
-                            <div className="flex items-center gap-2 mb-4">
-                              <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                                <Home className="w-4 h-4 text-blue-600" />
-                              </div>
-                              <div>
-                                <h4 className="font-bold text-gray-900 text-sm">Property Intelligence</h4>
-                                <span className="text-xs text-blue-600 font-medium">The Asset</span>
-                              </div>
-                            </div>
-                            
-                            <div className="space-y-3">
-                              <div className="flex justify-between items-center">
-                                <span className="text-xs text-gray-500">List Price</span>
-                                <span className="text-sm font-bold text-gray-900">$975,000</span>
-                              </div>
-                              <div className="flex justify-between items-center">
-                                <span className="text-xs text-gray-500">Price-to-Future-Value</span>
-                                <span className="text-sm font-bold text-green-600">82%</span>
-                              </div>
-                              <div className="flex justify-between items-center">
-                                <span className="text-xs text-gray-500">Days on Market</span>
-                                <span className="text-sm font-bold text-amber-600">45 Days</span>
-                              </div>
-                              <div className="flex justify-between items-center">
-                                <span className="text-xs text-gray-500">Lot Size</span>
-                                <span className="text-sm font-bold text-blue-600">36,600 sq ft</span>
-                              </div>
-                              
-                              <div className="pt-2 border-t border-gray-100">
-                                <p className="text-xs text-gray-600 italic">"Value-Add opportunity. Aged listing with discount potential."</p>
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Column 3: Agent Intelligence */}
-                          <div className="p-5">
-                            <div className="flex items-center gap-2 mb-4">
-                              <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
-                                <User className="w-4 h-4 text-orange-600" />
-                              </div>
-                              <div>
-                                <h4 className="font-bold text-gray-900 text-sm">Agent Intelligence</h4>
-                                <span className="text-xs text-orange-600 font-medium">The Access</span>
-                              </div>
-                            </div>
-                            
-                            <div className="space-y-3">
-                              <div>
-                                <span className="text-xs text-gray-500 block">Agent Name</span>
-                                <span className="text-sm font-bold text-gray-900">Aaron Mills</span>
-                              </div>
-                              <div className="flex justify-between items-center">
-                                <span className="text-xs text-gray-500">Classification</span>
-                                <span className="px-2 py-0.5 bg-orange-100 text-orange-700 text-xs font-bold rounded">Tier 2</span>
-                              </div>
-                              <div>
-                                <span className="text-xs text-gray-500 block">Role</span>
-                                <span className="text-xs font-medium text-gray-700">Sells TO Investors</span>
-                              </div>
-                              
-                              <div className="pt-2 border-t border-gray-100">
-                                <span className="text-xs text-gray-500 block mb-2">Buyer Ecosystem</span>
-                                <div className="space-y-1.5">
-                                  <div className="flex items-center justify-between text-xs">
-                                    <span className="text-gray-700 font-medium">LA21G LLC</span>
-                                    <span className="text-gray-500">$1.95M</span>
-                                  </div>
-                                  <div className="flex items-center justify-between text-xs">
-                                    <span className="text-gray-700 font-medium">MA GROUP LLC</span>
-                                    <span className="text-gray-500">$1.05M</span>
-                                  </div>
-                                  <div className="flex items-center justify-between text-xs">
-                                    <span className="text-gray-700 font-medium">CONSTAR INT'L</span>
-                                    <span className="text-gray-500">Volume</span>
-                                  </div>
-                                </div>
-                              </div>
-                              
-                              <div className="pt-2 border-t border-gray-100">
-                                <span className="text-xs text-gray-500 block mb-1">Partners</span>
-                                <div className="text-xs text-gray-600">
-                                  <div>Lender: <span className="font-medium">Goldman Sachs</span></div>
-                                  <div>Title: <span className="font-medium">First American</span></div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* FOOTER SECTION - The Script */}
-                        <div className="bg-gray-50 border-t border-gray-200 p-5">
-                          <div className="flex items-center gap-2 mb-3">
-                            <MessageSquare className="w-4 h-4 text-gray-500" />
-                            <h4 className="font-bold text-gray-900 text-sm">Call Script</h4>
-                          </div>
-                          <div className="bg-white rounded-lg border border-gray-200 p-4">
-                            <p className="text-sm text-gray-700 leading-relaxed">
-                              "Hello Aaron, this is <span className="font-bold text-[#FF6600]">[Your Name]</span> with <span className="font-bold text-[#FF6600]">[Company]</span>. I noticed your recent transaction with <span className="font-bold text-blue-600">LA21G LLC</span> and wanted to reach out about your listing on Larch. I work with investors who specialize in properties with value-add potential, and this 36,600 sq ft lot caught our attention. Would you have a few minutes to discuss?"
-                            </p>
-                          </div>
+                          )}
                         </div>
                     </div>
 
