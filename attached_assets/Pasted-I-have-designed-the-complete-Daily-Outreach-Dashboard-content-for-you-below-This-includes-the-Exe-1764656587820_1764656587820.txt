@@ -1,0 +1,70 @@
+I have designed the complete "Daily Outreach" Dashboard content for you below. This includes the Executive Summary, the Detailed Deep Dive (incorporating the full Agent Report), and the Prompt for Replit so you can build this exact UI.1. The Dashboard Content StructureThis is exactly how the data should appear on the screen to tell the "Story."Layer 1: The Executive Summary (The "Why")(Top of page, bold visual container)Headline: High-Distress "4-D" Seller Scenario + Investor-Friendly Agent (Tier 2)The Deal Story:This opportunity is driven by a convergence of Death and Debt. The seller is facing extreme pressure due to active bankruptcy, judgments, and an affidavit of death. While the motivation is critical, the asset is strong: a massive 36,600 sq ft lot priced at 82% of Future Value.The Execution:The agent, Aaron Mills, is a Tier 2 Investor-Active agent. He has closed 4+ transactions with LLCs (like LA21G & MA Group). He does not need "retail" education; he needs speed and certainty to solve his seller's title issues.Layer 2: The Full Report (The Deep Dive)(3-Column Grid below the summary)1. SELLER INTELLIGENCE2. PROPERTY INTELLIGENCE3. AGENT INTELLIGENCEStatus: 🔥 Critical DistressStatus: 📉 Undervalued AssetStatus: 🤝 Tier 2 (Investor-Friendly)Motivation (The 4 D's):• Death: Affidavit of Death Filed• Debt: Bankruptcy / Judgment• Debt: High Mortgage BalanceThe Asset:• Address: 10573 Larch, Bloomington• List Price: $975,000• Lot Size: 36,600 sq ft (Development potential)• House: 1,951 sq ft / 1940 BuiltClassification:• Name: Aaron Mills• Role: Sells TO Investors• Production: Low Vol / High RelevanceUrgency Signals:• Propensity Score: 11/8• Days on Market: 45 (Aging)The combination of Judgment + Death creates a hard deadline for the estate.The "Math":• Price to Future Value: 82%• Est. Future Value: ~$1.2M+• Strategy: Value-Add / WholesaleBuyer Ecosystem (The "Proof"):• LA21G LLC: Bought for $1.95M (Huntington Beach)• MA GROUP LLC: Bought for $1.05M (Los Angeles)• Other Buyers: Constar Int'l, BDI Enterprise• Price Lanes: $555k - $1.95MPartners:• Lenders: Goldman Sachs, PrideCo• Title: First American, Chicago TitleLayer 3: The Alignment Script(Bottom of page, sticky footer or distinct section)"Hello Aaron, it’s great to connect. I’m reaching out because I see you’re handling the Larch property. I dug into your track record and noticed you’ve done some solid work with investors like LA21G LLC and MA GROUP recently—closing deals ranging from $555k all the way up to $1.95M.I’m with FlipIQ. We aren't wholesalers looking to assign a contract; we are data-driven buyers looking to fit into that same 'buyer lane' you've established with those other groups. We focus on properties like Larch where we can solve the speed/certainty issue—which looks critical here given the Affidavit of Death and Bankruptcy flags.Since we buy in the exact price lanes you already sell in, I wanted to see if we could be a backup resource for you on this deal? We can provide a same-day inspection and a clean offer that removes the headache for your seller.What is the best way to submit an offer that makes your life easier on this one?"2. Prompt for Replit (Copy & Paste)Use this prompt in Replit (Agent mode or standard chat) to generate the code for this exact layout.Copy the text below:PlaintextI need you to build a React dashboard component called "DailyOutreach" using Tailwind CSS. This dashboard is for a Real Estate Acquisition Associate to review a specific deal and make a call.
+
+The layout must follow a "Story First" hierarchy with three distinct sections:
+
+1.  **HEADER SECTION (Executive Summary):**
+    * Title: "Deal Narrative: 10573 Larch, Bloomington"
+    * A prominent "Why This Deal" box. It should summarize the high-level story.
+    * Use badges/tags for key signals: "Bankruptcy", "Affidavit of Death", "Tier 2 Agent", "Huge Lot".
+
+2.  **MAIN CONTENT (The 3-Column Intelligence Grid):**
+    * Create a 3-column grid layout.
+    * **Column 1: Seller Intelligence.** Focus on "The Pressure".
+        * Data points: Propensity Score (11/8), Flags (Bankruptcy, Judgment, Death), Motivation Level (Critical).
+    * **Column 2: Property Intelligence.** Focus on "The Asset".
+        * Data points: Price ($975k), Price-to-Future-Value (82%), Lot Size (36,600 sq ft), Days on Market (45).
+    * **Column 3: Agent Intelligence.** Focus on "The Access".
+        * This column needs the most detail.
+        * Agent Name: Aaron Mills.
+        * Classification: Tier 2 - Mid-Value Agent (Sells TO Investors).
+        * **Buyer Ecosystem Section:** List his top investors (LA21G LLC, MA GROUP LLC, CONSTAR INTERNATIONAL). Show the price range ($555k - $1.95M).
+        * Partners Section: List Lenders (Goldman Sachs) and Title (First American).
+
+3.  **FOOTER SECTION (The Script):**
+    * A distinct section at the bottom containing the call script.
+    * The script should include dynamic placeholders (e.g., "Mentioning LA21G LLC").
+
+**Styling Requirements:**
+* Use a clean, modern "Dashboard" aesthetic (white background, gray borders, subtle shadows).
+* Use distinct colors for the columns to group them logically (e.g., Red accents for Seller Distress, Blue for Property Data, Orange for Agent Info).
+* Make sure the text is readable and hierarchy is clear (Bold headings, smaller details).
+
+**Hardcoded Data for the Component:**
+Please use this exact JSON object to populate the component:
+
+const dealData = {
+  address: "10573 Larch, Bloomington, CA 92316",
+  summary: {
+    headline: "High-Distress '4-D' Scenario + Investor-Friendly Agent",
+    narrative: "Driven by Death and Debt (Bankruptcy + Affidavit). Agent is Tier 2 and has closed 4+ investor deals. Asset has massive lot value ignored by retail market."
+  },
+  seller: {
+    score: "11/8",
+    status: "Critical Distress",
+    flags: ["Bankruptcy / Judgment", "Affidavit of Death", "High Mortgage Debt"],
+    insight: "Legal pressure creates non-negotiable timeline."
+  },
+  property: {
+    price: "$975,000",
+    pfv: "82%",
+    dom: "45 Days",
+    lot: "36,600 sq ft",
+    insight: "Value-Add opportunity. Aged listing."
+  },
+  agent: {
+    name: "Aaron Mills",
+    tier: "Tier 2 — Mid-Value Agent",
+    role: "Sells TO Investors",
+    markets: "Los Angeles, Huntington Beach, Ontario",
+    investors: [
+      { name: "LA21G LLC", note: "$1.95M High-Value" },
+      { name: "MA GROUP LLC", note: "$1.05M Purchase" },
+      { name: "CONSTAR INT'L", note: "Volume Buyer" }
+    ],
+    partners: {
+      lender: "Goldman Sachs Bank USA",
+      title: "First American Title"
+    }
+  },
+  script: "Hello Aaron... I noticed your recent transaction with LA21G LLC..." // Truncated for brevity, use full script in code.
+};

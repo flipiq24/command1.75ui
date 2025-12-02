@@ -32,7 +32,9 @@ import {
   Send,
   Clock,
   FileText,
-  Info
+  Info,
+  Home,
+  User
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -1715,127 +1717,184 @@ function DailyOutreachContent() {
                         </div>
                     </div>
 
-                    {/* IQ Property Intelligence Section */}
-                    <div className="bg-gradient-to-br from-white to-orange-50/30 border border-gray-200 rounded-xl mt-4 shadow-sm">
-                        {/* iQ Intelligence Content */}
-                        <div className="p-6">
-                          {/* Header with pulsing animation */}
-                          <div className="flex items-center justify-between mb-6">
-                            <div className="flex items-center gap-3">
-                              <div className="relative w-10 h-10 bg-gradient-to-br from-[#FF6600] to-[#FF8533] rounded-xl flex items-center justify-center shadow-sm">
+                    {/* Deal Narrative Dashboard */}
+                    <div className="bg-white border border-gray-200 rounded-xl mt-4 shadow-sm overflow-hidden">
+                        
+                        {/* HEADER SECTION - Executive Summary */}
+                        <div className="bg-gradient-to-r from-orange-50 to-amber-50 border-b border-gray-200 p-6">
+                          <div className="flex items-center justify-between mb-4">
+                            <h2 className="text-xl font-bold text-gray-900">Deal Narrative: {currentDeal.address.split(',')[0]}</h2>
+                            <div className="flex items-center gap-2">
+                              <span className="px-2 py-1 bg-red-100 text-red-700 text-xs font-bold rounded">Bankruptcy</span>
+                              <span className="px-2 py-1 bg-red-100 text-red-700 text-xs font-bold rounded">Affidavit of Death</span>
+                              <span className="px-2 py-1 bg-orange-100 text-orange-700 text-xs font-bold rounded">Tier 2 Agent</span>
+                              <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded">Huge Lot</span>
+                            </div>
+                          </div>
+                          
+                          <div className="bg-white rounded-lg border border-orange-200 p-4 shadow-sm">
+                            <div className="flex items-start gap-3">
+                              <div className="w-10 h-10 bg-gradient-to-br from-[#FF6600] to-[#FF8533] rounded-xl flex items-center justify-center shadow-sm shrink-0">
                                 <Lightbulb className="w-5 h-5 text-white" />
-                                {!showCompletionState && (
-                                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#FF6600] rounded-full animate-ping"></div>
-                                )}
                               </div>
                               <div>
-                                <h2 className="text-lg font-bold text-gray-900">iQ Property Intelligence</h2>
-                                {!showCompletionState ? (
-                                  <div className="flex items-center gap-1 text-xs text-gray-500">
-                                    <span>analyzing</span>
-                                    <span className="inline-flex gap-0.5">
-                                      <span className="w-1 h-1 bg-[#FF6600] rounded-full animate-bounce" style={{animationDelay: '0ms'}}></span>
-                                      <span className="w-1 h-1 bg-[#FF6600] rounded-full animate-bounce" style={{animationDelay: '150ms'}}></span>
-                                      <span className="w-1 h-1 bg-[#FF6600] rounded-full animate-bounce" style={{animationDelay: '300ms'}}></span>
-                                    </span>
-                                  </div>
-                                ) : (
-                                  <div className="flex items-center gap-1.5 text-xs text-green-600 animate-in fade-in duration-300">
-                                    <Check className="w-3 h-3" />
-                                    <span>Analysis complete</span>
-                                  </div>
-                                )}
+                                <h3 className="font-bold text-gray-900 mb-1">High-Distress "4-D" Scenario + Investor-Friendly Agent</h3>
+                                <p className="text-sm text-gray-600">Driven by Death and Debt (Bankruptcy + Affidavit). Agent is Tier 2 and has closed 4+ investor deals. Asset has massive lot value ignored by retail market.</p>
                               </div>
                             </div>
                           </div>
+                        </div>
 
-                          {/* Streaming Content */}
-                          <div key={iqRevealKey} className="space-y-2 text-sm">
-                            {streamingLines.map((line, index) => {
-                              const displayedText = displayedLines.get(index) || '';
-                              const isCurrentLine = index === currentLineIndex;
-                              const hasStarted = index <= currentLineIndex;
-
-                              if (!hasStarted) return null;
-
-                              if (line.type === 'stat') {
-                                const fullText = `${line.label}: ${line.value}`;
-                                const colonIndex = fullText.indexOf(':');
-                                const displayedLabel = displayedText.slice(0, Math.min(displayedText.length, colonIndex + 1));
-                                const displayedValue = displayedText.length > colonIndex + 1 ? displayedText.slice(colonIndex + 1) : '';
-                                const valueColorClass = line.color || 'text-gray-900';
-                                
-                                return (
-                                  <div key={index} className="flex items-center">
-                                    <span className="text-gray-500">{displayedLabel}</span>
-                                    {line.isLink && displayedValue.includes('[View Agent]') ? (
-                                      <a 
-                                        href={line.linkUrl} 
-                                        target="_blank" 
-                                        rel="noopener noreferrer" 
-                                        className="text-blue-600 underline hover:text-blue-800 font-semibold"
-                                      >
-                                        {displayedValue}
-                                      </a>
-                                    ) : (
-                                      <span className={cn(valueColorClass, "font-semibold")}>{displayedValue}</span>
-                                    )}
-                                    {isCurrentLine && showCursor && (
-                                      <span className="inline-block w-0.5 h-4 bg-[#FF6600] ml-0.5 animate-pulse"></span>
-                                    )}
-                                  </div>
-                                );
-                              }
-
-                              if (line.type === 'header') {
-                                return (
-                                  <div key={index} className="pt-6 pb-2">
-                                    <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                                      <Sparkles className="w-5 h-5 text-[#FF6600]" />
-                                      {displayedText}
-                                      {isCurrentLine && showCursor && (
-                                        <span className="inline-block w-0.5 h-5 bg-[#FF6600] animate-pulse"></span>
-                                      )}
-                                    </h3>
-                                  </div>
-                                );
-                              }
-
-                              if (line.type === 'bullet') {
-                                const bulletColor = line.color || 'text-gray-700';
-                                const dotColor = line.color ? line.color.replace('text-', 'text-') : 'text-[#FF6600]';
-                                return (
-                                  <div key={index} className="flex items-start gap-2 pl-2">
-                                    <span className={cn(dotColor, "mt-0.5")}>•</span>
-                                    <span className={bulletColor}>
-                                      {displayedText}
-                                      {isCurrentLine && showCursor && (
-                                        <span className="inline-block w-0.5 h-4 bg-[#FF6600] ml-0.5 animate-pulse"></span>
-                                      )}
-                                    </span>
-                                  </div>
-                                );
-                              }
-
+                        {/* MAIN CONTENT - 3-Column Intelligence Grid */}
+                        <div className="grid grid-cols-3 divide-x divide-gray-200">
+                          
+                          {/* Column 1: Seller Intelligence */}
+                          <div className="p-5">
+                            <div className="flex items-center gap-2 mb-4">
+                              <div className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
+                                <AlertTriangle className="w-4 h-4 text-red-600" />
+                              </div>
+                              <div>
+                                <h4 className="font-bold text-gray-900 text-sm">Seller Intelligence</h4>
+                                <span className="text-xs text-red-600 font-medium">The Pressure</span>
+                              </div>
+                            </div>
+                            
+                            <div className="space-y-3">
+                              <div className="flex justify-between items-center">
+                                <span className="text-xs text-gray-500">Propensity Score</span>
+                                <span className="text-sm font-bold text-red-600">11 / 8</span>
+                              </div>
+                              <div className="flex justify-between items-center">
+                                <span className="text-xs text-gray-500">Motivation Level</span>
+                                <span className="px-2 py-0.5 bg-red-100 text-red-700 text-xs font-bold rounded">CRITICAL</span>
+                              </div>
                               
-                              return null;
-                            })}
-                          </div>
-
-                          <div className="border-t border-gray-200 pt-6 mt-6">
-                            <div className="flex items-center gap-3 bg-gray-50 rounded-full px-4 py-3 border border-gray-200">
-                              <Plus className="w-5 h-5 text-gray-400" />
-                              <input 
-                                type="text" 
-                                placeholder="Ask anything" 
-                                className="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none"
-                                data-testid="input-ask-anything"
-                              />
-                              <Mic className="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-600" />
-                              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center cursor-pointer hover:bg-blue-700">
-                                <MessageSquare className="w-4 h-4" style={{color: 'white'}} />
+                              <div className="pt-2 border-t border-gray-100">
+                                <span className="text-xs text-gray-500 block mb-2">Distress Flags</span>
+                                <div className="space-y-1.5">
+                                  <div className="flex items-center gap-2 text-xs">
+                                    <span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span>
+                                    <span className="text-gray-700">Bankruptcy / Judgment</span>
+                                  </div>
+                                  <div className="flex items-center gap-2 text-xs">
+                                    <span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span>
+                                    <span className="text-gray-700">Affidavit of Death</span>
+                                  </div>
+                                  <div className="flex items-center gap-2 text-xs">
+                                    <span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span>
+                                    <span className="text-gray-700">High Mortgage Debt</span>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              <div className="pt-2 border-t border-gray-100">
+                                <p className="text-xs text-gray-600 italic">"Legal pressure creates non-negotiable timeline."</p>
                               </div>
                             </div>
+                          </div>
+
+                          {/* Column 2: Property Intelligence */}
+                          <div className="p-5">
+                            <div className="flex items-center gap-2 mb-4">
+                              <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <Home className="w-4 h-4 text-blue-600" />
+                              </div>
+                              <div>
+                                <h4 className="font-bold text-gray-900 text-sm">Property Intelligence</h4>
+                                <span className="text-xs text-blue-600 font-medium">The Asset</span>
+                              </div>
+                            </div>
+                            
+                            <div className="space-y-3">
+                              <div className="flex justify-between items-center">
+                                <span className="text-xs text-gray-500">List Price</span>
+                                <span className="text-sm font-bold text-gray-900">$975,000</span>
+                              </div>
+                              <div className="flex justify-between items-center">
+                                <span className="text-xs text-gray-500">Price-to-Future-Value</span>
+                                <span className="text-sm font-bold text-green-600">82%</span>
+                              </div>
+                              <div className="flex justify-between items-center">
+                                <span className="text-xs text-gray-500">Days on Market</span>
+                                <span className="text-sm font-bold text-amber-600">45 Days</span>
+                              </div>
+                              <div className="flex justify-between items-center">
+                                <span className="text-xs text-gray-500">Lot Size</span>
+                                <span className="text-sm font-bold text-blue-600">36,600 sq ft</span>
+                              </div>
+                              
+                              <div className="pt-2 border-t border-gray-100">
+                                <p className="text-xs text-gray-600 italic">"Value-Add opportunity. Aged listing with discount potential."</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Column 3: Agent Intelligence */}
+                          <div className="p-5">
+                            <div className="flex items-center gap-2 mb-4">
+                              <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                                <User className="w-4 h-4 text-orange-600" />
+                              </div>
+                              <div>
+                                <h4 className="font-bold text-gray-900 text-sm">Agent Intelligence</h4>
+                                <span className="text-xs text-orange-600 font-medium">The Access</span>
+                              </div>
+                            </div>
+                            
+                            <div className="space-y-3">
+                              <div>
+                                <span className="text-xs text-gray-500 block">Agent Name</span>
+                                <span className="text-sm font-bold text-gray-900">Aaron Mills</span>
+                              </div>
+                              <div className="flex justify-between items-center">
+                                <span className="text-xs text-gray-500">Classification</span>
+                                <span className="px-2 py-0.5 bg-orange-100 text-orange-700 text-xs font-bold rounded">Tier 2</span>
+                              </div>
+                              <div>
+                                <span className="text-xs text-gray-500 block">Role</span>
+                                <span className="text-xs font-medium text-gray-700">Sells TO Investors</span>
+                              </div>
+                              
+                              <div className="pt-2 border-t border-gray-100">
+                                <span className="text-xs text-gray-500 block mb-2">Buyer Ecosystem</span>
+                                <div className="space-y-1.5">
+                                  <div className="flex items-center justify-between text-xs">
+                                    <span className="text-gray-700 font-medium">LA21G LLC</span>
+                                    <span className="text-gray-500">$1.95M</span>
+                                  </div>
+                                  <div className="flex items-center justify-between text-xs">
+                                    <span className="text-gray-700 font-medium">MA GROUP LLC</span>
+                                    <span className="text-gray-500">$1.05M</span>
+                                  </div>
+                                  <div className="flex items-center justify-between text-xs">
+                                    <span className="text-gray-700 font-medium">CONSTAR INT'L</span>
+                                    <span className="text-gray-500">Volume</span>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              <div className="pt-2 border-t border-gray-100">
+                                <span className="text-xs text-gray-500 block mb-1">Partners</span>
+                                <div className="text-xs text-gray-600">
+                                  <div>Lender: <span className="font-medium">Goldman Sachs</span></div>
+                                  <div>Title: <span className="font-medium">First American</span></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* FOOTER SECTION - The Script */}
+                        <div className="bg-gray-50 border-t border-gray-200 p-5">
+                          <div className="flex items-center gap-2 mb-3">
+                            <MessageSquare className="w-4 h-4 text-gray-500" />
+                            <h4 className="font-bold text-gray-900 text-sm">Call Script</h4>
+                          </div>
+                          <div className="bg-white rounded-lg border border-gray-200 p-4">
+                            <p className="text-sm text-gray-700 leading-relaxed">
+                              "Hello Aaron, this is <span className="font-bold text-[#FF6600]">[Your Name]</span> with <span className="font-bold text-[#FF6600]">[Company]</span>. I noticed your recent transaction with <span className="font-bold text-blue-600">LA21G LLC</span> and wanted to reach out about your listing on Larch. I work with investors who specialize in properties with value-add potential, and this 36,600 sq ft lot caught our attention. Would you have a few minutes to discuss?"
+                            </p>
                           </div>
                         </div>
                     </div>
