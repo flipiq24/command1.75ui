@@ -1720,29 +1720,14 @@ function DailyOutreachContent() {
                     {/* Deal Dossier - ChatGPT Style Report */}
                     <div className="bg-white border border-gray-200 rounded-xl mt-4 shadow-sm overflow-hidden">
                         
-                        {/* Toggle Header */}
-                        <div className="border-b border-gray-200 p-4 flex items-center gap-2">
+                        {/* Header with Toggle */}
+                        <div className="border-b border-gray-200 p-4 flex items-center justify-between">
+                          <h2 className="text-lg font-bold text-[#FF6600]">iQ Property Intelligence</h2>
                           <button
-                            onClick={() => setIQViewMode('stats')}
-                            className={cn(
-                              "px-4 py-2 text-sm font-bold rounded transition",
-                              iQViewMode === 'stats' 
-                                ? "bg-gray-900 text-white" 
-                                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                            )}
+                            onClick={() => setIQViewMode(iQViewMode === 'stats' ? 'description' : 'stats')}
+                            className="text-sm font-medium text-gray-500 hover:text-gray-700 transition"
                           >
-                            SUMMARY
-                          </button>
-                          <button
-                            onClick={() => setIQViewMode('description')}
-                            className={cn(
-                              "px-4 py-2 text-sm font-bold rounded transition",
-                              iQViewMode === 'description' 
-                                ? "bg-gray-900 text-white" 
-                                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                            )}
-                          >
-                            FULL REPORT
+                            {iQViewMode === 'stats' ? 'Full Report' : 'Summary'}
                           </button>
                         </div>
 
@@ -1752,7 +1737,6 @@ function DailyOutreachContent() {
                           {iQViewMode === 'stats' ? (
                             /* SUMMARY VIEW */
                             <div className="space-y-6">
-                              <p className="text-xs text-gray-500 uppercase tracking-wide mb-4">Quick-scan — what matters and why</p>
                               
                               {/* PROPERTY */}
                               <div className="border-b border-gray-100 pb-5">
@@ -1790,7 +1774,6 @@ function DailyOutreachContent() {
                           ) : (
                             /* FULL REPORT VIEW */
                             <div className="space-y-6">
-                              <p className="text-xs text-gray-500 uppercase tracking-wide mb-4">Deep dive — all execution data, no fluff</p>
                               
                               {/* PROPERTY */}
                               <div className="border-b border-gray-100 pb-5">
