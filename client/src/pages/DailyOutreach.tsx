@@ -1718,7 +1718,7 @@ function DailyOutreachContent() {
                     </div>
 
                     {/* Deal Dossier - ChatGPT Style Report */}
-                    <div className="bg-white border border-gray-200 rounded-xl mt-4 shadow-sm overflow-hidden">
+                    <div className="bg-white border border-gray-200 rounded-xl mt-4 shadow-sm overflow-hidden relative">
                         
                         {/* Header with Toggle */}
                         <div className="border-b border-gray-200 p-4">
@@ -1737,7 +1737,7 @@ function DailyOutreachContent() {
                         </div>
 
                         {/* Content Area */}
-                        <div className="p-6">
+                        <div className="p-6 pb-24">
                           
                           {iQViewMode === 'stats' ? (
                             /* SUMMARY VIEW */
@@ -1957,6 +1957,27 @@ function DailyOutreachContent() {
                               </div>
                             </div>
                           )}
+                        </div>
+
+                        {/* Floating ChatGPT-style Ask Anything Bar */}
+                        <div className="absolute bottom-4 left-4 right-4">
+                          <div className="bg-white rounded-full px-4 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.1),0_4px_20px_rgba(0,0,0,0.15)] border border-gray-200 flex items-center gap-3">
+                            <div className="w-8 h-8 bg-gradient-to-br from-[#FF6600] to-[#FF8533] rounded-full flex items-center justify-center shrink-0">
+                              <Sparkles className="w-4 h-4 text-white" />
+                            </div>
+                            <input 
+                              type="text" 
+                              placeholder="Ask anything about this property..." 
+                              className="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none"
+                              data-testid="input-ask-iq"
+                            />
+                            <div className="flex items-center gap-2">
+                              <Mic className="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-600 transition" />
+                              <button className="w-9 h-9 bg-[#FF6600] hover:bg-[#E55A00] rounded-full flex items-center justify-center transition shadow-md">
+                                <Send className="w-4 h-4 text-white" />
+                              </button>
+                            </div>
+                          </div>
                         </div>
                     </div>
 
