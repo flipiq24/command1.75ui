@@ -203,15 +203,6 @@ export default function PriorityAgentPanel({
           </h3>
           
           <button 
-            onClick={onCallNow}
-            className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition shadow-sm"
-            data-testid="button-header-call"
-          >
-            <Phone className="w-4 h-4" />
-            Call
-          </button>
-          
-          <button 
             onClick={onNext}
             disabled={currentIndex === totalAgents - 1}
             className={cn(
