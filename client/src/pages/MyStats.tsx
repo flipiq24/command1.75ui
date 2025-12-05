@@ -51,7 +51,7 @@ const DAILY_STATS = {
     sent: 3, 
     termsOut: 3, 
     contractSubmitted: 0,
-    negotiations: 2,
+    teamAvg: 2.7,
     teamAvgPercent: 107
   },
   communication: { 
@@ -61,6 +61,7 @@ const DAILY_STATS = {
     avgCallTime: '2:37',
     texts: 12, 
     emails: 15,
+    teamAvg: 29,
     teamAvgPercent: 107
   },
   relationships: { 
@@ -70,6 +71,7 @@ const DAILY_STATS = {
     hot: 0,
     warm: 2,
     cold: 0,
+    teamAvg: 6,
     teamAvgPercent: 50
   },
   time: { 
@@ -83,14 +85,14 @@ const DAILY_STATS = {
 };
 
 const TEAM_LEADERBOARD = [
-  { rank: 1, name: 'Maria', offers: 5, calls: 38, relationships: 6, time: 180, isUser: false },
-  { rank: 2, name: 'Tony (You)', offers: 3, calls: 32, relationships: 3, time: 145, isUser: true },
-  { rank: 3, name: 'James', offers: 3, calls: 28, relationships: 4, time: 160, isUser: false },
-  { rank: 4, name: 'Sarah', offers: 2, calls: 30, relationships: 5, time: 155, isUser: false },
-  { rank: 5, name: 'Mike', offers: 2, calls: 25, relationships: 3, time: 140, isUser: false },
-  { rank: 6, name: 'Jennifer', offers: 1, calls: 22, relationships: 2, time: 130, isUser: false },
-  { rank: 7, name: 'David', offers: 1, calls: 18, relationships: 1, time: 120, isUser: false },
-  { rank: 8, name: 'Lisa', offers: 0, calls: 15, relationships: 2, time: 110, isUser: false }
+  { rank: 1, name: 'Maria', offers: 5, communication: 38, relationships: 6, time: 180, isUser: false },
+  { rank: 2, name: 'Tony (You)', offers: 3, communication: 32, relationships: 3, time: 145, isUser: true },
+  { rank: 3, name: 'James', offers: 3, communication: 28, relationships: 4, time: 160, isUser: false },
+  { rank: 4, name: 'Sarah', offers: 2, communication: 30, relationships: 5, time: 155, isUser: false },
+  { rank: 5, name: 'Mike', offers: 2, communication: 25, relationships: 3, time: 140, isUser: false },
+  { rank: 6, name: 'Jennifer', offers: 1, communication: 22, relationships: 2, time: 130, isUser: false },
+  { rank: 7, name: 'David', offers: 1, communication: 18, relationships: 1, time: 120, isUser: false },
+  { rank: 8, name: 'Lisa', offers: 0, communication: 15, relationships: 2, time: 110, isUser: false }
 ];
 
 const MiniSparkline = ({ data, isPositive }: { data: number[], isPositive: boolean }) => {
@@ -129,6 +131,7 @@ const StatCard = ({
   unit,
   percentDiff, 
   chartData,
+  tooltip,
   isLast = false
 }: { 
   icon: React.ElementType;
@@ -137,6 +140,7 @@ const StatCard = ({
   unit?: string;
   percentDiff: number;
   chartData: number[];
+  tooltip?: React.ReactNode;
   isLast?: boolean;
 }) => {
   const isPositive = percentDiff > 0;
@@ -152,6 +156,15 @@ const StatCard = ({
         <div className="flex items-center gap-2">
           <Icon className="w-4 h-4 text-gray-400" strokeWidth={1.5} />
           <span className="text-xs font-medium text-gray-500">{label}</span>
+          {tooltip && (
+            <div className="relative group">
+              <Info className="w-3 h-3 text-gray-400 cursor-help" />
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
+                {tooltip}
+                <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+              </div>
+            </div>
+          )}
         </div>
         <span className={cn("text-xs", textColor)}>
           {sign}{Math.abs(percentDiff).toFixed(1)}% than average
@@ -185,7 +198,7 @@ function MyStatsContent() {
     {
       id: '1',
       role: 'ai',
-      content: `Hey Tony! Here's your performance overview.\n\nYou're currently #2 on the team leaderboard with 3 offers and 32 calls today. Great job on exceeding your conversation goal!\n\nToday's Highlights:\n• Offers: 3 sent (107% of Team Avg)\n• Calls: 32 (25% connected)\n• Relationships: 3 new\n\nAsk me anything about your stats, trends, or how to improve!`
+      content: `Hey Tony! Here's your performance overview.\n\nYou're currently #2 on the team leaderboard with 3 offers and 32 calls today. Great job on exceeding your conversation goal!\n\nToday's Highlights:\n• Offers: 3 sent (107% of Team Avg: 2.7)\n• Calls: 32 (25% connected)\n• Relationships: 3 new (50% of Team Avg: 6)\n\nAsk me anything about your stats, trends, or how to improve!`
     }
   ]);
   const [inputValue, setInputValue] = useState('');
@@ -215,15 +228,15 @@ function MyStatsContent() {
       const lowerMessage = userMessage.toLowerCase();
 
       if (lowerMessage.includes('call') || lowerMessage.includes('calls')) {
-        response = `Call Statistics:\n\nToday you made 32 calls with 8 conversations (25% connected).\nAverage call time: 2:37\n\nBreakdown:\n• Connected: 8\n• Texts: 12\n• Emails: 15\n\n107% of Team Average`;
+        response = `Call Statistics:\n\nToday you made 32 calls with 8 conversations (25% connected).\nAverage call time: 2:37\n\nBreakdown:\n• Connected: 8 (25%)\n• Texts: 12\n• Emails: 15\n\n107% of Team Average (Team Avg: 29)`;
       } else if (lowerMessage.includes('offer') || lowerMessage.includes('offers')) {
-        response = `Offer Statistics:\n\nToday you sent 3 offers (107% of Team Avg)\n\nBreakdown:\n• Offer Terms Sent: 3\n• Contract Submitted: 0\n• In Negotiations: 2\n\nData Source: My Stats → Offer Status Change KPIs`;
+        response = `Offer Statistics:\n\nToday you sent 3 offers\n\nBreakdown:\n• Offer Terms Sent: 3\n• Contract Submitted: 0\n\nOffers Sent = Offer Terms Sent + Contract Submitted\n\n107% of Team Average (Team Avg: 2.7)\n\nSource: REO.Technology → My Stats → Offer Status Change KPIs`;
       } else if (lowerMessage.includes('relationship') || lowerMessage.includes('agent')) {
-        response = `Relationship Statistics:\n\nToday's Progress:\n• New Relationships: 3\n• Upgraded Relationships: 3\n  - Priority: 1\n  - Hot: 0\n  - Warm: 2\n  - Cold: 0\n\n50% of Team Average`;
+        response = `Relationship Statistics:\n\nToday's Progress:\n• New Relationships: 3 (Total Added today, does NOT include upgrades)\n• Upgraded Relationships: 3 (tier increases)\n  - Priority: 1\n  - Hot: 0\n  - Warm: 2\n  - Cold: 0\n\n50% of Team Average (Team Avg: 6)`;
       } else if (lowerMessage.includes('team') || lowerMessage.includes('leaderboard') || lowerMessage.includes('rank')) {
-        response = `Team Leaderboard:\n\n1. Maria - 5 offers, 38 calls, 6 relationships\n2. Tony (You) - 3 offers, 32 calls, 3 relationships\n3. James - 3 offers, 28 calls, 4 relationships\n4. Sarah - 2 offers, 30 calls, 5 relationships\n5. Mike - 2 offers, 25 calls, 3 relationships`;
+        response = `Team Leaderboard:\n\n1. Maria - 5 offers, 38 comms, 6 relationships\n2. Tony (You) - 3 offers, 32 comms, 3 relationships\n3. James - 3 offers, 28 comms, 4 relationships\n4. Sarah - 2 offers, 30 comms, 5 relationships\n5. Mike - 2 offers, 25 comms, 3 relationships`;
       } else if (lowerMessage.includes('time')) {
-        response = `Time Statistics:\n\nTotal: 145 minutes\n\nBreakdown:\n• PIQ: 42 min\n• Comps: 78 min\n• Investment Analysis: 5 min\n• Offer Terms: 25 min\n• Agents: 10 min\n\nSource: My Stats → Time Spent per Module`;
+        response = `Time Statistics:\n\nTotal: 145 minutes\n\nBreakdown:\n• PIQ: 42 min\n• Comps: 78 min\n• Investment Analysis: 5 min\n• Offer Terms: 25 min\n• Agents: 10 min\n\nSource: REO.Technology → My Stats → Time Spent per Module`;
       } else {
         response = `I can help you understand your performance stats! Try asking about:\n\n• "How are my calls looking?"\n• "Show me my offer statistics"\n• "How am I doing on relationships?"\n• "Where do I rank on the team?"\n• "How did I spend my time?"`;
       }
@@ -264,7 +277,7 @@ function MyStatsContent() {
         </div>
       </div>
 
-      {/* Stats Cards - NEW ORDER: Offers, Communication, Relationships, Time */}
+      {/* Stats Cards - ORDER: Offers, Communication, Relationships, Time */}
       <div className="flex border-b border-gray-100 flex-shrink-0">
         <StatCard
           icon={FileText}
@@ -272,6 +285,13 @@ function MyStatsContent() {
           value={MOCK_STATS.offers.value}
           percentDiff={MOCK_STATS.offers.percentDiff}
           chartData={MOCK_STATS.offers.chartData}
+          tooltip={
+            <div>
+              <p className="font-medium mb-1">Offers</p>
+              <p className="text-gray-300">Counts only Offer Terms Sent + Contract Submitted.</p>
+              <p className="text-gray-400 mt-2 text-[10px]">Source: REO.Technology → My Stats → Offer Status Change KPIs</p>
+            </div>
+          }
         />
         <StatCard
           icon={Phone}
@@ -279,6 +299,12 @@ function MyStatsContent() {
           value={MOCK_STATS.communication.value}
           percentDiff={MOCK_STATS.communication.percentDiff}
           chartData={MOCK_STATS.communication.chartData}
+          tooltip={
+            <div>
+              <p className="font-medium mb-1">Communication</p>
+              <p className="text-gray-300">Calls from My Stats; Conversations & Call Duration from Dialpad API.</p>
+            </div>
+          }
         />
         <StatCard
           icon={Users}
@@ -286,6 +312,13 @@ function MyStatsContent() {
           value={MOCK_STATS.relationships.value}
           percentDiff={MOCK_STATS.relationships.percentDiff}
           chartData={MOCK_STATS.relationships.chartData}
+          tooltip={
+            <div>
+              <p className="font-medium mb-1">Relationships</p>
+              <p className="text-gray-300">New = Total Added Today</p>
+              <p className="text-gray-300">Upgraded = Tier increases</p>
+            </div>
+          }
         />
         <StatCard
           icon={Clock}
@@ -294,29 +327,36 @@ function MyStatsContent() {
           unit="min"
           percentDiff={MOCK_STATS.time.percentDiff}
           chartData={MOCK_STATS.time.chartData}
+          tooltip={
+            <div>
+              <p className="font-medium mb-1">Time Spent</p>
+              <p className="text-gray-300">Sum of all module minutes for today.</p>
+              <p className="text-gray-400 mt-2 text-[10px]">Source: REO.Technology → My Stats → Time Spent per Module</p>
+            </div>
+          }
           isLast
         />
       </div>
 
       {/* Scrollable Content Area */}
       <div className="flex-1 flex flex-col min-h-0 p-6 pb-24 overflow-y-auto">
-        {/* Team Leaderboard - NEW ORDER: Offers, Communication, Relationships, Time */}
+        {/* Team Leaderboard - ORDER: Offers, Communication, Relationships, Time */}
         <div className="bg-white rounded-lg border border-gray-100 p-5 mb-6 flex-shrink-0">
           <h3 className="text-sm font-semibold text-gray-900 mb-4 flex items-center gap-2">
             <Trophy className="w-4 h-4 text-yellow-500" />
             Team Leaderboard Today
           </h3>
           
-          {/* Column Headers */}
+          {/* Column Headers - Full names */}
           <div className="flex items-center justify-between py-2 px-3 text-xs text-gray-400 border-b border-gray-100 mb-1">
             <div className="flex items-center gap-3 w-40">
               <span className="w-6"></span>
               <span>Name</span>
             </div>
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4">
               <span className="w-16 text-center">Offers</span>
-              <span className="w-16 text-center">Comms</span>
-              <span className="w-20 text-center">Relations</span>
+              <span className="w-24 text-center">Communication</span>
+              <span className="w-24 text-center">Relationships</span>
               <span className="w-16 text-center">Time</span>
             </div>
           </div>
@@ -339,10 +379,10 @@ function MyStatsContent() {
                     {member.name}
                   </span>
                 </div>
-                <div className="flex items-center gap-6 text-xs text-gray-500">
+                <div className="flex items-center gap-4 text-xs text-gray-500">
                   <span className="w-16 text-center"><strong className="text-gray-900">{member.offers}</strong></span>
-                  <span className="w-16 text-center"><strong className="text-gray-900">{member.calls}</strong></span>
-                  <span className="w-20 text-center"><strong className="text-gray-900">{member.relationships}</strong></span>
+                  <span className="w-24 text-center"><strong className="text-gray-900">{member.communication}</strong></span>
+                  <span className="w-24 text-center"><strong className="text-gray-900">{member.relationships}</strong></span>
                   <span className="w-16 text-center"><strong className="text-gray-900">{member.time}</strong>m</span>
                 </div>
               </div>
@@ -350,7 +390,7 @@ function MyStatsContent() {
           </div>
         </div>
 
-        {/* Daily Performance Report - NEW FORMAT */}
+        {/* Daily Performance Report - ORDER: Offers, Communication, Relationships, Time */}
         <div className="bg-white rounded-lg border border-gray-100 p-5 mb-6 flex-shrink-0">
           <h3 className="text-sm font-semibold text-gray-900 mb-4">Daily Performance Report</h3>
           
@@ -364,7 +404,8 @@ function MyStatsContent() {
                   <div>
                     <p className="font-medium mb-1">Offers Sent</p>
                     <p className="text-gray-300">= Offer Terms Sent + Contract Submitted</p>
-                    <p className="text-gray-400 mt-2 text-[10px]">Source: My Stats → Offer Status Change KPIs</p>
+                    <p className="text-gray-300 mt-1 text-[10px]">DO NOT include In Negotiations</p>
+                    <p className="text-gray-400 mt-2 text-[10px]">Source: REO.Technology → My Stats → Offer Status Change KPIs</p>
                   </div>
                 }>
                   <Info className="w-3 h-3 text-gray-400 cursor-help" />
@@ -378,10 +419,9 @@ function MyStatsContent() {
               <div className="text-xs text-gray-500 space-y-0.5">
                 <div>Offer Terms Sent: {DAILY_STATS.offers.termsOut}</div>
                 <div>Contract Submitted: {DAILY_STATS.offers.contractSubmitted}</div>
-                <div>In Negotiations: {DAILY_STATS.offers.negotiations}</div>
               </div>
               <div className="text-xs text-green-600 font-medium pt-1">
-                {DAILY_STATS.offers.teamAvgPercent}% of Team Average
+                {DAILY_STATS.offers.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.offers.teamAvg})
               </div>
             </div>
 
@@ -402,8 +442,8 @@ function MyStatsContent() {
                       <p className="text-gray-400 text-[10px]">Source: Dialpad API → connected_calls_count</p>
                     </div>
                     <div>
-                      <p className="font-medium">% Connected</p>
-                      <p className="text-gray-300 text-[10px]">Conversations ÷ Calls</p>
+                      <p className="font-medium">% Connected (Required)</p>
+                      <p className="text-gray-300 text-[10px]">Conversations ÷ Calls (must always appear)</p>
                     </div>
                     <div>
                       <p className="font-medium">Average Call Time</p>
@@ -417,7 +457,7 @@ function MyStatsContent() {
               <div className="flex items-baseline gap-1">
                 <span className="text-lg font-bold text-green-600">✓</span>
                 <span className="text-lg font-semibold text-gray-900">{DAILY_STATS.communication.calls}</span>
-                <span className="text-xs text-gray-400">calls ({DAILY_STATS.communication.teamAvgPercent}% of Team Avg)</span>
+                <span className="text-xs text-gray-400">calls ({DAILY_STATS.communication.teamAvgPercent}% of Team Avg: {DAILY_STATS.communication.teamAvg})</span>
               </div>
               <div className="text-xs text-gray-500 space-y-0.5">
                 <div>Conversations: {DAILY_STATS.communication.conversations} ({DAILY_STATS.communication.connectedPercent}% connected)</div>
@@ -436,12 +476,12 @@ function MyStatsContent() {
                   <div className="space-y-2">
                     <div>
                       <p className="font-medium">New Relationships</p>
-                      <p className="text-gray-300 text-[10px]">Brand new relationships created today.</p>
+                      <p className="text-gray-300 text-[10px]">= Total Added today (does NOT include upgrades)</p>
                       <p className="text-gray-400 text-[10px]">Source: My Stats → Acquisition Listing Agent Relationship → Total Added</p>
                     </div>
                     <div>
                       <p className="font-medium">Upgraded Relationships</p>
-                      <p className="text-gray-300 text-[10px]">Existing relationships that moved up categories (Cold/Warm → Hot/Priority).</p>
+                      <p className="text-gray-300 text-[10px]">= Count of tier increases (Cold/Warm → Hot/Priority)</p>
                       <p className="text-gray-400 text-[10px]">Source: Relationship Status Change Log</p>
                     </div>
                   </div>
@@ -462,7 +502,7 @@ function MyStatsContent() {
                 <div className="pl-3">Cold: {DAILY_STATS.relationships.cold}</div>
               </div>
               <div className="text-xs text-amber-600 font-medium pt-1">
-                {DAILY_STATS.relationships.teamAvgPercent}% of Team Average
+                {DAILY_STATS.relationships.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.relationships.teamAvg})
               </div>
             </div>
 
@@ -473,8 +513,9 @@ function MyStatsContent() {
                 <Tooltip content={
                   <div>
                     <p className="font-medium mb-1">Time Spent</p>
-                    <p className="text-gray-300">Total minutes spent across all modules.</p>
-                    <p className="text-gray-400 mt-2 text-[10px]">Source: My Stats → Time Spent per Module</p>
+                    <p className="text-gray-300">= SUM of all module minutes for today</p>
+                    <p className="text-gray-400 mt-2 text-[10px]">Source: REO.Technology → My Stats → Time Spent per Module</p>
+                    <p className="text-gray-400 mt-1 text-[10px]">PIQ, Comps, IA, Offer Terms, Agents come directly from their respective rows.</p>
                   </div>
                 }>
                   <Info className="w-3 h-3 text-gray-400 cursor-help" />

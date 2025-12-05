@@ -1,0 +1,158 @@
+CORRECTION #1 — “Relationships 50% than average” (INCORRECT)
+
+Replit Output:
+Relationships — 50% than average
+
+Correction:
+The team average for relationships TODAY = 6
+Your relationships = 3
+
+Correct percentage is:
+
+3 / 6 = 50% → This part is correct
+BUT Replit MUST show:
+“50% of Team Average (Team Avg = 6)”
+
+So update the displayed label to:
+
+50% of Team Average (Team Avg = 6)
+
+❗ CORRECTION #2 — Offers Team Average must be explicitly shown (2.7)
+
+Replit Output:
+“107% of Team Average”
+
+Missing the number.
+
+Correct version:
+
+107% of Team Average (Team Avg = 2.7)
+
+❗ CORRECTION #3 — Communication Team Average must be explicitly shown (29)
+
+Replit Output:
+“32 calls (107% of Team Avg)”
+
+Correct version:
+
+32 calls (107% of Team Avg: 29)
+
+❗ CORRECTION #4 — Offers definition MUST match your exact spec
+
+Replit currently shows:
+
+Offers Sent = Offer Terms Sent + Contract Submitted
+
+That part is correct, but you must REMOVE “In Negotiations” from counting as sent, because it is NOT an offer.
+
+Correct definition:
+
+Offers Sent = Offer Terms Sent + Contract Submitted
+DO NOT include In Negotiations
+DO NOT include Continue to Follow
+
+❗ CORRECTION #5 — Incorrect tagline under Relationships
+
+Replit wrote:
+
+"3 new relationships"
+
+Correct → must remain:
+
+3 new relationships
+
+
+But what was missing is that “Upgraded Relationships” do not count inside “new relationships”.
+
+So add the clarification:
+
+New Relationships = Total Added today (does NOT include upgrades)
+Upgraded Relationships = count of tier increases
+
+❗ CORRECTION #6 — Team Leaderboard wording
+
+In Replit:
+
+Comms
+Relations
+Time
+
+
+Correct universal naming:
+
+Offers
+
+Communication
+
+Relationships
+
+Time
+
+Fix labels:
+
+Offers | Communication | Relationships | Time
+
+❗ CORRECTION #7 — The “Time” tooltip must NOT show “Score”
+
+Replit had removed the Score (correct),
+But the tooltip text still implies scoring.
+
+Correct TIME tooltip:
+
+Time Spent = SUM of all module minutes for today
+Source: REO.Technology → My Stats → Time Spent per Module
+
+PIQ, Comps, IA, Offer Terms, Agents come directly from their respective rows.
+
+
+No scoring.
+
+❗ CORRECTION #8 — Daily Performance Header Should Follow Universal Order
+
+Replit currently mixes order.
+
+Correct order should always be:
+
+Offers
+
+Communication
+
+Relationships
+
+Time
+
+Ensure the section order is exactly like this.
+
+❗ CORRECTION #9 — Tooltips must be added to ALL Metric Headers
+
+Replit is missing tooltips in the headers.
+
+Add:
+
+Offers Tooltip (Header)
+Counts only Offer Terms Sent + Contract Submitted.
+Source:
+REO.Technology > My Stats > Offer Status Change KPIs
+
+Communication Tooltip (Header)
+Calls from My Stats; Conversations & Call Duration from Dialpad API.
+
+Relationships Tooltip (Header)
+New = Total Added Today
+Upgraded = Tier increases
+
+Time Tooltip (Header)
+Sum of all module minutes for today.
+Source: Time Spent per Module
+
+❗ CORRECTION #10 — Conversation % must ALWAYS show percentage
+
+Replit output shows:
+
+Conversations: 8 (25% connected)
+
+
+This part is correct — BUT it must be required, not optional.
+So add:
+
+% Connected is mandatory and MUST appear whenever calls exist.
