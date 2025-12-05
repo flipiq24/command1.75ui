@@ -506,7 +506,7 @@ function MyStatsContent() {
                 <div className="pl-3">Warm: {DAILY_STATS.relationships.warm}</div>
                 <div className="pl-3">Cold: {DAILY_STATS.relationships.cold}</div>
               </div>
-              <div className="text-xs text-amber-600 font-medium pt-1">
+              <div className="text-xs text-red-500 font-medium pt-1">
                 {DAILY_STATS.relationships.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.relationships.teamAvg})
               </div>
             </div>
