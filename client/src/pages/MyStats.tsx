@@ -13,10 +13,8 @@ import {
   Trophy,
   Clock,
   Info,
-  FileText,
   MessageSquare,
   Handshake,
-  CheckCircle,
   Home
 } from 'lucide-react';
 
@@ -36,11 +34,6 @@ const MOCK_STATS = {
     value: 3,
     percentDiff: -50.0,
     chartData: [2, 3, 2, 3, 4, 3, 2, 3, 3, 4, 3, 4, 3, 3]
-  },
-  analysis: {
-    value: 145,
-    percentDiff: 12.5,
-    chartData: [120, 135, 140, 145, 130, 145, 140, 135, 145, 150, 145, 140, 145, 145]
   },
   offersSent: {
     value: 3,
@@ -90,16 +83,6 @@ const DAILY_STATS = {
     teamAvg: 6,
     teamAvgPercent: 50
   },
-  analysis: {
-    piq: 42,
-    comps: 78,
-    investmentAnalysis: 5,
-    offerTerms: 25,
-    agents: 10,
-    totalMinutes: 160,
-    teamAvg: 140,
-    teamAvgPercent: 114
-  },
   offersSent: { 
     sent: 3, 
     termsOut: 3, 
@@ -124,20 +107,25 @@ const DAILY_STATS = {
   },
   time: { 
     totalMinutes: 145,
+    piq: 42,
+    comps: 78,
+    investmentAnalysis: 5,
+    offerTerms: 25,
+    agents: 10,
     teamAvg: 130,
     teamAvgPercent: 112
   }
 };
 
 const TEAM_LEADERBOARD = [
-  { rank: 1, name: 'Maria', calls: 38, relationships: 6, analysis: 180, offersSent: 5, inNegotiations: 3, offersAccepted: 2, acquired: 1, time: 180, isUser: false },
-  { rank: 2, name: 'Tony (You)', calls: 32, relationships: 3, analysis: 160, offersSent: 3, inNegotiations: 2, offersAccepted: 1, acquired: 1, time: 145, isUser: true },
-  { rank: 3, name: 'James', calls: 28, relationships: 4, analysis: 155, offersSent: 3, inNegotiations: 2, offersAccepted: 1, acquired: 0, time: 160, isUser: false },
-  { rank: 4, name: 'Sarah', calls: 30, relationships: 5, analysis: 150, offersSent: 2, inNegotiations: 1, offersAccepted: 1, acquired: 1, time: 155, isUser: false },
-  { rank: 5, name: 'Mike', calls: 25, relationships: 3, analysis: 140, offersSent: 2, inNegotiations: 1, offersAccepted: 0, acquired: 0, time: 140, isUser: false },
-  { rank: 6, name: 'Jennifer', calls: 22, relationships: 2, analysis: 130, offersSent: 1, inNegotiations: 1, offersAccepted: 0, acquired: 0, time: 130, isUser: false },
-  { rank: 7, name: 'David', calls: 18, relationships: 1, analysis: 120, offersSent: 1, inNegotiations: 0, offersAccepted: 0, acquired: 0, time: 120, isUser: false },
-  { rank: 8, name: 'Lisa', calls: 15, relationships: 2, analysis: 110, offersSent: 0, inNegotiations: 0, offersAccepted: 0, acquired: 0, time: 110, isUser: false }
+  { rank: 1, name: 'Maria', calls: 38, relationships: 6, offersSent: 5, inNegotiations: 3, offersAccepted: 2, acquired: 1, time: 180, isUser: false },
+  { rank: 2, name: 'Tony (You)', calls: 32, relationships: 3, offersSent: 3, inNegotiations: 2, offersAccepted: 1, acquired: 1, time: 145, isUser: true },
+  { rank: 3, name: 'James', calls: 28, relationships: 4, offersSent: 3, inNegotiations: 2, offersAccepted: 1, acquired: 0, time: 160, isUser: false },
+  { rank: 4, name: 'Sarah', calls: 30, relationships: 5, offersSent: 2, inNegotiations: 1, offersAccepted: 1, acquired: 1, time: 155, isUser: false },
+  { rank: 5, name: 'Mike', calls: 25, relationships: 3, offersSent: 2, inNegotiations: 1, offersAccepted: 0, acquired: 0, time: 140, isUser: false },
+  { rank: 6, name: 'Jennifer', calls: 22, relationships: 2, offersSent: 1, inNegotiations: 1, offersAccepted: 0, acquired: 0, time: 130, isUser: false },
+  { rank: 7, name: 'David', calls: 18, relationships: 1, offersSent: 1, inNegotiations: 0, offersAccepted: 0, acquired: 0, time: 120, isUser: false },
+  { rank: 8, name: 'Lisa', calls: 15, relationships: 2, offersSent: 0, inNegotiations: 0, offersAccepted: 0, acquired: 0, time: 110, isUser: false }
 ];
 
 const MiniSparkline = ({ data, isPositive }: { data: number[], isPositive: boolean }) => {
@@ -194,13 +182,13 @@ const StatCard = ({
 
   return (
     <div className={cn(
-      "flex-1 py-3 px-3",
+      "flex-1 py-3 px-4",
       !isLast && "border-r border-gray-200"
     )}>
       <div className="flex items-start justify-between mb-1">
         <div className="flex items-center gap-1.5">
           <Icon className="w-3.5 h-3.5 text-gray-400" strokeWidth={1.5} />
-          <span className="text-[10px] font-medium text-gray-500">{label}</span>
+          <span className="text-[11px] font-medium text-gray-500">{label}</span>
           {tooltip && (
             <div className="relative group">
               <Info className="w-2.5 h-2.5 text-gray-400 cursor-help" />
@@ -218,7 +206,7 @@ const StatCard = ({
       
       <div className="flex items-end justify-between">
         <div className="flex items-baseline gap-0.5">
-          <span className="text-lg font-semibold text-gray-900">{value}</span>
+          <span className="text-xl font-semibold text-gray-900">{value}</span>
           {unit && <span className="text-[10px] text-gray-400">{unit}</span>}
         </div>
         <MiniSparkline data={chartData} isPositive={isPositive} />
@@ -282,8 +270,10 @@ function MyStatsContent() {
         response = `Negotiations Status:\n\n• Currently In Negotiations: 2 deals\n• 133% of Team Average (Team Avg = 1.5)\n\nThese are offers that have been received and are actively being negotiated.`;
       } else if (lowerMessage.includes('acquired') || lowerMessage.includes('closed')) {
         response = `Acquired Deals:\n\n• Acquired Today: 1\n• 200% of Team Average (Team Avg = 0.5)\n\nExcellent! You're closing at twice the team rate.`;
+      } else if (lowerMessage.includes('time')) {
+        response = `Time Statistics:\n\nTotal: 145 minutes\n\nBreakdown:\n• PIQ: 42 min\n• Comps: 78 min\n• Investment Analysis: 5 min\n• Offer Terms: 25 min\n• Agents: 10 min\n\n112% of Team Average (Team Avg = 130)`;
       } else {
-        response = `I can help you understand your acquisition pipeline! Try asking about:\n\n• "How are my calls looking?"\n• "Show me my offer pipeline"\n• "How am I doing on relationships?"\n• "What's my negotiation status?"\n• "How many deals have I acquired?"`;
+        response = `I can help you understand your acquisition pipeline! Try asking about:\n\n• "How are my calls looking?"\n• "Show me my offer pipeline"\n• "How am I doing on relationships?"\n• "What's my negotiation status?"\n• "How many deals have I acquired?"\n• "How did I spend my time?"`;
       }
 
       setMessages(prev => [...prev, {
@@ -322,7 +312,7 @@ function MyStatsContent() {
         </div>
       </div>
 
-      {/* Stats Cards - WORKFLOW ORDER: Calls → Relationships → Analysis → Offers Sent → In Negotiations → Offers Accepted → Acquired → Time */}
+      {/* Stats Cards - WORKFLOW ORDER: Calls → Relationships → Offers Sent → In Negotiations → Offers Accepted → Acquired → Time */}
       <div className="flex border-b border-gray-100 flex-shrink-0">
         <StatCard
           icon={Phone}
@@ -339,15 +329,6 @@ function MyStatsContent() {
           percentDiff={MOCK_STATS.relationships.percentDiff}
           chartData={MOCK_STATS.relationships.chartData}
           tooltip={<p>New relationships created today.</p>}
-        />
-        <StatCard
-          icon={FileText}
-          label="Analysis"
-          value={MOCK_STATS.analysis.value}
-          unit="min"
-          percentDiff={MOCK_STATS.analysis.percentDiff}
-          chartData={MOCK_STATS.analysis.chartData}
-          tooltip={<p>Time spent on PIQ, Comps, IA, Offer Terms.</p>}
         />
         <StatCard
           icon={Send}
@@ -408,10 +389,9 @@ function MyStatsContent() {
               <span className="w-5"></span>
               <span>Name</span>
             </div>
-            <div className="flex-1 grid grid-cols-8 gap-1 text-center">
+            <div className="flex-1 grid grid-cols-7 gap-1 text-center">
               <span>Calls</span>
               <span>Relations</span>
-              <span>Analysis</span>
               <span>Offers</span>
               <span>Negot.</span>
               <span>Accepted</span>
@@ -438,10 +418,9 @@ function MyStatsContent() {
                     {member.name}
                   </span>
                 </div>
-                <div className="flex-1 grid grid-cols-8 gap-1 text-center text-[10px] text-gray-500">
+                <div className="flex-1 grid grid-cols-7 gap-1 text-center text-[10px] text-gray-500">
                   <span><strong className="text-gray-900">{member.calls}</strong></span>
                   <span><strong className="text-gray-900">{member.relationships}</strong></span>
-                  <span><strong className="text-gray-900">{member.analysis}</strong></span>
                   <span><strong className="text-gray-900">{member.offersSent}</strong></span>
                   <span><strong className="text-gray-900">{member.inNegotiations}</strong></span>
                   <span><strong className="text-gray-900">{member.offersAccepted}</strong></span>
@@ -518,38 +497,7 @@ function MyStatsContent() {
               </div>
             </div>
 
-            {/* 3. ANALYSIS */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-1">
-                <FileText className="w-3 h-3 text-gray-400" />
-                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Analysis</span>
-                <Tooltip content={
-                  <div className="space-y-1">
-                    <p className="font-medium">Analysis / Work Modules</p>
-                    <p className="text-gray-300 text-[10px]">Time spent preparing offers.</p>
-                    <p className="text-gray-400 text-[10px]">Source: Time Spent per Module</p>
-                  </div>
-                }>
-                  <Info className="w-3 h-3 text-gray-400 cursor-help" />
-                </Tooltip>
-              </div>
-              <div className="flex items-baseline gap-1">
-                <span className="text-lg font-semibold text-gray-900">{DAILY_STATS.analysis.totalMinutes}</span>
-                <span className="text-xs text-gray-400">minutes</span>
-              </div>
-              <div className="text-xs text-gray-500 space-y-0.5">
-                <div>PIQ: {DAILY_STATS.analysis.piq}</div>
-                <div>Comps: {DAILY_STATS.analysis.comps}</div>
-                <div>Investment Analysis: {DAILY_STATS.analysis.investmentAnalysis}</div>
-                <div>Offer Terms: {DAILY_STATS.analysis.offerTerms}</div>
-                <div>Agents: {DAILY_STATS.analysis.agents}</div>
-              </div>
-              <div className="text-xs text-green-600 font-medium pt-1">
-                {DAILY_STATS.analysis.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.analysis.teamAvg})
-              </div>
-            </div>
-
-            {/* 4. OFFERS SENT */}
+            {/* 3. OFFERS SENT */}
             <div className="space-y-2">
               <div className="flex items-center gap-1">
                 <Send className="w-3 h-3 text-gray-400" />
@@ -577,11 +525,8 @@ function MyStatsContent() {
                 {DAILY_STATS.offersSent.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.offersSent.teamAvg})
               </div>
             </div>
-          </div>
 
-          {/* Second row: In Negotiations, Offers Accepted, Acquired, Time */}
-          <div className="grid grid-cols-4 gap-4">
-            {/* 5. IN NEGOTIATIONS */}
+            {/* 4. IN NEGOTIATIONS */}
             <div className="space-y-2">
               <div className="flex items-center gap-1">
                 <MessageSquare className="w-3 h-3 text-gray-400" />
@@ -603,8 +548,11 @@ function MyStatsContent() {
                 {DAILY_STATS.inNegotiations.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.inNegotiations.teamAvg})
               </div>
             </div>
+          </div>
 
-            {/* 6. OFFERS ACCEPTED */}
+          {/* Second row: Offers Accepted, Acquired, Time */}
+          <div className="grid grid-cols-4 gap-4">
+            {/* 5. OFFERS ACCEPTED */}
             <div className="space-y-2">
               <div className="flex items-center gap-1">
                 <Handshake className="w-3 h-3 text-gray-400" />
@@ -628,7 +576,7 @@ function MyStatsContent() {
               </div>
             </div>
 
-            {/* 7. ACQUIRED */}
+            {/* 6. ACQUIRED */}
             <div className="space-y-2">
               <div className="flex items-center gap-1">
                 <Home className="w-3 h-3 text-gray-400" />
@@ -652,8 +600,8 @@ function MyStatsContent() {
               </div>
             </div>
 
-            {/* 8. TIME */}
-            <div className="space-y-2">
+            {/* 7. TIME - with full breakdown */}
+            <div className="space-y-2 col-span-2">
               <div className="flex items-center gap-1">
                 <Clock className="w-3 h-3 text-gray-400" />
                 <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Time</span>
@@ -670,6 +618,13 @@ function MyStatsContent() {
               <div className="flex items-baseline gap-1">
                 <span className="text-lg font-semibold text-gray-900">{DAILY_STATS.time.totalMinutes}</span>
                 <span className="text-xs text-gray-400">minutes</span>
+              </div>
+              <div className="text-xs text-gray-500 grid grid-cols-2 gap-x-4 gap-y-0.5">
+                <div>PIQ: {DAILY_STATS.time.piq}</div>
+                <div>Comps: {DAILY_STATS.time.comps}</div>
+                <div>Investment Analysis: {DAILY_STATS.time.investmentAnalysis}</div>
+                <div>Offer Terms: {DAILY_STATS.time.offerTerms}</div>
+                <div>Agents: {DAILY_STATS.time.agents}</div>
               </div>
               <div className="text-xs text-green-600 font-medium pt-1">
                 {DAILY_STATS.time.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.time.teamAvg})
