@@ -312,66 +312,73 @@ function MyStatsContent() {
         </div>
       </div>
 
-      {/* Stats Cards - WORKFLOW ORDER: Calls → Relationships → Offers Sent → In Negotiations → Offers Accepted → Acquired → Time */}
-      <div className="flex border-b border-gray-100 flex-shrink-0">
-        <StatCard
-          icon={Phone}
-          label="Calls"
-          value={MOCK_STATS.calls.value}
-          percentDiff={MOCK_STATS.calls.percentDiff}
-          chartData={MOCK_STATS.calls.chartData}
-          tooltip={<p>Total outbound calls placed today.</p>}
-        />
-        <StatCard
-          icon={Users}
-          label="Relationships"
-          value={MOCK_STATS.relationships.value}
-          percentDiff={MOCK_STATS.relationships.percentDiff}
-          chartData={MOCK_STATS.relationships.chartData}
-          tooltip={<p>New relationships created today.</p>}
-        />
-        <StatCard
-          icon={Send}
-          label="Offers Sent"
-          value={MOCK_STATS.offersSent.value}
-          percentDiff={MOCK_STATS.offersSent.percentDiff}
-          chartData={MOCK_STATS.offersSent.chartData}
-          tooltip={<p>Offer Terms Sent + Contract Submitted.</p>}
-        />
-        <StatCard
-          icon={MessageSquare}
-          label="In Negotiations"
-          value={MOCK_STATS.inNegotiations.value}
-          percentDiff={MOCK_STATS.inNegotiations.percentDiff}
-          chartData={MOCK_STATS.inNegotiations.chartData}
-          tooltip={<p>Offers currently being negotiated.</p>}
-        />
-        <StatCard
-          icon={Handshake}
-          label="Accepted"
-          value={MOCK_STATS.offersAccepted.value}
-          percentDiff={MOCK_STATS.offersAccepted.percentDiff}
-          chartData={MOCK_STATS.offersAccepted.chartData}
-          tooltip={<p>Offers accepted, under contract.</p>}
-        />
-        <StatCard
-          icon={Home}
-          label="Acquired"
-          value={MOCK_STATS.acquired.value}
-          percentDiff={MOCK_STATS.acquired.percentDiff}
-          chartData={MOCK_STATS.acquired.chartData}
-          tooltip={<p>Deals closed and acquired.</p>}
-        />
-        <StatCard
-          icon={Clock}
-          label="Time"
-          value={MOCK_STATS.time.value}
-          unit="min"
-          percentDiff={MOCK_STATS.time.percentDiff}
-          chartData={MOCK_STATS.time.chartData}
-          tooltip={<p>Total time spent across all modules.</p>}
-          isLast
-        />
+      {/* Stats Cards - WORKFLOW ORDER: 4 on top, 3 underneath */}
+      <div className="flex-shrink-0">
+        {/* Top row - 4 cards */}
+        <div className="flex border-b border-gray-100">
+          <StatCard
+            icon={Phone}
+            label="Calls"
+            value={MOCK_STATS.calls.value}
+            percentDiff={MOCK_STATS.calls.percentDiff}
+            chartData={MOCK_STATS.calls.chartData}
+            tooltip={<p>Total outbound calls placed today.</p>}
+          />
+          <StatCard
+            icon={Users}
+            label="Relationships"
+            value={MOCK_STATS.relationships.value}
+            percentDiff={MOCK_STATS.relationships.percentDiff}
+            chartData={MOCK_STATS.relationships.chartData}
+            tooltip={<p>New relationships created today.</p>}
+          />
+          <StatCard
+            icon={Send}
+            label="Offers Sent"
+            value={MOCK_STATS.offersSent.value}
+            percentDiff={MOCK_STATS.offersSent.percentDiff}
+            chartData={MOCK_STATS.offersSent.chartData}
+            tooltip={<p>Offer Terms Sent + Contract Submitted.</p>}
+          />
+          <StatCard
+            icon={MessageSquare}
+            label="In Negotiations"
+            value={MOCK_STATS.inNegotiations.value}
+            percentDiff={MOCK_STATS.inNegotiations.percentDiff}
+            chartData={MOCK_STATS.inNegotiations.chartData}
+            tooltip={<p>Offers currently being negotiated.</p>}
+            isLast
+          />
+        </div>
+        {/* Bottom row - 3 cards */}
+        <div className="flex border-b border-gray-100">
+          <StatCard
+            icon={Handshake}
+            label="Accepted"
+            value={MOCK_STATS.offersAccepted.value}
+            percentDiff={MOCK_STATS.offersAccepted.percentDiff}
+            chartData={MOCK_STATS.offersAccepted.chartData}
+            tooltip={<p>Offers accepted, under contract.</p>}
+          />
+          <StatCard
+            icon={Home}
+            label="Acquired"
+            value={MOCK_STATS.acquired.value}
+            percentDiff={MOCK_STATS.acquired.percentDiff}
+            chartData={MOCK_STATS.acquired.chartData}
+            tooltip={<p>Deals closed and acquired.</p>}
+          />
+          <StatCard
+            icon={Clock}
+            label="Time"
+            value={MOCK_STATS.time.value}
+            unit="min"
+            percentDiff={MOCK_STATS.time.percentDiff}
+            chartData={MOCK_STATS.time.chartData}
+            tooltip={<p>Total time spent across all modules.</p>}
+            isLast
+          />
+        </div>
       </div>
 
       {/* Scrollable Content Area */}
@@ -549,6 +556,9 @@ function MyStatsContent() {
               </div>
             </div>
           </div>
+
+          {/* Faint divider line */}
+          <div className="border-t border-gray-100 my-4"></div>
 
           {/* Second row: Offers Accepted, Acquired, Time */}
           <div className="grid grid-cols-4 gap-4">
