@@ -1,0 +1,129 @@
+THE NEW UNIVERSAL ORDER (TRUE ACQUISITION WORKFLOW)
+Use this everywhere: My Stats → Team Leaderboard → Daily Performance Report
+1. CALLS
+
+Outbound calls are ALWAYS the start of the workflow.
+
+Includes:
+
+Calls
+
+Conversations
+
+% Connected
+
+Call Duration
+
+Texts / Emails
+
+2. RELATIONSHIPS
+
+Once conversations happen → relationships are formed.
+
+Includes:
+
+New Relationships
+
+Upgraded Relationships
+
+Priority / Hot / Warm / Cold
+
+3. ANALYSIS (Optional Section, but correctly fits here)
+
+This includes your work modules BEFORE the offer:
+
+– PIQ
+– Comps
+– Investment Analysis
+– Agent Module
+– Notes/Reminders if needed
+
+This is where your TIME is actually spent preparing to make an offer.
+
+4. OFFERS SENT
+
+After analysis, the first outbound offer happens.
+
+Includes:
+
+Offer Terms Sent
+
+Contract Submitted
+
+5. IN NEGOTIATIONS
+
+Offer was received and negotiation begins.
+
+Includes:
+
+In Negotiations status count
+
+6. OFFERS ACCEPTED
+
+Negotiation successful → under contract.
+
+Includes:
+
+Offer Accepted
+
+7. ACQUIRED
+
+Deal closes.
+
+Includes:
+
+Acquired
+
+8. TIME (Moved to the bottom)
+
+Time spent across workflow modules.
+This belongs at the end because it is diagnostic, not part of the workflow.
+
+🎯 FINAL ORDER (PRINT THIS FOR DEV)
+1. Calls
+2. Relationships
+3. Analysis / Work Modules
+4. Offers Sent
+5. In Negotiations
+6. Offers Accepted
+7. Acquired
+8. Time
+🔥 WHY THIS ORDER IS PERFECT
+
+Because it matches EXACTLY how a real acquisition pipeline flows:
+
+Call → Connect → Build Relationship → Analyze → Make Offer → Negotiate → Win → Close → Track Time
+
+This order also helps you and your team visually spot:
+
+Where leads stall
+
+Where agents drop off
+
+Whether the bottleneck is relationships, offers, or negotiations
+
+It becomes a visual “funnel” you can follow from top to bottom.
+
+⚙️ APPLY THIS ORDER TO ALL THREE AREAS
+My Stats
+
+Top metrics reorder:
+Calls → Relationships → Analysis → Offers Sent → In Negotiations → Offers Accepted → Acquired → Time
+
+Team Leaderboard
+
+Columns reorder:
+Calls | Relationships | Analysis | Offers Sent | In Negotiations | Offers Accepted | Acquired | Time
+
+Daily Performance Report
+
+Section reorder:
+Calls → Relationships → Analysis → Offers Sent → In Negotiations → Offers Accepted → Acquired → Time
+
+If you want the updated full engineering spec using THIS new order, I can generate:
+✔ Updated Part 1–3 Document
+✔ Full Replit engineering prompt
+✔ Updated wireframes (My Stats, Team Leaderboard, Daily Performance)
+✔ Full tooltip set for ALL sections
+
+Say: “Give me the updated document using this new workflow order.”
