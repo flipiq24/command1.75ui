@@ -15,7 +15,8 @@ import {
   Info,
   MessageSquare,
   Handshake,
-  Home
+  Home,
+  Target
 } from 'lucide-react';
 
 interface Message {
@@ -104,6 +105,14 @@ const DAILY_STATS = {
     count: 1,
     teamAvg: 0.5,
     teamAvgPercent: 200
+  },
+  dealSource: {
+    mls: 2,
+    directMail: 1,
+    coldCall: 0,
+    referral: 0,
+    teamAvg: 2.5,
+    teamAvgPercent: 120
   },
   time: { 
     totalMinutes: 145,
@@ -610,7 +619,36 @@ function MyStatsContent() {
               </div>
             </div>
 
-            {/* 7. TIME - with full breakdown */}
+            {/* 7. DEAL SOURCE */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-1">
+                <Target className="w-3 h-3 text-gray-400" />
+                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Deal Source</span>
+                <Tooltip content={
+                  <div className="space-y-1">
+                    <p className="font-medium">Deal Source</p>
+                    <p className="text-gray-300 text-[10px]">Where acquired deals originated from.</p>
+                  </div>
+                }>
+                  <Info className="w-3 h-3 text-gray-400 cursor-help" />
+                </Tooltip>
+              </div>
+              <div className="flex items-baseline gap-1">
+                <span className="text-lg font-semibold text-gray-900">{DAILY_STATS.dealSource.mls + DAILY_STATS.dealSource.directMail + DAILY_STATS.dealSource.coldCall + DAILY_STATS.dealSource.referral}</span>
+                <span className="text-xs text-gray-400">total</span>
+              </div>
+              <div className="text-xs text-gray-500 space-y-0.5">
+                <div>MLS: {DAILY_STATS.dealSource.mls}</div>
+                <div>Direct Mail: {DAILY_STATS.dealSource.directMail}</div>
+                <div>Cold Call: {DAILY_STATS.dealSource.coldCall}</div>
+                <div>Referral: {DAILY_STATS.dealSource.referral}</div>
+              </div>
+              <div className="text-xs text-green-600 font-medium pt-1">
+                {DAILY_STATS.dealSource.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.dealSource.teamAvg})
+              </div>
+            </div>
+
+            {/* 8. TIME - with full breakdown */}
             <div className="space-y-2">
               <div className="flex items-center gap-1">
                 <Clock className="w-3 h-3 text-gray-400" />
@@ -640,9 +678,6 @@ function MyStatsContent() {
                 {DAILY_STATS.time.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.time.teamAvg})
               </div>
             </div>
-            
-            {/* Empty column for alignment */}
-            <div></div>
           </div>
         </div>
 
