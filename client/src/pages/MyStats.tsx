@@ -601,7 +601,7 @@ function MyStatsContent() {
             </div>
 
             {/* 7. TIME - with full breakdown */}
-            <div className="space-y-2 col-span-2">
+            <div className="space-y-2">
               <div className="flex items-center gap-1">
                 <Clock className="w-3 h-3 text-gray-400" />
                 <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Time</span>
@@ -619,7 +619,7 @@ function MyStatsContent() {
                 <span className="text-lg font-semibold text-gray-900">{DAILY_STATS.time.totalMinutes}</span>
                 <span className="text-xs text-gray-400">minutes</span>
               </div>
-              <div className="text-xs text-gray-500 grid grid-cols-2 gap-x-4 gap-y-0.5">
+              <div className="text-xs text-gray-500 space-y-0.5">
                 <div>PIQ: {DAILY_STATS.time.piq}</div>
                 <div>Comps: {DAILY_STATS.time.comps}</div>
                 <div>Investment Analysis: {DAILY_STATS.time.investmentAnalysis}</div>
@@ -630,6 +630,9 @@ function MyStatsContent() {
                 {DAILY_STATS.time.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.time.teamAvg})
               </div>
             </div>
+            
+            {/* Empty column for alignment */}
+            <div></div>
           </div>
         </div>
 
