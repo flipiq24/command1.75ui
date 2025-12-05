@@ -1,0 +1,190 @@
+REPLIT ENGINEERING PROMPT — UPDATE MY STATS, TEAM LEADERBOARD & DAILY PERFORMANCE REPORT
+
+Objective:
+Update My Stats, Team Leaderboard, and Daily Performance Report to follow a new universal metric order and use new data sources + tooltips.
+
+1. NEW REQUIRED METRIC ORDER (USE THIS ORDER EVERYWHERE)
+
+Apply this order to:
+• My Stats (top metrics)
+• Team Leaderboard columns
+• Daily Performance Report sections
+
+ORDER:
+
+Offers (has daily goal)
+
+Communication
+
+Relationships (has daily goal)
+
+Time
+
+2. DAILY PERFORMANCE REPORT — FINAL FORMAT
+OFFERS (Goal: 3–5/day)
+
+✓ 3 offers sent
+
+Offer Terms Sent: 3
+
+Contract Submitted: 0
+
+In Negotiations: 2
+
+REMOVE “Continue to Follow”
+
+107% of Team Average
+
+TOOLTIP:
+
+Offers Sent = Offer Terms Sent + Contract Submitted
+Source: My Stats → Offer Status Change KPIs
+
+COMMUNICATION
+
+✓ 32 calls (107% of Team Avg)
+
+Conversations: 8 (25% connected)
+
+Average Call Time: 2:37 (must be pulled from Dialpad API)
+
+Texts: 12
+
+Emails: 15
+
+TOOLTIP — Calls:
+
+Total outbound calls placed.
+Source: My Stats → IDX Note (call agent)
+
+TOOLTIP — Conversations:
+
+Connected calls.
+Source: Dialpad API → connected_calls_count
+
+TOOLTIP — % Connected:
+
+Conversations ÷ Calls (ex: 8/32 = 25%)
+
+TOOLTIP — Average Call Time:
+
+Must use Dialpad API → average_call_duration
+
+TOOLTIP — Texts:
+
+Source: My Stats → Communication → text agent
+
+TOOLTIP — Emails:
+
+Source: My Stats → Communication → email agent
+
+RELATIONSHIPS (Goal: 5/day)
+
+✓ 3 new relationships
+
+Upgraded Relationships: 3
+
+Priority: 1
+
+Hot: 0
+
+Warm: 2
+
+Cold: 0
+
+50% of Team Average
+
+TOOLTIP — New Relationships:
+
+Brand new relationships created today.
+Source: My Stats → Acquisition Listing Agent Relationship → Total Added
+
+TOOLTIP — Upgraded Relationships:
+
+Existing relationships that moved up categories (Cold/Warm → Hot/Priority).
+Source: Relationship Status Change Log
+
+TIME
+
+145 minutes
+
+PIQ: 42
+
+Comps: 78
+
+Investment Analysis: 5
+
+Offer Terms: 25
+
+Agents: 10
+
+REMOVE Score
+
+TOOLTIP — Time:
+
+Total minutes spent across all modules.
+Source: My Stats → Time Spent per Module
+
+3. TEAM LEADERBOARD UPDATE
+
+Add a Relationships column next to Offers and Communication using the same universal order:
+
+Offers
+
+Communication
+
+Relationships
+
+Time
+
+Relationships Value:
+
+Count of new relationships only (NOT upgrades).
+Source: My Stats → Acquisition Listing Agent Relationship
+
+4. DATA SOURCE MAP (ENGINEER MUST FOLLOW EXACTLY)
+OFFERS DATA SOURCE:
+
+My Stats → Offer Status Change KPIs
+
+Offer Terms Sent
+
+Contract Submitted
+Offers Sent = Offer Terms Sent + Contract Submitted
+
+COMMUNICATION DATA SOURCE:
+
+My Stats → IDX Note (call agent)
+My Stats → Communication (email + text)
+Dialpad API required for:
+
+connected calls
+
+call duration
+
+RELATIONSHIPS DATA SOURCE:
+
+My Stats → Acquisition Listing Agent Relationship
+Relationship Status Change Log
+
+TIME DATA SOURCE:
+
+My Stats → Time Spent per Module
+
+5. RULES ENGINEERING MUST FOLLOW
+
+Do NOT show “(No Goal)” anywhere.
+
+Always show Conversations % (connected rate).
+
+Average call time MUST come from Dialpad API.
+
+Upgraded relationships must NOT be counted as new.
+
+Remove Score from Time section.
+
+Remove “Continue to Follow” from Offers.
+
+6. EXAMPLE UI EXTRACT (REFERENCE FOR ENGINEERS)
+
+Use the screenshot as a visual baseline, but update ordering + counts using the rules above.
