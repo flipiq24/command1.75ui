@@ -80,7 +80,9 @@ const DAILY_STATS = {
     comps: 78,
     investmentAnalysis: 5,
     offerTerms: 25,
-    agents: 10
+    agents: 10,
+    teamAvg: 130,
+    teamAvgPercent: 112
   }
 };
 
@@ -457,13 +459,16 @@ function MyStatsContent() {
               <div className="flex items-baseline gap-1">
                 <span className="text-lg font-bold text-green-600">✓</span>
                 <span className="text-lg font-semibold text-gray-900">{DAILY_STATS.communication.calls}</span>
-                <span className="text-xs text-gray-400">calls ({DAILY_STATS.communication.teamAvgPercent}% of Team Avg: {DAILY_STATS.communication.teamAvg})</span>
+                <span className="text-xs text-gray-400">calls</span>
               </div>
               <div className="text-xs text-gray-500 space-y-0.5">
                 <div>Conversations: {DAILY_STATS.communication.conversations} ({DAILY_STATS.communication.connectedPercent}% connected)</div>
                 <div>Average Call Time: {DAILY_STATS.communication.avgCallTime}</div>
                 <div>Texts: {DAILY_STATS.communication.texts}</div>
                 <div>Emails: {DAILY_STATS.communication.emails}</div>
+              </div>
+              <div className="text-xs text-green-600 font-medium pt-1">
+                {DAILY_STATS.communication.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.communication.teamAvg})
               </div>
             </div>
 
@@ -531,6 +536,9 @@ function MyStatsContent() {
                 <div>Investment Analysis: {DAILY_STATS.time.investmentAnalysis}</div>
                 <div>Offer Terms: {DAILY_STATS.time.offerTerms}</div>
                 <div>Agents: {DAILY_STATS.time.agents}</div>
+              </div>
+              <div className="text-xs text-green-600 font-medium pt-1">
+                {DAILY_STATS.time.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.time.teamAvg})
               </div>
             </div>
           </div>
