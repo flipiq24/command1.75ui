@@ -53,6 +53,9 @@ function PIQContent() {
   const [showMapValueIQCompletion, setShowMapValueIQCompletion] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [loanProgram, setLoanProgram] = useState('Cash');
+  const [showOtherCosts, setShowOtherCosts] = useState(false);
+  const [otherCostType, setOtherCostType] = useState('wholesale_fee');
+  const [otherCostAmount, setOtherCostAmount] = useState('5000');
   
   const { openIQ } = useLayout();
 
@@ -920,38 +923,69 @@ function PIQContent() {
                         <div className="pt-3 border-t border-gray-200 mt-3">
                           <div className="flex items-center justify-between mb-2">
                             <span className="text-sm text-gray-600">Other Costs</span>
-                            <button className="text-xs text-[#FF6600] hover:text-[#e65c00] font-medium">+ Add</button>
+                            {!showOtherCosts && (
+                              <button 
+                                className="text-xs text-[#FF6600] hover:text-[#e65c00] font-medium"
+                                onClick={() => setShowOtherCosts(true)}
+                                data-testid="button-add-other-cost"
+                              >
+                                + Add
+                              </button>
+                            )}
                           </div>
-                          <select 
-                            className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-400 mb-2"
-                            data-testid="select-other-costs"
-                          >
-                            <option value="">Select cost type...</option>
-                            <option value="wholesale_fee">Wholesale Fee</option>
-                            <option value="acquisition_cost">Acquisition Cost</option>
-                            <option value="short_sale_fee">Short Sale Fee</option>
-                            <option value="third_party_fee">3rd Party Fee</option>
-                            <option value="agent_fee">Agent Fee</option>
-                            <option value="sellers_closing_cost">Sellers Closing Cost</option>
-                            <option value="due_diligence">Due Diligence</option>
-                          </select>
-                          <div className="flex items-center gap-2">
-                            <input 
-                              type="text" 
-                              placeholder="$0" 
-                              className="flex-1 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-gray-400"
-                              data-testid="input-other-cost-amount"
-                            />
-                            <span className="text-xs text-gray-400">reduces offer</span>
-                          </div>
+                          
+                          {showOtherCosts && (
+                            <div className="space-y-2">
+                              <select 
+                                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-400"
+                                data-testid="select-other-costs"
+                                value={otherCostType}
+                                onChange={(e) => setOtherCostType(e.target.value)}
+                              >
+                                <option value="wholesale_fee">Wholesale Fee</option>
+                                <option value="acquisition_cost">Acquisition Cost</option>
+                                <option value="short_sale_fee">Short Sale Fee</option>
+                                <option value="third_party_fee">3rd Party Fee</option>
+                                <option value="agent_fee">Agent Fee</option>
+                                <option value="sellers_closing_cost">Sellers Closing Cost</option>
+                                <option value="due_diligence">Due Diligence</option>
+                              </select>
+                              <div className="flex items-center gap-2">
+                                <input 
+                                  type="text" 
+                                  value={otherCostAmount}
+                                  onChange={(e) => setOtherCostAmount(e.target.value)}
+                                  className="flex-1 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-gray-400"
+                                  data-testid="input-other-cost-amount"
+                                />
+                                <button 
+                                  className="text-xs text-red-500 hover:text-red-600"
+                                  onClick={() => setShowOtherCosts(false)}
+                                  data-testid="button-remove-other-cost"
+                                >
+                                  ✕
+                                </button>
+                              </div>
+                              <div className="text-xs text-gray-500 text-right">reduces offer</div>
+                            </div>
+                          )}
                         </div>
                       </div>
                       
                       {/* The Results */}
                       <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4">
                         <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Offer Price</div>
-                        <div className="text-2xl font-bold text-gray-900">$165,000</div>
-                        <div className="text-sm text-gray-500 mt-0.5">58.95% of ARV</div>
+                        <div className="text-2xl font-bold text-gray-900">
+                          ${showOtherCosts ? (165000 - parseInt(otherCostAmount || '0')).toLocaleString() : '165,000'}
+                        </div>
+                        <div className="text-sm text-gray-500 mt-0.5">
+                          {showOtherCosts ? `${((165000 - parseInt(otherCostAmount || '0')) / 279900 * 100).toFixed(2)}%` : '58.95%'} of ARV
+                        </div>
+                        {showOtherCosts && (
+                          <div className="text-xs text-gray-400 mt-1">
+                            (−${parseInt(otherCostAmount || '0').toLocaleString()} other costs)
+                          </div>
+                        )}
                       </div>
                       
                       {/* Deal Metrics */}
