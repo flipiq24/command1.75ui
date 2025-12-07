@@ -881,18 +881,6 @@ function PIQContent() {
                         <div>
                           <span className="text-sm text-gray-600 block mb-2">Target Profit Goal</span>
                           <div className="flex items-center gap-2">
-                            <div className="flex-1 flex items-center border border-gray-300 rounded-md bg-white overflow-hidden">
-                              <input 
-                                type="text" 
-                                defaultValue="$35,000" 
-                                className="flex-1 px-3 py-2 text-sm text-right bg-transparent font-semibold text-gray-900 focus:outline-none"
-                                data-testid="input-target-profit-amount"
-                              />
-                              <div className="border-l border-gray-200 px-2 py-2 bg-gray-50">
-                                <span className="text-xs text-gray-500 font-medium">$</span>
-                              </div>
-                            </div>
-                            <span className="text-gray-400 text-sm">or</span>
                             <div className="w-20 flex items-center border border-gray-300 rounded-md bg-white overflow-hidden">
                               <input 
                                 type="text" 
@@ -902,6 +890,18 @@ function PIQContent() {
                               />
                               <div className="border-l border-gray-200 px-2 py-2 bg-gray-50">
                                 <span className="text-xs text-gray-500 font-medium">%</span>
+                              </div>
+                            </div>
+                            <span className="text-gray-400 text-sm">or</span>
+                            <div className="flex-1 flex items-center border border-gray-300 rounded-md bg-white overflow-hidden">
+                              <input 
+                                type="text" 
+                                defaultValue="$35,000" 
+                                className="flex-1 px-3 py-2 text-sm text-right bg-transparent font-semibold text-gray-900 focus:outline-none"
+                                data-testid="input-target-profit-amount"
+                              />
+                              <div className="border-l border-gray-200 px-2 py-2 bg-gray-50">
+                                <span className="text-xs text-gray-500 font-medium">$</span>
                               </div>
                             </div>
                           </div>
@@ -923,17 +923,6 @@ function PIQContent() {
                         <div className="text-sm text-gray-500 mt-0.5">58.95% of ARV</div>
                       </div>
                       
-                      <div className="space-y-3 mb-4">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-600">Projected Cash Net Profit</span>
-                          <span className="text-lg font-bold text-gray-900">$49,605</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-600">ROI</span>
-                          <span className="text-lg font-bold text-gray-900">22.93%</span>
-                        </div>
-                      </div>
-                      
                       {/* Deal Metrics */}
                       <div className="space-y-2 pt-3 border-t border-gray-200">
                         <div className="flex items-center justify-between">
@@ -949,23 +938,22 @@ function PIQContent() {
 
                     {/* COLUMN 3: Financing & Hold (The Funding) */}
                     <div className="bg-white rounded-xl border border-gray-200 p-5">
-                      <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-4 pb-2 border-b border-gray-100">Financing & Hold</h3>
+                      <div className="flex items-center justify-between mb-4 pb-2 border-b border-gray-100">
+                        <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide">Financing & Hold</h3>
+                        <select 
+                          className="px-3 py-1.5 text-sm border border-gray-200 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-400"
+                          data-testid="select-loan-program"
+                        >
+                          <option>Cash</option>
+                          <option>Kiavi 75% ARV</option>
+                          <option>Hard Money 70% ARV</option>
+                          <option>Hard Money 75% ARV</option>
+                          <option>Private Money</option>
+                          <option>Conventional</option>
+                          <option>Seller Financing</option>
+                        </select>
+                      </div>
                       <div className="space-y-3">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-600">Loan Program</span>
-                          <select 
-                            className="w-36 px-3 py-1.5 text-sm border border-gray-200 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                            data-testid="select-loan-program"
-                          >
-                            <option>Kiavi 75% ARV</option>
-                            <option>Cash</option>
-                            <option>Hard Money 70% ARV</option>
-                            <option>Hard Money 75% ARV</option>
-                            <option>Private Money</option>
-                            <option>Conventional</option>
-                            <option>Seller Financing</option>
-                          </select>
-                        </div>
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-gray-600">Hold Time</span>
                           <div className="flex items-center gap-1">
