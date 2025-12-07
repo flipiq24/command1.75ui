@@ -53,11 +53,11 @@ function PIQContent() {
   const [showMapValueIQCompletion, setShowMapValueIQCompletion] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [loanProgram, setLoanProgram] = useState('Cash');
-  const [otherCosts, setOtherCosts] = useState<{id: number, type: string, amount: string}[]>([]);
+  const [otherCosts, setOtherCosts] = useState<{id: number, type: string, customName: string, amount: string}[]>([]);
   const [nextCostId, setNextCostId] = useState(1);
   
   const addOtherCost = () => {
-    setOtherCosts([...otherCosts, { id: nextCostId, type: 'wholesale_fee', amount: '5000' }]);
+    setOtherCosts([...otherCosts, { id: nextCostId, type: '', customName: '', amount: '' }]);
     setNextCostId(nextCostId + 1);
   };
   
@@ -65,7 +65,7 @@ function PIQContent() {
     setOtherCosts(otherCosts.filter(c => c.id !== id));
   };
   
-  const updateOtherCost = (id: number, field: 'type' | 'amount', value: string) => {
+  const updateOtherCost = (id: number, field: 'type' | 'amount' | 'customName', value: string) => {
     setOtherCosts(otherCosts.map(c => c.id === id ? { ...c, [field]: value } : c));
   };
   
@@ -990,38 +990,55 @@ function PIQContent() {
                           {otherCosts.length > 0 && (
                             <div className="space-y-2">
                               {otherCosts.map((cost) => (
-                                <div key={cost.id} className="flex items-center gap-2">
-                                  <select 
-                                    className="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-md bg-white text-gray-700 focus:outline-none"
-                                    data-testid={`select-other-cost-${cost.id}`}
-                                    value={cost.type}
-                                    onChange={(e) => updateOtherCost(cost.id, 'type', e.target.value)}
-                                  >
-                                    <option value="wholesale_fee">Wholesale Fee</option>
-                                    <option value="acquisition_cost">Acquisition Cost</option>
-                                    <option value="short_sale_fee">Short Sale Fee</option>
-                                    <option value="third_party_fee">3rd Party Fee</option>
-                                    <option value="agent_fee">Agent Fee</option>
-                                    <option value="sellers_closing_cost">Sellers Closing Cost</option>
-                                    <option value="due_diligence">Due Diligence</option>
-                                  </select>
-                                  <input 
-                                    type="text" 
-                                    value={cost.amount}
-                                    onChange={(e) => updateOtherCost(cost.id, 'amount', e.target.value)}
-                                    className="w-24 px-3 py-2 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none"
-                                    data-testid={`input-other-cost-${cost.id}`}
-                                  />
-                                  <button 
-                                    className="text-red-500 hover:text-red-600"
-                                    onClick={() => removeOtherCost(cost.id)}
-                                    data-testid={`button-remove-cost-${cost.id}`}
-                                  >
-                                    ✕
-                                  </button>
+                                <div key={cost.id} className="space-y-1">
+                                  <div className="flex items-center gap-2">
+                                    <select 
+                                      className="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-md bg-white text-gray-700 focus:outline-none"
+                                      data-testid={`select-other-cost-${cost.id}`}
+                                      value={cost.type}
+                                      onChange={(e) => updateOtherCost(cost.id, 'type', e.target.value)}
+                                    >
+                                      <option value="" disabled>Select type...</option>
+                                      <option value="wholesale_fee">Wholesale Fee</option>
+                                      <option value="acquisition_cost">Acquisition Cost</option>
+                                      <option value="short_sale_fee">Short Sale Fee</option>
+                                      <option value="third_party_fee">3rd Party Fee</option>
+                                      <option value="agent_fee">Agent Fee</option>
+                                      <option value="sellers_closing_cost">Sellers Closing Cost</option>
+                                      <option value="due_diligence">Due Diligence</option>
+                                      <option value="manual">Manual Entry</option>
+                                    </select>
+                                    <input 
+                                      type="text" 
+                                      value={cost.amount}
+                                      onChange={(e) => updateOtherCost(cost.id, 'amount', e.target.value)}
+                                      placeholder="$0"
+                                      className="w-24 px-3 py-2 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none"
+                                      data-testid={`input-other-cost-${cost.id}`}
+                                    />
+                                    <button 
+                                      className="text-red-500 hover:text-red-600"
+                                      onClick={() => removeOtherCost(cost.id)}
+                                      data-testid={`button-remove-cost-${cost.id}`}
+                                    >
+                                      ✕
+                                    </button>
+                                  </div>
+                                  {cost.type === 'manual' && (
+                                    <input 
+                                      type="text" 
+                                      value={cost.customName}
+                                      onChange={(e) => updateOtherCost(cost.id, 'customName', e.target.value)}
+                                      placeholder="Enter cost name..."
+                                      className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md bg-white focus:outline-none"
+                                      data-testid={`input-other-cost-name-${cost.id}`}
+                                    />
+                                  )}
                                 </div>
                               ))}
-                              <div className="text-xs text-gray-500 text-right">−${totalOtherCosts.toLocaleString()} reduces offer</div>
+                              {totalOtherCosts > 0 && (
+                                <div className="text-xs text-gray-500 text-right">−${totalOtherCosts.toLocaleString()} reduces offer</div>
+                              )}
                             </div>
                           )}
                         </div>
