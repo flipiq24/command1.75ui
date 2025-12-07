@@ -915,6 +915,36 @@ function PIQContent() {
                         >
                           Calculate
                         </button>
+                        
+                        {/* Other Costs */}
+                        <div className="pt-3 border-t border-gray-200 mt-3">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm text-gray-600">Other Costs</span>
+                            <button className="text-xs text-[#FF6600] hover:text-[#e65c00] font-medium">+ Add</button>
+                          </div>
+                          <select 
+                            className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-400 mb-2"
+                            data-testid="select-other-costs"
+                          >
+                            <option value="">Select cost type...</option>
+                            <option value="wholesale_fee">Wholesale Fee</option>
+                            <option value="acquisition_cost">Acquisition Cost</option>
+                            <option value="short_sale_fee">Short Sale Fee</option>
+                            <option value="third_party_fee">3rd Party Fee</option>
+                            <option value="agent_fee">Agent Fee</option>
+                            <option value="sellers_closing_cost">Sellers Closing Cost</option>
+                            <option value="due_diligence">Due Diligence</option>
+                          </select>
+                          <div className="flex items-center gap-2">
+                            <input 
+                              type="text" 
+                              placeholder="$0" 
+                              className="flex-1 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-gray-400"
+                              data-testid="input-other-cost-amount"
+                            />
+                            <span className="text-xs text-gray-400">reduces offer</span>
+                          </div>
+                        </div>
                       </div>
                       
                       {/* The Results */}
