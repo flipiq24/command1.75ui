@@ -53,9 +53,23 @@ function PIQContent() {
   const [showMapValueIQCompletion, setShowMapValueIQCompletion] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [loanProgram, setLoanProgram] = useState('Cash');
-  const [showOtherCosts, setShowOtherCosts] = useState(false);
-  const [otherCostType, setOtherCostType] = useState('wholesale_fee');
-  const [otherCostAmount, setOtherCostAmount] = useState('5000');
+  const [otherCosts, setOtherCosts] = useState<{id: number, type: string, amount: string}[]>([]);
+  const [nextCostId, setNextCostId] = useState(1);
+  
+  const addOtherCost = () => {
+    setOtherCosts([...otherCosts, { id: nextCostId, type: 'wholesale_fee', amount: '5000' }]);
+    setNextCostId(nextCostId + 1);
+  };
+  
+  const removeOtherCost = (id: number) => {
+    setOtherCosts(otherCosts.filter(c => c.id !== id));
+  };
+  
+  const updateOtherCost = (id: number, field: 'type' | 'amount', value: string) => {
+    setOtherCosts(otherCosts.map(c => c.id === id ? { ...c, [field]: value } : c));
+  };
+  
+  const totalOtherCosts = otherCosts.reduce((sum, c) => sum + parseInt(c.amount || '0'), 0);
   
   const { openIQ } = useLayout();
 
@@ -923,50 +937,52 @@ function PIQContent() {
                         <div className="pt-3 border-t border-gray-200 mt-3">
                           <div className="flex items-center justify-between mb-2">
                             <span className="text-sm text-gray-600">Other Costs</span>
-                            {!showOtherCosts && (
-                              <button 
-                                className="text-xs text-[#FF6600] hover:text-[#e65c00] font-medium"
-                                onClick={() => setShowOtherCosts(true)}
-                                data-testid="button-add-other-cost"
-                              >
-                                + Add
-                              </button>
-                            )}
+                            <button 
+                              className="text-xs text-[#FF6600] hover:text-[#e65c00] font-medium"
+                              onClick={addOtherCost}
+                              data-testid="button-add-other-cost"
+                            >
+                              + Add
+                            </button>
                           </div>
                           
-                          {showOtherCosts && (
+                          {otherCosts.length > 0 && (
                             <div className="space-y-2">
-                              <select 
-                                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-400"
-                                data-testid="select-other-costs"
-                                value={otherCostType}
-                                onChange={(e) => setOtherCostType(e.target.value)}
-                              >
-                                <option value="wholesale_fee">Wholesale Fee</option>
-                                <option value="acquisition_cost">Acquisition Cost</option>
-                                <option value="short_sale_fee">Short Sale Fee</option>
-                                <option value="third_party_fee">3rd Party Fee</option>
-                                <option value="agent_fee">Agent Fee</option>
-                                <option value="sellers_closing_cost">Sellers Closing Cost</option>
-                                <option value="due_diligence">Due Diligence</option>
-                              </select>
-                              <div className="flex items-center gap-2">
-                                <input 
-                                  type="text" 
-                                  value={otherCostAmount}
-                                  onChange={(e) => setOtherCostAmount(e.target.value)}
-                                  className="flex-1 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-gray-400"
-                                  data-testid="input-other-cost-amount"
-                                />
-                                <button 
-                                  className="text-xs text-red-500 hover:text-red-600"
-                                  onClick={() => setShowOtherCosts(false)}
-                                  data-testid="button-remove-other-cost"
-                                >
-                                  ✕
-                                </button>
+                              <div className="flex flex-wrap gap-2">
+                                {otherCosts.map((cost) => (
+                                  <div key={cost.id} className="flex items-center gap-1 bg-gray-50 border border-gray-200 rounded-md p-2">
+                                    <select 
+                                      className="px-2 py-1 text-xs border border-gray-200 rounded bg-white text-gray-700 focus:outline-none"
+                                      data-testid={`select-other-cost-${cost.id}`}
+                                      value={cost.type}
+                                      onChange={(e) => updateOtherCost(cost.id, 'type', e.target.value)}
+                                    >
+                                      <option value="wholesale_fee">Wholesale Fee</option>
+                                      <option value="acquisition_cost">Acquisition Cost</option>
+                                      <option value="short_sale_fee">Short Sale Fee</option>
+                                      <option value="third_party_fee">3rd Party Fee</option>
+                                      <option value="agent_fee">Agent Fee</option>
+                                      <option value="sellers_closing_cost">Sellers Closing Cost</option>
+                                      <option value="due_diligence">Due Diligence</option>
+                                    </select>
+                                    <input 
+                                      type="text" 
+                                      value={cost.amount}
+                                      onChange={(e) => updateOtherCost(cost.id, 'amount', e.target.value)}
+                                      className="w-16 px-2 py-1 text-xs text-right border border-gray-200 rounded bg-white focus:outline-none"
+                                      data-testid={`input-other-cost-${cost.id}`}
+                                    />
+                                    <button 
+                                      className="text-xs text-red-500 hover:text-red-600 ml-1"
+                                      onClick={() => removeOtherCost(cost.id)}
+                                      data-testid={`button-remove-cost-${cost.id}`}
+                                    >
+                                      ✕
+                                    </button>
+                                  </div>
+                                ))}
                               </div>
-                              <div className="text-xs text-gray-500 text-right">reduces offer</div>
+                              <div className="text-xs text-gray-500 text-right">−${totalOtherCosts.toLocaleString()} reduces offer</div>
                             </div>
                           )}
                         </div>
@@ -976,14 +992,14 @@ function PIQContent() {
                       <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4">
                         <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Offer Price</div>
                         <div className="text-2xl font-bold text-gray-900">
-                          ${showOtherCosts ? (165000 - parseInt(otherCostAmount || '0')).toLocaleString() : '165,000'}
+                          ${(165000 - totalOtherCosts).toLocaleString()}
                         </div>
                         <div className="text-sm text-gray-500 mt-0.5">
-                          {showOtherCosts ? `${((165000 - parseInt(otherCostAmount || '0')) / 279900 * 100).toFixed(2)}%` : '58.95%'} of ARV
+                          {((165000 - totalOtherCosts) / 279900 * 100).toFixed(2)}% of ARV
                         </div>
-                        {showOtherCosts && (
+                        {totalOtherCosts > 0 && (
                           <div className="text-xs text-gray-400 mt-1">
-                            (−${parseInt(otherCostAmount || '0').toLocaleString()} other costs)
+                            (−${totalOtherCosts.toLocaleString()} other costs)
                           </div>
                         )}
                       </div>
@@ -993,13 +1009,13 @@ function PIQContent() {
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-gray-600">Total Acquisition Cost</span>
                           <span className="text-sm text-gray-700">
-                            ${showOtherCosts ? (166300 - parseInt(otherCostAmount || '0')).toLocaleString() : '166,300'}
+                            ${(166300 - totalOtherCosts).toLocaleString()}
                           </span>
                         </div>
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-gray-600">Total Project Cost</span>
                           <span className="text-sm text-gray-700">
-                            ${showOtherCosts ? (216300 - parseInt(otherCostAmount || '0')).toLocaleString() : '216,300'}
+                            ${(216300 - totalOtherCosts).toLocaleString()}
                           </span>
                         </div>
                       </div>
