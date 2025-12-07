@@ -1005,6 +1005,32 @@ function PIQContent() {
                         </div>
                         <div className="flex items-center justify-between">
                           <div>
+                            <span className="text-sm text-gray-600">Unleveraged Profit</span>
+                            <div className="text-xs text-gray-400">Profit if Cash Deal</div>
+                          </div>
+                          <input 
+                            type="text" 
+                            defaultValue="$49,605" 
+                            className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-green-100 font-semibold text-green-700 focus:outline-none"
+                            readOnly
+                            data-testid="input-unleveraged-profit"
+                          />
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <span className="text-sm text-gray-600">Leveraged Profit</span>
+                            <div className="text-xs text-gray-400">After Financing Costs</div>
+                          </div>
+                          <input 
+                            type="text" 
+                            defaultValue="$40,734" 
+                            className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-green-100 font-semibold text-green-700 focus:outline-none"
+                            readOnly
+                            data-testid="input-leveraged-profit"
+                          />
+                        </div>
+                        <div className="flex items-center justify-between pt-2 border-t border-gray-100 mt-2">
+                          <div>
                             <span className="text-sm text-gray-600">Total Acquisition Cost</span>
                             <div className="text-xs text-gray-400">59.41% of ARV</div>
                           </div>
@@ -1027,19 +1053,6 @@ function PIQContent() {
                             className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-100 text-gray-600 focus:outline-none"
                             readOnly
                             data-testid="input-total-project-cost"
-                          />
-                        </div>
-                        <div className="flex items-center justify-between pt-2 border-t border-gray-100 mt-2">
-                          <div>
-                            <span className="text-sm font-medium text-gray-700">Unleveraged Profit</span>
-                            <div className="text-xs text-gray-400">Profit if Cash Deal</div>
-                          </div>
-                          <input 
-                            type="text" 
-                            defaultValue="$49,605" 
-                            className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-green-100 font-semibold text-green-700 focus:outline-none"
-                            readOnly
-                            data-testid="input-unleveraged-profit"
                           />
                         </div>
                       </div>
