@@ -565,20 +565,6 @@ function PIQContent() {
 
               {showIQPanel && (
                 <div className="mt-6 bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="relative">
-                      <Lightbulb className="w-6 h-6 text-[#FF6600] animate-pulse" />
-                      <div className="absolute inset-0 w-6 h-6 bg-[#FF6600] rounded-full opacity-30 animate-ping"></div>
-                    </div>
-                    <div>
-                      <h2 className="text-lg font-bold text-[#FF6600]">iQ Property Intelligence</h2>
-                      <div className="flex items-center gap-1.5 text-xs text-green-600 mt-0.5">
-                        <Check className="w-3 h-3" />
-                        <span>Analysis complete</span>
-                      </div>
-                    </div>
-                  </div>
-
                   <div className="space-y-2 text-sm mb-6">
                     <div>Status: <span className="text-gray-900 font-semibold">Active</span></div>
                     <div>Days on Market: <span className="text-gray-900 font-semibold">45</span></div>
@@ -881,25 +867,191 @@ function PIQContent() {
                 </div>
               )}
 
+              {activeTab === 'investment' && (
+                <div className="space-y-6">
+                  <div className="grid grid-cols-2 gap-8">
+                    {/* Left Column - Purchase & Repairs, Sale, Offer */}
+                    <div className="space-y-6">
+                      {/* PURCHASE & REPAIRS */}
+                      <div>
+                        <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-4">Purchase & Repairs</h3>
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">Asking Price</span>
+                            <input 
+                              type="text" 
+                              defaultValue="$200,000" 
+                              className="w-32 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                              data-testid="input-asking-price"
+                            />
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">Closing Cost</span>
+                            <input 
+                              type="text" 
+                              defaultValue="$1,300" 
+                              className="w-32 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                              data-testid="input-closing-cost"
+                            />
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm text-gray-600">Repair Cost</span>
+                              <select className="text-xs border border-gray-200 rounded px-2 py-0.5 bg-white text-gray-500">
+                                <option>Estimated Unseen</option>
+                                <option>Estimated Seen</option>
+                                <option>Contractor Bid</option>
+                              </select>
+                            </div>
+                            <input 
+                              type="text" 
+                              defaultValue="$50,000" 
+                              className="w-32 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                              data-testid="input-repair-cost"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* SALE */}
+                      <div>
+                        <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-4">Sale</h3>
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">ARV</span>
+                            <input 
+                              type="text" 
+                              defaultValue="$279,900" 
+                              className="w-32 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-green-50 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                              data-testid="input-arv"
+                            />
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">Closing Costs</span>
+                            <div className="flex items-center gap-2">
+                              <input 
+                                type="text" 
+                                defaultValue="5" 
+                                className="w-12 px-2 py-1.5 text-sm text-center border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                data-testid="input-closing-costs-percent"
+                              />
+                              <span className="text-sm text-gray-400">%</span>
+                              <input 
+                                type="text" 
+                                defaultValue="$13,995" 
+                                className="w-24 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                data-testid="input-closing-costs-amount"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* OFFER */}
+                      <div>
+                        <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-4">Offer</h3>
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">Profit Adjustment</span>
+                            <input 
+                              type="text" 
+                              defaultValue="$35,000" 
+                              className="w-32 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                              data-testid="input-profit-adjustment"
+                            />
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">Proposed Offer</span>
+                            <div className="flex items-center gap-2">
+                              <input 
+                                type="text" 
+                                defaultValue="$165,000" 
+                                className="w-32 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-green-100 font-semibold focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                data-testid="input-proposed-offer"
+                              />
+                              <span className="text-sm text-green-600 font-medium">58.95%</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right Column - Metrics, Financing */}
+                    <div className="space-y-6">
+                      {/* METRICS */}
+                      <div>
+                        <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-4">Metrics</h3>
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">Purchase Cost</span>
+                            <div className="flex items-center gap-2">
+                              <input 
+                                type="text" 
+                                defaultValue="$166,300" 
+                                className="w-32 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                readOnly
+                                data-testid="input-purchase-cost"
+                              />
+                              <span className="text-sm text-gray-500">59.41%</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">Development Cost</span>
+                            <div className="flex items-center gap-2">
+                              <input 
+                                type="text" 
+                                defaultValue="$216,300" 
+                                className="w-32 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                readOnly
+                                data-testid="input-development-cost"
+                              />
+                              <span className="text-sm text-gray-500">77.28%</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">Cash Net Profits</span>
+                            <div className="flex items-center gap-2">
+                              <input 
+                                type="text" 
+                                defaultValue="$49,605" 
+                                className="w-32 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-green-100 font-semibold focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                readOnly
+                                data-testid="input-cash-net-profits"
+                              />
+                              <span className="text-sm text-green-600 font-medium">22.93% ROI</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* FINANCING */}
+                      <div>
+                        <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-4">Financing</h3>
+                        <div className="space-y-3">
+                          <select 
+                            className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md bg-white text-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                            data-testid="select-financing-type"
+                          >
+                            <option>Select Type of Capital...</option>
+                            <option>Cash</option>
+                            <option>Hard Money</option>
+                            <option>Private Money</option>
+                            <option>Conventional</option>
+                            <option>Seller Financing</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
             </div>
           </div>
 
-          {/* iQ Property Intelligence Report - Bottom Section */}
+          {/* Property Intelligence Report - Bottom Section */}
           <div className="border-t border-gray-200 p-6">
             <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="relative">
-                  <Lightbulb className="w-6 h-6 text-[#FF6600]" />
-                </div>
-                <div>
-                  <h2 className="text-lg font-bold text-[#FF6600]">iQ Property Intelligence</h2>
-                  <div className="flex items-center gap-1.5 text-xs text-green-600 mt-0.5">
-                    <Check className="w-3 h-3" />
-                    <span>Analysis complete</span>
-                  </div>
-                </div>
-              </div>
-
               <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm mb-6">
                 <div className="flex justify-between">
                   <span className="text-gray-500">Status:</span>
