@@ -1,0 +1,43 @@
+Create a Real Estate Deal Analyzer dashboard using React and Tailwind CSS. The design should look professional, clean, and modern (like a fintech dashboard).
+
+The layout must be reorganized into a 3-column "Deal Flow" structure. Do not omit any data from the logic below, but use the New Names provided.
+
+### LAYOUT STRUCTURE
+
+**1. TOP HEADER (The "Hero" Section)**
+Display these 3 key metrics in large, bold cards. These are the most important outputs.
+- **Max Allowable Offer**: $165,000 (Subtext: 58.95% of ARV) -> Style: Blue background, white text.
+- **Projected Net Profit**: $40,734 -> Style: Green text, bold.
+- **ROI**: 22.93% -> Style: Green badge or circular indicator.
+
+**2. LEFT COLUMN: Property & Scope (Inputs)**
+Header: "Project Details"
+- Input: List Price ($200,000)
+- Input: After Repair Value / ARV ($279,900)
+- Input: Renovation Budget ($50,000) -> Include a small 'calculator' icon.
+- Input: Project Timeline ($4 months)
+- Input: Buy-Side Closing Costs ($1,300)
+- Input: Sell-Side Closing Costs (5% | $13,995)
+
+**3. MIDDLE COLUMN: Financing (Inputs & Costs)**
+Header: "Loan & Capital"
+- Dropdown: Loan Program (Default: "Kiavi 75% ARV")
+- Row: Total Loan Principal ($209,925) -> Read-only, gray background.
+- Row: Origination Points ($1,574)
+- Row: Lender Fees ($999)
+- Row: Projected Interest Expense ($6,298)
+- Summary Row: Total Financing Costs ($8,871) -> Highlight this sum.
+
+**4. RIGHT COLUMN: Analysis & Targets (The Math)**
+Header: "Deal Performance"
+- Input: Target Profit Goal ($35,000) -> *User edits this to change the Max Offer.*
+- Read-only: Total Acquisition Cost ($166,300) | Subtext: 59.41% of ARV.
+- Read-only: Total Project Cost ($216,300) | Subtext: 77.28% of ARV.
+- Read-only: Unleveraged Profit ($49,605) -> Label as "Profit if Cash Deal".
+
+### VISUAL STYLE GUIDELINES
+- Use a white background with light gray borders for input fields.
+- Use a light gray background for read-only calculated fields (to distinguish them from inputs).
+- Use a distinct color (e.g., Yellow/Amber) for the "Target Profit" input to show it is a control lever.
+- Add a "Calculate" button (even if it auto-calculates, the button adds clarity).
+- Ensure the layout is responsive but optimized for desktop viewing.
