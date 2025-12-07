@@ -988,11 +988,11 @@ function PIQContent() {
                               <input 
                                 type="text" 
                                 defaultValue="$166,300" 
-                                className="w-32 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500"
                                 readOnly
                                 data-testid="input-purchase-cost"
                               />
-                              <span className="text-sm text-gray-500">59.41%</span>
+                              <span className="text-sm text-gray-400 w-16 text-right">59.41%</span>
                             </div>
                           </div>
                           <div className="flex items-center justify-between">
@@ -1001,11 +1001,11 @@ function PIQContent() {
                               <input 
                                 type="text" 
                                 defaultValue="$216,300" 
-                                className="w-32 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500"
                                 readOnly
                                 data-testid="input-development-cost"
                               />
-                              <span className="text-sm text-gray-500">77.28%</span>
+                              <span className="text-sm text-gray-400 w-16 text-right">77.28%</span>
                             </div>
                           </div>
                           <div className="flex items-center justify-between">
@@ -1014,11 +1014,11 @@ function PIQContent() {
                               <input 
                                 type="text" 
                                 defaultValue="$49,605" 
-                                className="w-32 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-green-100 font-semibold focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-green-100 font-semibold focus:outline-none focus:ring-1 focus:ring-blue-500"
                                 readOnly
                                 data-testid="input-cash-net-profits"
                               />
-                              <span className="text-sm text-green-600 font-medium">22.93% ROI</span>
+                              <span className="text-sm text-green-600 font-medium w-16 text-right">22.93% ROI</span>
                             </div>
                           </div>
                         </div>
@@ -1026,19 +1026,90 @@ function PIQContent() {
 
                       {/* FINANCING */}
                       <div>
-                        <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-4">Financing</h3>
-                        <div className="space-y-3">
+                        <div className="flex items-center justify-between mb-4">
+                          <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wide">Financing</h3>
                           <select 
-                            className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md bg-white text-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                            className="px-3 py-1.5 text-sm border border-gray-200 rounded-md bg-white text-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500"
                             data-testid="select-financing-type"
                           >
-                            <option>Select Type of Capital...</option>
+                            <option>Kiavi 75% ARV</option>
                             <option>Cash</option>
-                            <option>Hard Money</option>
+                            <option>Hard Money 70% ARV</option>
+                            <option>Hard Money 75% ARV</option>
                             <option>Private Money</option>
                             <option>Conventional</option>
                             <option>Seller Financing</option>
                           </select>
+                        </div>
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">Hold Time</span>
+                            <div className="flex items-center gap-2">
+                              <input 
+                                type="text" 
+                                defaultValue="4" 
+                                className="w-16 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                data-testid="input-hold-time"
+                              />
+                              <span className="text-sm text-gray-500">months</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">Loan Amount</span>
+                            <div className="flex items-center gap-2">
+                              <input 
+                                type="text" 
+                                defaultValue="$0" 
+                                className="w-16 px-2 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                data-testid="input-loan-amount"
+                              />
+                              <span className="text-xs text-gray-400">Points</span>
+                              <input 
+                                type="text" 
+                                defaultValue="$0" 
+                                className="w-14 px-2 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                data-testid="input-loan-points"
+                              />
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">Interest Cost</span>
+                            <div className="flex items-center gap-2">
+                              <input 
+                                type="text" 
+                                defaultValue="$0" 
+                                className="w-16 px-2 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                data-testid="input-interest-cost"
+                              />
+                              <span className="text-xs text-gray-400">Fees</span>
+                              <input 
+                                type="text" 
+                                defaultValue="$0" 
+                                className="w-14 px-2 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                data-testid="input-interest-fees"
+                              />
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">Total Cost of Capital</span>
+                            <input 
+                              type="text" 
+                              defaultValue="$0" 
+                              className="w-20 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                              readOnly
+                              data-testid="input-total-cost-capital"
+                            />
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">Net Profit</span>
+                            <input 
+                              type="text" 
+                              defaultValue="$49,605" 
+                              className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-green-100 font-semibold text-green-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                              readOnly
+                              data-testid="input-net-profit"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
