@@ -835,8 +835,20 @@ function PIQContent() {
                           </div>
                         </div>
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-1">
-                            <span className="text-sm text-gray-600">Renovation Budget</span>
+                          <span className="text-sm text-gray-600">Buy-Side Closing Costs</span>
+                          <div className="flex items-center gap-2">
+                            <input 
+                              type="text" 
+                              defaultValue="$1,300" 
+                              className="w-24 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                              data-testid="input-buy-closing-costs"
+                            />
+                            <span className="w-16"></span>
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-gray-600">Renovation Budget</span>
+                          <div className="flex items-center gap-2">
                             <button 
                               className="p-1 border border-gray-300 rounded bg-gray-50 hover:bg-gray-100 transition"
                               data-testid="button-renovation-calculator"
@@ -845,8 +857,6 @@ function PIQContent() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                               </svg>
                             </button>
-                          </div>
-                          <div className="flex items-center gap-2">
                             <input 
                               type="text" 
                               defaultValue="$50,000" 
@@ -854,6 +864,13 @@ function PIQContent() {
                               data-testid="input-renovation-budget"
                             />
                             <span className="text-xs text-gray-500 w-16 text-right">17.9% ARV</span>
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+                          <span className="text-sm font-medium text-gray-700">Total Acquisition Cost</span>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-semibold text-gray-900">$251,300</span>
+                            <span className="text-xs text-gray-500 w-16 text-right">89.8% ARV</span>
                           </div>
                         </div>
                         <div className="flex items-center justify-between">
@@ -864,18 +881,6 @@ function PIQContent() {
                               defaultValue="$279,900" 
                               className="w-24 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
                               data-testid="input-arv"
-                            />
-                            <span className="w-16"></span>
-                          </div>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-600">Buy-Side Closing Costs</span>
-                          <div className="flex items-center gap-2">
-                            <input 
-                              type="text" 
-                              defaultValue="$1,300" 
-                              className="w-24 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                              data-testid="input-buy-closing-costs"
                             />
                             <span className="w-16"></span>
                           </div>
