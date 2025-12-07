@@ -52,6 +52,7 @@ function PIQContent() {
   const [mapValueIQRevealKey, setMapValueIQRevealKey] = useState(0);
   const [showMapValueIQCompletion, setShowMapValueIQCompletion] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
+  const [loanProgram, setLoanProgram] = useState('Cash');
   
   const { openIQ } = useLayout();
 
@@ -943,88 +944,97 @@ function PIQContent() {
                         <select 
                           className="px-3 py-1.5 text-sm border border-gray-200 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-400"
                           data-testid="select-loan-program"
+                          value={loanProgram}
+                          onChange={(e) => setLoanProgram(e.target.value)}
                         >
-                          <option>Cash</option>
-                          <option>Kiavi 75% ARV</option>
-                          <option>Hard Money 70% ARV</option>
-                          <option>Hard Money 75% ARV</option>
-                          <option>Private Money</option>
-                          <option>Conventional</option>
-                          <option>Seller Financing</option>
+                          <option value="Cash">Cash</option>
+                          <option value="Kiavi 75% ARV">Kiavi 75% ARV</option>
+                          <option value="Hard Money 70% ARV">Hard Money 70% ARV</option>
+                          <option value="Hard Money 75% ARV">Hard Money 75% ARV</option>
+                          <option value="Private Money">Private Money</option>
+                          <option value="Conventional">Conventional</option>
+                          <option value="Seller Financing">Seller Financing</option>
                         </select>
                       </div>
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-600">Hold Time</span>
-                          <div className="flex items-center gap-1">
+                      
+                      {loanProgram === 'Cash' ? (
+                        <div className="text-center py-8 text-gray-500">
+                          <p className="text-sm">No financing costs for cash purchase</p>
+                        </div>
+                      ) : (
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">Hold Time</span>
+                            <div className="flex items-center gap-1">
+                              <input 
+                                type="text" 
+                                defaultValue="4" 
+                                className="w-14 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                data-testid="input-hold-time"
+                              />
+                              <span className="text-xs text-gray-400">months</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">Total Loan Principal</span>
                             <input 
                               type="text" 
-                              defaultValue="4" 
-                              className="w-14 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                              data-testid="input-hold-time"
+                              defaultValue="$209,925" 
+                              className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-100 text-gray-600 focus:outline-none"
+                              readOnly
+                              data-testid="input-loan-principal"
                             />
-                            <span className="text-xs text-gray-400">months</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">Origination Points</span>
+                            <input 
+                              type="text" 
+                              defaultValue="$1,574" 
+                              className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                              data-testid="input-origination-points"
+                            />
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">Lender Fees</span>
+                            <input 
+                              type="text" 
+                              defaultValue="$999" 
+                              className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                              data-testid="input-lender-fees"
+                            />
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-600">Projected Interest Expense</span>
+                            <input 
+                              type="text" 
+                              defaultValue="$6,298" 
+                              className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-100 text-gray-600 focus:outline-none"
+                              readOnly
+                              data-testid="input-interest-expense"
+                            />
+                          </div>
+                          <div className="flex items-center justify-between pt-2 border-t border-gray-100 mt-2">
+                            <span className="text-sm font-semibold text-gray-700">Total Financing Costs</span>
+                            <input 
+                              type="text" 
+                              defaultValue="$8,871" 
+                              className="w-28 px-3 py-1.5 text-sm text-right border border-gray-300 rounded-md bg-gray-100 font-semibold text-gray-700 focus:outline-none"
+                              readOnly
+                              data-testid="input-total-financing-costs"
+                            />
+                          </div>
+                          <div className="flex items-center justify-between pt-2 mt-2">
+                            <span className="text-sm font-semibold text-gray-700">Levered Profit</span>
+                            <input 
+                              type="text" 
+                              defaultValue="$40,734" 
+                              className="w-28 px-3 py-1.5 text-sm text-right border border-gray-300 rounded-md bg-gray-100 font-semibold text-gray-900 focus:outline-none"
+                              readOnly
+                              data-testid="input-levered-profit"
+                            />
                           </div>
                         </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-600">Total Loan Principal</span>
-                          <input 
-                            type="text" 
-                            defaultValue="$209,925" 
-                            className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-100 text-gray-600 focus:outline-none"
-                            readOnly
-                            data-testid="input-loan-principal"
-                          />
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-600">Origination Points</span>
-                          <input 
-                            type="text" 
-                            defaultValue="$1,574" 
-                            className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                            data-testid="input-origination-points"
-                          />
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-600">Lender Fees</span>
-                          <input 
-                            type="text" 
-                            defaultValue="$999" 
-                            className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                            data-testid="input-lender-fees"
-                          />
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-600">Projected Interest Expense</span>
-                          <input 
-                            type="text" 
-                            defaultValue="$6,298" 
-                            className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-100 text-gray-600 focus:outline-none"
-                            readOnly
-                            data-testid="input-interest-expense"
-                          />
-                        </div>
-                        <div className="flex items-center justify-between pt-2 border-t border-gray-100 mt-2">
-                          <span className="text-sm font-semibold text-gray-700">Total Financing Costs</span>
-                          <input 
-                            type="text" 
-                            defaultValue="$8,871" 
-                            className="w-28 px-3 py-1.5 text-sm text-right border border-gray-300 rounded-md bg-gray-100 font-semibold text-gray-700 focus:outline-none"
-                            readOnly
-                            data-testid="input-total-financing-costs"
-                          />
-                        </div>
-                        <div className="flex items-center justify-between pt-2 mt-2">
-                          <span className="text-sm font-semibold text-gray-700">Levered Profit</span>
-                          <input 
-                            type="text" 
-                            defaultValue="$40,734" 
-                            className="w-28 px-3 py-1.5 text-sm text-right border border-gray-300 rounded-md bg-gray-100 font-semibold text-gray-900 focus:outline-none"
-                            readOnly
-                            data-testid="input-levered-profit"
-                          />
-                        </div>
-                      </div>
+                      )}
                     </div>
 
                   </div>
