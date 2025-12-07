@@ -933,6 +933,34 @@ function PIQContent() {
                           </div>
                         </div>
                         
+                        {/* Adjustment Table */}
+                        <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+                          <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">Adjustments</div>
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs text-gray-600">Profit %</span>
+                              <div className="flex items-center gap-1">
+                                <input 
+                                  type="text" 
+                                  defaultValue="12" 
+                                  className="w-14 px-2 py-1 text-xs text-center border border-gray-200 rounded bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                  data-testid="input-adjust-profit-percent"
+                                />
+                                <span className="text-xs text-gray-400">%</span>
+                              </div>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs text-gray-600">Profit $</span>
+                              <input 
+                                type="text" 
+                                defaultValue="$35,000" 
+                                className="w-20 px-2 py-1 text-xs text-right border border-gray-200 rounded bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                data-testid="input-adjust-profit-amount"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        
                         {/* Calculate Button */}
                         <button 
                           className="w-full px-4 py-2.5 bg-[#FF6600] hover:bg-[#e65c00] text-white font-bold rounded-lg transition shadow-sm uppercase tracking-wide text-sm"
