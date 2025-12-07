@@ -837,13 +837,6 @@ function PIQContent() {
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-gray-600">Renovation Budget</span>
                           <div className="flex items-center gap-1">
-                            <input 
-                              type="text" 
-                              defaultValue="$50,000" 
-                              className="w-20 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                              data-testid="input-renovation-budget"
-                            />
-                            <span className="text-xs text-gray-500 w-14">17.9% ARV</span>
                             <button 
                               className="p-1.5 border border-gray-300 rounded-md bg-gray-50 hover:bg-gray-100 transition"
                               data-testid="button-renovation-calculator"
@@ -852,6 +845,13 @@ function PIQContent() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                               </svg>
                             </button>
+                            <input 
+                              type="text" 
+                              defaultValue="$50,000" 
+                              className="w-20 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                              data-testid="input-renovation-budget"
+                            />
+                            <span className="text-xs text-gray-500 w-14">17.9% ARV</span>
                           </div>
                         </div>
                         <div className="flex items-center justify-between">
