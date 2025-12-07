@@ -988,10 +988,7 @@ function PIQContent() {
                       
                       {/* The Results */}
                       <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4">
-                        <div className="flex items-center justify-between mb-1">
-                          <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">Offer Price</div>
-                          <div className="text-xs text-gray-500">ARV: $279,900</div>
-                        </div>
+                        <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Offer Price</div>
                         <div className="text-2xl font-bold text-gray-900">
                           ${(165000 - totalOtherCosts).toLocaleString()}
                         </div>
