@@ -1,0 +1,41 @@
+Refactor the Real Estate Deal Analyzer into a strict "Process Flow" layout with 3 vertical columns. Remove the top "Hero" banner entirely. All results must be integrated into the columns.
+
+### COLUMN 1: PROPERTY & SCOPE (The Asset)
+*Logic: What are we buying and fixing?*
+- Input: List Price ($200,000)
+- Input: After Repair Value / ARV ($279,900)
+- Input Group: Renovation Budget ($50,000) -> Must include the [Calculator Icon] button.
+- Input: Buy-Side Closing Costs ($1,300)
+- Input: Sell-Side Closing Costs (5% | $13,995)
+
+### COLUMN 2: TARGETS & RESULTS (The Decision Engine)
+*Logic: What do I want to make? -> Therefore, what do I offer?*
+1. **Target Profit Input Section (Top of Column):**
+   - Label: "Target Profit Goal"
+   - UI: Create a split input that allows entering a Fixed Amount (e.g., $35,000) OR a Percentage (e.g., 12%).
+   - Action: Place a prominent "CALCULATE" button immediately below this input.
+
+2. **The Results (Middle of Column - High Visibility):**
+   - **Max Allowable Offer**: Display this as the primary big number (e.g., $165,000) with "58.95% of ARV" small below it.
+   - **Projected Net Profit**: Large text (e.g., $40,734).
+   - **ROI**: Badge style (e.g., 22.93%).
+
+3. **Deal Metrics (Bottom of Column):**
+   - Read-only: Unleveraged Profit (Profit if Cash Deal)
+   - Read-only: Total Acquisition Cost
+   - Read-only: Total Project Cost
+
+### COLUMN 3: FINANCING & HOLD (The Funding)
+*Logic: How do I pay for it?*
+- Dropdown: Loan Program (Kiavi 75% ARV, Hard Money, etc.)
+- Input: Hold Time (4 Months) -> *Critical: This drives the Interest calc.*
+- Read-only: Total Loan Principal
+- Input: Origination Points ($1,574)
+- Input: Lender Fees ($999)
+- Read-only: Projected Interest Expense ($6,298)
+- Summary Box: **Total Financing Costs** ($8,871)
+
+### VISUAL INSTRUCTIONS
+- **No Header Banner:** The top of the page should just be the column headers.
+- **Column 2 Emphasis:** The "Max Allowable Offer" and "Net Profit" inside Column 2 should be visually distinct (bold/colored text) so the eye is drawn there after hitting "Calculate".
+- **Compactness:** Keep inputs tight. Use standard Tailwind spacing (gap-4 or gap-6).

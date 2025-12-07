@@ -796,37 +796,11 @@ function PIQContent() {
               )}
 
               {activeTab === 'investment' && (
-                <div className="space-y-6">
-                  {/* TOP HEADER - Hero Section with Key Metrics */}
+                <div className="space-y-4">
+                  {/* 3-COLUMN PROCESS FLOW LAYOUT */}
                   <div className="grid grid-cols-3 gap-4">
-                    {/* Max Allowable Offer */}
-                    <div className="bg-blue-600 rounded-xl p-5 text-white">
-                      <div className="text-xs font-medium text-blue-200 uppercase tracking-wide mb-1">Max Allowable Offer</div>
-                      <div className="text-2xl font-bold">$165,000</div>
-                      <div className="text-sm text-blue-200 mt-1">58.95% of ARV</div>
-                    </div>
-                    {/* Projected Net Profit */}
-                    <div className="bg-white rounded-xl p-5 border border-gray-200">
-                      <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Projected Net Profit</div>
-                      <div className="text-2xl font-bold text-green-600">$40,734</div>
-                      <div className="text-sm text-gray-400 mt-1">After all costs</div>
-                    </div>
-                    {/* ROI */}
-                    <div className="bg-white rounded-xl p-5 border border-gray-200 flex items-center justify-between">
-                      <div>
-                        <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Return on Investment</div>
-                        <div className="text-2xl font-bold text-green-600">22.93%</div>
-                      </div>
-                      <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center">
-                        <span className="text-green-600 font-bold text-sm">ROI</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* 3-COLUMN LAYOUT */}
-                  <div className="grid grid-cols-3 gap-6">
                     
-                    {/* LEFT COLUMN: Property & Scope */}
+                    {/* COLUMN 1: Property & Scope (The Asset) */}
                     <div className="bg-white rounded-xl border border-gray-200 p-5">
                       <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-4 pb-2 border-b border-gray-100">Property & Scope</h3>
                       <div className="space-y-3">
@@ -898,7 +872,94 @@ function PIQContent() {
                       </div>
                     </div>
 
-                    {/* MIDDLE COLUMN: Financing & Hold */}
+                    {/* COLUMN 2: Targets & Results (The Decision Engine) */}
+                    <div className="bg-white rounded-xl border-2 border-blue-200 p-5">
+                      <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-4 pb-2 border-b border-gray-100">Targets & Results</h3>
+                      
+                      {/* Target Profit Input Section */}
+                      <div className="space-y-3 mb-4">
+                        <div>
+                          <span className="text-sm text-gray-600 block mb-2">Target Profit Goal</span>
+                          <div className="flex items-center gap-2">
+                            <div className="flex-1 flex items-center border-2 border-amber-400 rounded-md bg-amber-50 overflow-hidden">
+                              <input 
+                                type="text" 
+                                defaultValue="$35,000" 
+                                className="flex-1 px-3 py-2 text-sm text-right bg-transparent font-semibold text-amber-700 focus:outline-none"
+                                data-testid="input-target-profit-amount"
+                              />
+                              <div className="border-l border-amber-300 px-2 py-2 bg-amber-100">
+                                <span className="text-xs text-amber-600 font-medium">$</span>
+                              </div>
+                            </div>
+                            <span className="text-gray-400 text-sm">or</span>
+                            <div className="w-20 flex items-center border border-gray-300 rounded-md bg-white overflow-hidden">
+                              <input 
+                                type="text" 
+                                defaultValue="12" 
+                                className="w-full px-2 py-2 text-sm text-right bg-transparent text-gray-700 focus:outline-none"
+                                data-testid="input-target-profit-percent"
+                              />
+                              <div className="border-l border-gray-200 px-2 py-2 bg-gray-50">
+                                <span className="text-xs text-gray-500 font-medium">%</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Calculate Button */}
+                        <button 
+                          className="w-full px-4 py-2.5 bg-[#FF6600] hover:bg-[#e65c00] text-white font-bold rounded-lg transition shadow-sm uppercase tracking-wide text-sm"
+                          data-testid="button-calculate"
+                        >
+                          Calculate
+                        </button>
+                      </div>
+                      
+                      {/* The Results - High Visibility */}
+                      <div className="bg-blue-600 rounded-lg p-4 mb-4">
+                        <div className="text-xs font-medium text-blue-200 uppercase tracking-wide mb-1">Max Allowable Offer</div>
+                        <div className="text-2xl font-bold text-white">$165,000</div>
+                        <div className="text-sm text-blue-200 mt-0.5">58.95% of ARV</div>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-3 mb-4">
+                        <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                          <div className="text-xs text-green-600 uppercase tracking-wide mb-1">Projected Net Profit</div>
+                          <div className="text-xl font-bold text-green-700">$40,734</div>
+                        </div>
+                        <div className="bg-green-50 border border-green-200 rounded-lg p-3 flex items-center justify-between">
+                          <div>
+                            <div className="text-xs text-green-600 uppercase tracking-wide mb-1">ROI</div>
+                            <div className="text-xl font-bold text-green-700">22.93%</div>
+                          </div>
+                          <div className="w-10 h-10 rounded-full bg-green-200 flex items-center justify-center">
+                            <span className="text-green-700 font-bold text-xs">ROI</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Deal Metrics */}
+                      <div className="space-y-2 pt-3 border-t border-gray-200">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <span className="text-sm text-gray-600">Unleveraged Profit</span>
+                            <div className="text-xs text-gray-400">Profit if Cash Deal</div>
+                          </div>
+                          <span className="text-sm font-semibold text-gray-700">$49,605</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-gray-600">Total Acquisition Cost</span>
+                          <span className="text-sm text-gray-700">$166,300</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-gray-600">Total Project Cost</span>
+                          <span className="text-sm text-gray-700">$216,300</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* COLUMN 3: Financing & Hold (The Funding) */}
                     <div className="bg-white rounded-xl border border-gray-200 p-5">
                       <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-4 pb-2 border-b border-gray-100">Financing & Hold</h3>
                       <div className="space-y-3">
@@ -978,92 +1039,6 @@ function PIQContent() {
                           />
                         </div>
                       </div>
-                    </div>
-
-                    {/* RIGHT COLUMN: Deal Targets & Analysis */}
-                    <div className="bg-white rounded-xl border border-gray-200 p-5">
-                      <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-4 pb-2 border-b border-gray-100">Deal Targets & Analysis</h3>
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-600">Target Profit Goal</span>
-                          <div className="flex items-center gap-1">
-                            <input 
-                              type="text" 
-                              defaultValue="$35,000" 
-                              className="w-24 px-3 py-1.5 text-sm text-right border-2 border-amber-400 rounded-md bg-amber-50 font-semibold text-amber-700 focus:outline-none focus:ring-1 focus:ring-amber-500"
-                              data-testid="input-target-profit"
-                            />
-                            <button 
-                              className="p-1.5 border border-amber-400 rounded-md bg-amber-50 hover:bg-amber-100 transition"
-                              data-testid="button-profit-calculator"
-                            >
-                              <svg className="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                              </svg>
-                            </button>
-                          </div>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <span className="text-sm text-gray-600">Unleveraged Profit</span>
-                            <div className="text-xs text-gray-400">Profit if Cash Deal</div>
-                          </div>
-                          <input 
-                            type="text" 
-                            defaultValue="$49,605" 
-                            className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-green-100 font-semibold text-green-700 focus:outline-none"
-                            readOnly
-                            data-testid="input-unleveraged-profit"
-                          />
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <span className="text-sm text-gray-600">Leveraged Profit</span>
-                            <div className="text-xs text-gray-400">After Financing Costs</div>
-                          </div>
-                          <input 
-                            type="text" 
-                            defaultValue="$40,734" 
-                            className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-green-100 font-semibold text-green-700 focus:outline-none"
-                            readOnly
-                            data-testid="input-leveraged-profit"
-                          />
-                        </div>
-                        <div className="flex items-center justify-between pt-2 border-t border-gray-100 mt-2">
-                          <div>
-                            <span className="text-sm text-gray-600">Total Acquisition Cost</span>
-                            <div className="text-xs text-gray-400">59.41% of ARV</div>
-                          </div>
-                          <input 
-                            type="text" 
-                            defaultValue="$166,300" 
-                            className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-100 text-gray-600 focus:outline-none"
-                            readOnly
-                            data-testid="input-total-acquisition"
-                          />
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <span className="text-sm text-gray-600">Total Project Cost</span>
-                            <div className="text-xs text-gray-400">77.28% of ARV</div>
-                          </div>
-                          <input 
-                            type="text" 
-                            defaultValue="$216,300" 
-                            className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-100 text-gray-600 focus:outline-none"
-                            readOnly
-                            data-testid="input-total-project-cost"
-                          />
-                        </div>
-                      </div>
-                      
-                      {/* Calculate Button */}
-                      <button 
-                        className="w-full mt-6 px-4 py-2.5 bg-[#FF6600] hover:bg-[#e65c00] text-white font-bold rounded-lg transition shadow-sm"
-                        data-testid="button-calculate"
-                      >
-                        Calculate
-                      </button>
                     </div>
 
                   </div>
