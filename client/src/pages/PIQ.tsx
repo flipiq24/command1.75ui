@@ -823,10 +823,7 @@ function PIQContent() {
                       <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-4 pb-2 border-b border-gray-100">Property & Scope</h3>
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
-                          <div>
-                            <span className="text-sm text-gray-600">List Price</span>
-                            <span className="text-xs text-gray-400 ml-2">71.5% ARV</span>
-                          </div>
+                          <span className="text-sm text-gray-600">List Price</span>
                           <input 
                             type="text" 
                             defaultValue="$200,000" 
@@ -844,10 +841,7 @@ function PIQContent() {
                           />
                         </div>
                         <div className="flex items-center justify-between">
-                          <div>
-                            <span className="text-sm text-gray-600">Renovation Budget</span>
-                            <span className="text-xs text-gray-400 ml-2">17.9% ARV</span>
-                          </div>
+                          <span className="text-sm text-gray-600">Renovation Budget</span>
                           <div className="flex items-center gap-1">
                             <input 
                               type="text" 
@@ -863,28 +857,6 @@ function PIQContent() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                               </svg>
                             </button>
-                          </div>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <span className="text-sm text-gray-600">Total Profit Goal</span>
-                            <span className="text-xs text-gray-400 ml-2">(ROI)</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <input 
-                              type="text" 
-                              defaultValue="$35,000" 
-                              className="w-20 px-2 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                              data-testid="input-total-profit-goal"
-                            />
-                            <span className="text-xs text-gray-400">/</span>
-                            <input 
-                              type="text" 
-                              defaultValue="12" 
-                              className="w-12 px-2 py-1.5 text-sm text-center border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                              data-testid="input-roi-percent"
-                            />
-                            <span className="text-xs text-gray-400">%</span>
                           </div>
                         </div>
                         <div className="flex items-center justify-between">
