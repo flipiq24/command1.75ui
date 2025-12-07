@@ -824,21 +824,15 @@ function PIQContent() {
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-gray-600">List Price</span>
-                          <input 
-                            type="text" 
-                            defaultValue="$200,000" 
-                            className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                            data-testid="input-list-price"
-                          />
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-600">After Repair Value (ARV)</span>
-                          <input 
-                            type="text" 
-                            defaultValue="$279,900" 
-                            className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                            data-testid="input-arv"
-                          />
+                          <div className="flex items-center gap-2">
+                            <input 
+                              type="text" 
+                              defaultValue="$200,000" 
+                              className="w-24 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                              data-testid="input-list-price"
+                            />
+                            <span className="text-xs text-gray-500 w-14">71.5% ARV</span>
+                          </div>
                         </div>
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-gray-600">Renovation Budget</span>
@@ -846,9 +840,10 @@ function PIQContent() {
                             <input 
                               type="text" 
                               defaultValue="$50,000" 
-                              className="w-24 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                              className="w-20 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
                               data-testid="input-renovation-budget"
                             />
+                            <span className="text-xs text-gray-500 w-14">17.9% ARV</span>
                             <button 
                               className="p-1.5 border border-gray-300 rounded-md bg-gray-50 hover:bg-gray-100 transition"
                               data-testid="button-renovation-calculator"
@@ -858,6 +853,15 @@ function PIQContent() {
                               </svg>
                             </button>
                           </div>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-gray-600">After Repair Value (ARV)</span>
+                          <input 
+                            type="text" 
+                            defaultValue="$279,900" 
+                            className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                            data-testid="input-arv"
+                          />
                         </div>
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-gray-600">Buy-Side Closing Costs</span>
