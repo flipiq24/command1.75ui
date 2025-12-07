@@ -1,0 +1,44 @@
+Create a professional Real Estate Deal Analyzer dashboard using React and Tailwind CSS. The priority is FUNCTIONALITY and DATA DENSITY, not just aesthetics.
+
+### CRITICAL REQUIREMENTS
+1. **Preserve Complexity:** Do not remove data points. We need all the specific financial fields.
+2. **Calculator Tools:** The "Renovation Budget" and "Target Profit" inputs MUST have a visible "Calculator/Grid" icon button next to them. This implies they open a breakdown modal (you don't need to build the modal logic yet, but the UI element must be there).
+3. **Logic Flow:** Follow the specific column mapping below.
+
+### LAYOUT SPECIFICATION
+
+**1. HERO SECTION (Top Banner)**
+*Goal: The Verdict.*
+- **Max Allowable Offer**: Display in a large Blue container. (Show "XX% of ARV" as subtext).
+- **Projected Net Profit**: Large Green text.
+- **ROI**: Display as a badge or distinct metric.
+
+**2. LEFT COLUMN: "Property & Scope"**
+*Goal: The Asset.*
+- Input: List Price
+- Input: After Repair Value (ARV)
+- Input Group: **Renovation Budget** -> [Input Field] + [Calculator/Grid Icon Button] (Make this button obvious).
+- Input: Buy-Side Closing Costs ($)
+- Input: Sell-Side Closing Costs (% and $)
+
+**3. MIDDLE COLUMN: "Financing & Hold"**
+*Goal: The Cost of Money.*
+- Dropdown: Loan Program (e.g., Kiavi 75% ARV)
+- Input: **Hold Time (Months)** -> *Placement Correction: Keep this here, as it drives Interest Cost.*
+- Read-Only: Total Loan Principal
+- Input: Origination Points ($)
+- Input: Lender Fees ($)
+- Read-Only: Projected Interest Expense (Calculated from Hold Time)
+- Summary: Total Financing Costs (Sum of Points, Fees, Interest) -> Highlight this.
+
+**4. RIGHT COLUMN: "Deal Targets & Analysis"**
+*Goal: The Decision.*
+- Input Group: **Target Profit Goal** -> [Input Field] + [Calculator Icon Button] (For adjusting based on ROI targets).
+- Read-Only: Total Acquisition Cost (Offer + Buy Costs)
+- Read-Only: Total Project Cost (Acquisition + Reno + Carry Costs)
+- Read-Only: Unleveraged Profit (Profit if Cash Deal) -> Distinct style to separate from Net Profit.
+
+### VISUAL STYLE
+- **Density:** Use a compact layout. Do not use excessive whitespace. The user needs to see the data relationships.
+- **Inputs vs Outputs:** clearly distinguish editable fields (white/border) from calculated fields (gray/background).
+- **Action Bar:** Add a prominent "Calculate" button at the bottom right.

@@ -826,9 +826,9 @@ function PIQContent() {
                   {/* 3-COLUMN LAYOUT */}
                   <div className="grid grid-cols-3 gap-6">
                     
-                    {/* LEFT COLUMN: Project Details */}
+                    {/* LEFT COLUMN: Property & Scope */}
                     <div className="bg-white rounded-xl border border-gray-200 p-5">
-                      <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-4 pb-2 border-b border-gray-100">Project Details</h3>
+                      <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-4 pb-2 border-b border-gray-100">Property & Scope</h3>
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-gray-600">List Price</span>
@@ -849,29 +849,22 @@ function PIQContent() {
                           />
                         </div>
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-1.5">
-                            <span className="text-sm text-gray-600">Renovation Budget</span>
-                            <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                            </svg>
-                          </div>
-                          <input 
-                            type="text" 
-                            defaultValue="$50,000" 
-                            className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                            data-testid="input-renovation-budget"
-                          />
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-600">Project Timeline</span>
+                          <span className="text-sm text-gray-600">Renovation Budget</span>
                           <div className="flex items-center gap-1">
                             <input 
                               type="text" 
-                              defaultValue="4" 
-                              className="w-14 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                              data-testid="input-project-timeline"
+                              defaultValue="$50,000" 
+                              className="w-24 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                              data-testid="input-renovation-budget"
                             />
-                            <span className="text-xs text-gray-400">months</span>
+                            <button 
+                              className="p-1.5 border border-gray-300 rounded-md bg-gray-50 hover:bg-gray-100 transition"
+                              data-testid="button-renovation-calculator"
+                            >
+                              <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                              </svg>
+                            </button>
                           </div>
                         </div>
                         <div className="flex items-center justify-between">
@@ -905,9 +898,9 @@ function PIQContent() {
                       </div>
                     </div>
 
-                    {/* MIDDLE COLUMN: Loan & Capital */}
+                    {/* MIDDLE COLUMN: Financing & Hold */}
                     <div className="bg-white rounded-xl border border-gray-200 p-5">
-                      <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-4 pb-2 border-b border-gray-100">Loan & Capital</h3>
+                      <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-4 pb-2 border-b border-gray-100">Financing & Hold</h3>
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-gray-600">Loan Program</span>
@@ -923,6 +916,18 @@ function PIQContent() {
                             <option>Conventional</option>
                             <option>Seller Financing</option>
                           </select>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-gray-600">Hold Time</span>
+                          <div className="flex items-center gap-1">
+                            <input 
+                              type="text" 
+                              defaultValue="4" 
+                              className="w-14 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                              data-testid="input-hold-time"
+                            />
+                            <span className="text-xs text-gray-400">months</span>
+                          </div>
                         </div>
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-gray-600">Total Loan Principal</span>
@@ -975,18 +980,28 @@ function PIQContent() {
                       </div>
                     </div>
 
-                    {/* RIGHT COLUMN: Deal Performance */}
+                    {/* RIGHT COLUMN: Deal Targets & Analysis */}
                     <div className="bg-white rounded-xl border border-gray-200 p-5">
-                      <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-4 pb-2 border-b border-gray-100">Deal Performance</h3>
+                      <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-4 pb-2 border-b border-gray-100">Deal Targets & Analysis</h3>
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-gray-600">Target Profit Goal</span>
-                          <input 
-                            type="text" 
-                            defaultValue="$35,000" 
-                            className="w-28 px-3 py-1.5 text-sm text-right border-2 border-amber-400 rounded-md bg-amber-50 font-semibold text-amber-700 focus:outline-none focus:ring-1 focus:ring-amber-500"
-                            data-testid="input-target-profit"
-                          />
+                          <div className="flex items-center gap-1">
+                            <input 
+                              type="text" 
+                              defaultValue="$35,000" 
+                              className="w-24 px-3 py-1.5 text-sm text-right border-2 border-amber-400 rounded-md bg-amber-50 font-semibold text-amber-700 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                              data-testid="input-target-profit"
+                            />
+                            <button 
+                              className="p-1.5 border border-amber-400 rounded-md bg-amber-50 hover:bg-amber-100 transition"
+                              data-testid="button-profit-calculator"
+                            >
+                              <svg className="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                              </svg>
+                            </button>
+                          </div>
                         </div>
                         <div className="flex items-center justify-between">
                           <div>
