@@ -831,64 +831,68 @@ function PIQContent() {
                               className="w-24 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
                               data-testid="input-list-price"
                             />
-                            <span className="text-xs text-gray-500 w-14">71.5% ARV</span>
+                            <span className="text-xs text-gray-500 w-16 text-right">71.5% ARV</span>
                           </div>
                         </div>
                         <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-600">Renovation Budget</span>
                           <div className="flex items-center gap-1">
+                            <span className="text-sm text-gray-600">Renovation Budget</span>
                             <button 
-                              className="p-1.5 border border-gray-300 rounded-md bg-gray-50 hover:bg-gray-100 transition"
+                              className="p-1 border border-gray-300 rounded bg-gray-50 hover:bg-gray-100 transition"
                               data-testid="button-renovation-calculator"
                             >
-                              <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                               </svg>
                             </button>
+                          </div>
+                          <div className="flex items-center gap-2">
                             <input 
                               type="text" 
                               defaultValue="$50,000" 
-                              className="w-20 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                              className="w-24 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
                               data-testid="input-renovation-budget"
                             />
-                            <span className="text-xs text-gray-500 w-14">17.9% ARV</span>
+                            <span className="text-xs text-gray-500 w-16 text-right">17.9% ARV</span>
                           </div>
                         </div>
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-gray-600">After Repair Value (ARV)</span>
-                          <input 
-                            type="text" 
-                            defaultValue="$279,900" 
-                            className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                            data-testid="input-arv"
-                          />
+                          <div className="flex items-center gap-2">
+                            <input 
+                              type="text" 
+                              defaultValue="$279,900" 
+                              className="w-24 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                              data-testid="input-arv"
+                            />
+                            <span className="w-16"></span>
+                          </div>
                         </div>
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-gray-600">Buy-Side Closing Costs</span>
-                          <input 
-                            type="text" 
-                            defaultValue="$1,300" 
-                            className="w-28 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                            data-testid="input-buy-closing-costs"
-                          />
+                          <div className="flex items-center gap-2">
+                            <input 
+                              type="text" 
+                              defaultValue="$1,300" 
+                              className="w-24 px-3 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                              data-testid="input-buy-closing-costs"
+                            />
+                            <span className="w-16"></span>
+                          </div>
                         </div>
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-gray-600">Sell-Side Closing Costs</span>
-                          <div className="flex items-center gap-1">
-                            <input 
-                              type="text" 
-                              defaultValue="5" 
-                              className="w-10 px-2 py-1.5 text-sm text-center border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                              data-testid="input-sell-closing-percent"
-                            />
-                            <span className="text-xs text-gray-400">%</span>
-                            <input 
-                              type="text" 
-                              defaultValue="$13,995" 
-                              className="w-20 px-2 py-1.5 text-sm text-right border border-gray-200 rounded-md bg-gray-100 text-gray-600 focus:outline-none"
-                              readOnly
-                              data-testid="input-sell-closing-amount"
-                            />
+                          <div className="flex items-center gap-2">
+                            <div className="w-24 flex items-center justify-end gap-1">
+                              <input 
+                                type="text" 
+                                defaultValue="5" 
+                                className="w-12 px-2 py-1.5 text-sm text-center border border-gray-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                data-testid="input-sell-closing-percent"
+                              />
+                              <span className="text-xs text-gray-500">%</span>
+                            </div>
+                            <span className="text-xs text-gray-500 w-16 text-right">$13,995</span>
                           </div>
                         </div>
                       </div>
