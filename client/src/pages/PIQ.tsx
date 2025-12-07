@@ -867,10 +867,10 @@ function PIQContent() {
                           </div>
                         </div>
                         <div className="flex items-center justify-between pt-2 border-t border-gray-100">
-                          <span className="text-sm font-medium text-gray-700">Total Acquisition Cost</span>
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm font-semibold text-gray-900">$251,300</span>
-                            <span className="text-xs text-gray-500 w-16 text-right">89.8% ARV</span>
+                          <span className="text-sm font-medium text-gray-700 whitespace-nowrap">Total Acquisition Cost</span>
+                          <div className="flex items-center gap-2 flex-shrink-0">
+                            <span className="text-sm font-semibold text-gray-900 whitespace-nowrap">$251,300</span>
+                            <span className="text-xs text-gray-500 whitespace-nowrap">89.8% ARV</span>
                           </div>
                         </div>
                         <div className="flex items-center justify-between">
