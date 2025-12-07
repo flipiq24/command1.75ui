@@ -992,11 +992,15 @@ function PIQContent() {
                       <div className="space-y-2 pt-3 border-t border-gray-200">
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-gray-600">Total Acquisition Cost</span>
-                          <span className="text-sm text-gray-700">$166,300</span>
+                          <span className="text-sm text-gray-700">
+                            ${showOtherCosts ? (166300 - parseInt(otherCostAmount || '0')).toLocaleString() : '166,300'}
+                          </span>
                         </div>
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-gray-600">Total Project Cost</span>
-                          <span className="text-sm text-gray-700">$216,300</span>
+                          <span className="text-sm text-gray-700">
+                            ${showOtherCosts ? (216300 - parseInt(otherCostAmount || '0')).toLocaleString() : '216,300'}
+                          </span>
                         </div>
                       </div>
                     </div>
