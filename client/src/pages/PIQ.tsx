@@ -907,8 +907,69 @@ function PIQContent() {
                     <div className="bg-white rounded-xl border border-gray-200 p-5">
                       <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-4 pb-2 border-b border-gray-100">Targets & Results</h3>
                       
+                      {/* Other Costs - moved to top */}
+                      <div className="mb-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm text-gray-600">Other Costs</span>
+                          <button 
+                            className="text-xs text-[#FF6600] hover:text-[#e65c00] font-medium"
+                            onClick={addOtherCost}
+                            data-testid="button-add-other-cost"
+                          >
+                            + Add
+                          </button>
+                        </div>
+                        
+                        {otherCosts.length > 0 && (
+                          <div className="space-y-2">
+                            {otherCosts.map((cost) => (
+                              <div key={cost.id} className="flex items-center gap-2">
+                                <div className="flex-1 relative">
+                                  <input 
+                                    type="text"
+                                    list={`cost-types-${cost.id}`}
+                                    value={cost.type}
+                                    onChange={(e) => updateOtherCost(cost.id, 'type', e.target.value)}
+                                    placeholder="Select or type cost..."
+                                    className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                    data-testid={`input-other-cost-type-${cost.id}`}
+                                  />
+                                  <datalist id={`cost-types-${cost.id}`}>
+                                    <option value="Wholesale Fee" />
+                                    <option value="Acquisition Cost" />
+                                    <option value="Short Sale Fee" />
+                                    <option value="3rd Party Fee" />
+                                    <option value="Agent Fee" />
+                                    <option value="Sellers Closing Cost" />
+                                    <option value="Due Diligence" />
+                                  </datalist>
+                                </div>
+                                <input 
+                                  type="text" 
+                                  value={cost.amount}
+                                  onChange={(e) => updateOtherCost(cost.id, 'amount', e.target.value)}
+                                  placeholder="$0"
+                                  className="w-24 px-3 py-2 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none"
+                                  data-testid={`input-other-cost-${cost.id}`}
+                                />
+                                <button 
+                                  className="text-red-500 hover:text-red-600"
+                                  onClick={() => removeOtherCost(cost.id)}
+                                  data-testid={`button-remove-cost-${cost.id}`}
+                                >
+                                  ✕
+                                </button>
+                              </div>
+                            ))}
+                            {totalOtherCosts > 0 && (
+                              <div className="text-xs text-gray-500 text-right">−${totalOtherCosts.toLocaleString()} reduces offer</div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                      
                       {/* Target Profit Input Section */}
-                      <div className="space-y-3 mb-4">
+                      <div className="space-y-3 mb-4 pt-3 border-t border-gray-200">
                         <div>
                           <span className="text-sm text-gray-600 block mb-2">Target Profit Goal</span>
                           <div className="flex items-center gap-2">
@@ -973,67 +1034,6 @@ function PIQContent() {
                         >
                           Calculate
                         </button>
-                        
-                        {/* Other Costs */}
-                        <div className="pt-3 border-t border-gray-200 mt-3">
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm text-gray-600">Other Costs</span>
-                            <button 
-                              className="text-xs text-[#FF6600] hover:text-[#e65c00] font-medium"
-                              onClick={addOtherCost}
-                              data-testid="button-add-other-cost"
-                            >
-                              + Add
-                            </button>
-                          </div>
-                          
-                          {otherCosts.length > 0 && (
-                            <div className="space-y-2">
-                              {otherCosts.map((cost) => (
-                                <div key={cost.id} className="flex items-center gap-2">
-                                  <div className="flex-1 relative">
-                                    <input 
-                                      type="text"
-                                      list={`cost-types-${cost.id}`}
-                                      value={cost.type}
-                                      onChange={(e) => updateOtherCost(cost.id, 'type', e.target.value)}
-                                      placeholder="Select or type cost..."
-                                      className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                      data-testid={`input-other-cost-type-${cost.id}`}
-                                    />
-                                    <datalist id={`cost-types-${cost.id}`}>
-                                      <option value="Wholesale Fee" />
-                                      <option value="Acquisition Cost" />
-                                      <option value="Short Sale Fee" />
-                                      <option value="3rd Party Fee" />
-                                      <option value="Agent Fee" />
-                                      <option value="Sellers Closing Cost" />
-                                      <option value="Due Diligence" />
-                                    </datalist>
-                                  </div>
-                                  <input 
-                                    type="text" 
-                                    value={cost.amount}
-                                    onChange={(e) => updateOtherCost(cost.id, 'amount', e.target.value)}
-                                    placeholder="$0"
-                                    className="w-24 px-3 py-2 text-sm text-right border border-gray-200 rounded-md bg-white focus:outline-none"
-                                    data-testid={`input-other-cost-${cost.id}`}
-                                  />
-                                  <button 
-                                    className="text-red-500 hover:text-red-600"
-                                    onClick={() => removeOtherCost(cost.id)}
-                                    data-testid={`button-remove-cost-${cost.id}`}
-                                  >
-                                    ✕
-                                  </button>
-                                </div>
-                              ))}
-                              {totalOtherCosts > 0 && (
-                                <div className="text-xs text-gray-500 text-right">−${totalOtherCosts.toLocaleString()} reduces offer</div>
-                              )}
-                            </div>
-                          )}
-                        </div>
                       </div>
                       
                       {/* The Results */}
