@@ -137,7 +137,6 @@ export default function ActionPlan({
 }: ActionPlanProps) {
   const [hoveredId, setHoveredId] = useState<DealType | null>(null);
   const [goalTooltipOpen, setGoalTooltipOpen] = useState(false);
-  const [aiMatchTooltipOpen, setAiMatchTooltipOpen] = useState(false);
 
   const handleFilterClick = (filter: DealType | "goal" | "completed") => {
     if (onFilterChange) {
@@ -266,59 +265,19 @@ export default function ActionPlan({
           <div className="text-sm text-gray-400 mt-1">Offers Made</div>
         </div>
 
-        {/* AI Match Section */}
+        {/* New Agent Relationships Section */}
         <div className="text-right relative border-l border-gray-200 pl-6">
-          <div
-            className="inline-flex items-center gap-1.5 cursor-help"
-            onMouseEnter={() => setAiMatchTooltipOpen(true)}
-            onMouseLeave={() => setAiMatchTooltipOpen(false)}
-          >
-            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">
-              AI Match Goal
-            </span>
-            <Info className="w-3 h-3 text-gray-400" />
-          </div>
-
-          {/* AI Match Tooltip */}
-          <div
-            className={cn(
-              "absolute top-full right-0 mt-2 w-80 bg-gray-900 text-white p-4 rounded-lg shadow-xl z-30 transition-all duration-200 pointer-events-none text-left text-xs leading-relaxed",
-              aiMatchTooltipOpen
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 -translate-y-2",
-            )}
-          >
-            <div className="font-bold text-white mb-2 text-sm">
-              Monthly Goal: 100+ Offers
-            </div>
-            <p className="text-gray-300 mb-4">
-              Submit a combination of Offer Terms and Contracts to hit your
-              target of 2 closed deals per month.
-            </p>
-
-            <div className="space-y-2 mb-4">
-              <div>
-                <span className="font-bold text-gray-300">• 1st Number:</span>{" "}
-                <span className="text-gray-400">Offers made today.</span>
-              </div>
-              <div>
-                <span className="font-bold text-gray-300">• 2nd Number:</span>{" "}
-                <span className="text-gray-400">Your daily goal.</span>
-              </div>
-            </div>
-
-            <div className="text-gray-400 italic border-t border-gray-700 pt-2 mt-2">
-              Click to filter and see the offers you made today.
-            </div>
-          </div>
+          <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+            New Agent Relationships
+          </span>
 
           <div
-            className="flex items-baseline justify-end gap-1 cursor-pointer transition-opacity hover:opacity-80"
+            className="flex items-baseline justify-end gap-1 cursor-pointer transition-opacity hover:opacity-80 mt-1"
           >
             <span className="text-4xl font-black text-blue-600">1</span>
-            <span className="text-2xl font-bold text-blue-600">/ 3</span>
+            <span className="text-2xl font-bold text-blue-600">/5</span>
           </div>
-          <div className="text-sm text-gray-400 mt-1">Offers Made - Match the AI in Daily Outreach</div>
+          <div className="text-sm text-gray-400 mt-1">Relationships Built</div>
         </div>
       </div>
 
