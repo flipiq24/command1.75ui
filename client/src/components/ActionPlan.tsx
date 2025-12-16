@@ -137,6 +137,7 @@ export default function ActionPlan({
 }: ActionPlanProps) {
   const [hoveredId, setHoveredId] = useState<DealType | null>(null);
   const [goalTooltipOpen, setGoalTooltipOpen] = useState(false);
+  const [relationshipTooltipOpen, setRelationshipTooltipOpen] = useState(false);
 
   const handleFilterClick = (filter: DealType | "goal" | "completed") => {
     if (onFilterChange) {
@@ -267,9 +268,48 @@ export default function ActionPlan({
 
         {/* New Agent Relationships Section */}
         <div className="text-right relative border-l border-gray-200 pl-6">
-          <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">
-            New Agent Relationships
-          </span>
+          <div
+            className="inline-flex items-center gap-1.5 cursor-help"
+            onMouseEnter={() => setRelationshipTooltipOpen(true)}
+            onMouseLeave={() => setRelationshipTooltipOpen(false)}
+          >
+            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+              New Agent Relationships
+            </span>
+            <Info className="w-3 h-3 text-gray-400" />
+          </div>
+
+          {/* Relationship Tooltip */}
+          <div
+            className={cn(
+              "absolute top-full right-0 mt-2 w-80 bg-gray-900 text-white p-4 rounded-lg shadow-xl z-30 transition-all duration-200 pointer-events-none text-left text-xs leading-relaxed",
+              relationshipTooltipOpen
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 -translate-y-2",
+            )}
+          >
+            <div className="font-bold text-white mb-2 text-sm">
+              Weekly Goal: 5 New Agent Relationships
+            </div>
+            <p className="text-gray-300 mb-4">
+              Build new connections with agents to expand your deal pipeline and increase your chances of closing more deals.
+            </p>
+
+            <div className="space-y-2 mb-4">
+              <div>
+                <span className="font-bold text-gray-300">• 1st Number:</span>{" "}
+                <span className="text-gray-400">Relationships built this week.</span>
+              </div>
+              <div>
+                <span className="font-bold text-gray-300">• 2nd Number:</span>{" "}
+                <span className="text-gray-400">Your weekly goal.</span>
+              </div>
+            </div>
+
+            <div className="text-gray-400 italic border-t border-gray-700 pt-2 mt-2">
+              Click to view your new agent relationships.
+            </div>
+          </div>
 
           <div
             className="flex items-baseline justify-end gap-1 cursor-pointer transition-opacity hover:opacity-80 mt-1"
