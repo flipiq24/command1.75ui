@@ -87,10 +87,47 @@ export default function OutreachActionPlan({
           </div>
         </div>
 
+        {/* Daily Offer Goal */}
+        <div className="text-right ml-8 group relative cursor-pointer transition-all">
+          <div className="flex items-center justify-end gap-1 text-[11px] text-gray-400 uppercase tracking-wider font-medium mb-1">
+            <span>Daily Offer Goal</span>
+            <HelpCircle className="w-3 h-3" />
+          </div>
+          <div className="text-3xl font-bold">
+            <span className="text-[#FF6600]">1</span>
+            <span className="text-gray-300">/ 3</span>
+          </div>
+          <div className="text-xs text-gray-400 mt-0.5">Offers Made</div>
+          
+          <div className="absolute top-full right-0 mt-2 w-80 bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-left">
+            <div className="font-bold text-white mb-2 text-sm">
+              Monthly Goal: 100+ Offers
+            </div>
+            <p className="text-gray-300 mb-4">
+              Submit a combination of Offer Terms and Contracts to hit your
+              target of 2 closed deals per month.
+            </p>
+            <div className="space-y-2 mb-4">
+              <div>
+                <span className="font-bold text-gray-300">• 1st Number:</span>{" "}
+                <span className="text-gray-400">Offers made today.</span>
+              </div>
+              <div>
+                <span className="font-bold text-gray-300">• 2nd Number:</span>{" "}
+                <span className="text-gray-400">Your daily goal.</span>
+              </div>
+            </div>
+            <div className="text-gray-400 italic border-t border-gray-700 pt-2 mt-2">
+              Click to filter and see the offers you made today.
+            </div>
+          </div>
+        </div>
+
+        {/* New Agent Relationships */}
         <div 
           className={cn(
-            "text-right ml-8 group relative cursor-pointer transition-all",
-            activeFilter === 'newRelationships' && "ring-2 ring-orange-400 rounded-lg p-2 -m-2 bg-orange-50"
+            "text-right ml-8 group relative cursor-pointer transition-all border-l border-gray-200 pl-8",
+            activeFilter === 'newRelationships' && "ring-2 ring-blue-400 rounded-lg p-2 -m-2 bg-blue-50"
           )}
           onClick={() => handleCircleClick('newRelationships')}
           data-testid="circle-new-relationships"
@@ -100,24 +137,30 @@ export default function OutreachActionPlan({
             <HelpCircle className="w-3 h-3" />
           </div>
           <div className="text-3xl font-bold">
-            <span className="text-orange-500">{newRelationships}</span>
+            <span className="text-blue-600">{newRelationships}</span>
             <span className="text-gray-300">/{newRelationshipsGoal}</span>
           </div>
           <div className="text-xs text-gray-400 mt-0.5">Relationships Built</div>
           
           <div className="absolute top-full right-0 mt-2 w-80 bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-left">
-            <div className="flex items-baseline gap-2 mb-2">
-              <span className="text-2xl font-black text-[#FF6600]">{newRelationships}</span>
-              <span className="text-lg text-gray-400">/ {newRelationshipsGoal}</span>
+            <div className="font-bold text-white mb-2 text-sm">
+              Weekly Goal: 5 New Agent Relationships
             </div>
-            <div className="font-bold text-white mb-1">Relationships Built</div>
-            <div className="font-bold text-[#FF6600] mb-3">New Agent Relationships</div>
-            <div className="mb-3 text-gray-300">Goal: 5 per day (1300+ relationships/year)</div>
-            <div className="text-gray-300 leading-relaxed">
-              Increments when an agent's relationship status changes from "Cold" or "Unassigned" to "Warm" or "Hot".
+            <p className="text-gray-300 mb-4">
+              Build new connections with agents to expand your deal pipeline and increase your chances of closing more deals.
+            </p>
+            <div className="space-y-2 mb-4">
+              <div>
+                <span className="font-bold text-gray-300">• 1st Number:</span>{" "}
+                <span className="text-gray-400">Relationships built this week.</span>
+              </div>
+              <div>
+                <span className="font-bold text-gray-300">• 2nd Number:</span>{" "}
+                <span className="text-gray-400">Your weekly goal.</span>
+              </div>
             </div>
-            <div className="mt-3 pt-3 border-t border-gray-700 text-gray-400 italic">
-              Click to filter and see relationships built today.
+            <div className="text-gray-400 italic border-t border-gray-700 pt-2 mt-2">
+              Click to view your new agent relationships.
             </div>
           </div>
         </div>
