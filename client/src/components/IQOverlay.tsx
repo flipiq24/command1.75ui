@@ -1014,13 +1014,29 @@ Let's debrief and see how you did today!`;
                 <p className="text-xs text-gray-500">{getPhaseLabel()}</p>
               </div>
             </div>
-            <button
-              onClick={onClose}
-              className="p-2 hover:bg-gray-100 rounded-full transition"
-              data-testid="button-close-iq-overlay"
-            >
-              <X className="w-5 h-5 text-gray-500" />
-            </button>
+            <div className="flex items-center gap-3">
+              <button 
+                className="bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg flex items-center gap-2 transition-colors border border-gray-200 shadow-sm"
+                data-testid="button-add-property-iq"
+              >
+                Add Property
+                <span className="text-[#FF6600] text-lg font-bold leading-none">+</span>
+              </button>
+              <button 
+                className="bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg flex items-center gap-2 transition-colors border border-gray-200 shadow-sm"
+                data-testid="button-dispo-property-iq"
+              >
+                Dispo Property
+                <span className="text-[#FF6600] text-lg font-bold leading-none">+</span>
+              </button>
+              <button
+                onClick={onClose}
+                className="p-2 hover:bg-gray-100 rounded-full transition"
+                data-testid="button-close-iq-overlay"
+              >
+                <X className="w-5 h-5 text-gray-500" />
+              </button>
+            </div>
           </div>
 
           {/* Chat Container */}
