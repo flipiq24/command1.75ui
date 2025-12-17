@@ -449,51 +449,19 @@ export default function OutreachActionPlan({
                   <X className="w-5 h-5 text-gray-500" />
                 </button>
               </div>
-              <p className="text-sm text-gray-500 mb-6">Choose how you want to make your calls.</p>
+              <p className="text-sm text-gray-500 mb-6">Configure how you want to start agent conversations.</p>
 
-              {/* Section 1: Agent Type */}
+              {/* Section 1: Call Style */}
               <div className="mb-6">
-                <p className="text-sm font-semibold text-gray-700 mb-3">Who do you want to call?</p>
-                <div className="space-y-2">
-                  <label className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition">
-                    <input 
-                      type="radio" 
-                      name="agentType" 
-                      checked={agentType === 'high'}
-                      onChange={() => setAgentType('high')}
-                      className="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500"
-                      data-testid="radio-high-value"
-                    />
-                    <span className="text-sm text-gray-700">High-Value Agents</span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition">
-                    <input 
-                      type="radio" 
-                      name="agentType" 
-                      checked={agentType === 'mid'}
-                      onChange={() => setAgentType('mid')}
-                      className="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500"
-                      data-testid="radio-mid-value"
-                    />
-                    <span className="text-sm text-gray-700">Mid-Value Agents</span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition">
-                    <input 
-                      type="radio" 
-                      name="agentType" 
-                      checked={agentType === 'low'}
-                      onChange={() => setAgentType('low')}
-                      className="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500"
-                      data-testid="radio-low-value"
-                    />
-                    <span className="text-sm text-gray-700">Low-Value Agents (Practice)</span>
-                  </label>
+                <div className="flex items-center gap-2 mb-3">
+                  <p className="text-sm font-semibold text-gray-700">1. How do you want to start the call?</p>
+                  <div className="relative group">
+                    <HelpCircle className="w-4 h-4 text-gray-400 cursor-help" />
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
+                      Choose how the call is framed. Using a property provides context for the conversation. Calling without a property keeps the discussion relationship-focused.
+                    </div>
+                  </div>
                 </div>
-              </div>
-
-              {/* Section 2: Call Style */}
-              <div className="mb-6">
-                <p className="text-sm font-semibold text-gray-700 mb-3">How do you want to start the call?</p>
                 <div className="space-y-2">
                   <label className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition">
                     <input 
@@ -518,12 +486,20 @@ export default function OutreachActionPlan({
                     <span className="text-sm text-gray-700">Call without a property</span>
                   </label>
                 </div>
-                <p className="text-xs text-gray-400 mt-2 italic">A property is a conversation starter, not a one-shot pitch.</p>
+                <p className="text-xs text-gray-400 mt-2">The property provides context for the call. The goal is to build the relationship.</p>
               </div>
 
-              {/* Section 3: Relationship Type */}
+              {/* Section 2: Agent Pool */}
               <div className="mb-6">
-                <p className="text-sm font-semibold text-gray-700 mb-3">Which agents should we include?</p>
+                <div className="flex items-center gap-2 mb-3">
+                  <p className="text-sm font-semibold text-gray-700">2. Which agents should we include?</p>
+                  <div className="relative group">
+                    <HelpCircle className="w-4 h-4 text-gray-400 cursor-help" />
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
+                      Select which agent pool Command should pull from. This determines whether you are expanding new relationships or working existing assignments.
+                    </div>
+                  </div>
+                </div>
                 <div className="space-y-2">
                   <label className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition">
                     <input 
@@ -548,6 +524,63 @@ export default function OutreachActionPlan({
                 </div>
               </div>
 
+              {/* Section 3: Agent Type */}
+              <div className="mb-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <p className="text-sm font-semibold text-gray-700">3. Who do you want to call?</p>
+                  <div className="relative group">
+                    <HelpCircle className="w-4 h-4 text-gray-400 cursor-help" />
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
+                      Choose the agent value tier. This affects conversation difficulty, expectations, and potential deal volume — not the properties shown.
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <label className="flex items-start gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition">
+                    <input 
+                      type="radio" 
+                      name="agentType" 
+                      checked={agentType === 'high'}
+                      onChange={() => setAgentType('high')}
+                      className="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500 mt-0.5"
+                      data-testid="radio-high-value"
+                    />
+                    <div>
+                      <span className="text-sm text-gray-700 font-medium">High-Value Agents</span>
+                      <p className="text-xs text-gray-400 mt-0.5">Proven investor activity, higher standards, higher upside</p>
+                    </div>
+                  </label>
+                  <label className="flex items-start gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition">
+                    <input 
+                      type="radio" 
+                      name="agentType" 
+                      checked={agentType === 'mid'}
+                      onChange={() => setAgentType('mid')}
+                      className="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500 mt-0.5"
+                      data-testid="radio-mid-value"
+                    />
+                    <div>
+                      <span className="text-sm text-gray-700 font-medium">Mid-Value Agents</span>
+                      <p className="text-xs text-gray-400 mt-0.5">Active agents building investor experience</p>
+                    </div>
+                  </label>
+                  <label className="flex items-start gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition">
+                    <input 
+                      type="radio" 
+                      name="agentType" 
+                      checked={agentType === 'low'}
+                      onChange={() => setAgentType('low')}
+                      className="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500 mt-0.5"
+                      data-testid="radio-low-value"
+                    />
+                    <div>
+                      <span className="text-sm text-gray-700 font-medium">Low-Value Agents (Practice)</span>
+                      <p className="text-xs text-gray-400 mt-0.5">Lower risk, ideal for reps and confidence</p>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
               {/* Action Buttons */}
               <div className="flex gap-3">
                 <button
@@ -565,7 +598,7 @@ export default function OutreachActionPlan({
                     }
                     handleButtonClick('connections');
                   }}
-                  className="flex-1 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white text-sm font-bold rounded-lg transition"
+                  className="flex-1 px-4 py-2.5 bg-[#FF6600] hover:bg-[#e55c00] text-white text-sm font-bold rounded-lg transition"
                   data-testid="button-start-calling"
                 >
                   Start Calling
