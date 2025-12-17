@@ -350,14 +350,6 @@ export default function OutreachActionPlan({
         <div className="grid grid-cols-3 gap-4 pt-4 border-t border-gray-100">
           
           <div className="p-4 bg-gray-50 rounded-lg">
-            <button 
-              onClick={() => handleButtonClick('topOfMind')}
-              className="w-full mb-4 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
-              data-testid="button-start-campaigns"
-            >
-              <MessageSquare className="w-4 h-4" />
-              Start Campaigns
-            </button>
             <h3 className="font-bold text-gray-900 text-sm mb-1">Send Campaigns</h3>
             <p className="text-xs text-blue-600 font-medium mb-3">Relationship Maintenance</p>
             
@@ -377,14 +369,6 @@ export default function OutreachActionPlan({
           </div>
 
           <div className="p-4 bg-gray-50 rounded-lg">
-            <button 
-              onClick={() => handleButtonClick('priority')}
-              className="w-full mb-4 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
-              data-testid="button-start-priority-agents"
-            >
-              <Phone className="w-4 h-4" />
-              Start Calling Priority Agents
-            </button>
             <h3 className="font-bold text-gray-900 text-sm mb-1">Call Your Priority Agents</h3>
             <p className="text-xs text-amber-600 font-medium mb-3">High-Value Relationship Building</p>
             
@@ -403,14 +387,6 @@ export default function OutreachActionPlan({
           </div>
 
           <div className="p-4 bg-gray-50 rounded-lg">
-            <button 
-              onClick={() => handleButtonClick('connections')}
-              className="w-full mb-4 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
-              data-testid="button-start-relationship-building"
-            >
-              <Users className="w-4 h-4" />
-              Start Relationship Building
-            </button>
             <h3 className="font-bold text-gray-900 text-sm mb-1">Build Relationships While Chasing Deals</h3>
             <p className="text-xs text-red-600 font-medium mb-3">Deal-Driven Relationship Entry</p>
             
