@@ -199,36 +199,38 @@ export default function ActionPlan({
 
   return (
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
+      {/* Top Header with Centered Scope Button */}
+      <div className="flex justify-center mb-4">
+        <button
+          onClick={handleScopeToggle}
+          className={cn(
+            "px-6 py-2.5 rounded-lg text-sm font-semibold transition-all",
+            currentScope === "all_active"
+              ? "bg-[#FF6600] text-white shadow-lg"
+              : "bg-[#FF6600] text-white hover:bg-[#e55c00] shadow-md"
+          )}
+          data-testid="button-scope-toggle"
+        >
+          {currentScope === "all_active" ? "✓ " : ""}All My Active Deals
+        </button>
+      </div>
+
       <div className="flex justify-between items-start mb-8">
         <div className="flex-1">
-          <div className="flex items-center justify-between mb-2">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900">
-                {currentScope === "today" ? "Nov 27, 2025 — " : ""}{getHeaderText()}
-              </h2>
-              {currentScope === "all_active" && (
-                <button
-                  onClick={handleScopeToggle}
-                  className="flex items-center gap-1 text-sm text-gray-500 hover:text-[#FF6600] mt-1 transition-colors"
-                  data-testid="button-back-to-today"
-                >
-                  <ArrowLeft className="w-4 h-4" />
-                  <span>Back to Today's Plan</span>
-                </button>
-              )}
-            </div>
-            <button
-              onClick={handleScopeToggle}
-              className={cn(
-                "px-4 py-2 rounded-lg text-sm font-medium transition-all border",
-                currentScope === "all_active"
-                  ? "bg-gray-100 border-gray-300 text-gray-700"
-                  : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
-              )}
-              data-testid="button-scope-toggle"
-            >
-              {currentScope === "all_active" ? "✓ " : ""}All My Active Deals
-            </button>
+          <div className="mb-2">
+            <h2 className="text-2xl font-bold text-gray-900">
+              {currentScope === "today" ? "Nov 27, 2025 — " : ""}{getHeaderText()}
+            </h2>
+            {currentScope === "all_active" && (
+              <button
+                onClick={handleScopeToggle}
+                className="flex items-center gap-1 text-sm text-gray-500 hover:text-[#FF6600] mt-1 transition-colors"
+                data-testid="button-back-to-today"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span>Back to Today's Plan</span>
+              </button>
+            )}
           </div>
 
           <div className="space-y-2">
