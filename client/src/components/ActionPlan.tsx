@@ -2,8 +2,6 @@ import React, { useState, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { Info, CheckCircle } from "lucide-react";
 
-export type ScopeType = "today" | "all_active";
-
 export type DealType = "hot" | "warm" | "cold" | "new";
 
 interface ActionItem {
@@ -128,8 +126,6 @@ interface ActionPlanProps {
   completionPercent?: number;
   userName?: string;
   onMilestoneComplete?: () => void;
-  scope?: ScopeType;
-  onScopeChange?: (scope: ScopeType) => void;
 }
 
 export default function ActionPlan({
@@ -138,33 +134,12 @@ export default function ActionPlan({
   completionPercent = 32,
   userName = "Tony",
   onMilestoneComplete,
-  scope = "today",
-  onScopeChange,
 }: ActionPlanProps) {
   const [hoveredId, setHoveredId] = useState<DealType | null>(null);
   const [goalTooltipOpen, setGoalTooltipOpen] = useState(false);
   const [relationshipTooltipOpen, setRelationshipTooltipOpen] = useState(false);
-  const [internalScope, setInternalScope] = useState<ScopeType>(scope);
-
-  const currentScope = onScopeChange ? scope : internalScope;
-
-  const handleScopeToggle = () => {
-    const newScope = currentScope === "today" ? "all_active" : "today";
-    if (onScopeChange) {
-      onScopeChange(newScope);
-    } else {
-      setInternalScope(newScope);
-    }
-    if (onFilterChange) {
-      onFilterChange(null);
-    }
-  };
 
   const getHeaderText = () => {
-    if (currentScope === "all_active") {
-      return "All My Active Deals!";
-    }
-    
     switch (activeFilter) {
       case "hot":
         return "Today's High Priority Deals!";
@@ -199,27 +174,11 @@ export default function ActionPlan({
 
   return (
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
-      {/* Top Header with Centered Scope Button */}
-      <div className="flex justify-center mb-4">
-        <button
-          onClick={handleScopeToggle}
-          className={cn(
-            "px-6 py-2.5 rounded-lg text-sm font-semibold transition-all",
-            currentScope === "all_active"
-              ? "bg-[#FF6600] text-white shadow-lg"
-              : "bg-[#FF6600] text-white hover:bg-[#e55c00] shadow-md"
-          )}
-          data-testid="button-scope-toggle"
-        >
-          {currentScope === "all_active" ? "✓ " : ""}All My Active Deals
-        </button>
-      </div>
-
       <div className="flex justify-between items-start mb-8">
         <div className="flex-1">
           <div className="mb-2">
             <h2 className="text-2xl font-bold text-gray-900">
-              {currentScope === "today" ? "Nov 27, 2025 — " : ""}{getHeaderText()}
+              Nov 27, 2025 — {getHeaderText()}
             </h2>
           </div>
 

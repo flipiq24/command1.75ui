@@ -866,13 +866,23 @@ function DailyOutreachContent() {
             <h2 className="text-xl font-bold text-gray-900" data-testid="text-page-title">Daily Outreach</h2>
             <p className="text-xs text-gray-500">Step-by-step execution mode.</p>
           </div>
-          <div className="relative group">
-            <button className="bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg flex items-center gap-2 transition-colors border border-gray-200">
-              <span className="group-hover:text-[#FF6600] transition-colors">Add Property</span>
-              <span className="text-[#FF6600] text-lg font-bold leading-none">+</span>
-            </button>
-            <div className="absolute top-full right-0 mt-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-              Enter an address and price. I'll automatically gather property details and run comparables for you.
+          <div className="flex items-center gap-3">
+            <Link href="/my-deals">
+              <button 
+                className="bg-[#FF6600] hover:bg-[#e55c00] text-white text-sm font-semibold px-5 py-2.5 rounded-lg shadow-md transition-colors"
+                data-testid="button-all-active-deals"
+              >
+                All My Active Deals
+              </button>
+            </Link>
+            <div className="relative group">
+              <button className="bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg flex items-center gap-2 transition-colors border border-gray-200">
+                <span className="group-hover:text-[#FF6600] transition-colors">Add Property</span>
+                <span className="text-[#FF6600] text-lg font-bold leading-none">+</span>
+              </button>
+              <div className="absolute top-full right-0 mt-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                Enter an address and price. I'll automatically gather property details and run comparables for you.
+              </div>
             </div>
           </div>
         </div>
