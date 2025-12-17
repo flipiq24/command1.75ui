@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { cn } from "@/lib/utils";
-import { Info, CheckCircle, ArrowLeft } from "lucide-react";
+import { Info, CheckCircle } from "lucide-react";
 
 export type ScopeType = "today" | "all_active";
 
@@ -221,16 +221,6 @@ export default function ActionPlan({
             <h2 className="text-2xl font-bold text-gray-900">
               {currentScope === "today" ? "Nov 27, 2025 — " : ""}{getHeaderText()}
             </h2>
-            {currentScope === "all_active" && (
-              <button
-                onClick={handleScopeToggle}
-                className="flex items-center gap-1 text-sm text-gray-500 hover:text-[#FF6600] mt-1 transition-colors"
-                data-testid="button-back-to-today"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                <span>Back to Today's Plan</span>
-              </button>
-            )}
           </div>
 
           <div className="space-y-2">
