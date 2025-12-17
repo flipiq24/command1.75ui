@@ -341,17 +341,17 @@ export default function OutreachActionPlan({
         <div className="grid grid-cols-3 gap-4 pt-4 border-t border-gray-100">
           
           <div className="p-4 bg-gray-50 rounded-lg">
-            <p className="text-xs text-blue-600 font-semibold mb-2">Relationship Maintenance</p>
+            <p className="text-sm text-blue-600 font-semibold mb-2">Relationship Maintenance</p>
             
-            <p className="text-xs text-gray-600 mb-3 leading-relaxed">
+            <p className="text-sm text-gray-600 mb-3 leading-relaxed">
               The system selects agents from your Hot, Warm, and Cold called relationships.
               These are lower-value agents where you have already made initial contact and planted the seed.
               You can send templated or custom messages.
             </p>
             
             <div className="border-t border-gray-200 pt-3 mt-3">
-              <p className="text-xs font-semibold text-gray-700 mb-1">Why It Matters</p>
-              <p className="text-xs text-gray-500 leading-relaxed">
+              <p className="text-sm font-semibold text-gray-700 mb-1">Why It Matters</p>
+              <p className="text-sm text-gray-500 leading-relaxed">
                 By staying in touch every few weeks, you stay top-of-mind.
                 When these agents trip over a deal — and often lack strong buyer relationships — you are the squeaky wheel they remember to send it to.
               </p>
@@ -359,15 +359,15 @@ export default function OutreachActionPlan({
           </div>
 
           <div className="p-4 bg-gray-50 rounded-lg">
-            <p className="text-xs text-amber-600 font-semibold mb-2">High-Value Relationship Building</p>
+            <p className="text-sm text-amber-600 font-semibold mb-2">High-Value Relationship Building</p>
             
-            <p className="text-xs text-gray-600 mb-3 leading-relaxed">
+            <p className="text-sm text-gray-600 mb-3 leading-relaxed">
               Priority Agents are investor-friendly, high-volume agents you are building relationships with or actively chasing.
             </p>
             
             <div className="border-t border-gray-200 pt-3 mt-3">
-              <p className="text-xs font-semibold text-gray-700 mb-1">Why It Matters</p>
-              <p className="text-xs text-gray-500 leading-relaxed">
+              <p className="text-sm font-semibold text-gray-700 mb-1">Why It Matters</p>
+              <p className="text-sm text-gray-500 leading-relaxed">
                 Your job is to build the relationship and provide real value.
                 These agents require phone calls, not texts or emails.
                 The goal is that they send you the deal first.
@@ -376,38 +376,38 @@ export default function OutreachActionPlan({
           </div>
 
           <div className="p-4 bg-gray-50 rounded-lg">
-            <p className="text-xs text-red-600 font-semibold mb-2">Deal-Driven Relationship Entry</p>
+            <p className="text-sm text-red-600 font-semibold mb-2">Deal-Driven Relationship Entry</p>
             
-            <p className="text-xs text-gray-600 mb-3 leading-relaxed">
+            <p className="text-sm text-gray-600 mb-3 leading-relaxed">
               Command uses your buy box to surface investor-grade properties (light to heavy fixers) at critical moments:
             </p>
             
-            <ul className="text-xs text-gray-600 mb-3 space-y-1 list-disc list-inside">
+            <ul className="text-sm text-gray-600 mb-3 space-y-1 list-disc list-inside">
               <li>Aged listings (70+ days)</li>
               <li>3 days after escrow opens (did the buyer put down the deposit?)</li>
               <li>10 days after escrow opens (did the buyer remove contingencies?)</li>
               <li>20+ days after escrow opens (why has the investor not closed?)</li>
             </ul>
             
-            <p className="text-xs text-gray-600 mb-3 leading-relaxed">
+            <p className="text-sm text-gray-600 mb-3 leading-relaxed">
               Wholesalers and investors often overpay to tie up deals. You want to be there when those deals start to fall apart — when agents are not being bombarded like they are on new listings.
             </p>
             
             <div className="border-t border-gray-200 pt-3 mt-3">
-              <p className="text-xs font-semibold text-gray-700 mb-1">Why It Matters</p>
-              <p className="text-xs text-gray-500 leading-relaxed mb-2">
+              <p className="text-sm font-semibold text-gray-700 mb-1">Why It Matters</p>
+              <p className="text-sm text-gray-500 leading-relaxed mb-2">
                 This approach puts you in front of agents at the right time, not when a listing first hits the market and everyone is calling.
               </p>
-              <p className="text-xs text-gray-500 leading-relaxed mb-2">
+              <p className="text-sm text-gray-500 leading-relaxed mb-2">
                 The system helps you identify high-propensity opportunities and equips you with:
               </p>
-              <ul className="text-xs text-gray-500 space-y-0.5 list-disc list-inside mb-2">
+              <ul className="text-sm text-gray-500 space-y-0.5 list-disc list-inside mb-2">
                 <li>Property key points</li>
                 <li>Seller pain points</li>
                 <li>How the agent makes money</li>
                 <li>A script to communicate value</li>
               </ul>
-              <p className="text-xs text-gray-700 font-medium italic">
+              <p className="text-sm text-gray-700 font-medium italic">
                 Always chase the relationship first, using the deal as the entry point — even if it's an overpriced fixer.
               </p>
             </div>
