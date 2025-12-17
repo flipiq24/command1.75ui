@@ -55,7 +55,7 @@ export default function OutreachActionPlan({
   const topOfMindTotal = 3;
   
   const newRelationships = 1;
-  const newRelationshipsGoal = 5;
+  const newRelationshipsGoal = currentCallStyle === 'without-property' ? 30 : 5;
 
   const totalTasks = connectionsTotal + priorityTotal + topOfMindTotal;
   const completedTasks = connectionsCompleted + priorityCompleted + topOfMindCompleted;
@@ -156,19 +156,21 @@ export default function OutreachActionPlan({
           
           <div className="absolute top-full right-0 mt-2 w-80 bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-left">
             <div className="font-bold text-white mb-2 text-sm">
-              Weekly Goal: 5 New Agent Relationships
+              {currentCallStyle === 'without-property' ? 'Daily Goal: 30 Relationship Calls' : 'Weekly Goal: 5 New Agent Relationships'}
             </div>
             <p className="text-gray-300 mb-4">
-              Build new connections with agents to expand your deal pipeline and increase your chances of closing more deals.
+              {currentCallStyle === 'without-property' 
+                ? 'Focus on building relationships through conversations. No property needed - just connect and establish rapport.'
+                : 'Build new connections with agents to expand your deal pipeline and increase your chances of closing more deals.'}
             </p>
             <div className="space-y-2 mb-4">
               <div>
                 <span className="font-bold text-gray-300">• 1st Number:</span>{" "}
-                <span className="text-gray-400">Relationships built this week.</span>
+                <span className="text-gray-400">{currentCallStyle === 'without-property' ? 'Calls made today.' : 'Relationships built this week.'}</span>
               </div>
               <div>
                 <span className="font-bold text-gray-300">• 2nd Number:</span>{" "}
-                <span className="text-gray-400">Your weekly goal.</span>
+                <span className="text-gray-400">{currentCallStyle === 'without-property' ? 'Your daily goal.' : 'Your weekly goal.'}</span>
               </div>
             </div>
             <div className="text-gray-400 italic border-t border-gray-700 pt-2 mt-2">
