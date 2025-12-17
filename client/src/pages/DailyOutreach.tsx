@@ -1351,6 +1351,41 @@ function DailyOutreachContent() {
                   </button>
                 </div>
               </div>
+            ) : callStyle === 'without-property' ? (
+              <>
+                {currentAgent && (
+                  <PriorityAgentPanel
+                    agent={{
+                      id: String(currentAgent.id),
+                      name: currentAgent.agentName,
+                      phone: currentAgent.phone,
+                      email: currentAgent.email,
+                      company: currentAgent.officeName,
+                      assignedUser: currentAgent.assignedUser,
+                      lastCommunicationDate: currentAgent.followUpDate || '11/27/2025',
+                      lastAddressDiscussed: "Building relationship",
+                      lastCommunicatedAA: currentAgent.assignedUser,
+                      activeInLast2Years: currentAgent.activeInLastTwoYears,
+                      averageDealsPerYear: currentAgent.sold || 6,
+                      doubleEnded: 0,
+                      investorSource: currentAgent.investorSourceCount ?? 0,
+                      relationshipStatus: currentAgent.relationshipStatus,
+                      agentRating: 'Unknown',
+                      basket: currentAgent.basket,
+                      followUpStatus: currentAgent.followUpStatus,
+                      followUpDate: currentAgent.followUpDate
+                    }}
+                    currentIndex={currentAgentIndex}
+                    totalAgents={priorityAgents.length}
+                    onPrevious={handlePrevAgent}
+                    onNext={handleNextAgent}
+                    onCallNow={handleCallNow}
+                    onSendText={() => handleTextEmailClick('text')}
+                    onSendEmail={() => handleTextEmailClick('email')}
+                    onAgentIQReport={handleGenerateAgentIQReport}
+                  />
+                )}
+              </>
             ) : (
               <>
             <div className="flex items-center justify-start px-4 py-3 mb-4">
