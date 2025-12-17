@@ -10,7 +10,8 @@ import {
   LogOut,
   BarChart2,
   FileText,
-  Lightbulb
+  Lightbulb,
+  Folder
 } from 'lucide-react';
 import { Link, useLocation } from "wouter";
 import logoUrl from '@assets/flipiQlogo_1764227557148.JPG';
@@ -130,6 +131,29 @@ export default function Sidebar({ onIQClick, onCloseIQ, isIQActive = false, onCo
                     <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
                         <span className="font-bold text-[#FF6600]">Daily Outreach:</span><br/>
                         list of Agents to call today focusing on relationship building
+                    </div>
+                </Link>
+
+                <Link 
+                  href="/my-deals" 
+                  onClick={() => onCloseIQ?.()}
+                  className={cn(
+                    "group relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg border transition",
+                    location === '/my-deals' && !isIQActive
+                      ? "bg-gray-100 text-gray-900 border-gray-200 hover:bg-gray-200"
+                      : "text-gray-600 hover:bg-gray-50 border-transparent hover:border-gray-100",
+                    isCollapsed && "justify-center"
+                  )}
+                  data-testid="link-my-active-deals"
+                >
+                    <span className="flex items-center gap-3">
+                      <Folder className="w-4 h-4 flex-shrink-0" /> 
+                      {!isCollapsed && <span>My Active Deals</span>}
+                    </span>
+                    
+                    <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                        <span className="font-bold text-[#FF6600]">My Active Deals:</span><br/>
+                        All your active properties assigned to you.
                     </div>
                 </Link>
             </div>
