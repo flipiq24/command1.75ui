@@ -1,0 +1,107 @@
+Direct feedback. No fluff.
+
+Your instinct is correct
+
+Moving “My Deals” out of the left sidebar and into Deal Review is the right call. The sidebar is already doing too much, and “My Deals” is contextually wrong there when the user is in execution mode.
+
+The mistake to avoid: adding another circle or metric. That would be visual trash.
+
+Where the “All My Deals” button should live (and why)
+✅ Best placement: Inline, right-aligned, text button above the property list
+
+Not inside the circles.
+Not as a KPI.
+Not competing for attention.
+
+Exact placement
+
+Row directly above the table
+
+Right-aligned
+
+Same horizontal row as filters / sort (or where filters will live)
+
+Deal Review                                    [ All My Deals → ]
+---------------------------------------------------------------
+[ Property list starts here ]
+
+Why this works
+
+Cognitive separation:
+Circles = What do I need to do now
+Button = Change scope
+
+Zero visual competition with progress indicators
+
+Scales cleanly later when you add:
+
+“Assigned to Me”
+
+“Team Deals”
+
+“Closed”
+
+Users already expect “view all” actions above tables
+
+Button design (keep it boring on purpose)
+
+This is important.
+
+Style: Text button + chevron
+
+Color: Neutral (gray / muted blue)
+
+Copy options (pick one):
+
+“All My Deals”
+
+“View All My Deals”
+
+Hover state only, no badge, no count
+
+This button is navigation, not motivation.
+
+What NOT to do (this is where most teams screw it up)
+
+❌ Do not add another circle
+❌ Do not add it next to “Process New Deals”
+❌ Do not put it under the Daily Offer Goal
+❌ Do not make it orange
+❌ Do not add a count like All My Deals (312)
+
+Any of those dilute the Today’s Action Plan focus.
+
+Sidebar cleanup (do this if you move it)
+
+Once you move it:
+
+Remove Pipeline → My Deals entirely
+
+Sidebar becomes:
+
+Today’s Plan
+
+Find Deals
+
+Tools
+
+Cleaner mental model:
+
+“Sidebar = modes”
+“Main panel = work”
+
+Net result
+
+Circles stay focused on today
+
+Deal Review becomes the execution hub
+
+“All My Deals” is accessible but not distracting
+
+Zero added visual noise
+
+This is aligned with the core rule:
+Does this help an AA close two deals per month?
+Yes. Anything louder would hurt that.
+
+If you want, next step is tightening the circle labels so they’re even more self-explanatory without adding UI.

@@ -432,6 +432,20 @@ function MyDealsContent() {
 
         <main className="flex-1 overflow-y-auto p-6">
 
+            {/* Header Row with All My Deals button */}
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-gray-900">Deal Review</h2>
+              <button 
+                className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 transition-colors"
+                data-testid="button-all-my-deals"
+              >
+                All My Deals
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+
             {/* Current Task List - Reorganized Layout */}
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm flex-1 flex flex-col">
 
