@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { 
-  LayoutDashboard, 
   ListTodo, 
   Phone, 
   Users, 
@@ -11,9 +10,7 @@ import {
   LogOut,
   BarChart2,
   FileText,
-  Lightbulb,
-  Folder,
-  Plus
+  Lightbulb
 } from 'lucide-react';
 import { Link, useLocation } from "wouter";
 import logoUrl from '@assets/flipiQlogo_1764227557148.JPG';
@@ -138,34 +135,6 @@ export default function Sidebar({ onIQClick, onCloseIQ, isIQActive = false, onCo
             </div>
           </div>
 
-          {/* Pipeline Section */}
-          <div>
-            <div className={cn("px-2 mb-2 text-xs font-bold text-gray-400 uppercase tracking-wider", isCollapsed && "text-center")}>
-                {isCollapsed ? "Pipe" : "Pipeline"}
-            </div>
-            <div className="space-y-1">
-                <Link 
-                  href="/my-deals" 
-                  onClick={() => onCloseIQ?.()}
-                  className={cn(
-                    "group relative flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg border transition",
-                    location === '/my-deals' && !isIQActive
-                      ? "bg-gray-100 text-gray-900 border-gray-200 hover:bg-gray-200"
-                      : "text-gray-600 hover:bg-gray-50 border-transparent hover:border-gray-100",
-                    isCollapsed && "justify-center"
-                  )}
-                  data-testid="link-my-deals"
-                >
-                    <div className="text-gray-500"><Folder className="w-4 h-4 flex-shrink-0" /></div>
-                    {!isCollapsed && "My Deals"}
-                    <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                        <span className="font-bold text-[#FF6600]">My Deals:</span><br/>
-                        List of all my active properties in the chronological order that are assigned to me.
-                    </div>
-                </Link>
-            </div>
-          </div>
-
           {/* Find Leads Section */}
           <div>
             <div className={cn("px-2 mb-2 text-xs font-bold text-gray-400 uppercase tracking-wider", isCollapsed && "text-center")}>
@@ -282,34 +251,7 @@ export default function Sidebar({ onIQClick, onCloseIQ, isIQActive = false, onCo
                       </div>
                   </a>
 
-                  <a href="#" className={cn("group relative flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg", isCollapsed && "justify-center")}>
-                      <LayoutDashboard className="w-4 h-4 text-gray-500 flex-shrink-0" />
-                      {!isCollapsed && "Pro Dashboard"}
-                      <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                          <span className="font-bold text-[#FF6600]">Pro Dashboard:</span><br/>
-                          Full detailed dashboard for Pro users.
-                      </div>
-                  </a>
-
-                  <button 
-                    onClick={onAddPropertyClick}
-                    className={cn("group relative flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-gray-500 hover:text-gray-900 transition w-full", isCollapsed ? "justify-center" : "pl-8 pr-3")}
-                  >
-                      {!isCollapsed && <span className="text-gray-400">└──</span>}
-                      {!isCollapsed && (
-                        <span className="flex items-center gap-1">
-                          Add Property
-                          <Plus className="w-3 h-3 text-[#FF6600]" />
-                        </span>
-                      )}
-                      {isCollapsed && <Plus className="w-3 h-3 text-[#FF6600]" />}
-                      
-                      <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
-                          <span className="font-bold text-[#FF6600]">Add Property:</span><br/>
-                          Manually add a new property to your pipeline.
-                      </div>
-                  </button>
-              </div>
+                  </div>
           </div>
 
         </div>
