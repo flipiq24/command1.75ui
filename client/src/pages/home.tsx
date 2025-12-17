@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Link, useSearch } from "wouter";
 import { cn } from "@/lib/utils";
-import ActionPlan, { DealType } from "@/components/ActionPlan";
+import ActionPlan, { DealType, ScopeType } from "@/components/ActionPlan";
 import { useLayout } from "@/components/Layout";
 import { Plus } from 'lucide-react';
 import { 
@@ -100,6 +100,7 @@ function HomeContent() {
   const [activeFilter, setActiveFilter] = useState<DealType | 'goal' | 'completed' | null>(null);
   const [selectedDealIds, setSelectedDealIds] = useState<number[]>([]);
   const [completionPercent, setCompletionPercent] = useState(100);
+  const [scope, setScope] = useState<ScopeType>("today");
   const queryClient = useQueryClient();
   const { openIQWithDealComplete, openAddProperty } = useLayout();
 
@@ -221,6 +222,8 @@ function HomeContent() {
             completionPercent={completionPercent}
             userName="Tony"
             onMilestoneComplete={handleMilestoneComplete}
+            scope={scope}
+            onScopeChange={setScope}
           />
 
             {/* Current Task List - Reorganized Layout */}
