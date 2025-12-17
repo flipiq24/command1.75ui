@@ -1700,12 +1700,18 @@ function DailyOutreachContent() {
                                     </div>
                                     <div className="flex flex-col group relative cursor-help">
                                         <span className="font-medium text-gray-500">Last Called Date:</span>
-                                        <span className={cn(
-                                          "text-gray-900 font-medium", 
-                                          currentDeal.lastCalled === 'N/A' && "bg-yellow-100 px-1.5 py-0.5 rounded font-bold w-fit"
-                                        )}>
-                                          {currentDeal.lastCalled}
-                                        </span>
+                                        {currentDeal.lastCalled !== 'N/A' ? (
+                                          <span className="bg-green-100 text-green-800 font-medium px-2 py-0.5 rounded w-fit flex items-center gap-1.5">
+                                            <svg className="w-3.5 h-3.5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                            </svg>
+                                            {currentDeal.lastCalled}
+                                          </span>
+                                        ) : (
+                                          <span className="bg-yellow-100 px-1.5 py-0.5 rounded font-bold w-fit text-gray-900">
+                                            {currentDeal.lastCalled}
+                                          </span>
+                                        )}
                                         {currentDeal.lastCalled === 'N/A' && (
                                           <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
                                             Needs attention: No recent call recorded.
