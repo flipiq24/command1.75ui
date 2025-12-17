@@ -335,15 +335,10 @@ export default function OutreachActionPlan({
                 <span>Connections Complete</span>
                 <Check className="w-4 h-4" />
               </>
-            ) : !hasStarted ? (
-              <>
-                <Phone className="w-4 h-4" />
-                <span>Start Calling</span>
-              </>
             ) : (
               <>
-                <Search className="w-4 h-4" />
-                <span>Chase Deals</span>
+                <Users className="w-4 h-4" />
+                <span>New Relationships Building</span>
               </>
             )}
           </button>
