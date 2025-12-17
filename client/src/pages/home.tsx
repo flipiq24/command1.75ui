@@ -207,7 +207,7 @@ function HomeContent() {
                 className="bg-[#FF6600] hover:bg-[#e55c00] text-white text-sm font-semibold px-5 py-2.5 rounded-lg shadow-md transition-colors"
                 data-testid="button-all-active-deals"
               >
-                All My Active Deals
+                My Active Deals
               </button>
             </Link>
             <button 
