@@ -329,7 +329,7 @@ export default function OutreachActionPlan({
             ) : (
               <>
                 <Users className="w-4 h-4" />
-                <span>New Relationships Building</span>
+                <span>Start New Relationships Building</span>
               </>
             )}
           </button>
