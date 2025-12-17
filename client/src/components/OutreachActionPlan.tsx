@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { cn } from "@/lib/utils";
 import { 
   HelpCircle,
@@ -6,7 +6,8 @@ import {
   Phone,
   Users,
   MessageSquare,
-  Search
+  Search,
+  X
 } from 'lucide-react';
 
 export type OutreachType = 'connections' | 'priority' | 'topOfMind' | 'newRelationships';
@@ -32,6 +33,12 @@ export default function OutreachActionPlan({
   connectionsMade = 0,
   dailyGoal = 30
 }: OutreachActionPlanProps) {
+  
+  const [showRelationshipModal, setShowRelationshipModal] = useState(false);
+  const [agentType, setAgentType] = useState<'high' | 'mid' | 'low'>('high');
+  const [callStyle, setCallStyle] = useState<'with-property' | 'without-property'>('with-property');
+  const [includeNewAgents, setIncludeNewAgents] = useState(true);
+  const [includeAssignedAgents, setIncludeAssignedAgents] = useState(true);
   
   const connectionsCompleted = connectionsMade;
   const connectionsTotal = dailyGoal;
@@ -308,7 +315,7 @@ export default function OutreachActionPlan({
             </div>
           </div>
           <button 
-            onClick={() => handleButtonClick('connections')}
+            onClick={() => setShowRelationshipModal(true)}
             className={cn(
               "px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2",
               activeFilter === 'connections'
@@ -413,6 +420,149 @@ export default function OutreachActionPlan({
             </div>
           </div>
 
+        </div>
+      )}
+
+      {/* Build New Relationships Modal */}
+      {showRelationshipModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div 
+            className="absolute inset-0 bg-black/50" 
+            onClick={() => setShowRelationshipModal(false)}
+          />
+          <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-lg mx-4 animate-in fade-in zoom-in-95 duration-200">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-2">
+                <h2 className="text-xl font-bold text-gray-900">Build New Relationships</h2>
+                <button 
+                  onClick={() => setShowRelationshipModal(false)}
+                  className="p-1.5 hover:bg-gray-100 rounded-full transition"
+                  data-testid="button-close-relationship-modal"
+                >
+                  <X className="w-5 h-5 text-gray-500" />
+                </button>
+              </div>
+              <p className="text-sm text-gray-500 mb-6">Choose how you want to make your calls.</p>
+
+              {/* Section 1: Agent Type */}
+              <div className="mb-6">
+                <p className="text-sm font-semibold text-gray-700 mb-3">Who do you want to call?</p>
+                <div className="space-y-2">
+                  <label className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition">
+                    <input 
+                      type="radio" 
+                      name="agentType" 
+                      checked={agentType === 'high'}
+                      onChange={() => setAgentType('high')}
+                      className="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500"
+                      data-testid="radio-high-value"
+                    />
+                    <span className="text-sm text-gray-700">High-Value Agents</span>
+                  </label>
+                  <label className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition">
+                    <input 
+                      type="radio" 
+                      name="agentType" 
+                      checked={agentType === 'mid'}
+                      onChange={() => setAgentType('mid')}
+                      className="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500"
+                      data-testid="radio-mid-value"
+                    />
+                    <span className="text-sm text-gray-700">Mid-Value Agents</span>
+                  </label>
+                  <label className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition">
+                    <input 
+                      type="radio" 
+                      name="agentType" 
+                      checked={agentType === 'low'}
+                      onChange={() => setAgentType('low')}
+                      className="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500"
+                      data-testid="radio-low-value"
+                    />
+                    <span className="text-sm text-gray-700">Low-Value Agents (Practice)</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Section 2: Call Style */}
+              <div className="mb-6">
+                <p className="text-sm font-semibold text-gray-700 mb-3">How do you want to start the call?</p>
+                <div className="space-y-2">
+                  <label className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition">
+                    <input 
+                      type="radio" 
+                      name="callStyle" 
+                      checked={callStyle === 'with-property'}
+                      onChange={() => setCallStyle('with-property')}
+                      className="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500"
+                      data-testid="radio-with-property"
+                    />
+                    <span className="text-sm text-gray-700">Use a property</span>
+                  </label>
+                  <label className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition">
+                    <input 
+                      type="radio" 
+                      name="callStyle" 
+                      checked={callStyle === 'without-property'}
+                      onChange={() => setCallStyle('without-property')}
+                      className="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500"
+                      data-testid="radio-without-property"
+                    />
+                    <span className="text-sm text-gray-700">Call without a property</span>
+                  </label>
+                </div>
+                <p className="text-xs text-gray-400 mt-2 italic">A property is a conversation starter, not a one-shot pitch.</p>
+              </div>
+
+              {/* Section 3: Relationship Type */}
+              <div className="mb-6">
+                <p className="text-sm font-semibold text-gray-700 mb-3">Which agents should we include?</p>
+                <div className="space-y-2">
+                  <label className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition">
+                    <input 
+                      type="checkbox" 
+                      checked={includeNewAgents}
+                      onChange={(e) => setIncludeNewAgents(e.target.checked)}
+                      className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                      data-testid="checkbox-new-agents"
+                    />
+                    <span className="text-sm text-gray-700">New agent relationships</span>
+                  </label>
+                  <label className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition">
+                    <input 
+                      type="checkbox" 
+                      checked={includeAssignedAgents}
+                      onChange={(e) => setIncludeAssignedAgents(e.target.checked)}
+                      className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                      data-testid="checkbox-assigned-agents"
+                    />
+                    <span className="text-sm text-gray-700">Agents assigned to me</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowRelationshipModal(false)}
+                  className="flex-1 px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium rounded-lg transition"
+                  data-testid="button-cancel-relationship"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => {
+                    setShowRelationshipModal(false);
+                    handleButtonClick('connections');
+                  }}
+                  className="flex-1 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white text-sm font-bold rounded-lg transition"
+                  data-testid="button-start-calling"
+                >
+                  Start Calling
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
