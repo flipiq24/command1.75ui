@@ -1,0 +1,130 @@
+Replit Prompt: Dynamic Header + Scope Button Logic
+
+Goal
+Add a top-level scope button labeled “All My Active Deals” that changes both:
+
+The dataset being shown
+
+The main header text
+
+This makes it explicit what the user is looking at at all times.
+
+UI Changes
+
+Add a button in the top header (right-aligned):
+
+Label: All My Active Deals
+
+Style: secondary / neutral (not orange)
+
+Behavior: toggle scope (not navigation)
+
+Header Logic (Primary Title)
+
+The main title text must dynamically change based on the current scope.
+
+Default State (no override)
+Today's Deal Review Plan!
+
+Priority-Based States (when filtered by Today’s Plan)
+
+If the user is in Today’s execution flow and clicks a priority action:
+
+High Priority active
+
+Today's High Priority Deals!
+
+
+Medium Priority active
+
+Today's Mid Priority Deals!
+
+
+Low Priority active
+
+Today's Low Priority Deals!
+
+
+New Deals active
+
+Today's New Deals!
+
+Override State (scope button active)
+
+When the user clicks All My Active Deals:
+
+Header text becomes:
+
+All My Active Deals!
+
+
+This overrides all Today’s Plan logic
+
+Priority circles are visually de-emphasized (not removed)
+
+Dataset shows:
+
+All ACTIVE deals
+
+Excludes: Closed, Dead, Archived
+
+Ignores “Today” constraints
+
+Button State Rules
+Button OFF (default)
+
+User is operating inside Today’s Plan
+
+Header reflects Today’s priority context
+
+Button ON (active)
+
+Button shows active state (pill / check / highlight)
+
+Header = All My Active Deals!
+
+Optional secondary text link appears:
+
+← Back to Today’s Plan
+
+
+Clicking “Back to Today’s Plan”:
+
+Restores:
+
+Today's Deal Review Plan!
+
+
+Restores Today’s filters and progress logic
+
+Data Logic Summary (for devs)
+IF scope = "today" {
+  header = dynamic based on priority filter
+}
+
+IF scope = "all_active" {
+  header = "All My Active Deals!"
+  ignore today_priority_filters
+}
+
+Why this is non-negotiable
+
+Removes ambiguity: “Why am I seeing this deal?”
+
+Makes mode switching explicit
+
+Prevents AAs from thinking they’re “behind” when they’re just viewing pipeline
+
+Directly supports execution focus → 2 deals/month
+
+If you want, next step is:
+
+tightening copy consistency between:
+
+“Today’s Deal Review Plan”
+
+“Daily Outreach”
+
+“Process New Deals”
+
+But this header + button logic is correct and complete.

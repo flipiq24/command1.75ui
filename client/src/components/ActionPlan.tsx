@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from "react";
 import { cn } from "@/lib/utils";
-import { Info, CheckCircle } from "lucide-react";
+import { Info, CheckCircle, ArrowLeft } from "lucide-react";
+
+export type ScopeType = "today" | "all_active";
 
 export type DealType = "hot" | "warm" | "cold" | "new";
 
@@ -126,6 +128,8 @@ interface ActionPlanProps {
   completionPercent?: number;
   userName?: string;
   onMilestoneComplete?: () => void;
+  scope?: ScopeType;
+  onScopeChange?: (scope: ScopeType) => void;
 }
 
 export default function ActionPlan({
@@ -134,10 +138,46 @@ export default function ActionPlan({
   completionPercent = 32,
   userName = "Tony",
   onMilestoneComplete,
+  scope = "today",
+  onScopeChange,
 }: ActionPlanProps) {
   const [hoveredId, setHoveredId] = useState<DealType | null>(null);
   const [goalTooltipOpen, setGoalTooltipOpen] = useState(false);
   const [relationshipTooltipOpen, setRelationshipTooltipOpen] = useState(false);
+  const [internalScope, setInternalScope] = useState<ScopeType>(scope);
+
+  const currentScope = onScopeChange ? scope : internalScope;
+
+  const handleScopeToggle = () => {
+    const newScope = currentScope === "today" ? "all_active" : "today";
+    if (onScopeChange) {
+      onScopeChange(newScope);
+    } else {
+      setInternalScope(newScope);
+    }
+    if (onFilterChange) {
+      onFilterChange(null);
+    }
+  };
+
+  const getHeaderText = () => {
+    if (currentScope === "all_active") {
+      return "All My Active Deals!";
+    }
+    
+    switch (activeFilter) {
+      case "hot":
+        return "Today's High Priority Deals!";
+      case "warm":
+        return "Today's Mid Priority Deals!";
+      case "cold":
+        return "Today's Low Priority Deals!";
+      case "new":
+        return "Today's New Deals!";
+      default:
+        return "Today's Deal Review Plan!";
+    }
+  };
 
   const handleFilterClick = (filter: DealType | "goal" | "completed") => {
     if (onFilterChange) {
@@ -159,11 +199,37 @@ export default function ActionPlan({
 
   return (
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-8">
-      <div className="flex justify-between items-end mb-8">
-        <div className="w-1/2">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Nov 27, 2025 — Today's Action Plan!
-          </h2>
+      <div className="flex justify-between items-start mb-8">
+        <div className="flex-1">
+          <div className="flex items-center justify-between mb-2">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">
+                {currentScope === "today" ? "Nov 27, 2025 — " : ""}{getHeaderText()}
+              </h2>
+              {currentScope === "all_active" && (
+                <button
+                  onClick={handleScopeToggle}
+                  className="flex items-center gap-1 text-sm text-gray-500 hover:text-[#FF6600] mt-1 transition-colors"
+                  data-testid="button-back-to-today"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  <span>Back to Today's Plan</span>
+                </button>
+              )}
+            </div>
+            <button
+              onClick={handleScopeToggle}
+              className={cn(
+                "px-4 py-2 rounded-lg text-sm font-medium transition-all border",
+                currentScope === "all_active"
+                  ? "bg-gray-100 border-gray-300 text-gray-700"
+                  : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
+              )}
+              data-testid="button-scope-toggle"
+            >
+              {currentScope === "all_active" ? "✓ " : ""}All My Active Deals
+            </button>
+          </div>
 
           <div className="space-y-2">
             <div
