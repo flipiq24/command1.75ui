@@ -384,7 +384,7 @@ function MyDealsContent() {
 
         <header className="bg-white border-b border-gray-200 py-4 px-6 flex justify-between items-center">
           <div className="flex items-center gap-4">
-            <h1 className="text-xl font-bold text-gray-900">My Deals</h1>
+            <h1 className="text-xl font-bold text-gray-900">My Active Deals</h1>
             <div className="relative">
               <Search className="w-5 h-5 absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <input 
