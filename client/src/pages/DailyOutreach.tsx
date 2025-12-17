@@ -2005,15 +2005,7 @@ function DailyOutreachContent() {
             </>
             )}
             </>
-          ) : (
-            <div className="flex-1 flex flex-col items-center justify-center bg-gray-50 text-center p-12 rounded-xl border border-gray-200">
-              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mb-6 shadow-sm border border-gray-100">
-                <Phone className="w-10 h-10 text-gray-300" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Ready to Start?</h3>
-              <p className="text-gray-500 max-w-md mb-8">You have {totalDeals} new calls queued up for today. Click the red "Start Calling" button above to begin your outreach session.</p>
-            </div>
-          )}
+          ) : null}
 
         </main>
       </div>
