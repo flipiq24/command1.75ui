@@ -390,11 +390,14 @@ export default function OutreachActionPlan({
             </ul>
             
             <p className="text-xs text-gray-600 mb-3 leading-relaxed">
-              Wholesalers and investors often overpay to tie up deals. You want to be there when those deals start to fall apart.
+              Wholesalers and investors often overpay to tie up deals. You want to be there when those deals start to fall apart — when agents are not being bombarded like they are on new listings.
             </p>
             
             <div className="border-t border-gray-200 pt-3 mt-3">
               <p className="text-xs font-semibold text-gray-700 mb-1">Why It Matters</p>
+              <p className="text-xs text-gray-500 leading-relaxed mb-2">
+                This approach puts you in front of agents at the right time, not when a listing first hits the market and everyone is calling.
+              </p>
               <p className="text-xs text-gray-500 leading-relaxed mb-2">
                 The system helps you identify high-propensity opportunities and equips you with:
               </p>
