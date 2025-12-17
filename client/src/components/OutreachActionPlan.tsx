@@ -5,7 +5,8 @@ import {
   Check,
   Phone,
   Users,
-  MessageSquare
+  MessageSquare,
+  Search
 } from 'lucide-react';
 
 export type OutreachType = 'connections' | 'priority' | 'topOfMind' | 'newRelationships';
@@ -48,9 +49,10 @@ export default function OutreachActionPlan({
   const completedTasks = connectionsCompleted + priorityCompleted + topOfMindCompleted;
   const progressPercent = Math.round((completedTasks / totalTasks) * 100);
 
-  const handleCircleClick = (type: OutreachType) => {
+  const handleButtonClick = (type: OutreachType) => {
+    if (onStart) onStart();
     if (onFilterChange) {
-      onFilterChange(activeFilter === type ? null : type);
+      onFilterChange(type);
     }
   };
 
@@ -61,7 +63,7 @@ export default function OutreachActionPlan({
   return (
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-6">
       
-      <div className="flex items-start justify-between mb-2">
+      <div className="flex items-start justify-between mb-6">
         
         <div className="flex-1">
           <h2 className="text-xl font-bold text-gray-900 mb-1">
@@ -87,7 +89,6 @@ export default function OutreachActionPlan({
           </div>
         </div>
 
-        {/* Daily Offer Goal */}
         <div className="text-right ml-8 group relative cursor-pointer transition-all">
           <div className="flex items-center justify-end gap-1 text-[11px] text-gray-400 uppercase tracking-wider font-medium mb-1">
             <span>Daily Offer Goal</span>
@@ -123,13 +124,12 @@ export default function OutreachActionPlan({
           </div>
         </div>
 
-        {/* New Agent Relationships */}
         <div 
           className={cn(
             "text-right ml-8 group relative cursor-pointer transition-all border-l border-gray-200 pl-8",
             activeFilter === 'newRelationships' && "ring-2 ring-blue-400 rounded-lg p-2 -m-2 bg-blue-50"
           )}
-          onClick={() => handleCircleClick('newRelationships')}
+          onClick={() => handleButtonClick('newRelationships')}
           data-testid="circle-new-relationships"
         >
           <div className="flex items-center justify-end gap-1 text-[11px] text-gray-400 uppercase tracking-wider font-medium mb-1">
@@ -166,211 +166,163 @@ export default function OutreachActionPlan({
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-8 mt-8">
-        
-        <div 
-          className="flex flex-col items-center cursor-pointer transition-all group relative"
-          onClick={() => handleCircleClick('connections')}
-          data-testid="circle-connections"
+      <div className="grid grid-cols-3 gap-4 mb-6">
+        <button 
+          onClick={() => handleButtonClick('topOfMind')}
+          className={cn(
+            "px-6 py-4 rounded-xl text-base font-semibold transition-all flex items-center justify-center gap-3 border-2",
+            activeFilter === 'topOfMind'
+              ? "bg-blue-600 text-white border-blue-600 shadow-lg"
+              : isTopOfMindComplete 
+                ? "bg-green-50 text-green-600 border-green-200"
+                : "bg-white text-blue-600 border-blue-400 hover:bg-blue-50 hover:border-blue-500"
+          )}
+          data-testid="button-send-campaigns"
         >
-          <div className="absolute -top-32 left-1/2 transform -translate-x-1/2 w-80 bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-left leading-relaxed">
-            <p className="mb-2">Focuses on High-Value Agents with Aged, Pending, and Backup listings that have a high Propensity to Sell.</p>
-            <p className="mb-0"><strong>Goal:</strong> 30 Contacts per day that create 5 new solid relationships per day (25/week or 1,300/year).</p>
-            <div className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 rotate-45 w-3 h-3 bg-gray-900"></div>
-          </div>
-          <div className={cn(
-            "relative w-28 h-28 mb-4 transition-transform group-hover:scale-105",
-            activeFilter === 'connections' && "scale-105"
-          )}>
-            <svg className="w-28 h-28 transform -rotate-90">
-              <circle 
-                cx="56" cy="56" r="48" 
-                stroke="#f3f4f6" 
-                strokeWidth="8" 
-                fill="none" 
-              />
-              <circle 
-                cx="56" cy="56" r="48" 
-                stroke={isConnectionsComplete ? "#22c55e" : "#dc2626"}
-                strokeWidth="8" 
-                fill="none" 
-                strokeDasharray={`${(connectionsCompleted / connectionsTotal) * 301.6} 301.6`}
-                strokeLinecap="round"
-                className="transition-all duration-500"
-              />
-            </svg>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-2xl font-bold text-gray-900">
-                {connectionsCompleted}<span className="text-gray-300">/{connectionsTotal}</span>
-              </span>
-            </div>
-          </div>
+          {isTopOfMindComplete ? (
+            <>
+              <Check className="w-5 h-5" />
+              <span>Campaigns Complete</span>
+            </>
+          ) : (
+            <>
+              <MessageSquare className="w-5 h-5" />
+              <span>Send Campaigns</span>
+            </>
+          )}
+        </button>
 
-          <button 
-            onClick={(e) => {
-              e.stopPropagation();
-              if (onStart) onStart();
-              if (onFilterChange) onFilterChange('connections');
-            }}
-            className={cn(
-              "px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2",
-              isConnectionsComplete 
-                ? "bg-green-50 text-green-600 border border-green-200"
+        <button 
+          onClick={() => handleButtonClick('priority')}
+          className={cn(
+            "px-6 py-4 rounded-xl text-base font-semibold transition-all flex items-center justify-center gap-3 border-2",
+            activeFilter === 'priority'
+              ? "bg-amber-500 text-white border-amber-500 shadow-lg"
+              : isPriorityComplete 
+                ? "bg-green-50 text-green-600 border-green-200"
+                : "bg-white text-amber-600 border-amber-400 hover:bg-amber-50 hover:border-amber-500"
+          )}
+          data-testid="button-call-priority"
+        >
+          {isPriorityComplete ? (
+            <>
+              <Check className="w-5 h-5" />
+              <span>Priority Complete</span>
+            </>
+          ) : (
+            <>
+              <Phone className="w-5 h-5" />
+              <span>Call Your Priority Agents</span>
+            </>
+          )}
+        </button>
+
+        <button 
+          onClick={() => handleButtonClick('connections')}
+          className={cn(
+            "px-6 py-4 rounded-xl text-base font-semibold transition-all flex items-center justify-center gap-3 border-2",
+            activeFilter === 'connections'
+              ? "bg-red-600 text-white border-red-600 shadow-lg"
+              : isConnectionsComplete 
+                ? "bg-green-50 text-green-600 border-green-200"
                 : !hasStarted
-                  ? "bg-red-600 text-white shadow-xl shadow-red-500/50 animate-pulse hover:bg-red-700"
-                  : "bg-white text-red-600 border-2 border-red-500 hover:bg-red-50"
-            )}
-            data-testid="button-new-relationships"
-          >
-            {isConnectionsComplete ? (
-              <>
-                <span>Connections Complete</span>
-                <Check className="w-4 h-4" />
-              </>
-            ) : !hasStarted ? (
-              <>
-                <Phone className="w-4 h-4" />
-                <span>Start Calling</span>
-              </>
-            ) : (
-              <>
-                <Phone className="w-4 h-4" />
-                <span>New Agent Relationships</span>
-              </>
-            )}
-          </button>
-        </div>
-
-        <div 
-          className="flex flex-col items-center cursor-pointer transition-all group relative"
-          onClick={() => handleCircleClick('priority')}
-          data-testid="circle-priority"
+                  ? "bg-red-600 text-white border-red-600 shadow-xl shadow-red-500/30 animate-pulse hover:bg-red-700"
+                  : "bg-white text-red-600 border-red-500 hover:bg-red-50 hover:border-red-600"
+          )}
+          data-testid="button-new-relationships"
         >
-          <div className="absolute -top-32 left-1/2 transform -translate-x-1/2 w-80 bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-left leading-relaxed">
-            <p className="mb-2">Constant live phone calls to reinforce your 100 Priority Relationships.</p>
-            <p className="mb-0"><strong className="text-green-400">This is your long term money maker!</strong></p>
-            <div className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 rotate-45 w-3 h-3 bg-gray-900"></div>
-          </div>
-          <div className={cn(
-            "relative w-28 h-28 mb-4 transition-transform group-hover:scale-105",
-            activeFilter === 'priority' && "scale-105"
-          )}>
-            <svg className="w-28 h-28 transform -rotate-90">
-              <circle 
-                cx="56" cy="56" r="48" 
-                stroke="#f3f4f6" 
-                strokeWidth="8" 
-                fill="none" 
-              />
-              <circle 
-                cx="56" cy="56" r="48" 
-                stroke={isPriorityComplete ? "#22c55e" : "#f59e0b"}
-                strokeWidth="8" 
-                fill="none" 
-                strokeDasharray={`${(priorityCompleted / priorityTotal) * 301.6} 301.6`}
-                strokeLinecap="round"
-                className="transition-all duration-500"
-              />
-            </svg>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-2xl font-bold text-gray-900">
-                {priorityCompleted}<span className="text-gray-300">/{priorityTotal}</span>
-              </span>
-            </div>
-          </div>
-
-          <button 
-            onClick={(e) => {
-              e.stopPropagation();
-              onFilterChange?.('priority');
-            }}
-            className={cn(
-              "px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2",
-              isPriorityComplete 
-                ? "bg-green-50 text-green-600 border border-green-200"
-                : "bg-white text-amber-500 border-2 border-amber-400 hover:bg-amber-50"
-            )}
-            data-testid="button-call-priority"
-          >
-            {isPriorityComplete ? (
-              <>
-                <span>Priority Complete</span>
-                <Check className="w-4 h-4" />
-              </>
-            ) : (
-              <>
-                <Phone className="w-4 h-4" />
-                <span>Call Priority Agents</span>
-              </>
-            )}
-          </button>
-        </div>
-
-        <div 
-          className="flex flex-col items-center cursor-pointer transition-all group relative"
-          onClick={() => handleCircleClick('topOfMind')}
-          data-testid="circle-top-of-mind"
-        >
-          <div className="absolute -top-32 left-1/2 transform -translate-x-1/2 w-80 bg-gray-900 text-white text-xs p-4 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 text-left leading-relaxed">
-            <p className="mb-0">Send valuable, relevant content every 2 weeks to Hot, Warm, and Cold agents to stay top of mind.</p>
-            <div className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 rotate-45 w-3 h-3 bg-gray-900"></div>
-          </div>
-          <div className={cn(
-            "relative w-28 h-28 mb-4 transition-transform group-hover:scale-105",
-            activeFilter === 'topOfMind' && "scale-105"
-          )}>
-            <svg className="w-28 h-28 transform -rotate-90">
-              <circle 
-                cx="56" cy="56" r="48" 
-                stroke="#f3f4f6" 
-                strokeWidth="8" 
-                fill="none" 
-              />
-              <circle 
-                cx="56" cy="56" r="48" 
-                stroke={isTopOfMindComplete ? "#22c55e" : "#2563eb"}
-                strokeWidth="8" 
-                fill="none" 
-                strokeDasharray={`${(topOfMindCompleted / topOfMindTotal) * 301.6} 301.6`}
-                strokeLinecap="round"
-                className="transition-all duration-500"
-              />
-            </svg>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-2xl font-bold text-gray-900">
-                {topOfMindCompleted}<span className="text-gray-300">/{topOfMindTotal}</span>
-              </span>
-            </div>
-          </div>
-
-          <button 
-            onClick={(e) => {
-              e.stopPropagation();
-              onFilterChange?.('topOfMind');
-            }}
-            className={cn(
-              "px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2",
-              isTopOfMindComplete 
-                ? "bg-green-50 text-green-600 border border-green-200"
-                : "bg-white text-blue-600 border-2 border-blue-400 hover:bg-blue-50"
-            )}
-            data-testid="button-send-campaigns"
-          >
-            {isTopOfMindComplete ? (
-              <>
-                <span>Campaigns Complete</span>
-                <Check className="w-4 h-4" />
-              </>
-            ) : (
-              <>
-                <MessageSquare className="w-4 h-4" />
-                <span>Send Campaigns</span>
-              </>
-            )}
-          </button>
-        </div>
-
+          {isConnectionsComplete ? (
+            <>
+              <Check className="w-5 h-5" />
+              <span>Connections Complete</span>
+            </>
+          ) : (
+            <>
+              <Search className="w-5 h-5" />
+              <span>Build Relationships While Chasing Deals</span>
+            </>
+          )}
+        </button>
       </div>
+
+      {!hasStarted && (
+        <div className="grid grid-cols-3 gap-4 pt-4 border-t border-gray-100">
+          
+          <div className="p-4 bg-gray-50 rounded-lg">
+            <h3 className="font-bold text-gray-900 text-sm mb-1">Send Campaigns</h3>
+            <p className="text-xs text-blue-600 font-medium mb-3">Relationship Maintenance</p>
+            
+            <p className="text-xs text-gray-600 mb-3 leading-relaxed">
+              The system selects agents from your Hot, Warm, and Cold called relationships.
+              These are lower-value agents where you have already made initial contact and planted the seed.
+              You can send templated or custom messages.
+            </p>
+            
+            <div className="border-t border-gray-200 pt-3 mt-3">
+              <p className="text-xs font-semibold text-gray-700 mb-1">Why It Matters</p>
+              <p className="text-xs text-gray-500 leading-relaxed">
+                By staying in touch every few weeks, you stay top-of-mind.
+                When these agents trip over a deal — and often lack strong buyer relationships — you are the squeaky wheel they remember to send it to.
+              </p>
+            </div>
+          </div>
+
+          <div className="p-4 bg-gray-50 rounded-lg">
+            <h3 className="font-bold text-gray-900 text-sm mb-1">Call Your Priority Agents</h3>
+            <p className="text-xs text-amber-600 font-medium mb-3">High-Value Relationship Building</p>
+            
+            <p className="text-xs text-gray-600 mb-3 leading-relaxed">
+              Priority Agents are investor-friendly, high-volume agents you are building relationships with or actively chasing.
+            </p>
+            
+            <div className="border-t border-gray-200 pt-3 mt-3">
+              <p className="text-xs font-semibold text-gray-700 mb-1">Why It Matters</p>
+              <p className="text-xs text-gray-500 leading-relaxed">
+                Your job is to build the relationship and provide real value.
+                These agents require phone calls, not texts or emails.
+                The goal is that they send you the deal first.
+              </p>
+            </div>
+          </div>
+
+          <div className="p-4 bg-gray-50 rounded-lg">
+            <h3 className="font-bold text-gray-900 text-sm mb-1">Build Relationships While Chasing Deals</h3>
+            <p className="text-xs text-red-600 font-medium mb-3">Deal-Driven Relationship Entry</p>
+            
+            <p className="text-xs text-gray-600 mb-3 leading-relaxed">
+              Command uses your buy box to surface investor-grade properties (light to heavy fixers) at critical moments:
+            </p>
+            
+            <ul className="text-xs text-gray-600 mb-3 space-y-1 list-disc list-inside">
+              <li>Aged listings (70+ days)</li>
+              <li>3 days after escrow opens (did the buyer put down the deposit?)</li>
+              <li>10 days after escrow opens (did the buyer remove contingencies?)</li>
+              <li>20+ days after escrow opens (why has the investor not closed?)</li>
+            </ul>
+            
+            <p className="text-xs text-gray-600 mb-3 leading-relaxed">
+              Wholesalers and investors often overpay to tie up deals. You want to be there when those deals start to fall apart.
+            </p>
+            
+            <div className="border-t border-gray-200 pt-3 mt-3">
+              <p className="text-xs font-semibold text-gray-700 mb-1">Why It Matters</p>
+              <p className="text-xs text-gray-500 leading-relaxed mb-2">
+                The system helps you identify high-propensity opportunities and equips you with:
+              </p>
+              <ul className="text-xs text-gray-500 space-y-0.5 list-disc list-inside mb-2">
+                <li>Property key points</li>
+                <li>Seller pain points</li>
+                <li>How the agent makes money</li>
+                <li>A script to communicate value</li>
+              </ul>
+              <p className="text-xs text-gray-700 font-medium italic">
+                Always chase the relationship first, using the deal as the entry point — even if it's an overpriced fixer.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      )}
 
     </div>
   );

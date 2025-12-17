@@ -1,0 +1,95 @@
+REPLIT PROMPT — DAILY OUTREACH UI UPDATE
+
+Objective
+Update the “Today’s Outreach Plan” section to clarify actions, reduce confusion, and align behavior with relationship-first execution.
+
+LAYOUT REQUIREMENTS
+
+Keep the three primary buttons at the top.
+
+Change the button order (left → right) to:
+
+Send Campaigns
+
+Call Your Priority Agents
+
+Build Relationships While Chasing Deals
+
+Remove the existing “Ready to Start?” section entirely.
+
+Add a three-column explanatory section directly under the buttons.
+
+Each column must align vertically with its corresponding button.
+
+Content must be static and visible until any button is clicked.
+
+When a button is clicked, the explanatory section disappears and the workflow loads.
+
+COLUMN CONTENT (USE EXACT STRUCTURE + ORDER)
+COLUMN 1 — Send Campaigns
+
+Heading
+Send Campaigns
+
+Subheading
+Relationship Maintenance
+
+Body Copy
+The system selects agents from your Hot, Warm, and Cold called relationships.
+These are lower-value agents where you have already made initial contact and planted the seed.
+You can send templated or custom messages.
+
+Why It Matters
+By staying in touch every few weeks, you stay top-of-mind.
+When these agents trip over a deal — and often lack strong buyer relationships — you are the squeaky wheel they remember to send it to.
+
+COLUMN 2 — Call Your Priority Agents
+
+Heading
+Call Your Priority Agents
+
+Subheading
+High-Value Relationship Building
+
+Body Copy
+Priority Agents are investor-friendly, high-volume agents you are building relationships with or actively chasing.
+
+Why It Matters
+Your job is to build the relationship and provide real value.
+These agents require phone calls, not texts or emails.
+The goal is that they send you the deal first.
+
+COLUMN 3 — Build Relationships While Chasing Deals
+
+Heading
+Build Relationships While Chasing Deals
+
+Subheading
+Deal-Driven Relationship Entry
+
+Body Copy
+Command uses your buy box to surface investor-grade properties (light to heavy fixers) at critical moments:
+
+Aged listings (70+ days)
+
+3 days after escrow opens (did the buyer put down the deposit?)
+
+10 days after escrow opens (did the buyer remove contingencies?)
+
+20+ days after escrow opens (why has the investor not closed?)
+
+Wholesalers and investors often overpay to tie up deals. You want to be there when those deals start to fall apart.
+
+Why It Matters
+The system helps you identify high-propensity opportunities and equips you with:
+
+Property key points
+
+Seller pain points
+
+How the agent makes money
+
+A script to communicate value
+
+IMPORTANT
+Always chase the relationship first, using the deal as the entry point — even if it’s an overpriced fixer.
