@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect, useCallback, useLayoutEffect } from 'react';
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
-import OutreachActionPlan, { OutreachType } from "@/components/OutreachActionPlan";
+import OutreachActionPlan, { OutreachType, CallStyleType } from "@/components/OutreachActionPlan";
 import PriorityAgentPanel from "@/components/PriorityAgentPanel";
 import StatusPipelineWidget from "@/components/StatusPipelineWidget";
 import { useLayout } from "@/components/Layout";
@@ -359,6 +359,7 @@ function DailyOutreachContent() {
   const [, setLocation] = useLocation();
   const { openIQWithCelebration } = useLayout();
   const [activeFilter, setActiveFilter] = useState<OutreachType | null>('connections');
+  const [callStyle, setCallStyle] = useState<CallStyleType>('with-property');
   const [selectedDealIds, setSelectedDealIds] = useState<number[]>([]);
   const [iQViewMode, setIQViewMode] = useState<'stats' | 'description'>('stats');
   const [propertyStory, setPropertyStory] = useState<string>('');
@@ -898,6 +899,8 @@ function DailyOutreachContent() {
             onStart={handleStart}
             connectionsMade={connectionsMade}
             dailyGoal={dailyGoal}
+            onCallStyleChange={setCallStyle}
+            currentCallStyle={callStyle}
           />
 
           {hasStarted ? (

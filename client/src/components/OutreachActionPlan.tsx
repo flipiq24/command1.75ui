@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 
 export type OutreachType = 'connections' | 'priority' | 'topOfMind' | 'newRelationships';
+export type CallStyleType = 'with-property' | 'without-property';
 
 interface OutreachActionPlanProps {
   activeFilter?: OutreachType | null;
@@ -21,6 +22,8 @@ interface OutreachActionPlanProps {
   onStart?: () => void;
   connectionsMade?: number;
   dailyGoal?: number;
+  onCallStyleChange?: (style: CallStyleType) => void;
+  currentCallStyle?: CallStyleType;
 }
 
 export default function OutreachActionPlan({ 
@@ -31,7 +34,9 @@ export default function OutreachActionPlan({
   hasStarted = false,
   onStart,
   connectionsMade = 0,
-  dailyGoal = 30
+  dailyGoal = 30,
+  onCallStyleChange,
+  currentCallStyle = 'with-property'
 }: OutreachActionPlanProps) {
   
   const [showRelationshipModal, setShowRelationshipModal] = useState(false);
@@ -553,6 +558,9 @@ export default function OutreachActionPlan({
                 <button
                   onClick={() => {
                     setShowRelationshipModal(false);
+                    if (onCallStyleChange) {
+                      onCallStyleChange(callStyle);
+                    }
                     handleButtonClick('connections');
                   }}
                   className="flex-1 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white text-sm font-bold rounded-lg transition"
