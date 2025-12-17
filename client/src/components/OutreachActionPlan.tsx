@@ -191,9 +191,6 @@ export default function OutreachActionPlan({
                 className="transition-all duration-500"
               />
             </svg>
-            <div className="absolute top-0 right-4">
-              <div className="w-2.5 h-2.5 rounded-full bg-blue-500" />
-            </div>
             <div className="absolute inset-0 flex items-center justify-center">
               <span className="text-2xl font-bold text-gray-900">
                 {topOfMindCompleted}<span className="text-gray-300">/{topOfMindTotal}</span>
@@ -249,9 +246,6 @@ export default function OutreachActionPlan({
                 className="transition-all duration-500"
               />
             </svg>
-            <div className="absolute top-0 right-4">
-              <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-            </div>
             <div className="absolute inset-0 flex items-center justify-center">
               <span className="text-2xl font-bold text-gray-900">
                 {priorityCompleted}<span className="text-gray-300">/{priorityTotal}</span>
@@ -307,9 +301,6 @@ export default function OutreachActionPlan({
                 className="transition-all duration-500"
               />
             </svg>
-            <div className="absolute top-0 right-4">
-              <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
-            </div>
             <div className="absolute inset-0 flex items-center justify-center">
               <span className="text-2xl font-bold text-gray-900">
                 {connectionsCompleted}<span className="text-gray-300">/{connectionsTotal}</span>
