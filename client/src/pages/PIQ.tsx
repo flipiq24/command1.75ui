@@ -1123,62 +1123,28 @@ function PIQContent() {
                   )}
 
                   {/* Subject Property Header */}
-                  <div className="mt-6 bg-gray-900 text-white rounded-xl p-4 mb-4">
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="text-xs font-bold bg-white text-gray-900 px-2 py-0.5 rounded">SUBJECT</span>
-                      <span className="text-sm font-bold">84692 Pavone Way, Indio, CA 92203</span>
-                    </div>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-2 text-sm">
-                      <div className="flex items-center gap-2">
-                        <span className="text-gray-400">Bed/Bath:</span>
-                        <span className="font-medium">4/2</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-gray-400">SqFt:</span>
-                        <span className="font-medium">2,472</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-gray-400">Lot:</span>
-                        <span className="font-medium">7,405 sqft</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-gray-400">Pool:</span>
-                        <span className="font-medium">Yes - Heated</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-gray-400">Garage:</span>
-                        <span className="font-medium">3 Car</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-gray-400">Year Built:</span>
-                        <span className="font-medium">2008</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-gray-400">Condition:</span>
-                        <span className="font-medium text-yellow-400">Fixer</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-gray-400">Location:</span>
-                        <span className="font-medium">Golf Course Front</span>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-2 text-sm mt-2 pt-2 border-t border-gray-700">
-                      <div className="flex items-center gap-2">
-                        <span className="text-gray-400">School District:</span>
-                        <span className="font-medium">Desert Sands USD</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-gray-400">Tract:</span>
-                        <span className="font-medium">Terra Lago</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-gray-400">Street:</span>
-                        <span className="font-medium">Interior (Not Busy)</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-gray-400">List:</span>
-                        <span className="font-medium text-green-400">$599,900</span>
-                      </div>
+                  <div className="mt-6 border border-gray-300 rounded-lg px-4 py-2 mb-4 bg-gray-50">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+                      <span className="text-[10px] font-bold bg-gray-800 text-white px-1.5 py-0.5 rounded">SUBJECT</span>
+                      <span className="font-semibold text-gray-900">84692 Pavone Way, Indio</span>
+                      <span className="text-gray-500">|</span>
+                      <span className="text-gray-700">4/2</span>
+                      <span className="text-gray-500">|</span>
+                      <span className="text-gray-700">2,472 sqft</span>
+                      <span className="text-gray-500">|</span>
+                      <span className="text-gray-700">7,405 lot</span>
+                      <span className="text-gray-500">|</span>
+                      <span className="text-gray-700">Pool</span>
+                      <span className="text-gray-500">|</span>
+                      <span className="text-gray-700">3 Car</span>
+                      <span className="text-gray-500">|</span>
+                      <span className="text-yellow-600 font-medium">Fixer</span>
+                      <span className="text-gray-500">|</span>
+                      <span className="text-gray-700">Golf Front</span>
+                      <span className="text-gray-500">|</span>
+                      <span className="text-gray-700">Desert Sands USD</span>
+                      <span className="text-gray-500">|</span>
+                      <span className="text-gray-700">Terra Lago</span>
                     </div>
                   </div>
 
@@ -1216,17 +1182,17 @@ function PIQContent() {
                         {keepComps.map((comp, idx) => (
                           <div 
                             key={comp.id}
-                            className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition"
+                            className="px-4 py-3 hover:bg-green-50/50 cursor-pointer transition"
                             onClick={() => handleCompClick(comp, comps.findIndex(c => c.id === comp.id))}
                             data-testid={`row-keep-comp-${comp.id}`}
                           >
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-start gap-3">
                               <input
                                 type="checkbox"
                                 checked={selectedKeepIds.has(comp.id)}
                                 onChange={(e) => { e.stopPropagation(); toggleSelectKeep(comp.id); }}
                                 onClick={(e) => e.stopPropagation()}
-                                className="w-4 h-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
+                                className="w-4 h-4 mt-1 rounded border-gray-300 text-green-600 focus:ring-green-500"
                                 data-testid={`checkbox-keep-${comp.id}`}
                               />
                               <div className="flex-1">
@@ -1242,9 +1208,25 @@ function PIQContent() {
                                     </span>
                                   </div>
                                 </div>
+                                <div className="flex items-center gap-2 mt-1 text-xs text-gray-500">
+                                  <span>{comp.bedBath}</span>
+                                  <span>•</span>
+                                  <span>{comp.size.toLocaleString()} sqft</span>
+                                  <span>•</span>
+                                  <span>{comp.lotSize.toLocaleString()} lot</span>
+                                  <span>•</span>
+                                  <span>{comp.pool === 'None' ? 'No Pool' : 'Pool'}</span>
+                                  <span>•</span>
+                                  <span>{comp.distance}</span>
+                                </div>
                                 {comp.whyKeep.length > 0 && (
-                                  <div className="mt-1.5 text-xs text-green-700">
-                                    <span className="text-green-600">✓</span> {comp.whyKeep[0]}
+                                  <div className="mt-2 space-y-1">
+                                    {comp.whyKeep.slice(0, 2).map((reason, i) => (
+                                      <div key={i} className="text-xs text-green-700 flex items-start gap-1.5">
+                                        <span className="text-green-600 font-bold">✓</span>
+                                        <span>{reason}</span>
+                                      </div>
+                                    ))}
                                   </div>
                                 )}
                               </div>
@@ -1291,17 +1273,17 @@ function PIQContent() {
                         {removeComps.map((comp, idx) => (
                           <div 
                             key={comp.id}
-                            className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition"
+                            className="px-4 py-3 hover:bg-red-50/50 cursor-pointer transition"
                             onClick={() => handleCompClick(comp, comps.findIndex(c => c.id === comp.id))}
                             data-testid={`row-remove-comp-${comp.id}`}
                           >
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-start gap-3">
                               <input
                                 type="checkbox"
                                 checked={selectedRemoveIds.has(comp.id)}
                                 onChange={(e) => { e.stopPropagation(); toggleSelectRemove(comp.id); }}
                                 onClick={(e) => e.stopPropagation()}
-                                className="w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+                                className="w-4 h-4 mt-1 rounded border-gray-300 text-red-600 focus:ring-red-500"
                                 data-testid={`checkbox-remove-${comp.id}`}
                               />
                               <div className="flex-1">
@@ -1317,9 +1299,25 @@ function PIQContent() {
                                     </span>
                                   </div>
                                 </div>
+                                <div className="flex items-center gap-2 mt-1 text-xs text-gray-500">
+                                  <span>{comp.bedBath}</span>
+                                  <span>•</span>
+                                  <span>{comp.size.toLocaleString()} sqft</span>
+                                  <span>•</span>
+                                  <span>{comp.lotSize.toLocaleString()} lot</span>
+                                  <span>•</span>
+                                  <span>{comp.pool === 'None' ? 'No Pool' : 'Pool'}</span>
+                                  <span>•</span>
+                                  <span>{comp.distance}</span>
+                                </div>
                                 {comp.whyRemove.length > 0 && (
-                                  <div className="mt-1.5 text-xs text-red-700">
-                                    <span className="text-red-600">✗</span> {comp.whyRemove[0]}
+                                  <div className="mt-2 space-y-1">
+                                    {comp.whyRemove.slice(0, 2).map((reason, i) => (
+                                      <div key={i} className="text-xs text-red-700 flex items-start gap-1.5">
+                                        <span className="text-red-600 font-bold">✗</span>
+                                        <span>{reason}</span>
+                                      </div>
+                                    ))}
                                   </div>
                                 )}
                               </div>
