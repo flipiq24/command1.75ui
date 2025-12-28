@@ -1281,16 +1281,6 @@ function PIQContent() {
                       <Pencil className="w-3.5 h-3.5" />
                       Draw Area
                     </button>
-                    <button 
-                      onClick={() => setCompsMapType('freehand')}
-                      className={cn(
-                        "flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition",
-                        compsMapType === 'freehand' ? "bg-blue-50 text-blue-600 border border-blue-200" : "text-gray-600 hover:bg-gray-100"
-                      )}
-                    >
-                      <Hand className="w-3.5 h-3.5" />
-                      Freehand
-                    </button>
                   </div>
                   )}
 
