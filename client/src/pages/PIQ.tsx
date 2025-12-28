@@ -141,7 +141,14 @@ const initialComps: CompProperty[] = [
     color: 'green',
     keep: true,
     whyKeep: ['Best comp - same tract, closest match', 'Pool match with subject', 'Recent closed sale'],
-    whyRemove: []
+    whyRemove: [],
+    condition: 'High Flip & Staged',
+    influences: [
+      { category: 'Pool', type: 'positive', note: 'Salt water pool with upgraded finishes.' },
+      { category: 'Lot', type: 'positive', note: 'Large 8,712 sqft lot in premium location.' },
+      { category: 'Design', type: 'positive', note: 'High-end staging and modern finishes.' }
+    ],
+    bucket: 'Premium'
   },
   {
     id: '2',
@@ -170,7 +177,13 @@ const initialComps: CompProperty[] = [
     color: 'green',
     keep: true,
     whyKeep: ['Same tract', 'Pool match', 'Similar bed/bath configuration'],
-    whyRemove: []
+    whyRemove: [],
+    condition: 'Standard High',
+    influences: [
+      { category: 'Location', type: 'positive', note: 'Prime location in desirable tract.' },
+      { category: 'Garage', type: 'positive', note: '2-car garage with extra storage.' }
+    ],
+    bucket: 'High'
   },
   {
     id: '3',
@@ -199,7 +212,14 @@ const initialComps: CompProperty[] = [
     color: 'blue',
     keep: true,
     whyKeep: ['Same street', 'Pool match', 'Close proximity'],
-    whyRemove: ['5BR vs 4BR - different buyer pool']
+    whyRemove: ['5BR vs 4BR - different buyer pool'],
+    condition: 'High Flip & Staged',
+    influences: [
+      { category: 'Pool', type: 'positive', note: 'Pebble finish private pool.' },
+      { category: 'Lot', type: 'positive', note: 'Oversized 12,632 sqft lot - largest in area.' },
+      { category: 'Bed/Bath', type: 'negative', note: '5BR vs 4BR - different buyer pool.' }
+    ],
+    bucket: 'Premium'
   },
   {
     id: '4',
@@ -228,7 +248,14 @@ const initialComps: CompProperty[] = [
     color: 'green',
     keep: true,
     whyKeep: ['Close distance', 'Pool match', 'Similar sqft'],
-    whyRemove: ['3BR vs 4BR']
+    whyRemove: ['3BR vs 4BR'],
+    condition: 'Standard High',
+    influences: [
+      { category: 'Pool', type: 'positive', note: 'Heated in-ground pool.' },
+      { category: 'Bed/Bath', type: 'negative', note: '3BR vs subject 4BR.' },
+      { category: 'Lot', type: 'negative', note: 'Smaller lot at 3,920 sqft.' }
+    ],
+    bucket: 'High'
   },
   {
     id: '5',
@@ -257,7 +284,14 @@ const initialComps: CompProperty[] = [
     color: 'green',
     keep: true,
     whyKeep: ['Closest distance', 'Pool match', 'Same tract'],
-    whyRemove: ['5BR vs 4BR']
+    whyRemove: ['5BR vs 4BR'],
+    condition: 'Standard High',
+    influences: [
+      { category: 'Pool', type: 'positive', note: 'Gunite pool with fencing.' },
+      { category: 'Location', type: 'positive', note: 'Close proximity at 0.22 mi.' },
+      { category: 'Bed/Bath', type: 'negative', note: '5BR vs subject 4BR.' }
+    ],
+    bucket: 'High'
   },
   {
     id: '6',
@@ -286,7 +320,14 @@ const initialComps: CompProperty[] = [
     color: 'blue',
     keep: false,
     whyKeep: ['Pool match', '3 car garage'],
-    whyRemove: ['5BR vs 4BR - different buyer pool', 'Larger sqft affects comparison']
+    whyRemove: ['5BR vs 4BR - different buyer pool', 'Larger sqft affects comparison'],
+    condition: 'Standard High',
+    influences: [
+      { category: 'Garage', type: 'positive', note: '3-car garage.' },
+      { category: 'Pool', type: 'positive', note: 'Gas heated private pool.' },
+      { category: 'Bed/Bath', type: 'negative', note: '5BR vs 4BR - different buyer pool.' }
+    ],
+    bucket: 'Mid'
   },
   {
     id: '7',
@@ -315,7 +356,14 @@ const initialComps: CompProperty[] = [
     color: 'red',
     keep: false,
     whyKeep: ['Pool match', 'Same year built'],
-    whyRemove: ['6BR vs 4BR - very different buyer pool', 'Much larger sqft']
+    whyRemove: ['6BR vs 4BR - very different buyer pool', 'Much larger sqft'],
+    condition: 'Standard Low',
+    influences: [
+      { category: 'Pool', type: 'positive', note: 'Private gas heated pool.' },
+      { category: 'Bed/Bath', type: 'negative', note: '6BR vs 4BR - very different buyer pool.' },
+      { category: 'Check Notes', type: 'negative', note: 'Larger sqft affects direct comparison.' }
+    ],
+    bucket: 'Mid'
   },
   {
     id: '8',
@@ -344,7 +392,14 @@ const initialComps: CompProperty[] = [
     color: 'blue',
     keep: false,
     whyKeep: ['Pool match', 'Fast DOM'],
-    whyRemove: ['5BR vs 4BR', 'Larger sqft']
+    whyRemove: ['5BR vs 4BR', 'Larger sqft'],
+    condition: 'Standard Flip & Staged',
+    influences: [
+      { category: 'Pool', type: 'positive', note: 'Private heated pool.' },
+      { category: 'Bed/Bath', type: 'negative', note: '5BR vs 4BR.' },
+      { category: 'Lot Usable Area', type: 'positive', note: 'Good lot size at 7,841 sqft.' }
+    ],
+    bucket: 'High'
   },
   {
     id: '9',
@@ -373,7 +428,14 @@ const initialComps: CompProperty[] = [
     color: 'green',
     keep: true,
     whyKeep: ['Close distance', 'Pool with waterfall', '3 car garage', 'Fast DOM'],
-    whyRemove: ['3BR vs 4BR']
+    whyRemove: ['3BR vs 4BR'],
+    condition: 'High Flip & Staged',
+    influences: [
+      { category: 'Pool', type: 'positive', note: 'Luxury waterfall pool feature.' },
+      { category: 'Garage', type: 'positive', note: '3-car garage.' },
+      { category: 'Bed/Bath', type: 'negative', note: '3BR vs subject 4BR.' }
+    ],
+    bucket: 'High'
   },
   {
     id: '10',
@@ -402,7 +464,15 @@ const initialComps: CompProperty[] = [
     color: 'green',
     keep: true,
     whyKeep: ['Closest distance at 0.06 mi', 'Exact bed/bath match 4/3', '3 car garage', 'Salt water pool'],
-    whyRemove: []
+    whyRemove: [],
+    condition: 'High Flip',
+    influences: [
+      { category: 'Location', type: 'positive', note: 'Closest comp at 0.06 mi.' },
+      { category: 'Bed/Bath', type: 'positive', note: 'Exact 4/3 bed/bath match.' },
+      { category: 'Garage', type: 'positive', note: '3-car garage.' },
+      { category: 'Pool', type: 'positive', note: 'Salt water pool.' }
+    ],
+    bucket: 'High'
   },
   {
     id: '11',
@@ -431,7 +501,14 @@ const initialComps: CompProperty[] = [
     color: 'green',
     keep: true,
     whyKeep: ['Very close at 0.08 mi', 'Exact bed/bath match', '3 car garage', 'Pool match'],
-    whyRemove: []
+    whyRemove: [],
+    condition: 'Standard High',
+    influences: [
+      { category: 'Location', type: 'positive', note: 'Very close at 0.08 mi.' },
+      { category: 'Bed/Bath', type: 'positive', note: 'Exact 4/3 bed/bath match.' },
+      { category: 'Garage', type: 'positive', note: '3-car garage.' }
+    ],
+    bucket: 'High'
   },
   {
     id: '12',
@@ -460,7 +537,14 @@ const initialComps: CompProperty[] = [
     color: 'blue',
     keep: false,
     whyKeep: ['Exact bed/bath match', 'Fast DOM'],
-    whyRemove: ['Pool status unknown', 'Newer year built affects comparison']
+    whyRemove: ['Pool status unknown', 'Newer year built affects comparison'],
+    condition: 'Standard High',
+    influences: [
+      { category: 'Bed/Bath', type: 'positive', note: 'Exact 4/3 bed/bath match.' },
+      { category: 'Check Notes', type: 'negative', note: 'Pool status unknown - verify.' },
+      { category: 'Design', type: 'negative', note: 'Newer 2013 build affects comparison.' }
+    ],
+    bucket: 'Mid'
   },
   {
     id: '13',
@@ -489,7 +573,14 @@ const initialComps: CompProperty[] = [
     color: 'red',
     keep: false,
     whyKeep: ['Exact bed/bath match', '3 car garage'],
-    whyRemove: ['NO POOL - Subject has pool', 'Farther distance', 'Lower condition']
+    whyRemove: ['NO POOL - Subject has pool', 'Farther distance', 'Lower condition'],
+    condition: 'Standard Low',
+    influences: [
+      { category: 'Garage', type: 'positive', note: '3-car garage.' },
+      { category: 'Pool', type: 'negative', note: 'No pool - subject has pool.' },
+      { category: 'Check Notes', type: 'negative', note: 'Lower condition noted.' }
+    ],
+    bucket: 'Low'
   },
   {
     id: '14',
@@ -518,7 +609,15 @@ const initialComps: CompProperty[] = [
     color: 'red',
     keep: false,
     whyKeep: ['3 car garage', 'Same year built'],
-    whyRemove: ['Pool status unknown', '3BR vs 4BR', 'Farther distance']
+    whyRemove: ['Pool status unknown', '3BR vs 4BR', 'Farther distance'],
+    condition: 'Standard Low',
+    influences: [
+      { category: 'Garage', type: 'positive', note: '3-car garage.' },
+      { category: 'Check Notes', type: 'negative', note: 'Pool status unknown.' },
+      { category: 'Bed/Bath', type: 'negative', note: '3BR vs 4BR.' },
+      { category: 'Location', type: 'negative', note: 'Farther distance at 0.88 mi.' }
+    ],
+    bucket: 'Low'
   },
   {
     id: '15',
@@ -547,7 +646,14 @@ const initialComps: CompProperty[] = [
     color: 'blue',
     keep: false,
     whyKeep: ['Similar bed/bath', 'Pool available'],
-    whyRemove: ['Community pool vs private', 'High DOM']
+    whyRemove: ['Community pool vs private', 'High DOM'],
+    condition: 'Standard Low',
+    influences: [
+      { category: 'Bed/Bath', type: 'positive', note: 'Similar 4/2.5 configuration.' },
+      { category: 'Pool', type: 'negative', note: 'Community pool vs private.' },
+      { category: 'Check Notes', type: 'negative', note: 'High DOM at 103 days.' }
+    ],
+    bucket: 'Mid'
   },
   {
     id: '16',
@@ -576,7 +682,14 @@ const initialComps: CompProperty[] = [
     color: 'blue',
     keep: false,
     whyKeep: ['Exact bed/bath match', 'Close distance'],
-    whyRemove: ['Community pool vs private', 'High DOM']
+    whyRemove: ['Community pool vs private', 'High DOM'],
+    condition: 'Standard Low',
+    influences: [
+      { category: 'Bed/Bath', type: 'positive', note: 'Exact 4/3 bed/bath match.' },
+      { category: 'Location', type: 'positive', note: 'Close distance at 0.23 mi.' },
+      { category: 'Pool', type: 'negative', note: 'Community pool vs private.' }
+    ],
+    bucket: 'Mid'
   }
 ];
 
