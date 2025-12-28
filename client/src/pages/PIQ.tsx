@@ -111,6 +111,7 @@ interface CompProperty {
   condition: PropertyCondition;
   influences: Influence[];
   bucket: CompBucket;
+  isValueCeiling?: boolean;
 }
 
 const initialComps: CompProperty[] = [
@@ -156,7 +157,7 @@ const initialComps: CompProperty[] = [
     price: 1060000,
     pricePerSqft: 453.38,
     size: 2338,
-    lotSize: 5663,
+    lotSize: 12000,
     bedBath: '4/2.5',
     yearBuilt: 2006,
     garage: '2 cars',
@@ -180,10 +181,11 @@ const initialComps: CompProperty[] = [
     whyRemove: [],
     condition: 'Standard High',
     influences: [
-      { category: 'Location', type: 'positive', note: 'Prime location in desirable tract.' },
-      { category: 'Garage', type: 'positive', note: '2-car garage with extra storage.' }
+      { category: 'Lot', type: 'positive', note: 'Oversized 12,000 sqft lot - larger than subject.' },
+      { category: 'Location', type: 'positive', note: 'Prime location in desirable tract.' }
     ],
-    bucket: 'High'
+    bucket: 'High',
+    isValueCeiling: true
   },
   {
     id: '3',
@@ -1563,19 +1565,6 @@ function PIQContent() {
                                     <td className="px-2 py-2 text-right text-gray-600">{comp.distance}</td>
                                   </tr>
                                 ))}
-                                {/* Value Ceiling Line */}
-                                <tr>
-                                  <td colSpan={12} className="px-0 py-0">
-                                    <div className="relative group cursor-help">
-                                      <div className="border-t-2 border-dashed border-red-500 my-1"></div>
-                                      <div className="absolute left-1/2 -translate-x-1/2 -top-2 px-2 py-0.5 bg-red-500 text-white text-[9px] font-bold rounded">VALUE CEILING</div>
-                                      <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1 z-50 hidden group-hover:block w-80 bg-gray-900 text-white text-[10px] rounded-lg p-3 shadow-xl">
-                                        <div className="font-bold mb-1">Value Ceiling Explanation</div>
-                                        <div>Premium comps above have ADUs (Bacino Court) and larger lots (8,700-12,600 sqft) that subject cannot replicate. Subject's max achievable value is set by High bucket comps below.</div>
-                                      </div>
-                                    </div>
-                                  </td>
-                                </tr>
                               </>
                             )}
 
@@ -1592,40 +1581,55 @@ function PIQContent() {
                                   </td>
                                 </tr>
                                 {comps.filter(c => c.bucket === 'High').map((comp, idx) => (
-                                  <tr 
-                                    key={comp.id}
-                                    className="hover:bg-green-50/50 cursor-pointer transition border-l-2 border-green-400"
-                                    onClick={() => handleCompClick(comp, comps.findIndex(c => c.id === comp.id))}
-                                    data-testid={`list-row-${comp.id}`}
-                                  >
-                                    <td className="px-2 py-2">
-                                      <input type="checkbox" className="w-3.5 h-3.5 rounded border-gray-300" onClick={(e) => e.stopPropagation()} />
-                                    </td>
-                                    <td className="px-2 py-2 text-gray-500">{idx + 1}</td>
-                                    <td className="px-2 py-2">
-                                      <div className="w-16 h-12 bg-gray-200 rounded overflow-hidden">
-                                        <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-gray-500 text-[10px]">Photo</div>
-                                      </div>
-                                    </td>
-                                    <td className="px-3 py-2"><div className="font-medium text-gray-900">{comp.address}</div></td>
-                                    <td className="px-3 py-2">
-                                      <div className="flex flex-col gap-1">
-                                        <span className="text-[10px] font-semibold text-green-700">{comp.condition}</span>
-                                        <div className="flex flex-wrap gap-1">
-                                          {comp.influences.map((inf, i) => (
-                                            <span key={i} className={cn("px-1.5 py-0.5 text-[9px] font-medium rounded cursor-help", inf.type === 'positive' ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700")} title={inf.note}>{inf.category}</span>
-                                          ))}
+                                  <React.Fragment key={comp.id}>
+                                    <tr 
+                                      className="hover:bg-green-50/50 cursor-pointer transition border-l-2 border-green-400"
+                                      onClick={() => handleCompClick(comp, comps.findIndex(c => c.id === comp.id))}
+                                      data-testid={`list-row-${comp.id}`}
+                                    >
+                                      <td className="px-2 py-2">
+                                        <input type="checkbox" className="w-3.5 h-3.5 rounded border-gray-300" onClick={(e) => e.stopPropagation()} />
+                                      </td>
+                                      <td className="px-2 py-2 text-gray-500">{idx + 1}</td>
+                                      <td className="px-2 py-2">
+                                        <div className="w-16 h-12 bg-gray-200 rounded overflow-hidden">
+                                          <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-gray-500 text-[10px]">Photo</div>
                                         </div>
-                                      </div>
-                                    </td>
-                                    <td className="px-3 py-2 text-right font-medium text-gray-900">${comp.price.toLocaleString()}</td>
-                                    <td className="px-2 py-2 text-center text-gray-600">{comp.bedBath}</td>
-                                    <td className="px-2 py-2 text-right text-gray-600">{comp.size.toLocaleString()}</td>
-                                    <td className="px-2 py-2 text-right text-gray-600">{comp.lotSize.toLocaleString()}</td>
-                                    <td className="px-2 py-2 text-center text-gray-600">{comp.garage}</td>
-                                    <td className="px-2 py-2 text-gray-600 max-w-[100px] truncate" title={comp.pool}>{comp.pool}</td>
-                                    <td className="px-2 py-2 text-right text-gray-600">{comp.distance}</td>
-                                  </tr>
+                                      </td>
+                                      <td className="px-3 py-2"><div className="font-medium text-gray-900">{comp.address}</div></td>
+                                      <td className="px-3 py-2">
+                                        <div className="flex flex-col gap-1">
+                                          <span className="text-[10px] font-semibold text-green-700">{comp.condition}</span>
+                                          <div className="flex flex-wrap gap-1">
+                                            {comp.influences.map((inf, i) => (
+                                              <span key={i} className={cn("px-1.5 py-0.5 text-[9px] font-medium rounded cursor-help", inf.type === 'positive' ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700")} title={inf.note}>{inf.category}</span>
+                                            ))}
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td className="px-3 py-2 text-right font-medium text-gray-900">${comp.price.toLocaleString()}</td>
+                                      <td className="px-2 py-2 text-center text-gray-600">{comp.bedBath}</td>
+                                      <td className="px-2 py-2 text-right text-gray-600">{comp.size.toLocaleString()}</td>
+                                      <td className="px-2 py-2 text-right text-gray-600">{comp.lotSize.toLocaleString()}</td>
+                                      <td className="px-2 py-2 text-center text-gray-600">{comp.garage}</td>
+                                      <td className="px-2 py-2 text-gray-600 max-w-[100px] truncate" title={comp.pool}>{comp.pool}</td>
+                                      <td className="px-2 py-2 text-right text-gray-600">{comp.distance}</td>
+                                    </tr>
+                                    {comp.isValueCeiling && (
+                                      <tr>
+                                        <td colSpan={12} className="px-0 py-0">
+                                          <div className="relative group cursor-help">
+                                            <div className="border-t-2 border-dashed border-red-500 my-1"></div>
+                                            <div className="absolute left-1/2 -translate-x-1/2 -top-2 px-2 py-0.5 bg-red-500 text-white text-[9px] font-bold rounded">VALUE CEILING</div>
+                                            <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1 z-50 hidden group-hover:block w-80 bg-gray-900 text-white text-[10px] rounded-lg p-3 shadow-xl">
+                                              <div className="font-bold mb-1">Value Ceiling Explanation</div>
+                                              <div>Comps above have larger lots (8,700-12,600 sqft) or premium features that subject cannot replicate. Subject's max achievable value is set by comps below this line.</div>
+                                            </div>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    )}
+                                  </React.Fragment>
                                 ))}
                               </>
                             )}
