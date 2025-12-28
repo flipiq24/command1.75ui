@@ -1226,12 +1226,12 @@ function PIQContent() {
                                   <div className="flex items-center gap-2">
                                     <span className="text-sm font-bold text-gray-900">{comp.address}</span>
                                     <span className={cn(
-                                      "px-1.5 py-0.5 text-[9px] font-bold rounded uppercase",
+                                      "px-1.5 py-0.5 text-[9px] font-medium rounded",
                                       idx === 0 ? "bg-green-100 text-green-700" : 
                                       idx === 1 ? "bg-green-50 text-green-600" : 
                                       "bg-yellow-50 text-yellow-700"
                                     )}>
-                                      {idx === 0 ? 'High' : idx === 1 ? 'High' : 'Moderate'}
+                                      Confidence: {idx === 0 ? 'High' : idx === 1 ? 'High' : 'Moderate'}
                                     </span>
                                   </div>
                                   <div className="flex items-center gap-2">
@@ -1267,20 +1267,6 @@ function PIQContent() {
                                       <span className="font-medium text-green-800">WHY KEPT: {comp.whyKeep[0]}</span>
                                     </div>
                                   )}
-                                </div>
-                                
-                                <div className="mt-3 pt-2 border-t border-gray-100">
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      setComps(prev => prev.map(c => c.id === comp.id ? { ...c, keep: false } : c));
-                                    }}
-                                    className="px-3 py-1.5 text-xs font-medium bg-red-50 text-red-700 rounded-lg hover:bg-red-100 transition flex items-center gap-1.5"
-                                    data-testid={`button-remove-comp-${comp.id}`}
-                                  >
-                                    <span className="text-red-500">✗</span>
-                                    Remove This Comp
-                                  </button>
                                 </div>
                               </div>
                             </div>
@@ -1350,8 +1336,8 @@ function PIQContent() {
                                 <div className="flex items-center justify-between mb-1">
                                   <div className="flex items-center gap-2">
                                     <span className="text-sm font-bold text-gray-700">{comp.address}</span>
-                                    <span className="px-1.5 py-0.5 text-[9px] font-bold rounded uppercase bg-orange-50 text-orange-600">
-                                      Weak
+                                    <span className="px-1.5 py-0.5 text-[9px] font-medium rounded bg-orange-50 text-orange-600">
+                                      Confidence: Weak
                                     </span>
                                   </div>
                                   <div className="flex items-center gap-2">
@@ -1387,20 +1373,6 @@ function PIQContent() {
                                       <span className="font-medium text-red-700">WHY REMOVED: {comp.whyRemove[0]}</span>
                                     </div>
                                   )}
-                                </div>
-                                
-                                <div className="mt-3 pt-2 border-t border-gray-100">
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      setComps(prev => prev.map(c => c.id === comp.id ? { ...c, keep: true } : c));
-                                    }}
-                                    className="px-3 py-1.5 text-xs font-medium bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition flex items-center gap-1.5"
-                                    data-testid={`button-keep-comp-${comp.id}`}
-                                  >
-                                    <span className="text-green-600">✓</span>
-                                    Keep This Comp
-                                  </button>
                                 </div>
                               </div>
                             </div>
