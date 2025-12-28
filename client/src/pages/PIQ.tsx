@@ -999,53 +999,138 @@ function PIQContent() {
                     </button>
                   </div>
 
-                  <div className="relative w-full h-[450px] bg-gray-200 rounded-xl overflow-hidden border border-gray-300">
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-100 via-blue-50 to-green-50">
-                      <div className="absolute inset-0 opacity-30" style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%23e8f4f8' width='400' height='400'/%3E%3Cpath d='M0 200 Q100 150 200 200 T400 200' stroke='%23a0c4d0' fill='none' stroke-width='2'/%3E%3Cpath d='M0 300 Q150 250 300 300 T400 280' stroke='%23b0d4e0' fill='none' stroke-width='1.5'/%3E%3C/svg%3E")`,
-                        backgroundSize: 'cover'
-                      }}></div>
-                      
-                      <div 
-                        className="absolute top-1/4 left-1/4 transform -translate-x-1/2 cursor-pointer hover:scale-110 transition-transform"
-                        onClick={() => handleCompClick(comps[0], 0)}
-                        data-testid="comp-marker-1"
-                      >
-                        <div className="bg-green-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg hover:bg-green-700">$499K</div>
-                      </div>
-                      <div 
-                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer hover:scale-110 transition-transform"
-                        onClick={() => handleCompClick(comps[1], 1)}
-                        data-testid="comp-marker-2"
-                      >
-                        <div className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg border-2 border-white hover:bg-blue-700">$650K</div>
-                        <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-blue-600"></div>
-                      </div>
-                      <div 
-                        className="absolute bottom-1/3 right-1/4 cursor-pointer hover:scale-110 transition-transform"
-                        onClick={() => handleCompClick(comps[2], 2)}
-                        data-testid="comp-marker-3"
-                      >
-                        <div className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg hover:bg-red-600">$800K</div>
-                      </div>
-                      <div className="absolute top-2/3 left-1/3">
-                        <div className="w-6 h-6 bg-gray-800 rounded-full flex items-center justify-center text-white text-[10px] font-bold shadow-lg">S</div>
+                  {compsMapView !== 'list' ? (
+                    <div className="relative w-full h-[450px] bg-gray-200 rounded-xl overflow-hidden border border-gray-300">
+                      <div className="absolute inset-0 bg-gradient-to-br from-blue-100 via-blue-50 to-green-50">
+                        <div className="absolute inset-0 opacity-30" style={{
+                          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%23e8f4f8' width='400' height='400'/%3E%3Cpath d='M0 200 Q100 150 200 200 T400 200' stroke='%23a0c4d0' fill='none' stroke-width='2'/%3E%3Cpath d='M0 300 Q150 250 300 300 T400 280' stroke='%23b0d4e0' fill='none' stroke-width='1.5'/%3E%3C/svg%3E")`,
+                          backgroundSize: 'cover'
+                        }}></div>
+                        
+                        <div 
+                          className="absolute top-1/4 left-1/4 transform -translate-x-1/2 cursor-pointer hover:scale-110 transition-transform"
+                          onClick={() => handleCompClick(comps[0], 0)}
+                          data-testid="comp-marker-1"
+                        >
+                          <div className="bg-green-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg hover:bg-green-700">$499K</div>
+                        </div>
+                        <div 
+                          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer hover:scale-110 transition-transform"
+                          onClick={() => handleCompClick(comps[1], 1)}
+                          data-testid="comp-marker-2"
+                        >
+                          <div className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg border-2 border-white hover:bg-blue-700">$650K</div>
+                          <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-blue-600"></div>
+                        </div>
+                        <div 
+                          className="absolute bottom-1/3 right-1/4 cursor-pointer hover:scale-110 transition-transform"
+                          onClick={() => handleCompClick(comps[2], 2)}
+                          data-testid="comp-marker-3"
+                        >
+                          <div className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg hover:bg-red-600">$800K</div>
+                        </div>
+                        <div className="absolute top-2/3 left-1/3">
+                          <div className="w-6 h-6 bg-gray-800 rounded-full flex items-center justify-center text-white text-[10px] font-bold shadow-lg">S</div>
+                        </div>
+
+                        <div className="absolute top-4 left-4 text-xs text-gray-600 font-medium">Bloomington</div>
+                        <div className="absolute top-1/3 right-1/4 text-xs text-gray-500">Rialto</div>
+                        <div className="absolute bottom-1/4 left-1/5 text-xs text-gray-500">Empire Center</div>
+                        <div className="absolute bottom-1/4 right-1/3 text-xs text-gray-500">West Colton</div>
                       </div>
 
-                      <div className="absolute top-4 left-4 text-xs text-gray-600 font-medium">Bloomington</div>
-                      <div className="absolute top-1/3 right-1/4 text-xs text-gray-500">Rialto</div>
-                      <div className="absolute bottom-1/4 left-1/5 text-xs text-gray-500">Empire Center</div>
-                      <div className="absolute bottom-1/4 right-1/3 text-xs text-gray-500">West Colton</div>
+                      <div className="absolute bottom-4 left-4 text-[10px] text-gray-500">
+                        Google
+                      </div>
+                      <div className="absolute bottom-4 right-4 flex flex-col gap-1">
+                        <button className="w-8 h-8 bg-white rounded shadow flex items-center justify-center text-gray-600 hover:bg-gray-50">+</button>
+                        <button className="w-8 h-8 bg-white rounded shadow flex items-center justify-center text-gray-600 hover:bg-gray-50">−</button>
+                      </div>
                     </div>
-
-                    <div className="absolute bottom-4 left-4 text-[10px] text-gray-500">
-                      Google
+                  ) : (
+                    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-xs">
+                          <thead>
+                            <tr className="bg-gray-50 border-b border-gray-200">
+                              <th className="px-2 py-2 text-left font-medium text-gray-500 w-8">
+                                <input type="checkbox" className="w-3.5 h-3.5 rounded border-gray-300" />
+                              </th>
+                              <th className="px-2 py-2 text-left font-medium text-gray-500 w-8">#</th>
+                              <th className="px-2 py-2 text-left font-medium text-gray-500 w-16">Photo</th>
+                              <th className="px-3 py-2 text-left font-medium text-gray-500">Address</th>
+                              <th className="px-3 py-2 text-left font-medium text-gray-500">Status</th>
+                              <th className="px-3 py-2 text-left font-medium text-gray-500">Type</th>
+                              <th className="px-3 py-2 text-right font-medium text-gray-500">List Price</th>
+                              <th className="px-3 py-2 text-right font-medium text-gray-500">Sale Price</th>
+                              <th className="px-2 py-2 text-center font-medium text-gray-500">Bed/Bath</th>
+                              <th className="px-2 py-2 text-center font-medium text-gray-500">Year Built</th>
+                              <th className="px-2 py-2 text-right font-medium text-gray-500">SQFT</th>
+                              <th className="px-2 py-2 text-right font-medium text-gray-500">LOT</th>
+                              <th className="px-2 py-2 text-center font-medium text-gray-500">Garage</th>
+                              <th className="px-2 py-2 text-center font-medium text-gray-500">DOM/CDOM</th>
+                              <th className="px-2 py-2 text-left font-medium text-gray-500">Pool</th>
+                              <th className="px-2 py-2 text-right font-medium text-gray-500">Distance</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-gray-100">
+                            {comps.map((comp, idx) => (
+                              <tr 
+                                key={comp.id}
+                                className="hover:bg-gray-50 cursor-pointer transition"
+                                onClick={() => handleCompClick(comp, idx)}
+                                data-testid={`list-row-${comp.id}`}
+                              >
+                                <td className="px-2 py-2">
+                                  <input 
+                                    type="checkbox" 
+                                    className="w-3.5 h-3.5 rounded border-gray-300"
+                                    onClick={(e) => e.stopPropagation()}
+                                  />
+                                </td>
+                                <td className="px-2 py-2 text-gray-500">{idx + 1}</td>
+                                <td className="px-2 py-2">
+                                  <div className="w-16 h-12 bg-gray-200 rounded overflow-hidden">
+                                    <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-gray-500 text-[10px]">
+                                      Photo
+                                    </div>
+                                  </div>
+                                </td>
+                                <td className="px-3 py-2">
+                                  <div className="font-medium text-gray-900">{comp.address}</div>
+                                </td>
+                                <td className="px-3 py-2">
+                                  <span className={cn(
+                                    "px-2 py-0.5 text-[10px] font-medium rounded",
+                                    comp.listingStatus === 'Closed' ? "bg-red-100 text-red-700" :
+                                    comp.listingStatus === 'Pending' ? "bg-yellow-100 text-yellow-700" :
+                                    comp.listingStatus === 'Active' ? "bg-blue-100 text-blue-700" :
+                                    "bg-gray-100 text-gray-700"
+                                  )}>
+                                    {comp.listingStatus}
+                                  </span>
+                                  <div className="text-[10px] text-gray-400 mt-0.5">{comp.closingDate}</div>
+                                </td>
+                                <td className="px-3 py-2 text-gray-600">{comp.type}</td>
+                                <td className="px-3 py-2 text-right font-medium text-gray-900">${comp.price.toLocaleString()}</td>
+                                <td className="px-3 py-2 text-right font-medium text-gray-900">
+                                  {comp.listingStatus === 'Closed' ? `$${comp.price.toLocaleString()}` : '$—'}
+                                </td>
+                                <td className="px-2 py-2 text-center text-gray-600">{comp.bedBath}</td>
+                                <td className="px-2 py-2 text-center text-gray-600">{comp.yearBuilt}</td>
+                                <td className="px-2 py-2 text-right text-gray-600">{comp.size.toLocaleString()}</td>
+                                <td className="px-2 py-2 text-right text-gray-600">{comp.lotSize.toLocaleString()}</td>
+                                <td className="px-2 py-2 text-center text-gray-600">{comp.garage}</td>
+                                <td className="px-2 py-2 text-center text-gray-600">{comp.domCdom}</td>
+                                <td className="px-2 py-2 text-gray-600 max-w-[100px] truncate" title={comp.pool}>{comp.pool}</td>
+                                <td className="px-2 py-2 text-right text-gray-600">{comp.distance}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
-                    <div className="absolute bottom-4 right-4 flex flex-col gap-1">
-                      <button className="w-8 h-8 bg-white rounded shadow flex items-center justify-center text-gray-600 hover:bg-gray-50">+</button>
-                      <button className="w-8 h-8 bg-white rounded shadow flex items-center justify-center text-gray-600 hover:bg-gray-50">−</button>
-                    </div>
-                  </div>
+                  )}
 
                   {showCompsIQReport && (
                     <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm animate-in slide-in-from-top-4 fade-in duration-500">
