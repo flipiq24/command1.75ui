@@ -1526,7 +1526,7 @@ function PIQContent() {
                       </div>
                     </div>
                   ) : compsMapView === 'matrix' ? (
-                    <div className="space-y-6 overflow-y-auto max-h-[600px]">
+                    <div className="space-y-6">
                       {/* PIQ & Comparison Section */}
                       <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
                         <div className="px-4 py-3 border-b border-gray-100 flex items-center gap-2">
