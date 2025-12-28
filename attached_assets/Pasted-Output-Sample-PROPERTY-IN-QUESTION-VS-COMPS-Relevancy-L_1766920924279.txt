@@ -1,0 +1,27 @@
+Output Sample: PROPERTY IN QUESTION VS COMPS
+Relevancy: LOW
+The PIQ aligns structurally with the comp set. Layout and size fall within the dominant buyer pool, and higher-priced comps share the same functional profile. There is no buyer-pool mismatch that would require discounting or adjustment.
+MATRIX TABLE — ACTIVES
+Relevancy: LOW
+There are two active listings. Both are in inferior condition and have been sitting. Once the PIQ is improved, these properties will not compete for the same buyer. Their pricing does not cap value or limit upside.
+MATRIX TABLE — PENDINGS / BACKUPS
+Relevancy: HIGH
+There are two pendings, both went under contract quickly and appear to be in better condition than the closed sales. These pendings are the most relevant forward signal in the dataset. If contract pricing confirms near their list levels, they indicate buyers are paying above the standard baseline.
+MATRIX TABLE — CLOSED SALES
+Relevancy: HIGH
+There are six closed sales forming a reliable baseline around $259/sqft. All six represent standard condition properties. None of the closed sales reflect premium finishes or top-tier presentation. This confirms the baseline is real, but not the ceiling.
+E-VALUE INTERPRETATION
+Outcome: POSSIBLE PUSH
+The E-Value of $287,568 is grounded in standard-condition closed sales. Given the lack of premium closed data and the presence of fast pendings in better condition, the baseline appears conservative rather than aggressive.
+MARKET CEILING & PUSH LOGIC
+Relevancy: HIGH
+The highest credible sold price defines the market ceiling. The pending properties appear to support movement toward that ceiling without breaking it. Using pending pricing (~$291/sqft) on the PIQ size implies a value near $308K, which remains inside the proven range.
+A safer execution strategy would be to target just below that level (high-$290s) unless pending contracts confirm stronger pricing.
+WHAT MUST BE VERIFIED
+* Confirm pending contract prices vs list
+* Confirm concessions or credits
+* Confirm condition level of pendings relative to PIQ
+* Confirm no premium feature exists in pendings that PIQ cannot replicate
+If pendings validate cleanly, they become the strongest justification for leaning above the baseline.
+CONCLUSION 
+Closed sales establish a standard baseline, but fast pendings in superior condition suggest the market may support a higher price within the existing ceiling if contract terms confirm.

@@ -31,7 +31,10 @@ import {
   Mail,
   Phone,
   Building2,
-  ExternalLink
+  ExternalLink,
+  Home,
+  Target,
+  Brain
 } from 'lucide-react';
 
 type PropertyCondition =
@@ -1429,7 +1432,7 @@ function PIQContent() {
                     </div>
                   </div>
 
-                  {compsMapView !== 'list' && (
+                  {compsMapView === 'map' && (
                   <div className="flex items-center gap-2 border-b border-gray-200 pb-2">
                     <button 
                       onClick={() => setCompsMapType('map')}
@@ -1474,7 +1477,7 @@ function PIQContent() {
                   </div>
                   )}
 
-                  {compsMapView !== 'list' ? (
+                  {compsMapView === 'map' ? (
                     <div className="relative w-full h-[450px] bg-gray-200 rounded-xl overflow-hidden border border-gray-300">
                       <div className="absolute inset-0 bg-gradient-to-br from-blue-100 via-blue-50 to-green-50">
                         <div className="absolute inset-0 opacity-30" style={{
@@ -1520,6 +1523,270 @@ function PIQContent() {
                       <div className="absolute bottom-4 right-4 flex flex-col gap-1">
                         <button className="w-8 h-8 bg-white rounded shadow flex items-center justify-center text-gray-600 hover:bg-gray-50">+</button>
                         <button className="w-8 h-8 bg-white rounded shadow flex items-center justify-center text-gray-600 hover:bg-gray-50">−</button>
+                      </div>
+                    </div>
+                  ) : compsMapView === 'matrix' ? (
+                    <div className="space-y-6 overflow-y-auto max-h-[600px]">
+                      {/* PIQ & Comparison Section */}
+                      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                        <div className="px-4 py-3 border-b border-gray-100 flex items-center gap-2">
+                          <Home className="w-4 h-4 text-gray-600" />
+                          <span className="text-sm font-semibold text-gray-900">Property in Question (PIQ) & Comparison</span>
+                        </div>
+                        <div className="px-4 py-2 text-xs text-blue-600">407 4th • Single Family</div>
+                        <table className="w-full text-xs">
+                          <thead>
+                            <tr className="bg-gray-50 border-b border-gray-200">
+                              <th className="px-4 py-2 text-left font-medium text-gray-500 uppercase tracking-wider">Metric</th>
+                              <th className="px-4 py-2 text-center font-medium text-gray-500 uppercase tracking-wider">PIQ</th>
+                              <th className="px-4 py-2 text-center font-medium text-gray-500 uppercase tracking-wider">Average Comps</th>
+                              <th className="px-4 py-2 text-right font-medium text-gray-500 uppercase tracking-wider">% Difference</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-gray-100">
+                            <tr className="hover:bg-gray-50">
+                              <td className="px-4 py-2.5 text-gray-700">Property Type</td>
+                              <td className="px-4 py-2.5 text-center text-gray-900">Single Family</td>
+                              <td className="px-4 py-2.5 text-center text-gray-600">Single Family</td>
+                              <td className="px-4 py-2.5 text-right text-gray-500">N/A</td>
+                            </tr>
+                            <tr className="hover:bg-gray-50">
+                              <td className="px-4 py-2.5 text-gray-700">Bedrooms</td>
+                              <td className="px-4 py-2.5 text-center text-gray-900">3</td>
+                              <td className="px-4 py-2.5 text-center text-gray-600">2.5</td>
+                              <td className="px-4 py-2.5 text-right text-green-600 font-medium">+20.0%</td>
+                            </tr>
+                            <tr className="hover:bg-gray-50">
+                              <td className="px-4 py-2.5 text-gray-700">Bathrooms</td>
+                              <td className="px-4 py-2.5 text-center text-gray-900">1</td>
+                              <td className="px-4 py-2.5 text-center text-gray-600">1.3</td>
+                              <td className="px-4 py-2.5 text-right text-red-600 font-medium">-20.0%</td>
+                            </tr>
+                            <tr className="hover:bg-gray-50">
+                              <td className="px-4 py-2.5 text-gray-700">Year Built</td>
+                              <td className="px-4 py-2.5 text-center text-gray-900">1949</td>
+                              <td className="px-4 py-2.5 text-center text-gray-600">1938</td>
+                              <td className="px-4 py-2.5 text-right text-green-600 font-medium">+0.6%</td>
+                            </tr>
+                            <tr className="hover:bg-gray-50">
+                              <td className="px-4 py-2.5 text-gray-700">Sqft</td>
+                              <td className="px-4 py-2.5 text-center text-gray-900">1,130 sqft</td>
+                              <td className="px-4 py-2.5 text-center text-gray-600">1,080 sqft</td>
+                              <td className="px-4 py-2.5 text-right text-green-600 font-medium">+4.7%</td>
+                            </tr>
+                            <tr className="hover:bg-gray-50">
+                              <td className="px-4 py-2.5 text-gray-700">Lot Size</td>
+                              <td className="px-4 py-2.5 text-center text-gray-900">5,812 sqft</td>
+                              <td className="px-4 py-2.5 text-center text-gray-600">6,807 sqft</td>
+                              <td className="px-4 py-2.5 text-right text-red-600 font-medium">-14.6%</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                      {/* Detailed Matrix Table */}
+                      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                        <div className="px-4 py-3 border-b border-gray-100 flex items-center gap-2">
+                          <LayoutGrid className="w-4 h-4 text-gray-600" />
+                          <span className="text-sm font-semibold text-gray-900">Detailed Matrix Table</span>
+                        </div>
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-xs">
+                            <thead>
+                              <tr className="bg-gray-50 border-b border-gray-200">
+                                <th className="px-3 py-2 text-left font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th className="px-3 py-2 text-right font-medium text-gray-500 uppercase tracking-wider">Min $/SQFT</th>
+                                <th className="px-3 py-2 text-right font-medium text-gray-500 uppercase tracking-wider">Max $/SQFT</th>
+                                <th className="px-3 py-2 text-right font-medium text-gray-500 uppercase tracking-wider">Avg $/SQFT</th>
+                                <th className="px-3 py-2 text-right font-medium text-gray-500 uppercase tracking-wider">Min Price</th>
+                                <th className="px-3 py-2 text-right font-medium text-gray-500 uppercase tracking-wider">Max Price</th>
+                                <th className="px-3 py-2 text-right font-medium text-gray-500 uppercase tracking-wider">Avg Price</th>
+                                <th className="px-3 py-2 text-right font-medium text-gray-500 uppercase tracking-wider">Min DOM</th>
+                                <th className="px-3 py-2 text-right font-medium text-gray-500 uppercase tracking-wider">Max DOM</th>
+                                <th className="px-3 py-2 text-right font-medium text-gray-500 uppercase tracking-wider">Avg DOM</th>
+                                <th className="px-3 py-2 text-right font-medium text-gray-500 uppercase tracking-wider">Confidence</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-100">
+                              <tr className="hover:bg-gray-50">
+                                <td className="px-3 py-2.5 text-gray-700 flex items-center gap-2">
+                                  <span className="w-2 h-2 rounded-full bg-green-500"></span>
+                                  Active (2)
+                                </td>
+                                <td className="px-3 py-2.5 text-right text-gray-900">$263.44</td>
+                                <td className="px-3 py-2.5 text-right text-gray-900">$324.92</td>
+                                <td className="px-3 py-2.5 text-right text-gray-900">$294.18</td>
+                                <td className="px-3 py-2.5 text-right text-gray-900">$250,000</td>
+                                <td className="px-3 py-2.5 text-right text-gray-900">$389,900</td>
+                                <td className="px-3 py-2.5 text-right text-gray-900">$319,950</td>
+                                <td className="px-3 py-2.5 text-right text-gray-600">2</td>
+                                <td className="px-3 py-2.5 text-right text-gray-600">113</td>
+                                <td className="px-3 py-2.5 text-right text-gray-600">57.5</td>
+                                <td className="px-3 py-2.5 text-right text-gray-600">2</td>
+                              </tr>
+                              <tr className="hover:bg-gray-50">
+                                <td className="px-3 py-2.5 text-gray-700 flex items-center gap-2">
+                                  <span className="w-2 h-2 rounded-full bg-yellow-500"></span>
+                                  Pending (0)
+                                </td>
+                                <td className="px-3 py-2.5 text-right text-gray-400">N/A</td>
+                                <td className="px-3 py-2.5 text-right text-gray-400">N/A</td>
+                                <td className="px-3 py-2.5 text-right text-gray-400">N/A</td>
+                                <td className="px-3 py-2.5 text-right text-gray-400">N/A</td>
+                                <td className="px-3 py-2.5 text-right text-gray-400">N/A</td>
+                                <td className="px-3 py-2.5 text-right text-gray-400">N/A</td>
+                                <td className="px-3 py-2.5 text-right text-gray-400">N/A</td>
+                                <td className="px-3 py-2.5 text-right text-gray-400">N/A</td>
+                                <td className="px-3 py-2.5 text-right text-gray-400">N/A</td>
+                                <td className="px-3 py-2.5 text-right text-gray-400">0</td>
+                              </tr>
+                              <tr className="hover:bg-gray-50">
+                                <td className="px-3 py-2.5 text-gray-700 flex items-center gap-2">
+                                  <span className="w-2 h-2 rounded-full bg-blue-500"></span>
+                                  Backup (0)
+                                </td>
+                                <td className="px-3 py-2.5 text-right text-gray-400">N/A</td>
+                                <td className="px-3 py-2.5 text-right text-gray-400">N/A</td>
+                                <td className="px-3 py-2.5 text-right text-gray-400">N/A</td>
+                                <td className="px-3 py-2.5 text-right text-gray-400">N/A</td>
+                                <td className="px-3 py-2.5 text-right text-gray-400">N/A</td>
+                                <td className="px-3 py-2.5 text-right text-gray-400">N/A</td>
+                                <td className="px-3 py-2.5 text-right text-gray-400">N/A</td>
+                                <td className="px-3 py-2.5 text-right text-gray-400">N/A</td>
+                                <td className="px-3 py-2.5 text-right text-gray-400">N/A</td>
+                                <td className="px-3 py-2.5 text-right text-gray-400">0</td>
+                              </tr>
+                              <tr className="hover:bg-gray-50">
+                                <td className="px-3 py-2.5 text-gray-700 flex items-center gap-2">
+                                  <span className="w-2 h-2 rounded-full bg-red-500"></span>
+                                  Closed (6)
+                                </td>
+                                <td className="px-3 py-2.5 text-right text-gray-900">$161.94</td>
+                                <td className="px-3 py-2.5 text-right text-gray-900">$291.13</td>
+                                <td className="px-3 py-2.5 text-right text-gray-900">$224.11</td>
+                                <td className="px-3 py-2.5 text-right text-gray-900">$160,000</td>
+                                <td className="px-3 py-2.5 text-right text-gray-900">$320,000</td>
+                                <td className="px-3 py-2.5 text-right text-gray-900">$244,667</td>
+                                <td className="px-3 py-2.5 text-right text-gray-600">3</td>
+                                <td className="px-3 py-2.5 text-right text-gray-600">37</td>
+                                <td className="px-3 py-2.5 text-right text-gray-600">14.67</td>
+                                <td className="px-3 py-2.5 text-right text-gray-600">6</td>
+                              </tr>
+                              <tr className="bg-gray-50 font-medium">
+                                <td className="px-3 py-2.5 text-gray-900">Average</td>
+                                <td className="px-3 py-2.5 text-right text-gray-900">$212.69</td>
+                                <td className="px-3 py-2.5 text-right text-gray-900">$308.02</td>
+                                <td className="px-3 py-2.5 text-right text-green-600">$259.14</td>
+                                <td className="px-3 py-2.5 text-right text-gray-900">$205,000</td>
+                                <td className="px-3 py-2.5 text-right text-gray-900">$354,950</td>
+                                <td className="px-3 py-2.5 text-right text-green-600">$282,308</td>
+                                <td className="px-3 py-2.5 text-right text-gray-600">2.5</td>
+                                <td className="px-3 py-2.5 text-right text-gray-600">75</td>
+                                <td className="px-3 py-2.5 text-right text-gray-600">36.09</td>
+                                <td className="px-3 py-2.5 text-right text-gray-600"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      {/* Final E-Value Calculation */}
+                      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                        <div className="px-4 py-3 border-b border-gray-100 flex items-center gap-2">
+                          <Target className="w-4 h-4 text-gray-600" />
+                          <span className="text-sm font-semibold text-gray-900">Final E-Value Calculation</span>
+                        </div>
+                        <div className="p-4 space-y-4">
+                          <div className="bg-gray-50 rounded-lg p-4">
+                            <div className="font-medium text-gray-900 mb-2">Square Footage Calculation:</div>
+                            <div className="text-xs text-gray-600 mb-2">Multiply the property's size by price per AVG $/sqft:</div>
+                            <div className="text-sm">
+                              1,130 sqft × <span className="text-green-600 font-medium">$259.14</span> = <span className="font-semibold">$292,828</span>
+                            </div>
+                            <div className="text-[10px] text-gray-400 mt-2">Debug: Property ID 38799187, Building Size: 1130, Comps Avg Price: $282,308.34, Avg $/sqft: $259.14</div>
+                          </div>
+
+                          <div className="bg-gray-50 rounded-lg p-4">
+                            <div className="font-medium text-gray-900 mb-2">Average Comparable Price:</div>
+                            <div className="text-sm">
+                              Comparable property price = <span className="text-green-600 font-semibold">$282,308</span>
+                            </div>
+                          </div>
+
+                          <div className="bg-gray-50 rounded-lg p-4">
+                            <div className="font-medium text-gray-900 mb-2">Average the two values:</div>
+                            <div className="text-xs text-gray-600 mb-2">Add the square footage calculation and comparable property price, then divide by two:</div>
+                            <div className="text-sm">
+                              ($292,828 + $282,308) ÷ 2 = <span className="font-semibold">$287,568</span>
+                            </div>
+                          </div>
+
+                          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <div className="text-sm text-gray-700">Final Estimated Value:</div>
+                            <div className="text-2xl font-bold text-green-600">$287,568</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* iQ Matrix Intelligence */}
+                      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                        <div className="px-4 py-3 border-b border-gray-100 flex items-center gap-2">
+                          <Brain className="w-4 h-4 text-blue-600" />
+                          <span className="text-sm font-semibold text-gray-900">iQ Matrix Intelligence</span>
+                        </div>
+                        <div className="p-4 space-y-4 text-xs">
+                          <div>
+                            <div className="font-semibold text-gray-900 mb-1">PROPERTY IN QUESTION VS COMPS</div>
+                            <div className="text-gray-500 text-[10px] mb-1">Relevancy: LOW</div>
+                            <div className="text-gray-600">The PIQ aligns structurally with the comp set. Layout and size fall within the dominant buyer pool, and higher-priced comps share the same functional profile. There is no buyer-pool mismatch that would require discounting or adjustment.</div>
+                          </div>
+
+                          <div>
+                            <div className="font-semibold text-gray-900 mb-1">MATRIX TABLE — ACTIVES</div>
+                            <div className="text-gray-500 text-[10px] mb-1">Relevancy: LOW</div>
+                            <div className="text-gray-600">There are two active listings. Both are in inferior condition and have been sitting. Once the PIQ is improved, these properties will not compete for the same buyer. Their pricing does not cap value or limit upside.</div>
+                          </div>
+
+                          <div>
+                            <div className="font-semibold text-gray-900 mb-1">MATRIX TABLE — PENDINGS / BACKUPS</div>
+                            <div className="text-gray-500 text-[10px] mb-1">Relevancy: HIGH</div>
+                            <div className="text-gray-600">There are two pendings, both went under contract quickly and appear to be in better condition than the closed sales. These pendings are the most relevant forward signal in the dataset. If contract pricing confirms near their list levels, they indicate buyers are paying above the standard baseline.</div>
+                          </div>
+
+                          <div>
+                            <div className="font-semibold text-gray-900 mb-1">MATRIX TABLE — CLOSED SALES</div>
+                            <div className="text-gray-500 text-[10px] mb-1">Relevancy: HIGH</div>
+                            <div className="text-gray-600">There are six closed sales forming a reliable baseline around $259/sqft. All six represent standard condition properties. None of the closed sales reflect premium finishes or top-tier presentation. This confirms the baseline is real, but not the ceiling.</div>
+                          </div>
+
+                          <div>
+                            <div className="font-semibold text-gray-900 mb-1">E-VALUE INTERPRETATION</div>
+                            <div className="text-yellow-600 text-[10px] mb-1">Outcome: POSSIBLE PUSH</div>
+                            <div className="text-gray-600">The E-Value of $287,568 is grounded in standard-condition closed sales. Given the lack of premium closed data and the presence of fast pendings in better condition, the baseline appears conservative rather than aggressive.</div>
+                          </div>
+
+                          <div>
+                            <div className="font-semibold text-gray-900 mb-1">MARKET CEILING & PUSH LOGIC</div>
+                            <div className="text-gray-500 text-[10px] mb-1">Relevancy: HIGH</div>
+                            <div className="text-gray-600">The highest credible sold price defines the market ceiling. The pending properties appear to support movement toward that ceiling without breaking it. Using pending pricing (~$291/sqft) on the PIQ size implies a value near $308K, which remains inside the proven range. A safer execution strategy would be to target just below that level (high-$290s) unless pending contracts confirm stronger pricing.</div>
+                          </div>
+
+                          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                            <div className="font-semibold text-gray-900 mb-2">WHAT MUST BE VERIFIED</div>
+                            <ul className="text-gray-600 space-y-1 list-disc list-inside">
+                              <li>Confirm pending contract prices vs list</li>
+                              <li>Confirm concessions or credits</li>
+                              <li>Confirm condition level of pendings relative to PIQ</li>
+                              <li>Confirm no premium feature exists in pendings that PIQ cannot replicate</li>
+                            </ul>
+                            <div className="text-gray-600 mt-2 italic">If pendings validate cleanly, they become the strongest justification for leaning above the baseline.</div>
+                          </div>
+
+                          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                            <div className="font-semibold text-gray-900 mb-1">CONCLUSION</div>
+                            <div className="text-gray-700">Closed sales establish a standard baseline, but fast pendings in superior condition suggest the market may support a higher price within the existing ceiling if contract terms confirm.</div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   ) : (
