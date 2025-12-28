@@ -1546,7 +1546,7 @@ function PIQContent() {
                                     <td className="px-3 py-2"><div className="font-medium text-gray-900">{comp.address}</div></td>
                                     <td className="px-3 py-2">
                                       <div className="flex flex-col gap-1">
-                                        <span className="px-2 py-0.5 text-[10px] font-medium rounded bg-purple-100 text-purple-700 w-fit">{comp.condition}</span>
+                                        <span className="text-[10px] font-semibold text-purple-700">{comp.condition}</span>
                                         <div className="flex flex-wrap gap-1">
                                           {comp.influences.map((inf, i) => (
                                             <span key={i} className={cn("px-1.5 py-0.5 text-[9px] font-medium rounded cursor-help", inf.type === 'positive' ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700")} title={inf.note}>{inf.category}</span>
@@ -1610,7 +1610,7 @@ function PIQContent() {
                                     <td className="px-3 py-2"><div className="font-medium text-gray-900">{comp.address}</div></td>
                                     <td className="px-3 py-2">
                                       <div className="flex flex-col gap-1">
-                                        <span className="px-2 py-0.5 text-[10px] font-medium rounded bg-green-100 text-green-700 w-fit">{comp.condition}</span>
+                                        <span className="text-[10px] font-semibold text-green-700">{comp.condition}</span>
                                         <div className="flex flex-wrap gap-1">
                                           {comp.influences.map((inf, i) => (
                                             <span key={i} className={cn("px-1.5 py-0.5 text-[9px] font-medium rounded cursor-help", inf.type === 'positive' ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700")} title={inf.note}>{inf.category}</span>
@@ -1661,7 +1661,7 @@ function PIQContent() {
                                     <td className="px-3 py-2"><div className="font-medium text-gray-900">{comp.address}</div></td>
                                     <td className="px-3 py-2">
                                       <div className="flex flex-col gap-1">
-                                        <span className="px-2 py-0.5 text-[10px] font-medium rounded bg-yellow-100 text-yellow-700 w-fit">{comp.condition}</span>
+                                        <span className="text-[10px] font-semibold text-yellow-700">{comp.condition}</span>
                                         <div className="flex flex-wrap gap-1">
                                           {comp.influences.map((inf, i) => (
                                             <span key={i} className={cn("px-1.5 py-0.5 text-[9px] font-medium rounded cursor-help", inf.type === 'positive' ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700")} title={inf.note}>{inf.category}</span>
@@ -1712,7 +1712,7 @@ function PIQContent() {
                                     <td className="px-3 py-2"><div className="font-medium text-gray-900">{comp.address}</div></td>
                                     <td className="px-3 py-2">
                                       <div className="flex flex-col gap-1">
-                                        <span className="px-2 py-0.5 text-[10px] font-medium rounded bg-red-100 text-red-700 w-fit">{comp.condition}</span>
+                                        <span className="text-[10px] font-semibold text-red-700">{comp.condition}</span>
                                         <div className="flex flex-wrap gap-1">
                                           {comp.influences.map((inf, i) => (
                                             <span key={i} className={cn("px-1.5 py-0.5 text-[9px] font-medium rounded cursor-help", inf.type === 'positive' ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700")} title={inf.note}>{inf.category}</span>
