@@ -1122,29 +1122,85 @@ function PIQContent() {
                     </div>
                   )}
 
-                  {/* Subject Property Header */}
-                  <div className="mt-6 border border-gray-300 rounded-lg px-4 py-2 mb-4 bg-gray-50">
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
-                      <span className="text-[10px] font-bold bg-gray-800 text-white px-1.5 py-0.5 rounded">SUBJECT</span>
-                      <span className="font-semibold text-gray-900">84692 Pavone Way, Indio</span>
-                      <span className="text-gray-500">|</span>
-                      <span className="text-gray-700">4/2</span>
-                      <span className="text-gray-500">|</span>
-                      <span className="text-gray-700">2,472 sqft</span>
-                      <span className="text-gray-500">|</span>
-                      <span className="text-gray-700">7,405 lot</span>
-                      <span className="text-gray-500">|</span>
-                      <span className="text-gray-700">Pool</span>
-                      <span className="text-gray-500">|</span>
-                      <span className="text-gray-700">3 Car</span>
-                      <span className="text-gray-500">|</span>
-                      <span className="text-yellow-600 font-medium">Fixer</span>
-                      <span className="text-gray-500">|</span>
-                      <span className="text-gray-700">Golf Front</span>
-                      <span className="text-gray-500">|</span>
-                      <span className="text-gray-700">Desert Sands USD</span>
-                      <span className="text-gray-500">|</span>
-                      <span className="text-gray-700">Terra Lago</span>
+                  {/* Subject Property Info Bar */}
+                  <div className="mt-6 mb-4 grid grid-cols-4 gap-0 border border-gray-200 rounded-lg overflow-hidden bg-white">
+                    <div className="p-3 border-r border-gray-200">
+                      <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-1">Property Details</div>
+                      <div className="text-xs font-medium text-gray-900">Single Family / 4 Br / 2 Ba / 3 Gar</div>
+                      <div className="text-xs text-gray-600">/ 2008 / 2,472 ft² / 7,405 ft² /</div>
+                      <div className="text-xs text-gray-600">Pool: Yes - Heated</div>
+                    </div>
+                    <div className="p-3 border-r border-gray-200">
+                      <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-1">List Price</div>
+                      <div className="text-sm font-bold text-gray-900">$599,900</div>
+                      <div className="text-xs text-gray-600">Owned over 15 years, Trust owned</div>
+                    </div>
+                    <div className="p-3 border-r border-gray-200">
+                      <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-1">Market Info</div>
+                      <div className="text-xs font-medium text-green-600">28 Days / Active</div>
+                      <div className="text-xs text-gray-600">DOM: 28 / CDOM: 12</div>
+                      <div className="text-xs text-gray-600">Sale Type: Standard</div>
+                    </div>
+                    <div className="p-3">
+                      <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-1">Evaluation Metrics</div>
+                      <div className="text-xs text-gray-600">Asking VS ARV: <span className="text-red-600 font-medium">85.7%</span></div>
+                      <div className="text-xs text-gray-600">ARV: <span className="font-medium text-gray-900">$699,900</span></div>
+                      <div className="text-xs text-gray-600">Comp Data: <span className="font-medium">A2, P1, B0, C1</span></div>
+                    </div>
+                  </div>
+
+                  {/* Property Comparison Summary */}
+                  <div className="mb-4 grid grid-cols-3 gap-4">
+                    <div className="bg-white border border-gray-200 rounded-lg p-3">
+                      <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-2 font-medium">Property vs Comps</div>
+                      <div className="space-y-1.5 text-xs">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Lot Size:</span>
+                          <span className="font-medium text-green-600">Same as avg</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Lot Shape:</span>
+                          <span className="font-medium text-gray-900">Usable, rectangular</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Condition:</span>
+                          <span className="font-medium text-yellow-600">Fixer (below avg)</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-white border border-gray-200 rounded-lg p-3">
+                      <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-2 font-medium">Location Factors</div>
+                      <div className="space-y-1.5 text-xs">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-green-600">✓</span>
+                          <span className="text-gray-700">Interior street (not busy)</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-green-600">✓</span>
+                          <span className="text-gray-700">Golf course front</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-green-600">✓</span>
+                          <span className="text-gray-700">No power lines</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-white border border-gray-200 rounded-lg p-3">
+                      <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-2 font-medium">Influences</div>
+                      <div className="space-y-1.5 text-xs">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">School District:</span>
+                          <span className="font-medium text-gray-900">Desert Sands USD</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Tract:</span>
+                          <span className="font-medium text-gray-900">Terra Lago</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Community:</span>
+                          <span className="font-medium text-gray-900">Guard Gated</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
