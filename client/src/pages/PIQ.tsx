@@ -1540,7 +1540,21 @@ function PIQContent() {
                         <table className="w-full text-xs">
                           <thead>
                             <tr className="bg-gray-50 border-b border-gray-200">
-                              <th className="px-2 py-2 text-left font-medium text-gray-500 w-8"></th>
+                              <th className="px-2 py-2 text-left font-medium text-gray-500 w-8">
+                                <input 
+                                  type="checkbox" 
+                                  className="w-3.5 h-3.5 rounded border-gray-300"
+                                  checked={comps.length > 0 && comps.every(c => selectedListIds.has(c.id))}
+                                  onChange={() => {
+                                    if (comps.every(c => selectedListIds.has(c.id))) {
+                                      setSelectedListIds(new Set());
+                                    } else {
+                                      setSelectedListIds(new Set(comps.map(c => c.id)));
+                                    }
+                                  }}
+                                  data-testid="checkbox-all"
+                                />
+                              </th>
                               <th className="px-2 py-2 text-left font-medium text-gray-500 w-8">#</th>
                               <th className="px-2 py-2 text-left font-medium text-gray-500 w-16">Photo</th>
                               <th className="px-3 py-2 text-left font-medium text-gray-500">Address</th>
