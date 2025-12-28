@@ -1191,17 +1191,23 @@ function PIQContent() {
                           <span className="text-xs text-green-600">({keepComps.length} comps)</span>
                         </div>
                         <button
-                          onClick={moveSelectedToRemove}
+                          onClick={() => {
+                            // Only keep selected - move all unchecked to remove
+                            setComps(prev => prev.map(c => 
+                              c.keep && !selectedKeepIds.has(c.id) ? { ...c, keep: false } : c
+                            ));
+                            setSelectedKeepIds(new Set());
+                          }}
                           disabled={selectedKeepIds.size === 0}
                           className={cn(
                             "px-3 py-1.5 text-xs font-medium rounded-lg transition",
                             selectedKeepIds.size > 0
-                              ? "bg-red-100 text-red-700 hover:bg-red-200"
+                              ? "bg-green-600 text-white hover:bg-green-700"
                               : "bg-gray-100 text-gray-400 cursor-not-allowed"
                           )}
-                          data-testid="button-remove-selected"
+                          data-testid="button-only-keep-selected"
                         >
-                          Remove Selected
+                          Only Keep Selected
                         </button>
                       </div>
                       <div className="divide-y divide-gray-100">
@@ -1295,17 +1301,23 @@ function PIQContent() {
                           <span className="text-xs text-red-600">({removeComps.length} comps)</span>
                         </div>
                         <button
-                          onClick={moveSelectedToKeep}
+                          onClick={() => {
+                            // Only remove selected - move all unchecked back to keep
+                            setComps(prev => prev.map(c => 
+                              !c.keep && !selectedRemoveIds.has(c.id) ? { ...c, keep: true } : c
+                            ));
+                            setSelectedRemoveIds(new Set());
+                          }}
                           disabled={selectedRemoveIds.size === 0}
                           className={cn(
                             "px-3 py-1.5 text-xs font-medium rounded-lg transition",
                             selectedRemoveIds.size > 0
-                              ? "bg-green-100 text-green-700 hover:bg-green-200"
+                              ? "bg-red-600 text-white hover:bg-red-700"
                               : "bg-gray-100 text-gray-400 cursor-not-allowed"
                           )}
-                          data-testid="button-keep-selected"
+                          data-testid="button-only-remove-selected"
                         >
-                          Keep Selected
+                          Only Remove Selected
                         </button>
                       </div>
                       
