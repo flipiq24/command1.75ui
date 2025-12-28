@@ -714,8 +714,40 @@ function PIQContent() {
   const [comps, setComps] = useState<CompProperty[]>(initialComps);
   const [selectedKeepIds, setSelectedKeepIds] = useState<Set<string>>(new Set());
   const [selectedRemoveIds, setSelectedRemoveIds] = useState<Set<string>>(new Set());
+  const [selectedListIds, setSelectedListIds] = useState<Set<string>>(new Set());
 
   const keepComps = comps.filter(c => c.keep);
+  
+  const toggleListSelection = (compId: string) => {
+    setSelectedListIds(prev => {
+      const next = new Set(prev);
+      if (next.has(compId)) {
+        next.delete(compId);
+      } else {
+        next.add(compId);
+      }
+      return next;
+    });
+  };
+
+  const toggleBucketSelection = (bucket: CompBucket) => {
+    const bucketComps = comps.filter(c => c.bucket === bucket);
+    const allSelected = bucketComps.every(c => selectedListIds.has(c.id));
+    setSelectedListIds(prev => {
+      const next = new Set(prev);
+      if (allSelected) {
+        bucketComps.forEach(c => next.delete(c.id));
+      } else {
+        bucketComps.forEach(c => next.add(c.id));
+      }
+      return next;
+    });
+  };
+
+  const removeSelectedListComps = () => {
+    setComps(prev => prev.filter(c => !selectedListIds.has(c.id)));
+    setSelectedListIds(new Set());
+  };
   const removeComps = comps.filter(c => !c.keep);
 
   const handleCompClick = (comp: CompProperty, index: number) => {
@@ -1492,13 +1524,23 @@ function PIQContent() {
                     </div>
                   ) : (
                     <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                      {selectedListIds.size > 0 && (
+                        <div className="px-3 py-2 bg-gray-50 border-b border-gray-200">
+                          <button
+                            onClick={removeSelectedListComps}
+                            className="px-4 py-1.5 bg-red-500 hover:bg-red-600 text-white text-xs font-bold rounded-lg flex items-center gap-2"
+                            data-testid="button-remove-selected"
+                          >
+                            <span>Remove</span>
+                            <span className="bg-white/20 px-1.5 py-0.5 rounded text-[10px]">{selectedListIds.size}</span>
+                          </button>
+                        </div>
+                      )}
                       <div className="overflow-x-auto">
                         <table className="w-full text-xs">
                           <thead>
                             <tr className="bg-gray-50 border-b border-gray-200">
-                              <th className="px-2 py-2 text-left font-medium text-gray-500 w-8">
-                                <input type="checkbox" className="w-3.5 h-3.5 rounded border-gray-300" />
-                              </th>
+                              <th className="px-2 py-2 text-left font-medium text-gray-500 w-8"></th>
                               <th className="px-2 py-2 text-left font-medium text-gray-500 w-8">#</th>
                               <th className="px-2 py-2 text-left font-medium text-gray-500 w-16">Photo</th>
                               <th className="px-3 py-2 text-left font-medium text-gray-500">Address</th>
@@ -1519,10 +1561,17 @@ function PIQContent() {
                                 <tr className="bg-purple-50">
                                   <td colSpan={12} className="px-3 py-2">
                                     <div className="flex items-center gap-2 group relative">
+                                      <input 
+                                        type="checkbox" 
+                                        className="w-3.5 h-3.5 rounded border-gray-300 text-purple-600"
+                                        checked={comps.filter(c => c.bucket === 'Premium').every(c => selectedListIds.has(c.id))}
+                                        onChange={() => toggleBucketSelection('Premium')}
+                                        data-testid="checkbox-premium-section"
+                                      />
                                       <div className="w-1 h-4 bg-purple-600 rounded-full"></div>
                                       <span className="text-xs font-bold text-purple-800">PREMIUM</span>
                                       <span className="text-[10px] text-purple-600">({comps.filter(c => c.bucket === 'Premium').length})</span>
-                                      <div className="absolute left-0 top-full mt-1 z-50 hidden group-hover:block w-72 bg-gray-900 text-white text-[10px] rounded-lg p-3 shadow-xl">
+                                      <div className="absolute left-8 top-full mt-1 z-50 hidden group-hover:block w-72 bg-gray-900 text-white text-[10px] rounded-lg p-3 shadow-xl">
                                         <div className="font-bold mb-1">Premium Comps</div>
                                         <div>These properties have unchangeable premium features: ADU/guest houses (Bacino Court), oversized lots 8,700-12,600 sqft with premium pools, and high-end staging. Subject cannot match these features.</div>
                                       </div>
@@ -1537,7 +1586,13 @@ function PIQContent() {
                                     data-testid={`list-row-${comp.id}`}
                                   >
                                     <td className="px-2 py-2">
-                                      <input type="checkbox" className="w-3.5 h-3.5 rounded border-gray-300" onClick={(e) => e.stopPropagation()} />
+                                      <input 
+                                        type="checkbox" 
+                                        className="w-3.5 h-3.5 rounded border-gray-300" 
+                                        checked={selectedListIds.has(comp.id)}
+                                        onChange={() => toggleListSelection(comp.id)}
+                                        onClick={(e) => e.stopPropagation()} 
+                                      />
                                     </td>
                                     <td className="px-2 py-2 text-gray-500">{idx + 1}</td>
                                     <td className="px-2 py-2">
@@ -1574,6 +1629,13 @@ function PIQContent() {
                                 <tr className="bg-green-50">
                                   <td colSpan={12} className="px-3 py-2">
                                     <div className="flex items-center gap-2">
+                                      <input 
+                                        type="checkbox" 
+                                        className="w-3.5 h-3.5 rounded border-gray-300 text-green-600"
+                                        checked={comps.filter(c => c.bucket === 'High').every(c => selectedListIds.has(c.id))}
+                                        onChange={() => toggleBucketSelection('High')}
+                                        data-testid="checkbox-high-section"
+                                      />
                                       <div className="w-1 h-4 bg-green-600 rounded-full"></div>
                                       <span className="text-xs font-bold text-green-800">HIGH</span>
                                       <span className="text-[10px] text-green-600">({comps.filter(c => c.bucket === 'High').length})</span>
@@ -1588,7 +1650,13 @@ function PIQContent() {
                                       data-testid={`list-row-${comp.id}`}
                                     >
                                       <td className="px-2 py-2">
-                                        <input type="checkbox" className="w-3.5 h-3.5 rounded border-gray-300" onClick={(e) => e.stopPropagation()} />
+                                        <input 
+                                          type="checkbox" 
+                                          className="w-3.5 h-3.5 rounded border-gray-300" 
+                                          checked={selectedListIds.has(comp.id)}
+                                          onChange={() => toggleListSelection(comp.id)}
+                                          onClick={(e) => e.stopPropagation()} 
+                                        />
                                       </td>
                                       <td className="px-2 py-2 text-gray-500">{idx + 1}</td>
                                       <td className="px-2 py-2">
@@ -1640,6 +1708,13 @@ function PIQContent() {
                                 <tr className="bg-yellow-50">
                                   <td colSpan={12} className="px-3 py-2">
                                     <div className="flex items-center gap-2">
+                                      <input 
+                                        type="checkbox" 
+                                        className="w-3.5 h-3.5 rounded border-gray-300 text-yellow-600"
+                                        checked={comps.filter(c => c.bucket === 'Mid').every(c => selectedListIds.has(c.id))}
+                                        onChange={() => toggleBucketSelection('Mid')}
+                                        data-testid="checkbox-mid-section"
+                                      />
                                       <div className="w-1 h-4 bg-yellow-500 rounded-full"></div>
                                       <span className="text-xs font-bold text-yellow-800">MID</span>
                                       <span className="text-[10px] text-yellow-600">({comps.filter(c => c.bucket === 'Mid').length})</span>
@@ -1654,7 +1729,13 @@ function PIQContent() {
                                     data-testid={`list-row-${comp.id}`}
                                   >
                                     <td className="px-2 py-2">
-                                      <input type="checkbox" className="w-3.5 h-3.5 rounded border-gray-300" onClick={(e) => e.stopPropagation()} />
+                                      <input 
+                                        type="checkbox" 
+                                        className="w-3.5 h-3.5 rounded border-gray-300" 
+                                        checked={selectedListIds.has(comp.id)}
+                                        onChange={() => toggleListSelection(comp.id)}
+                                        onClick={(e) => e.stopPropagation()} 
+                                      />
                                     </td>
                                     <td className="px-2 py-2 text-gray-500">{idx + 1}</td>
                                     <td className="px-2 py-2">
@@ -1691,6 +1772,13 @@ function PIQContent() {
                                 <tr className="bg-red-50">
                                   <td colSpan={12} className="px-3 py-2">
                                     <div className="flex items-center gap-2">
+                                      <input 
+                                        type="checkbox" 
+                                        className="w-3.5 h-3.5 rounded border-gray-300 text-red-600"
+                                        checked={comps.filter(c => c.bucket === 'Low').every(c => selectedListIds.has(c.id))}
+                                        onChange={() => toggleBucketSelection('Low')}
+                                        data-testid="checkbox-low-section"
+                                      />
                                       <div className="w-1 h-4 bg-red-500 rounded-full"></div>
                                       <span className="text-xs font-bold text-red-800">LOW</span>
                                       <span className="text-[10px] text-red-600">({comps.filter(c => c.bucket === 'Low').length})</span>
@@ -1705,7 +1793,13 @@ function PIQContent() {
                                     data-testid={`list-row-${comp.id}`}
                                   >
                                     <td className="px-2 py-2">
-                                      <input type="checkbox" className="w-3.5 h-3.5 rounded border-gray-300" onClick={(e) => e.stopPropagation()} />
+                                      <input 
+                                        type="checkbox" 
+                                        className="w-3.5 h-3.5 rounded border-gray-300" 
+                                        checked={selectedListIds.has(comp.id)}
+                                        onChange={() => toggleListSelection(comp.id)}
+                                        onClick={(e) => e.stopPropagation()} 
+                                      />
                                     </td>
                                     <td className="px-2 py-2 text-gray-500">{idx + 1}</td>
                                     <td className="px-2 py-2">
