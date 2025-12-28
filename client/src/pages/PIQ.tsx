@@ -1500,73 +1500,237 @@ function PIQContent() {
                               <th className="px-2 py-2 text-left font-medium text-gray-500 w-8">#</th>
                               <th className="px-2 py-2 text-left font-medium text-gray-500 w-16">Photo</th>
                               <th className="px-3 py-2 text-left font-medium text-gray-500">Address</th>
-                              <th className="px-3 py-2 text-left font-medium text-gray-500">Status</th>
-                              <th className="px-3 py-2 text-left font-medium text-gray-500">Type</th>
-                              <th className="px-3 py-2 text-right font-medium text-gray-500">List Price</th>
+                              <th className="px-3 py-2 text-left font-medium text-gray-500">Condition</th>
                               <th className="px-3 py-2 text-right font-medium text-gray-500">Sale Price</th>
                               <th className="px-2 py-2 text-center font-medium text-gray-500">Bed/Bath</th>
-                              <th className="px-2 py-2 text-center font-medium text-gray-500">Year Built</th>
                               <th className="px-2 py-2 text-right font-medium text-gray-500">SQFT</th>
                               <th className="px-2 py-2 text-right font-medium text-gray-500">LOT</th>
                               <th className="px-2 py-2 text-center font-medium text-gray-500">Garage</th>
-                              <th className="px-2 py-2 text-center font-medium text-gray-500">DOM/CDOM</th>
                               <th className="px-2 py-2 text-left font-medium text-gray-500">Pool</th>
                               <th className="px-2 py-2 text-right font-medium text-gray-500">Distance</th>
                             </tr>
                           </thead>
-                          <tbody className="divide-y divide-gray-100">
-                            {comps.map((comp, idx) => (
-                              <tr 
-                                key={comp.id}
-                                className="hover:bg-gray-50 cursor-pointer transition"
-                                onClick={() => handleCompClick(comp, idx)}
-                                data-testid={`list-row-${comp.id}`}
-                              >
-                                <td className="px-2 py-2">
-                                  <input 
-                                    type="checkbox" 
-                                    className="w-3.5 h-3.5 rounded border-gray-300"
-                                    onClick={(e) => e.stopPropagation()}
-                                  />
-                                </td>
-                                <td className="px-2 py-2 text-gray-500">{idx + 1}</td>
-                                <td className="px-2 py-2">
-                                  <div className="w-16 h-12 bg-gray-200 rounded overflow-hidden">
-                                    <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-gray-500 text-[10px]">
-                                      Photo
+                          <tbody>
+                            {/* Premium Bucket */}
+                            {comps.filter(c => c.bucket === 'Premium').length > 0 && (
+                              <>
+                                <tr className="bg-purple-50">
+                                  <td colSpan={12} className="px-3 py-2">
+                                    <div className="flex items-center gap-2 group relative">
+                                      <div className="w-1 h-4 bg-purple-600 rounded-full"></div>
+                                      <span className="text-xs font-bold text-purple-800">PREMIUM</span>
+                                      <span className="text-[10px] text-purple-600">({comps.filter(c => c.bucket === 'Premium').length})</span>
+                                      <div className="absolute left-0 top-full mt-1 z-50 hidden group-hover:block w-72 bg-gray-900 text-white text-[10px] rounded-lg p-3 shadow-xl">
+                                        <div className="font-bold mb-1">Premium Comps</div>
+                                        <div>These properties have unchangeable premium features like ADU/guest house, oversized lots with pool, or high-end staging that set them apart from typical market comps.</div>
+                                      </div>
                                     </div>
-                                  </div>
-                                </td>
-                                <td className="px-3 py-2">
-                                  <div className="font-medium text-gray-900">{comp.address}</div>
-                                </td>
-                                <td className="px-3 py-2">
-                                  <span className={cn(
-                                    "px-2 py-0.5 text-[10px] font-medium rounded",
-                                    comp.listingStatus === 'Closed' ? "bg-red-100 text-red-700" :
-                                    comp.listingStatus === 'Pending' ? "bg-yellow-100 text-yellow-700" :
-                                    comp.listingStatus === 'Active' ? "bg-blue-100 text-blue-700" :
-                                    "bg-gray-100 text-gray-700"
-                                  )}>
-                                    {comp.listingStatus}
-                                  </span>
-                                  <div className="text-[10px] text-gray-400 mt-0.5">{comp.closingDate}</div>
-                                </td>
-                                <td className="px-3 py-2 text-gray-600">{comp.type}</td>
-                                <td className="px-3 py-2 text-right font-medium text-gray-900">${comp.price.toLocaleString()}</td>
-                                <td className="px-3 py-2 text-right font-medium text-gray-900">
-                                  {comp.listingStatus === 'Closed' ? `$${comp.price.toLocaleString()}` : '$—'}
-                                </td>
-                                <td className="px-2 py-2 text-center text-gray-600">{comp.bedBath}</td>
-                                <td className="px-2 py-2 text-center text-gray-600">{comp.yearBuilt}</td>
-                                <td className="px-2 py-2 text-right text-gray-600">{comp.size.toLocaleString()}</td>
-                                <td className="px-2 py-2 text-right text-gray-600">{comp.lotSize.toLocaleString()}</td>
-                                <td className="px-2 py-2 text-center text-gray-600">{comp.garage}</td>
-                                <td className="px-2 py-2 text-center text-gray-600">{comp.domCdom}</td>
-                                <td className="px-2 py-2 text-gray-600 max-w-[100px] truncate" title={comp.pool}>{comp.pool}</td>
-                                <td className="px-2 py-2 text-right text-gray-600">{comp.distance}</td>
-                              </tr>
-                            ))}
+                                  </td>
+                                </tr>
+                                {comps.filter(c => c.bucket === 'Premium').map((comp, idx) => (
+                                  <tr 
+                                    key={comp.id}
+                                    className="hover:bg-purple-50/50 cursor-pointer transition border-l-2 border-purple-400"
+                                    onClick={() => handleCompClick(comp, comps.findIndex(c => c.id === comp.id))}
+                                    data-testid={`list-row-${comp.id}`}
+                                  >
+                                    <td className="px-2 py-2">
+                                      <input type="checkbox" className="w-3.5 h-3.5 rounded border-gray-300" onClick={(e) => e.stopPropagation()} />
+                                    </td>
+                                    <td className="px-2 py-2 text-gray-500">{idx + 1}</td>
+                                    <td className="px-2 py-2">
+                                      <div className="w-16 h-12 bg-gray-200 rounded overflow-hidden">
+                                        <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-gray-500 text-[10px]">Photo</div>
+                                      </div>
+                                    </td>
+                                    <td className="px-3 py-2"><div className="font-medium text-gray-900">{comp.address}</div></td>
+                                    <td className="px-3 py-2">
+                                      <div className="flex flex-col gap-1">
+                                        <span className="px-2 py-0.5 text-[10px] font-medium rounded bg-purple-100 text-purple-700 w-fit">{comp.condition}</span>
+                                        <div className="flex flex-wrap gap-1">
+                                          {comp.influences.map((inf, i) => (
+                                            <span key={i} className={cn("px-1.5 py-0.5 text-[9px] font-medium rounded cursor-help", inf.type === 'positive' ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700")} title={inf.note}>{inf.category}</span>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    </td>
+                                    <td className="px-3 py-2 text-right font-medium text-gray-900">${comp.price.toLocaleString()}</td>
+                                    <td className="px-2 py-2 text-center text-gray-600">{comp.bedBath}</td>
+                                    <td className="px-2 py-2 text-right text-gray-600">{comp.size.toLocaleString()}</td>
+                                    <td className="px-2 py-2 text-right text-gray-600">{comp.lotSize.toLocaleString()}</td>
+                                    <td className="px-2 py-2 text-center text-gray-600">{comp.garage}</td>
+                                    <td className="px-2 py-2 text-gray-600 max-w-[100px] truncate" title={comp.pool}>{comp.pool}</td>
+                                    <td className="px-2 py-2 text-right text-gray-600">{comp.distance}</td>
+                                  </tr>
+                                ))}
+                                {/* Value Ceiling Line */}
+                                <tr>
+                                  <td colSpan={12} className="px-0 py-0">
+                                    <div className="relative group cursor-help">
+                                      <div className="border-t-2 border-dashed border-red-500 my-1"></div>
+                                      <div className="absolute left-1/2 -translate-x-1/2 -top-2 px-2 py-0.5 bg-red-500 text-white text-[9px] font-bold rounded">VALUE CEILING</div>
+                                      <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1 z-50 hidden group-hover:block w-80 bg-gray-900 text-white text-[10px] rounded-lg p-3 shadow-xl">
+                                        <div className="font-bold mb-1">Value Ceiling Explanation</div>
+                                        <div>Comps above this line have unchangeable premium features (ADU, oversized lot + pool, high-end staging) that do not match the subject property. The subject's maximum achievable value is set by the High bucket comps below.</div>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </>
+                            )}
+
+                            {/* High Bucket */}
+                            {comps.filter(c => c.bucket === 'High').length > 0 && (
+                              <>
+                                <tr className="bg-green-50">
+                                  <td colSpan={12} className="px-3 py-2">
+                                    <div className="flex items-center gap-2">
+                                      <div className="w-1 h-4 bg-green-600 rounded-full"></div>
+                                      <span className="text-xs font-bold text-green-800">HIGH</span>
+                                      <span className="text-[10px] text-green-600">({comps.filter(c => c.bucket === 'High').length})</span>
+                                    </div>
+                                  </td>
+                                </tr>
+                                {comps.filter(c => c.bucket === 'High').map((comp, idx) => (
+                                  <tr 
+                                    key={comp.id}
+                                    className="hover:bg-green-50/50 cursor-pointer transition border-l-2 border-green-400"
+                                    onClick={() => handleCompClick(comp, comps.findIndex(c => c.id === comp.id))}
+                                    data-testid={`list-row-${comp.id}`}
+                                  >
+                                    <td className="px-2 py-2">
+                                      <input type="checkbox" className="w-3.5 h-3.5 rounded border-gray-300" onClick={(e) => e.stopPropagation()} />
+                                    </td>
+                                    <td className="px-2 py-2 text-gray-500">{idx + 1}</td>
+                                    <td className="px-2 py-2">
+                                      <div className="w-16 h-12 bg-gray-200 rounded overflow-hidden">
+                                        <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-gray-500 text-[10px]">Photo</div>
+                                      </div>
+                                    </td>
+                                    <td className="px-3 py-2"><div className="font-medium text-gray-900">{comp.address}</div></td>
+                                    <td className="px-3 py-2">
+                                      <div className="flex flex-col gap-1">
+                                        <span className="px-2 py-0.5 text-[10px] font-medium rounded bg-green-100 text-green-700 w-fit">{comp.condition}</span>
+                                        <div className="flex flex-wrap gap-1">
+                                          {comp.influences.map((inf, i) => (
+                                            <span key={i} className={cn("px-1.5 py-0.5 text-[9px] font-medium rounded cursor-help", inf.type === 'positive' ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700")} title={inf.note}>{inf.category}</span>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    </td>
+                                    <td className="px-3 py-2 text-right font-medium text-gray-900">${comp.price.toLocaleString()}</td>
+                                    <td className="px-2 py-2 text-center text-gray-600">{comp.bedBath}</td>
+                                    <td className="px-2 py-2 text-right text-gray-600">{comp.size.toLocaleString()}</td>
+                                    <td className="px-2 py-2 text-right text-gray-600">{comp.lotSize.toLocaleString()}</td>
+                                    <td className="px-2 py-2 text-center text-gray-600">{comp.garage}</td>
+                                    <td className="px-2 py-2 text-gray-600 max-w-[100px] truncate" title={comp.pool}>{comp.pool}</td>
+                                    <td className="px-2 py-2 text-right text-gray-600">{comp.distance}</td>
+                                  </tr>
+                                ))}
+                              </>
+                            )}
+
+                            {/* Mid Bucket */}
+                            {comps.filter(c => c.bucket === 'Mid').length > 0 && (
+                              <>
+                                <tr className="bg-yellow-50">
+                                  <td colSpan={12} className="px-3 py-2">
+                                    <div className="flex items-center gap-2">
+                                      <div className="w-1 h-4 bg-yellow-500 rounded-full"></div>
+                                      <span className="text-xs font-bold text-yellow-800">MID</span>
+                                      <span className="text-[10px] text-yellow-600">({comps.filter(c => c.bucket === 'Mid').length})</span>
+                                    </div>
+                                  </td>
+                                </tr>
+                                {comps.filter(c => c.bucket === 'Mid').map((comp, idx) => (
+                                  <tr 
+                                    key={comp.id}
+                                    className="hover:bg-yellow-50/50 cursor-pointer transition border-l-2 border-yellow-400"
+                                    onClick={() => handleCompClick(comp, comps.findIndex(c => c.id === comp.id))}
+                                    data-testid={`list-row-${comp.id}`}
+                                  >
+                                    <td className="px-2 py-2">
+                                      <input type="checkbox" className="w-3.5 h-3.5 rounded border-gray-300" onClick={(e) => e.stopPropagation()} />
+                                    </td>
+                                    <td className="px-2 py-2 text-gray-500">{idx + 1}</td>
+                                    <td className="px-2 py-2">
+                                      <div className="w-16 h-12 bg-gray-200 rounded overflow-hidden">
+                                        <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-gray-500 text-[10px]">Photo</div>
+                                      </div>
+                                    </td>
+                                    <td className="px-3 py-2"><div className="font-medium text-gray-900">{comp.address}</div></td>
+                                    <td className="px-3 py-2">
+                                      <div className="flex flex-col gap-1">
+                                        <span className="px-2 py-0.5 text-[10px] font-medium rounded bg-yellow-100 text-yellow-700 w-fit">{comp.condition}</span>
+                                        <div className="flex flex-wrap gap-1">
+                                          {comp.influences.map((inf, i) => (
+                                            <span key={i} className={cn("px-1.5 py-0.5 text-[9px] font-medium rounded cursor-help", inf.type === 'positive' ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700")} title={inf.note}>{inf.category}</span>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    </td>
+                                    <td className="px-3 py-2 text-right font-medium text-gray-900">${comp.price.toLocaleString()}</td>
+                                    <td className="px-2 py-2 text-center text-gray-600">{comp.bedBath}</td>
+                                    <td className="px-2 py-2 text-right text-gray-600">{comp.size.toLocaleString()}</td>
+                                    <td className="px-2 py-2 text-right text-gray-600">{comp.lotSize.toLocaleString()}</td>
+                                    <td className="px-2 py-2 text-center text-gray-600">{comp.garage}</td>
+                                    <td className="px-2 py-2 text-gray-600 max-w-[100px] truncate" title={comp.pool}>{comp.pool}</td>
+                                    <td className="px-2 py-2 text-right text-gray-600">{comp.distance}</td>
+                                  </tr>
+                                ))}
+                              </>
+                            )}
+
+                            {/* Low Bucket */}
+                            {comps.filter(c => c.bucket === 'Low').length > 0 && (
+                              <>
+                                <tr className="bg-red-50">
+                                  <td colSpan={12} className="px-3 py-2">
+                                    <div className="flex items-center gap-2">
+                                      <div className="w-1 h-4 bg-red-500 rounded-full"></div>
+                                      <span className="text-xs font-bold text-red-800">LOW</span>
+                                      <span className="text-[10px] text-red-600">({comps.filter(c => c.bucket === 'Low').length})</span>
+                                    </div>
+                                  </td>
+                                </tr>
+                                {comps.filter(c => c.bucket === 'Low').map((comp, idx) => (
+                                  <tr 
+                                    key={comp.id}
+                                    className="hover:bg-red-50/50 cursor-pointer transition border-l-2 border-red-400"
+                                    onClick={() => handleCompClick(comp, comps.findIndex(c => c.id === comp.id))}
+                                    data-testid={`list-row-${comp.id}`}
+                                  >
+                                    <td className="px-2 py-2">
+                                      <input type="checkbox" className="w-3.5 h-3.5 rounded border-gray-300" onClick={(e) => e.stopPropagation()} />
+                                    </td>
+                                    <td className="px-2 py-2 text-gray-500">{idx + 1}</td>
+                                    <td className="px-2 py-2">
+                                      <div className="w-16 h-12 bg-gray-200 rounded overflow-hidden">
+                                        <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-gray-500 text-[10px]">Photo</div>
+                                      </div>
+                                    </td>
+                                    <td className="px-3 py-2"><div className="font-medium text-gray-900">{comp.address}</div></td>
+                                    <td className="px-3 py-2">
+                                      <div className="flex flex-col gap-1">
+                                        <span className="px-2 py-0.5 text-[10px] font-medium rounded bg-red-100 text-red-700 w-fit">{comp.condition}</span>
+                                        <div className="flex flex-wrap gap-1">
+                                          {comp.influences.map((inf, i) => (
+                                            <span key={i} className={cn("px-1.5 py-0.5 text-[9px] font-medium rounded cursor-help", inf.type === 'positive' ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700")} title={inf.note}>{inf.category}</span>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    </td>
+                                    <td className="px-3 py-2 text-right font-medium text-gray-900">${comp.price.toLocaleString()}</td>
+                                    <td className="px-2 py-2 text-center text-gray-600">{comp.bedBath}</td>
+                                    <td className="px-2 py-2 text-right text-gray-600">{comp.size.toLocaleString()}</td>
+                                    <td className="px-2 py-2 text-right text-gray-600">{comp.lotSize.toLocaleString()}</td>
+                                    <td className="px-2 py-2 text-center text-gray-600">{comp.garage}</td>
+                                    <td className="px-2 py-2 text-gray-600 max-w-[100px] truncate" title={comp.pool}>{comp.pool}</td>
+                                    <td className="px-2 py-2 text-right text-gray-600">{comp.distance}</td>
+                                  </tr>
+                                ))}
+                              </>
+                            )}
                           </tbody>
                         </table>
                       </div>
