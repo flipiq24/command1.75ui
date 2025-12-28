@@ -144,8 +144,8 @@ const initialComps: CompProperty[] = [
     whyRemove: [],
     condition: 'High Flip & Staged',
     influences: [
+      { category: 'Lot', type: 'positive', note: 'Oversized 8,712 sqft lot - larger than subject.' },
       { category: 'Pool', type: 'positive', note: 'Salt water pool with upgraded finishes.' },
-      { category: 'Lot', type: 'positive', note: 'Large 8,712 sqft lot in premium location.' },
       { category: 'Design', type: 'positive', note: 'High-end staging and modern finishes.' }
     ],
     bucket: 'Premium'
@@ -249,13 +249,13 @@ const initialComps: CompProperty[] = [
     keep: true,
     whyKeep: ['Close distance', 'Pool match', 'Similar sqft'],
     whyRemove: ['3BR vs 4BR'],
-    condition: 'Standard High',
+    condition: 'High Flip & Staged',
     influences: [
+      { category: 'Guest/AUD', type: 'positive', note: 'Detached ADU adds significant value.' },
       { category: 'Pool', type: 'positive', note: 'Heated in-ground pool.' },
-      { category: 'Bed/Bath', type: 'negative', note: '3BR vs subject 4BR.' },
-      { category: 'Lot', type: 'negative', note: 'Smaller lot at 3,920 sqft.' }
+      { category: 'Bed/Bath', type: 'negative', note: '3BR vs subject 4BR.' }
     ],
-    bucket: 'High'
+    bucket: 'Premium'
   },
   {
     id: '5',
@@ -1522,7 +1522,7 @@ function PIQContent() {
                                       <span className="text-[10px] text-purple-600">({comps.filter(c => c.bucket === 'Premium').length})</span>
                                       <div className="absolute left-0 top-full mt-1 z-50 hidden group-hover:block w-72 bg-gray-900 text-white text-[10px] rounded-lg p-3 shadow-xl">
                                         <div className="font-bold mb-1">Premium Comps</div>
-                                        <div>These properties have unchangeable premium features like ADU/guest house, oversized lots with pool, or high-end staging that set them apart from typical market comps.</div>
+                                        <div>These properties have unchangeable premium features: ADU/guest houses (Bacino Court), oversized lots 8,700-12,600 sqft with premium pools, and high-end staging. Subject cannot match these features.</div>
                                       </div>
                                     </div>
                                   </td>
@@ -1571,7 +1571,7 @@ function PIQContent() {
                                       <div className="absolute left-1/2 -translate-x-1/2 -top-2 px-2 py-0.5 bg-red-500 text-white text-[9px] font-bold rounded">VALUE CEILING</div>
                                       <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1 z-50 hidden group-hover:block w-80 bg-gray-900 text-white text-[10px] rounded-lg p-3 shadow-xl">
                                         <div className="font-bold mb-1">Value Ceiling Explanation</div>
-                                        <div>Comps above this line have unchangeable premium features (ADU, oversized lot + pool, high-end staging) that do not match the subject property. The subject's maximum achievable value is set by the High bucket comps below.</div>
+                                        <div>Premium comps above have ADUs (Bacino Court) and larger lots (8,700-12,600 sqft) that subject cannot replicate. Subject's max achievable value is set by High bucket comps below.</div>
                                       </div>
                                     </div>
                                   </td>
