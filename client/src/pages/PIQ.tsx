@@ -1122,8 +1122,68 @@ function PIQContent() {
                     </div>
                   )}
 
+                  {/* Subject Property Header */}
+                  <div className="mt-6 bg-gray-900 text-white rounded-xl p-4 mb-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-xs font-bold bg-white text-gray-900 px-2 py-0.5 rounded">SUBJECT</span>
+                      <span className="text-sm font-bold">84692 Pavone Way, Indio, CA 92203</span>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-2 text-sm">
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-400">Bed/Bath:</span>
+                        <span className="font-medium">4/2</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-400">SqFt:</span>
+                        <span className="font-medium">2,472</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-400">Lot:</span>
+                        <span className="font-medium">7,405 sqft</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-400">Pool:</span>
+                        <span className="font-medium">Yes - Heated</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-400">Garage:</span>
+                        <span className="font-medium">3 Car</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-400">Year Built:</span>
+                        <span className="font-medium">2008</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-400">Condition:</span>
+                        <span className="font-medium text-yellow-400">Fixer</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-400">Location:</span>
+                        <span className="font-medium">Golf Course Front</span>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-2 text-sm mt-2 pt-2 border-t border-gray-700">
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-400">School District:</span>
+                        <span className="font-medium">Desert Sands USD</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-400">Tract:</span>
+                        <span className="font-medium">Terra Lago</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-400">Street:</span>
+                        <span className="font-medium">Interior (Not Busy)</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-400">List:</span>
+                        <span className="font-medium text-green-400">$599,900</span>
+                      </div>
+                    </div>
+                  </div>
+
                   {/* Keep/Remove Two-Column Table */}
-                  <div className="mt-6 grid grid-cols-2 gap-6">
+                  <div className="grid grid-cols-2 gap-6">
                     {/* KEEP Column */}
                     <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
                       <div className="bg-green-50 border-b border-green-200 px-4 py-3 flex items-center justify-between">
