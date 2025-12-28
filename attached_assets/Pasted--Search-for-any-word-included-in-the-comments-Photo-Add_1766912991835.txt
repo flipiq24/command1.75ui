@@ -1,0 +1,96 @@
+
+Search for any word included in the comments
+	#	Photo	
+Address
+Status
+Type
+List Price
+Sale Price
+Bed/Bath
+Year Built
+SQFT
+LOT
+Garage
+DOM/CDOM
+Pool
+Distance
+	1	84426 Ponte Court	
+84426 Ponte Court
+Closed
+3/21/2025
+Single Family	$1,224,900	$1,195,000	4/3	2009	2,317	8,712	2	41/-	In Ground, Salt Water	0.32
+	2	42871 Beato Drive	
+42871 Beato Drive
+Closed
+10/8/2025
+Single Family	$1,124,000	$1,060,000	4/2.5	2006	2,338	5,663	2	180/-	Association, In Ground, Heated, Community	0.37
+	3	42745 Ponte Court	
+42745 Ponte Court
+Closed
+5/1/2025
+Single Family	$1,100,000	$1,050,000	5/3.5	2005	2,627	12,632	2	87/-	Pebble, In Ground, Private	0.35
+	4	43173 Bacino Court	
+43173 Bacino Court
+Closed
+11/19/2025
+Single Family	$1,099,900	$1,015,000	3/2.5	2005	2,274	3,920	2	74/-	In Ground, Electric Heat	0.28
+	5	42776 Del Lago Court	
+42776 Del Lago Court
+Closed
+12/17/2025
+Single Family	$1,050,000	$915,000	5/3	2005	2,431	7,405	2	142/-	Gunite, Fenced, Private	0.22
+	6	43118 Fiore Street	
+43118 Fiore Street
+Closed
+7/23/2025
+Single Family	$885,000	$800,000	5/2.5	2008	2,697	7,841	3	26/-	Private, Gas Heat, In Ground	0.40
+	7	43955 Campo Place	
+43955 Campo Place
+Closed
+7/23/2025
+Single Family	$885,000	$800,000	6/2.5	2005	2,697	8,276	2	26/-	Private, Gas Heat, In Ground	0.47
+	8	43703 Campo Place	
+43703 Campo Place
+Closed
+4/30/2025
+Single Family	$785,000	$785,000	5/2.5	2005	2,697	7,841	2	12/-	Private, Heated, In Ground	0.38
+	9	43451 Sentiero Drive	
+43451 Sentiero Drive
+Closed
+5/30/2025
+Single Family	$749,000	$750,000	3/3	2005	2,595	9,148	3	9/-	Private, In Ground, Waterfall	0.22
+	10	84637 Pavone Way	
+84637 Pavone Way
+Closed
+3/21/2025
+Single Family	$699,900	$699,900	4/3	2008	2,371	6,098	3	38/-	In Ground, Salt Water	0.06
+	11	43128 Sentiero Drive	
+43128 Sentiero Drive
+Closed
+8/22/2025
+Single Family	$699,800	$655,000	4/3	2005	2,595	8,276	3	87/-	In Ground, Electric Heat	0.08
+	12	84317 Falco Court	
+84317 Falco Court
+Closed
+12/19/2025
+Single Family	$610,000	$610,000	4/3	2013	2,284	9,148	2	10/-	Unknown	0.55
+	13	83898 Carolina Court	
+83898 Carolina Court
+Closed
+10/8/2025
+Single Family	$569,500	$565,000	4/3	2003	2,529	7,405	3	74/-	None	0.80
+	14	42269 Whisper Rock Street	
+42269 Whisper Rock Street
+Closed
+11/14/2025
+Single Family	$565,000	$550,000	3/2.5	2005	2,072	7,405	3	37/-	Unknown	0.88
+	15	84186 Canzone Drive	
+84186 Canzone Drive
+Closed
+11/3/2025
+Single Family	$550,000	$525,000	4/2.5	2006	2,338	5,227	2	103/-	In Ground, Community	0.53
+	16	42730 Del Lago Court	
+42730 Del Lago Court
+Closed
+4/2/2025
+Single Family	$520,000	$520,000	4/3	2005	2,249	7,405	2	78/-	In Ground, Community	0.23

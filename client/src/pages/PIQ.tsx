@@ -1207,6 +1207,8 @@ function PIQContent() {
                     </div>
                   )}
 
+                  {compsMapView !== 'list' && (
+                  <>
                   {/* Variable Analysis - 3 Columns */}
                   <div className="mt-6 mb-4 grid grid-cols-3 gap-4">
                     {/* PROPERTY (Structure / Use) */}
@@ -1483,6 +1485,8 @@ function PIQContent() {
                       </div>
                     </div>
                   </div>
+                  </>
+                  )}
                 </div>
               )}
 
