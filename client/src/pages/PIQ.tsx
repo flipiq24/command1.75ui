@@ -1840,37 +1840,6 @@ function PIQContent() {
               </div>
 
               <div className="p-6">
-                {/* Map Preview */}
-                <div className="relative w-full h-48 bg-gray-200 rounded-xl overflow-hidden border border-gray-300 mb-6">
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-100 via-blue-50 to-green-50">
-                    <div className="absolute inset-0 opacity-30" style={{
-                      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%23e8f4f8' width='400' height='400'/%3E%3Cpath d='M0 200 Q100 150 200 200 T400 200' stroke='%23a0c4d0' fill='none' stroke-width='2'/%3E%3Cpath d='M0 300 Q150 250 300 300 T400 280' stroke='%23b0d4e0' fill='none' stroke-width='1.5'/%3E%3C/svg%3E")`,
-                      backgroundSize: 'cover'
-                    }}></div>
-                    <div className="absolute top-1/4 left-1/4">
-                      <div className="bg-green-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg">$499K</div>
-                    </div>
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                      <div className={cn(
-                        "text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg border-2 border-white",
-                        selectedComp.color === 'green' ? "bg-green-600" : selectedComp.color === 'red' ? "bg-red-500" : "bg-blue-600"
-                      )}>
-                        ${(selectedComp.price / 1000).toFixed(0)}K
-                      </div>
-                    </div>
-                    <div className="absolute bottom-1/3 right-1/4">
-                      <div className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg">$800K</div>
-                    </div>
-                    <div className="absolute top-2/3 left-1/3">
-                      <div className="w-6 h-6 bg-gray-800 rounded-full flex items-center justify-center text-white text-[10px] font-bold shadow-lg">S</div>
-                    </div>
-                  </div>
-                  <div className="absolute bottom-2 left-2 text-[10px] text-gray-500">Google</div>
-                  <div className="absolute bottom-2 right-2 flex gap-1">
-                    <button className="w-6 h-6 bg-white rounded shadow flex items-center justify-center text-gray-600 text-xs">+</button>
-                    <button className="w-6 h-6 bg-white rounded shadow flex items-center justify-center text-gray-600 text-xs">−</button>
-                  </div>
-                </div>
 
                 {/* WHY KEEPING / WHY REMOVING Section */}
                 {selectedComp.keep ? (
