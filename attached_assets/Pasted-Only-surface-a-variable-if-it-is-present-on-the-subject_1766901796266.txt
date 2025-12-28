@@ -1,0 +1,54 @@
+Only surface a variable if it is present on the subject OR meaningfully different across comps.
+If the condition does not exist, do not mention it.
+No “FYI”, no empty checks, no neutral statements.
+
+Silence is the correct output when something is irrelevant.
+
+COLUMN 1: PROPERTY (STRUCTURE / USE)
+Variable	When to Show	Explanation (Only When Shown)
+Stories / Layout	Subject or comps differ	Single-story vs two-story homes appeal to different buyer pools even at similar sqft.
+Architectural Style	Style differs meaningfully within tract	Certain styles carry premiums or discounts within the same micro-market.
+Garage Type & Capacity	Mismatch exists	Attached vs detached garage or car count differences affect usability and buyer appeal.
+Parking Capacity	Subject or comps have atypical parking	Additional parking can materially impact desirability in dense or family neighborhoods.
+ADU / Guest House / Auxiliary Unit	Present on subject or any comp	Additional living units change buyer pool and should not be treated as apples-to-apples.
+Ceiling Height / Volume	Subject or top comps have vaulted/high ceilings	Higher ceilings increase perceived quality even when sqft is similar.
+Solar	Property has solar	Solar present — specify Owned, Leased, or Unknown. Buyer response differs materially by type.
+Property Attachment	Attached vs detached differs	Detached SFRs should not be directly compared to attached or PUD properties.
+COLUMN 2: LOT (USABILITY & FUNCTION)
+Variable	When to Show	Explanation (Only When Shown)
+Lot Shape	Irregular vs standard exists	Irregular or pie-shaped lots affect yard usability and future expansion.
+Lot Usability	Partial usability exists	Slopes, easements, or constraints reduce functional outdoor space.
+Topography	Sloped / hillside present	Flat lots differ materially from sloped or hillside lots in buyer perception.
+RV / Boat Parking	Subject or comps have it	Dedicated RV or boat access carries a premium in many markets.
+Pool	Pool mismatch exists	Pool presence changes buyer pool and price behavior — must be flagged.
+Auxiliary Buildings	Permanent structures present	Workshops, studios, or sheds add functional value and affect comparability.
+Horse Property / Horse Zoning	Present on subject or comps	Horse zoning attracts a niche buyer pool and is not comparable to standard residential.
+Flag Lot	Flag configuration present	Flag lots trade accessibility for privacy and behave differently in the market.
+Corner Lot	Corner exposure exists	Corner lots have higher exposure and different traffic/privacy dynamics.
+COLUMN 3: LOCATION (EXTERNAL / MARKET)
+Variable	When to Show	Explanation (Only When Shown)
+HOA Presence	HOA vs non-HOA differs	HOA rules, fees, and amenities materially change buyer pool and desirability.
+Tract / Subdivision	Comp crosses tract boundary	Same tract is the strongest micro-market anchor for comparability.
+Water Adjacency	Subject or comps are adjacent	Water can be a premium or a negative depending on placement and perception.
+Golf Course Adjacency	Subject or comps are adjacent	Golf course adjacency can be premium or a nuisance depending on exposure.
+View	Subject or comps have notable view	Views (mountain, water, park) materially influence buyer perception.
+Backing / Adjacency	Subject or comps back a use	Backing commercial, schools, or parking lots often reduce desirability.
+Street Position	Interior vs perimeter differs	Interior streets behave differently than perimeter or through-streets.
+Micro-Submarket Separation	Physical divider exists	Major arterials or barriers can create sharp pricing differences nearby.
+Proximity to Amenities	Subject or comps are notably close	Walkable access to parks or retail can create premium positioning.
+Noise Sources (Non-Road)	Present and proximate	Railroads, airports, or commercial noise must be flagged when nearby.
+School District	District differs across comps	Different school districts can materially change buyer pool behavior.
+Busy Street	Subject or comps front arterial	Arterial exposure increases noise and traffic; relevance depends on local behavior.
+FINAL ENFORCEMENT NOTES (DO NOT SKIP)
+
+❌ Do not mention variables that are not present
+
+❌ Do not list “checked but not applicable”
+
+❌ Do not educate unless relevance exists
+
+✅ Only flag differences or meaningful presences
+
+✅ Explanation appears only when triggered
+
+✅ Silence = correct behavior when irrelevant

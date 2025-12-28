@@ -1122,83 +1122,53 @@ function PIQContent() {
                     </div>
                   )}
 
-                  {/* Property Comparison Table */}
+                  {/* Variable Analysis - 3 Columns */}
                   <div className="mt-6 mb-4 grid grid-cols-3 gap-4">
-                    <div className="col-span-2 bg-white border border-gray-200 rounded-lg overflow-hidden">
-                      <table className="w-full text-xs">
-                        <thead>
-                          <tr className="bg-gray-700 text-white">
-                            <th className="text-left px-3 py-2 font-medium uppercase tracking-wide">Metric</th>
-                            <th className="text-center px-3 py-2 font-medium uppercase tracking-wide">PIQ</th>
-                            <th className="text-center px-3 py-2 font-medium uppercase tracking-wide">Average Comps</th>
-                            <th className="text-right px-3 py-2 font-medium uppercase tracking-wide">% Difference</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-100">
-                          <tr className="hover:bg-gray-50">
-                            <td className="px-3 py-2 text-gray-700">Property Type</td>
-                            <td className="px-3 py-2 text-center font-medium text-gray-900">Single Family</td>
-                            <td className="px-3 py-2 text-center text-gray-600">Single Family</td>
-                            <td className="px-3 py-2 text-right text-gray-500">N/A</td>
-                          </tr>
-                          <tr className="hover:bg-gray-50">
-                            <td className="px-3 py-2 text-gray-700">Bedrooms</td>
-                            <td className="px-3 py-2 text-center font-medium text-gray-900">4</td>
-                            <td className="px-3 py-2 text-center text-gray-600">4.2</td>
-                            <td className="px-3 py-2 text-right text-red-600 font-medium">-3.8%</td>
-                          </tr>
-                          <tr className="hover:bg-gray-50">
-                            <td className="px-3 py-2 text-gray-700">Bathrooms</td>
-                            <td className="px-3 py-2 text-center font-medium text-gray-900">3</td>
-                            <td className="px-3 py-2 text-center text-gray-600">2.7</td>
-                            <td className="px-3 py-2 text-right text-green-600 font-medium">+10.0%</td>
-                          </tr>
-                          <tr className="hover:bg-gray-50">
-                            <td className="px-3 py-2 text-gray-700">Year Built</td>
-                            <td className="px-3 py-2 text-center font-medium text-gray-900">2008</td>
-                            <td className="px-3 py-2 text-center text-gray-600">2006</td>
-                            <td className="px-3 py-2 text-right text-green-600 font-medium">+0.1%</td>
-                          </tr>
-                          <tr className="hover:bg-gray-50">
-                            <td className="px-3 py-2 text-gray-700">Sqft</td>
-                            <td className="px-3 py-2 text-center font-medium text-gray-900">2,472 sqft</td>
-                            <td className="px-3 py-2 text-center text-gray-600">2,419 sqft</td>
-                            <td className="px-3 py-2 text-right text-green-600 font-medium">+2.2%</td>
-                          </tr>
-                          <tr className="hover:bg-gray-50">
-                            <td className="px-3 py-2 text-gray-700">Lot Size</td>
-                            <td className="px-3 py-2 text-center font-medium text-gray-900">7,405 sqft</td>
-                            <td className="px-3 py-2 text-center text-gray-600">7,458 sqft</td>
-                            <td className="px-3 py-2 text-right text-red-600 font-medium">-0.7%</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div className="space-y-4">
-                      <div className="bg-white border border-gray-200 rounded-lg p-3">
-                        <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-2 font-medium">Location Factors</div>
-                        <div className="space-y-1.5 text-xs">
-                          <div className="flex items-center gap-1.5">
-                            <span className="text-green-600 font-bold">+</span>
-                            <span className="text-gray-700">Golf course front</span>
-                          </div>
-                          <div className="flex items-center gap-1.5">
-                            <span className="text-green-600 font-bold">+</span>
-                            <span className="text-gray-700">Guard gated community</span>
-                          </div>
+                    {/* PROPERTY (Structure / Use) */}
+                    <div className="bg-white border border-gray-200 rounded-lg p-3">
+                      <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-3 font-medium border-b border-gray-100 pb-2">Property</div>
+                      <div className="space-y-2.5 text-xs">
+                        <div>
+                          <div className="font-medium text-gray-900">Garage: 3-car attached</div>
+                          <div className="text-gray-500 mt-0.5">2 comps have 2-car — extra capacity adds appeal</div>
+                        </div>
+                        <div>
+                          <div className="font-medium text-gray-900">Solar: Owned</div>
+                          <div className="text-gray-500 mt-0.5">Owned solar adds value vs leased or none</div>
                         </div>
                       </div>
-                      <div className="bg-white border border-gray-200 rounded-lg p-3">
-                        <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-2 font-medium">Influences</div>
-                        <div className="space-y-1.5 text-xs">
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">School District:</span>
-                            <span className="font-medium text-gray-900">Desert Sands USD</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">Tract:</span>
-                            <span className="font-medium text-gray-900">Terra Lago</span>
-                          </div>
+                    </div>
+
+                    {/* LOT (Usability & Function) */}
+                    <div className="bg-white border border-gray-200 rounded-lg p-3">
+                      <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-3 font-medium border-b border-gray-100 pb-2">Lot</div>
+                      <div className="space-y-2.5 text-xs">
+                        <div>
+                          <div className="font-medium text-gray-900">Pool: In-ground heated</div>
+                          <div className="text-gray-500 mt-0.5">1 comp has no pool — pool changes buyer pool</div>
+                        </div>
+                        <div>
+                          <div className="font-medium text-gray-900">Lot Shape: Rectangular</div>
+                          <div className="text-gray-500 mt-0.5">Standard usable lot, no constraints</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* LOCATION (External / Market) */}
+                    <div className="bg-white border border-gray-200 rounded-lg p-3">
+                      <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-3 font-medium border-b border-gray-100 pb-2">Location</div>
+                      <div className="space-y-2.5 text-xs">
+                        <div>
+                          <div className="font-medium text-gray-900">Golf Course: Front adjacency</div>
+                          <div className="text-gray-500 mt-0.5">Premium positioning — 2 comps are interior</div>
+                        </div>
+                        <div>
+                          <div className="font-medium text-gray-900">Tract: Terra Lago</div>
+                          <div className="text-gray-500 mt-0.5">All comps same tract — strong anchor</div>
+                        </div>
+                        <div>
+                          <div className="font-medium text-gray-900">HOA: Guard gated</div>
+                          <div className="text-gray-500 mt-0.5">Community amenities included</div>
                         </div>
                       </div>
                     </div>
