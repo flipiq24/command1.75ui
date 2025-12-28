@@ -1239,6 +1239,7 @@ function PIQContent() {
                     </div>
                   </div>
 
+                  {compsMapView !== 'list' && (
                   <div className="flex items-center gap-2 border-b border-gray-200 pb-2">
                     <button 
                       onClick={() => setCompsMapType('map')}
@@ -1291,6 +1292,7 @@ function PIQContent() {
                       Freehand
                     </button>
                   </div>
+                  )}
 
                   {compsMapView !== 'list' ? (
                     <div className="relative w-full h-[450px] bg-gray-200 rounded-xl overflow-hidden border border-gray-300">
