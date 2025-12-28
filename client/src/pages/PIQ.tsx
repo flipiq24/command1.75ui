@@ -1152,15 +1152,27 @@ function PIQContent() {
                   {/* Property Comparison Summary */}
                   <div className="mb-4 grid grid-cols-3 gap-4">
                     <div className="bg-white border border-gray-200 rounded-lg p-3">
-                      <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-2 font-medium">Property vs Comps</div>
+                      <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-2 font-medium">Property vs Comp Avg</div>
                       <div className="space-y-1.5 text-xs">
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Lot Size:</span>
-                          <span className="font-medium text-green-600">Same as avg</span>
+                          <span className="text-gray-600">Bed/Bath:</span>
+                          <span className="font-medium text-gray-900">4/2 <span className="text-green-600">(same)</span></span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Lot Shape:</span>
-                          <span className="font-medium text-gray-900">Usable, rectangular</span>
+                          <span className="text-gray-600">Garage:</span>
+                          <span className="font-medium text-gray-900">3 <span className="text-green-600">(+1)</span></span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Year Built:</span>
+                          <span className="font-medium text-gray-900">2008 <span className="text-green-600">(+2 yrs)</span></span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">SqFt:</span>
+                          <span className="font-medium text-gray-900">2,472 <span className="text-red-600">(-78)</span></span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Lot:</span>
+                          <span className="font-medium text-gray-900">7,405 <span className="text-green-600">(same)</span></span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-gray-600">Condition:</span>
@@ -1172,16 +1184,12 @@ function PIQContent() {
                       <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-2 font-medium">Location Factors</div>
                       <div className="space-y-1.5 text-xs">
                         <div className="flex items-center gap-1.5">
-                          <span className="text-green-600">✓</span>
-                          <span className="text-gray-700">Interior street (not busy)</span>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-green-600">✓</span>
+                          <span className="text-green-600 font-bold">+</span>
                           <span className="text-gray-700">Golf course front</span>
                         </div>
                         <div className="flex items-center gap-1.5">
-                          <span className="text-green-600">✓</span>
-                          <span className="text-gray-700">No power lines</span>
+                          <span className="text-green-600 font-bold">+</span>
+                          <span className="text-gray-700">Guard gated community</span>
                         </div>
                       </div>
                     </div>
@@ -1195,10 +1203,6 @@ function PIQContent() {
                         <div className="flex justify-between">
                           <span className="text-gray-600">Tract:</span>
                           <span className="font-medium text-gray-900">Terra Lago</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Community:</span>
-                          <span className="font-medium text-gray-900">Guard Gated</span>
                         </div>
                       </div>
                     </div>
