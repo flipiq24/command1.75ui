@@ -1,0 +1,270 @@
+roperty
+Garage: 3-car attached
+2 comps have 2-car — extra capacity adds appeal
+Solar: Owned
+Owned solar adds value vs leased or none
+Lot
+Pool: In-ground heated
+1 comp has no pool — pool changes buyer pool
+Lot Shape: Rectangular
+Standard usable lot, no constraints
+Location
+Golf Course: Front adjacency
+Premium positioning — 2 comps are interior
+Tract: Terra Lago
+All comps same tract — strong anchor
+HOA: Guard gated
+Community amenities included
+
+KEEP
+(8 comps)
+Only Keep Selected
+
+84426 Ponte Court
+Confidence: High
+$1195K
+SOLD
+Single Family / 4 Br / 3 Ba / 2 cars / 2009 / 2,317 ft² / 8,712 ft² / Pool: Yes
+✓
+Best comp - same tract, closest match
+✓
+Pool match with subject
+✓
+Recent closed sale
+✓
+CONDITION: Standard High — 0.32 mi from subject
+✓
+WHY KEPT: Best comp - same tract, closest match
+
+42871 Beato Drive
+Confidence: High
+$1060K
+SOLD
+Single Family / 4 Br / 2.5 Ba / 2 cars / 2006 / 2,338 ft² / 12,000 ft² / Pool: Yes
+✓
+Same tract
+✓
+Pool match
+✓
+Similar bed/bath configuration
+✓
+CONDITION: Standard — 0.37 mi from subject
+✓
+WHY KEPT: Same tract
+
+42745 Ponte Court
+Confidence: Moderate
+$1050K
+SOLD
+Single Family / 5 Br / 3.5 Ba / 2 cars / 2005 / 2,627 ft² / 12,632 ft² / Pool: Yes
+✓
+Same street
+✓
+Pool match
+✓
+Close proximity
+✓
+CONDITION: Standard High — 0.35 mi from subject
+✓
+WHY KEPT: Same street
+
+43173 Bacino Court
+Confidence: Moderate
+$1015K
+SOLD
+Single Family / 3 Br / 2.5 Ba / 2 cars / 2005 / 2,274 ft² / 3,920 ft² / Pool: Yes
+✓
+Close distance
+✓
+Pool match
+✓
+Similar sqft
+✓
+CONDITION: Standard — 0.28 mi from subject
+✓
+WHY KEPT: Close distance
+
+42776 Del Lago Court
+Confidence: Moderate
+$915K
+SOLD
+Single Family / 5 Br / 3 Ba / 2 cars / 2005 / 2,431 ft² / 7,405 ft² / Pool: Yes
+✓
+Closest distance
+✓
+Pool match
+✓
+Same tract
+✓
+CONDITION: Standard — 0.22 mi from subject
+✓
+WHY KEPT: Closest distance
+
+43451 Sentiero Drive
+Confidence: Moderate
+$750K
+SOLD
+Single Family / 3 Br / 3 Ba / 3 cars / 2005 / 2,595 ft² / 9,148 ft² / Pool: Yes
+✓
+Close distance
+✓
+Pool with waterfall
+✓
+3 car garage
+✓
+CONDITION: Standard High — 0.22 mi from subject
+✓
+WHY KEPT: Close distance
+
+84637 Pavone Way
+Confidence: Moderate
+$700K
+SOLD
+Single Family / 4 Br / 3 Ba / 3 cars / 2008 / 2,371 ft² / 6,098 ft² / Pool: Yes
+✓
+Closest distance at 0.06 mi
+✓
+Exact bed/bath match 4/3
+✓
+3 car garage
+✓
+CONDITION: Standard — 0.06 mi from subject
+✓
+WHY KEPT: Closest distance at 0.06 mi
+
+43128 Sentiero Drive
+Confidence: Moderate
+$655K
+SOLD
+Single Family / 4 Br / 3 Ba / 3 cars / 2005 / 2,595 ft² / 8,276 ft² / Pool: Yes
+✓
+Very close at 0.08 mi
+✓
+Exact bed/bath match
+✓
+3 car garage
+✓
+CONDITION: Standard — 0.08 mi from subject
+✓
+WHY KEPT: Very close at 0.08 mi
+
+REMOVE
+(8 comps)
+Only Remove Selected
+Lower Relevance
+
+43118 Fiore Street
+Confidence: Weak
+$800K
+SOLD
+Single Family / 5 Br / 2.5 Ba / 3 cars / 2008 / 2,697 ft² / 7,841 ft² / Pool: Yes
+✗
+5BR vs 4BR - different buyer pool
+✗
+Larger sqft affects comparison
+✗
+CONDITION: Standard — 0.40 mi from subject
+✗
+WHY REMOVED: 5BR vs 4BR - different buyer pool
+
+43955 Campo Place
+Confidence: Weak
+$800K
+SOLD
+Single Family / 6 Br / 2.5 Ba / 2 cars / 2005 / 2,697 ft² / 8,276 ft² / Pool: Yes
+✗
+6BR vs 4BR - very different buyer pool
+✗
+Much larger sqft
+✗
+CONDITION: Standard — 0.47 mi from subject
+✗
+WHY REMOVED: 6BR vs 4BR - very different buyer pool
+
+43703 Campo Place
+Confidence: Weak
+$785K
+SOLD
+Single Family / 5 Br / 2.5 Ba / 2 cars / 2005 / 2,697 ft² / 7,841 ft² / Pool: Yes
+✗
+5BR vs 4BR
+✗
+Larger sqft
+✗
+CONDITION: Standard — 0.38 mi from subject
+✗
+WHY REMOVED: 5BR vs 4BR
+
+84317 Falco Court
+Confidence: Weak
+$610K
+SOLD
+Single Family / 4 Br / 3 Ba / 2 cars / 2013 / 2,284 ft² / 9,148 ft² / Pool: Yes
+✗
+Pool status unknown
+✗
+Newer year built affects comparison
+✗
+CONDITION: Standard — 0.55 mi from subject
+✗
+WHY REMOVED: Pool status unknown
+
+83898 Carolina Court
+Confidence: Weak
+$565K
+SOLD
+Single Family / 4 Br / 3 Ba / 3 cars / 2003 / 2,529 ft² / 7,405 ft² / Pool: None
+✗
+NO POOL - Subject has pool
+✗
+Farther distance
+✗
+Lower condition
+✗
+CONDITION: Standard Low — 0.80 mi from subject
+✗
+WHY REMOVED: NO POOL - Subject has pool
+
+42269 Whisper Rock Street
+Confidence: Weak
+$550K
+SOLD
+Single Family / 3 Br / 2.5 Ba / 3 cars / 2005 / 2,072 ft² / 7,405 ft² / Pool: Yes
+✗
+Pool status unknown
+✗
+3BR vs 4BR
+✗
+Farther distance
+✗
+CONDITION: Standard — 0.88 mi from subject
+✗
+WHY REMOVED: Pool status unknown
+
+84186 Canzone Drive
+Confidence: Weak
+$525K
+SOLD
+Single Family / 4 Br / 2.5 Ba / 2 cars / 2006 / 2,338 ft² / 5,227 ft² / Pool: Yes
+✗
+Community pool vs private
+✗
+High DOM
+✗
+CONDITION: Standard — 0.53 mi from subject
+✗
+WHY REMOVED: Community pool vs private
+
+42730 Del Lago Court
+Confidence: Weak
+$520K
+SOLD
+Single Family / 4 Br / 3 Ba / 2 cars / 2005 / 2,249 ft² / 7,405 ft² / Pool: Yes
+✗
+Community pool vs private
+✗
+High DOM
+✗
+CONDITION: Standard — 0.23 mi from subject
+✗
+WHY REMOVED: Community pool vs private
