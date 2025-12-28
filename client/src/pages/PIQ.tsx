@@ -65,9 +65,12 @@ interface CompProperty {
   publicRemarks: string;
   imageUrl: string;
   color: 'green' | 'red' | 'blue';
+  keep: boolean;
+  whyKeep: string[];
+  whyRemove: string[];
 }
 
-const sampleComps: CompProperty[] = [
+const initialComps: CompProperty[] = [
   {
     id: '38734340',
     address: '84303 Eremo Way',
@@ -95,10 +98,19 @@ const sampleComps: CompProperty[] = [
       phone: '(760) 422-4030',
       office: 'Coldwell Banker Realty'
     },
-    agentRemarks: 'Go Direct. Gate Code: Guard gated.\n\nFor financed offers, please include recent pre-qual letter + proof of funds statement for down payment. For cash offers, please include recent proof of funds. We cannot guarantee the accuracy of square footage, lot size or other information concerning the condition or features of property provided by Seller or obtained from public records or other sources. Buyer is advised to independently verify the accuracy of all information through personal/professional inspections. Buyer Letters will not be presented to Seller.',
-    publicRemarks: 'Step into this exceptional residence where indoor-outdoor living & vacation-style amenities meet everyday comfort. The open-floor plan invites you into the great room with soaring ceilings and abundant natural light, flowing seamlessly into a well-appointed kitchen with ample cabinetry, breakfast bar and pantry. The den is currently being used as a 4th bedroom. The epoxy coated double car garage also has a tandem side for 3rd vehicle parking. Outside, discover your own backyard escape: a covered patio, space for outdoor dining or lounging, with a large grassy yard perfect for play, and SOUTHERN mountain views beyond.',
+    agentRemarks: 'Go Direct. Gate Code: Guard gated.',
+    publicRemarks: 'Step into this exceptional residence where indoor-outdoor living & vacation-style amenities meet everyday comfort.',
     imageUrl: '',
-    color: 'green'
+    color: 'green',
+    keep: true,
+    whyKeep: [
+      'Best comp - Model match, same tract',
+      'Golf course front like subject',
+      'Flip condition - best ARV baseline',
+      'All features match: 4/2, pool, 3-car garage',
+      'Closest distance at 0.44 mi'
+    ],
+    whyRemove: []
   },
   {
     id: '38756123',
@@ -128,9 +140,20 @@ const sampleComps: CompProperty[] = [
       office: 'RE/MAX Desert Properties'
     },
     agentRemarks: 'Showing by appointment only. 24-hour notice required.',
-    publicRemarks: 'Beautiful single-story home in the desirable Terra Lago community. Features include granite countertops, stainless steel appliances, and an open floor plan perfect for entertaining.',
+    publicRemarks: 'Beautiful single-story home in the desirable Terra Lago community.',
     imageUrl: '',
-    color: 'blue'
+    color: 'blue',
+    keep: true,
+    whyKeep: [
+      'Same tract (Terra Lago)',
+      'Recent flip with good condition',
+      'Bed/bath close match (4/3 vs 4/2)',
+      'Similar year built (2007 vs 2005)'
+    ],
+    whyRemove: [
+      'NO POOL - Subject has pool',
+      'Different garage config (2 vs 3 car)'
+    ]
   },
   {
     id: '38789456',
@@ -159,10 +182,65 @@ const sampleComps: CompProperty[] = [
       phone: '(760) 555-9876',
       office: 'Berkshire Hathaway'
     },
-    agentRemarks: 'Premium listing. Serious buyers only. Pre-approval required.',
-    publicRemarks: 'Stunning luxury home with panoramic mountain views. This property features high-end finishes throughout, a gourmet kitchen, and a resort-style backyard with heated pool and spa.',
+    agentRemarks: 'Premium listing. Serious buyers only.',
+    publicRemarks: 'Stunning luxury home with panoramic mountain views.',
     imageUrl: '',
-    color: 'red'
+    color: 'red',
+    keep: false,
+    whyKeep: [
+      'Same tract and school district',
+      'Pool match with subject',
+      'Garage match (3 cars)'
+    ],
+    whyRemove: [
+      '5BR/3BA - Subject is 4BR/2BA, different buyer pool',
+      '378 sqft larger than subject',
+      'Lot 2,159 sqft larger - affects value comparison',
+      'Price outlier at $800K vs subject ARV range'
+    ]
+  },
+  {
+    id: '38801234',
+    address: '84312 Avenue 43',
+    price: 565000,
+    pricePerSqft: 275.00,
+    size: 2054,
+    lotSize: 6800,
+    bedBath: '4/2',
+    yearBuilt: 2004,
+    garage: '2 cars',
+    domCdom: '52 / 8',
+    pool: 'None',
+    financeType: 'FHA',
+    distance: '1.2 mi',
+    closingDate: '09/15/2025',
+    lastUpdate: '2025-09-10T00:00:00',
+    listingId: '38801234',
+    listingStatus: 'Closed',
+    type: 'Single Family',
+    conditions: 'Standard',
+    agent: {
+      name: 'Valley Realtors',
+      email: 'info@valleyrealtors.com',
+      id: 'CDAR-D45678',
+      phone: '(760) 555-4567',
+      office: 'Keller Williams'
+    },
+    agentRemarks: 'Great starter home opportunity.',
+    publicRemarks: 'Well-maintained home in established neighborhood.',
+    imageUrl: '',
+    color: 'green',
+    keep: false,
+    whyKeep: [
+      'Bed/bath match (4/2)',
+      'Similar size to subject'
+    ],
+    whyRemove: [
+      'NO POOL - Subject has pool',
+      'NOT golf course location',
+      'Interior street location',
+      '1.2 mi away - too far for tight comp set'
+    ]
   }
 ];
 
@@ -182,6 +260,12 @@ function PIQContent() {
   const [isCompsIQLoading, setIsCompsIQLoading] = useState(false);
   const [selectedComp, setSelectedComp] = useState<CompProperty | null>(null);
   const [selectedCompIndex, setSelectedCompIndex] = useState(0);
+  const [comps, setComps] = useState<CompProperty[]>(initialComps);
+  const [selectedKeepIds, setSelectedKeepIds] = useState<Set<string>>(new Set());
+  const [selectedRemoveIds, setSelectedRemoveIds] = useState<Set<string>>(new Set());
+
+  const keepComps = comps.filter(c => c.keep);
+  const removeComps = comps.filter(c => !c.keep);
 
   const handleCompClick = (comp: CompProperty, index: number) => {
     setSelectedComp(comp);
@@ -191,14 +275,71 @@ function PIQContent() {
   const handlePrevComp = () => {
     if (selectedCompIndex > 0) {
       setSelectedCompIndex(selectedCompIndex - 1);
-      setSelectedComp(sampleComps[selectedCompIndex - 1]);
+      setSelectedComp(comps[selectedCompIndex - 1]);
     }
   };
 
   const handleNextComp = () => {
-    if (selectedCompIndex < sampleComps.length - 1) {
+    if (selectedCompIndex < comps.length - 1) {
       setSelectedCompIndex(selectedCompIndex + 1);
-      setSelectedComp(sampleComps[selectedCompIndex + 1]);
+      setSelectedComp(comps[selectedCompIndex + 1]);
+    }
+  };
+
+  const toggleCompKeep = (compId: string) => {
+    setComps(prev => prev.map(c => 
+      c.id === compId ? { ...c, keep: !c.keep } : c
+    ));
+    if (selectedComp && selectedComp.id === compId) {
+      setSelectedComp(prev => prev ? { ...prev, keep: !prev.keep } : null);
+    }
+  };
+
+  const moveSelectedToRemove = () => {
+    setComps(prev => prev.map(c => 
+      selectedKeepIds.has(c.id) ? { ...c, keep: false } : c
+    ));
+    setSelectedKeepIds(new Set());
+  };
+
+  const moveSelectedToKeep = () => {
+    setComps(prev => prev.map(c => 
+      selectedRemoveIds.has(c.id) ? { ...c, keep: true } : c
+    ));
+    setSelectedRemoveIds(new Set());
+  };
+
+  const toggleSelectKeep = (id: string) => {
+    setSelectedKeepIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const toggleSelectRemove = (id: string) => {
+    setSelectedRemoveIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const selectAllKeep = () => {
+    if (selectedKeepIds.size === keepComps.length) {
+      setSelectedKeepIds(new Set());
+    } else {
+      setSelectedKeepIds(new Set(keepComps.map(c => c.id)));
+    }
+  };
+
+  const selectAllRemove = () => {
+    if (selectedRemoveIds.size === removeComps.length) {
+      setSelectedRemoveIds(new Set());
+    } else {
+      setSelectedRemoveIds(new Set(removeComps.map(c => c.id)));
     }
   };
   const [isIQAnalyzed, setIsIQAnalyzed] = useState(fromNewAgent);
@@ -867,14 +1008,14 @@ function PIQContent() {
                       
                       <div 
                         className="absolute top-1/4 left-1/4 transform -translate-x-1/2 cursor-pointer hover:scale-110 transition-transform"
-                        onClick={() => handleCompClick(sampleComps[0], 0)}
+                        onClick={() => handleCompClick(comps[0], 0)}
                         data-testid="comp-marker-1"
                       >
                         <div className="bg-green-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg hover:bg-green-700">$499K</div>
                       </div>
                       <div 
                         className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer hover:scale-110 transition-transform"
-                        onClick={() => handleCompClick(sampleComps[1], 1)}
+                        onClick={() => handleCompClick(comps[1], 1)}
                         data-testid="comp-marker-2"
                       >
                         <div className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg border-2 border-white hover:bg-blue-700">$650K</div>
@@ -882,7 +1023,7 @@ function PIQContent() {
                       </div>
                       <div 
                         className="absolute bottom-1/3 right-1/4 cursor-pointer hover:scale-110 transition-transform"
-                        onClick={() => handleCompClick(sampleComps[2], 2)}
+                        onClick={() => handleCompClick(comps[2], 2)}
                         data-testid="comp-marker-3"
                       >
                         <div className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg hover:bg-red-600">$800K</div>
@@ -980,6 +1121,159 @@ function PIQContent() {
                       )}
                     </div>
                   )}
+
+                  {/* Keep/Remove Two-Column Table */}
+                  <div className="mt-6 grid grid-cols-2 gap-6">
+                    {/* KEEP Column */}
+                    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                      <div className="bg-green-50 border-b border-green-200 px-4 py-3 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <input
+                            type="checkbox"
+                            checked={selectedKeepIds.size === keepComps.length && keepComps.length > 0}
+                            onChange={selectAllKeep}
+                            className="w-4 h-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
+                            data-testid="checkbox-select-all-keep"
+                          />
+                          <span className="text-sm font-bold text-green-800">KEEP</span>
+                          <span className="text-xs text-green-600">({keepComps.length} comps)</span>
+                        </div>
+                        <button
+                          onClick={moveSelectedToRemove}
+                          disabled={selectedKeepIds.size === 0}
+                          className={cn(
+                            "px-3 py-1.5 text-xs font-medium rounded-lg transition",
+                            selectedKeepIds.size > 0
+                              ? "bg-red-100 text-red-700 hover:bg-red-200"
+                              : "bg-gray-100 text-gray-400 cursor-not-allowed"
+                          )}
+                          data-testid="button-remove-selected"
+                        >
+                          Remove Selected
+                        </button>
+                      </div>
+                      <div className="divide-y divide-gray-100">
+                        {keepComps.map((comp, idx) => (
+                          <div 
+                            key={comp.id}
+                            className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition"
+                            onClick={() => handleCompClick(comp, comps.findIndex(c => c.id === comp.id))}
+                            data-testid={`row-keep-comp-${comp.id}`}
+                          >
+                            <div className="flex items-center gap-3">
+                              <input
+                                type="checkbox"
+                                checked={selectedKeepIds.has(comp.id)}
+                                onChange={(e) => { e.stopPropagation(); toggleSelectKeep(comp.id); }}
+                                onClick={(e) => e.stopPropagation()}
+                                className="w-4 h-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
+                                data-testid={`checkbox-keep-${comp.id}`}
+                              />
+                              <div className="flex-1">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-sm font-medium text-gray-900">{comp.address}</span>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-sm font-bold text-gray-900">${(comp.price / 1000).toFixed(0)}K</span>
+                                    <span className={cn(
+                                      "px-2 py-0.5 text-[10px] font-bold rounded",
+                                      comp.listingStatus === 'Closed' ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"
+                                    )}>
+                                      {comp.listingStatus === 'Closed' ? 'SOLD' : comp.listingStatus.toUpperCase()}
+                                    </span>
+                                  </div>
+                                </div>
+                                {comp.whyKeep.length > 0 && (
+                                  <div className="mt-1.5 text-xs text-green-700">
+                                    <span className="text-green-600">✓</span> {comp.whyKeep[0]}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                        {keepComps.length === 0 && (
+                          <div className="px-4 py-8 text-center text-sm text-gray-400">
+                            No comps in keep list
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* REMOVE Column */}
+                    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                      <div className="bg-red-50 border-b border-red-200 px-4 py-3 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <input
+                            type="checkbox"
+                            checked={selectedRemoveIds.size === removeComps.length && removeComps.length > 0}
+                            onChange={selectAllRemove}
+                            className="w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+                            data-testid="checkbox-select-all-remove"
+                          />
+                          <span className="text-sm font-bold text-red-800">REMOVE</span>
+                          <span className="text-xs text-red-600">({removeComps.length} comps)</span>
+                        </div>
+                        <button
+                          onClick={moveSelectedToKeep}
+                          disabled={selectedRemoveIds.size === 0}
+                          className={cn(
+                            "px-3 py-1.5 text-xs font-medium rounded-lg transition",
+                            selectedRemoveIds.size > 0
+                              ? "bg-green-100 text-green-700 hover:bg-green-200"
+                              : "bg-gray-100 text-gray-400 cursor-not-allowed"
+                          )}
+                          data-testid="button-keep-selected"
+                        >
+                          Keep Selected
+                        </button>
+                      </div>
+                      <div className="divide-y divide-gray-100">
+                        {removeComps.map((comp, idx) => (
+                          <div 
+                            key={comp.id}
+                            className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition"
+                            onClick={() => handleCompClick(comp, comps.findIndex(c => c.id === comp.id))}
+                            data-testid={`row-remove-comp-${comp.id}`}
+                          >
+                            <div className="flex items-center gap-3">
+                              <input
+                                type="checkbox"
+                                checked={selectedRemoveIds.has(comp.id)}
+                                onChange={(e) => { e.stopPropagation(); toggleSelectRemove(comp.id); }}
+                                onClick={(e) => e.stopPropagation()}
+                                className="w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+                                data-testid={`checkbox-remove-${comp.id}`}
+                              />
+                              <div className="flex-1">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-sm font-medium text-gray-900">{comp.address}</span>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-sm font-bold text-gray-900">${(comp.price / 1000).toFixed(0)}K</span>
+                                    <span className={cn(
+                                      "px-2 py-0.5 text-[10px] font-bold rounded",
+                                      comp.listingStatus === 'Closed' ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"
+                                    )}>
+                                      {comp.listingStatus === 'Closed' ? 'SOLD' : comp.listingStatus.toUpperCase()}
+                                    </span>
+                                  </div>
+                                </div>
+                                {comp.whyRemove.length > 0 && (
+                                  <div className="mt-1.5 text-xs text-red-700">
+                                    <span className="text-red-600">✗</span> {comp.whyRemove[0]}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                        {removeComps.length === 0 && (
+                          <div className="px-4 py-8 text-center text-sm text-gray-400">
+                            No comps in remove list
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
 
@@ -1410,10 +1704,10 @@ function PIQContent() {
                 </button>
                 <button 
                   onClick={handleNextComp}
-                  disabled={selectedCompIndex === sampleComps.length - 1}
+                  disabled={selectedCompIndex === comps.length - 1}
                   className={cn(
                     "px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium transition",
-                    selectedCompIndex === sampleComps.length - 1 ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-50"
+                    selectedCompIndex === comps.length - 1 ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-50"
                   )}
                   data-testid="button-next-comp"
                 >
