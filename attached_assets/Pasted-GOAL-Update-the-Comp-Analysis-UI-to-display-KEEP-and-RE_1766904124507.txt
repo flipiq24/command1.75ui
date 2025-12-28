@@ -1,0 +1,127 @@
+GOAL:
+Update the Comp Analysis UI to display KEEP and REMOVE comps with structured, comparable explanations
+driven by the Comp Analysis Bot output.
+
+This UI is used by Acquisition Associates to understand WHY comps are kept or removed.
+The UI does not calculate ARV or prices.
+
+--------------------------------
+TOP SECTION (UNCHANGED)
+--------------------------------
+- Map with subject + comp price pins
+- Zoom, pan, and selection behavior unchanged
+
+--------------------------------
+SECTION: SUBJECT CONTEXT (UNCHANGED)
+--------------------------------
+- Property / Lot / Location cards remain as-is
+- These cards describe the SUBJECT relative to the comp set
+
+--------------------------------
+SECTION: KEEP COMPS
+--------------------------------
+
+Header:
+- "KEEP (X comps)"
+- Green background tint
+- Bulk action button: [Remove Selected] (secondary)
+
+For EACH comp in KEEP, render a card with:
+
+1) CHECKBOX (left)
+- Allows selecting comp for manual removal
+
+2) PRIMARY ID LINE (bold):
+<Address>
+Single Family / <Beds> Br / <Baths> Ba / <Garage> Gar / <Year Built> / <SqFt> ft² / <Lot SqFt> ft² / Pool: <Pool Type or None>
+
+3) COMPARISON BLOCK (stacked, compact):
+
+PROPERTY (only if exists):
+- ✓ <Factual difference vs subject>
+- ✓ <Optional second bullet>
+
+LOT (only if exists):
+- ✓ <Factual difference vs subject>
+
+LOCATION (only if exists):
+- ✓ <Factual difference vs subject>
+
+CONDITION:
+- ✓ <FLIP | GOOD | ORIGINAL | FIXER> — <short factual reason>
+
+WHY KEPT (single line, emphasized):
+- ✓ <Primary reason this comp ranks higher than others>
+
+4) STATUS CHIP (right side):
+- SOLD / PENDING / ACTIVE
+- Color coded (red / yellow / blue)
+
+5) INTERACTION:
+- Clicking card opens side panel with full comp details
+- Card highlight syncs with map pin
+
+--------------------------------
+SECTION: REMOVE COMPS
+--------------------------------
+
+Header:
+- "REMOVE (X comps)"
+- Red background tint
+- Bulk action button: [Keep Selected] (secondary)
+
+REMOVE comps are visually de-emphasized but still readable.
+
+Group REMOVE comps into collapsible sub-sections:
+
+A) REMOVE — LOWER RELEVANCE
+B) REMOVE — REDUNDANT (BETTER COMPS AVAILABLE)
+
+For EACH removed comp, render SAME card structure as KEEP, but:
+
+- Red “X” icon instead of green checkmarks
+- WHY REMOVED line replaces WHY KEPT
+- Slightly reduced opacity
+
+WHY REMOVED line MUST state one of:
+- "Lower relevance due to mismatch"
+- "Acceptable comp, removed due to stronger alternatives"
+
+--------------------------------
+INTERACTION RULES
+--------------------------------
+
+- User can:
+  - Move comps between KEEP and REMOVE
+  - Click into any comp for full inspection
+- UI does NOT re-rank comps automatically after manual changes
+- UI does NOT hide removed comps
+
+--------------------------------
+CONTENT RULES (STRICT)
+--------------------------------
+
+- Only show PROPERTY / LOT / LOCATION sections if data exists
+- Never show empty sections
+- Never show “no difference” messages
+- No pricing commentary
+- No buyer pool language
+- No opinionated language
+
+--------------------------------
+VISUAL PRIORITY
+--------------------------------
+
+1) WHY KEPT / WHY REMOVED
+2) CONDITION
+3) LOCATION differences
+4) LOT differences
+5) PROPERTY differences
+
+--------------------------------
+DONE WHEN:
+--------------------------------
+- Each comp card has exactly 6 logical sections max
+- KEEP comps visually read as “best → worst”
+- REMOVE comps clearly explain WHY they’re out
+- UI mirrors bot output exactly without reinterpretation

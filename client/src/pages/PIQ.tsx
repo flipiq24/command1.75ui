@@ -1222,8 +1222,8 @@ function PIQContent() {
                                 data-testid={`checkbox-keep-${comp.id}`}
                               />
                               <div className="flex-1">
-                                <div className="flex items-center justify-between">
-                                  <span className="text-sm font-medium text-gray-900">{comp.address}</span>
+                                <div className="flex items-center justify-between mb-1">
+                                  <span className="text-sm font-bold text-gray-900">{comp.address}</span>
                                   <div className="flex items-center gap-2">
                                     <span className="text-sm font-bold text-gray-900">${(comp.price / 1000).toFixed(0)}K</span>
                                     <span className={cn(
@@ -1234,27 +1234,30 @@ function PIQContent() {
                                     </span>
                                   </div>
                                 </div>
-                                <div className="flex items-center gap-2 mt-1 text-xs text-gray-500">
-                                  <span>{comp.bedBath}</span>
-                                  <span>•</span>
-                                  <span>{comp.size.toLocaleString()} sqft</span>
-                                  <span>•</span>
-                                  <span>{comp.lotSize.toLocaleString()} lot</span>
-                                  <span>•</span>
-                                  <span>{comp.pool === 'None' ? 'No Pool' : 'Pool'}</span>
-                                  <span>•</span>
-                                  <span>{comp.distance}</span>
+                                <div className="text-[11px] text-gray-600 mb-2">
+                                  Single Family / {comp.bedBath.split('/')[0]} Br / {comp.bedBath.split('/')[1]} Ba / {comp.garage} / {comp.yearBuilt} / {comp.size.toLocaleString()} ft² / {comp.lotSize.toLocaleString()} ft² / Pool: {comp.pool === 'None' ? 'None' : 'Yes'}
                                 </div>
-                                {comp.whyKeep.length > 0 && (
-                                  <div className="mt-2 space-y-1">
-                                    {comp.whyKeep.slice(0, 2).map((reason, i) => (
-                                      <div key={i} className="text-xs text-green-700 flex items-start gap-1.5">
-                                        <span className="text-green-600 font-bold">✓</span>
-                                        <span>{reason}</span>
-                                      </div>
-                                    ))}
+                                
+                                <div className="space-y-1.5 text-xs">
+                                  {comp.whyKeep.slice(0, 3).map((reason, i) => (
+                                    <div key={i} className="flex items-start gap-1.5 text-gray-700">
+                                      <span className="text-green-600 font-bold mt-0.5">✓</span>
+                                      <span>{reason}</span>
+                                    </div>
+                                  ))}
+                                  
+                                  <div className="flex items-start gap-1.5 text-gray-700">
+                                    <span className="text-green-600 font-bold mt-0.5">✓</span>
+                                    <span><span className="font-medium">CONDITION:</span> {comp.conditions} — {comp.distance} from subject</span>
                                   </div>
-                                )}
+                                  
+                                  {comp.whyKeep.length > 0 && (
+                                    <div className="flex items-start gap-1.5 pt-1 border-t border-green-100 mt-1">
+                                      <span className="text-green-600 font-bold mt-0.5">✓</span>
+                                      <span className="font-medium text-green-800">WHY KEPT: {comp.whyKeep[0]}</span>
+                                    </div>
+                                  )}
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -1295,11 +1298,18 @@ function PIQContent() {
                           Keep Selected
                         </button>
                       </div>
+                      
+                      {removeComps.length > 0 && (
+                        <div className="px-3 py-2 bg-red-50/50 border-b border-red-100">
+                          <span className="text-[10px] font-medium text-red-700 uppercase tracking-wide">Lower Relevance</span>
+                        </div>
+                      )}
+                      
                       <div className="divide-y divide-gray-100">
                         {removeComps.map((comp, idx) => (
                           <div 
                             key={comp.id}
-                            className="px-4 py-3 hover:bg-red-50/50 cursor-pointer transition"
+                            className="px-4 py-3 hover:bg-red-50/30 cursor-pointer transition opacity-80"
                             onClick={() => handleCompClick(comp, comps.findIndex(c => c.id === comp.id))}
                             data-testid={`row-remove-comp-${comp.id}`}
                           >
@@ -1313,10 +1323,10 @@ function PIQContent() {
                                 data-testid={`checkbox-remove-${comp.id}`}
                               />
                               <div className="flex-1">
-                                <div className="flex items-center justify-between">
-                                  <span className="text-sm font-medium text-gray-900">{comp.address}</span>
+                                <div className="flex items-center justify-between mb-1">
+                                  <span className="text-sm font-bold text-gray-700">{comp.address}</span>
                                   <div className="flex items-center gap-2">
-                                    <span className="text-sm font-bold text-gray-900">${(comp.price / 1000).toFixed(0)}K</span>
+                                    <span className="text-sm font-bold text-gray-700">${(comp.price / 1000).toFixed(0)}K</span>
                                     <span className={cn(
                                       "px-2 py-0.5 text-[10px] font-bold rounded",
                                       comp.listingStatus === 'Closed' ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"
@@ -1325,27 +1335,30 @@ function PIQContent() {
                                     </span>
                                   </div>
                                 </div>
-                                <div className="flex items-center gap-2 mt-1 text-xs text-gray-500">
-                                  <span>{comp.bedBath}</span>
-                                  <span>•</span>
-                                  <span>{comp.size.toLocaleString()} sqft</span>
-                                  <span>•</span>
-                                  <span>{comp.lotSize.toLocaleString()} lot</span>
-                                  <span>•</span>
-                                  <span>{comp.pool === 'None' ? 'No Pool' : 'Pool'}</span>
-                                  <span>•</span>
-                                  <span>{comp.distance}</span>
+                                <div className="text-[11px] text-gray-500 mb-2">
+                                  Single Family / {comp.bedBath.split('/')[0]} Br / {comp.bedBath.split('/')[1]} Ba / {comp.garage} / {comp.yearBuilt} / {comp.size.toLocaleString()} ft² / {comp.lotSize.toLocaleString()} ft² / Pool: {comp.pool === 'None' ? 'None' : 'Yes'}
                                 </div>
-                                {comp.whyRemove.length > 0 && (
-                                  <div className="mt-2 space-y-1">
-                                    {comp.whyRemove.slice(0, 2).map((reason, i) => (
-                                      <div key={i} className="text-xs text-red-700 flex items-start gap-1.5">
-                                        <span className="text-red-600 font-bold">✗</span>
-                                        <span>{reason}</span>
-                                      </div>
-                                    ))}
+                                
+                                <div className="space-y-1.5 text-xs">
+                                  {comp.whyRemove.slice(0, 3).map((reason, i) => (
+                                    <div key={i} className="flex items-start gap-1.5 text-gray-600">
+                                      <span className="text-red-500 font-bold mt-0.5">✗</span>
+                                      <span>{reason}</span>
+                                    </div>
+                                  ))}
+                                  
+                                  <div className="flex items-start gap-1.5 text-gray-600">
+                                    <span className="text-red-500 font-bold mt-0.5">✗</span>
+                                    <span><span className="font-medium">CONDITION:</span> {comp.conditions} — {comp.distance} from subject</span>
                                   </div>
-                                )}
+                                  
+                                  {comp.whyRemove.length > 0 && (
+                                    <div className="flex items-start gap-1.5 pt-1 border-t border-red-100 mt-1">
+                                      <span className="text-red-500 font-bold mt-0.5">✗</span>
+                                      <span className="font-medium text-red-700">WHY REMOVED: {comp.whyRemove[0]}</span>
+                                    </div>
+                                  )}
+                                </div>
                               </div>
                             </div>
                           </div>
