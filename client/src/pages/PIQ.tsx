@@ -1223,7 +1223,17 @@ function PIQContent() {
                               />
                               <div className="flex-1">
                                 <div className="flex items-center justify-between mb-1">
-                                  <span className="text-sm font-bold text-gray-900">{comp.address}</span>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-sm font-bold text-gray-900">{comp.address}</span>
+                                    <span className={cn(
+                                      "px-1.5 py-0.5 text-[9px] font-bold rounded uppercase",
+                                      idx === 0 ? "bg-green-100 text-green-700" : 
+                                      idx === 1 ? "bg-green-50 text-green-600" : 
+                                      "bg-yellow-50 text-yellow-700"
+                                    )}>
+                                      {idx === 0 ? 'High' : idx === 1 ? 'High' : 'Moderate'}
+                                    </span>
+                                  </div>
                                   <div className="flex items-center gap-2">
                                     <span className="text-sm font-bold text-gray-900">${(comp.price / 1000).toFixed(0)}K</span>
                                     <span className={cn(
@@ -1338,7 +1348,12 @@ function PIQContent() {
                               />
                               <div className="flex-1">
                                 <div className="flex items-center justify-between mb-1">
-                                  <span className="text-sm font-bold text-gray-700">{comp.address}</span>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-sm font-bold text-gray-700">{comp.address}</span>
+                                    <span className="px-1.5 py-0.5 text-[9px] font-bold rounded uppercase bg-orange-50 text-orange-600">
+                                      Weak
+                                    </span>
+                                  </div>
                                   <div className="flex items-center gap-2">
                                     <span className="text-sm font-bold text-gray-700">${(comp.price / 1000).toFixed(0)}K</span>
                                     <span className={cn(
