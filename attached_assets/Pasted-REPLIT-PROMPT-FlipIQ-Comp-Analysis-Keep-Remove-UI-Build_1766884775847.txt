@@ -1,0 +1,188 @@
+REPLIT PROMPT: FlipIQ Comp Analysis Keep/Remove UI
+Build a React component for analyzing and sorting comparable properties. The UI has three parts: Subject Property header, two-column Keep/Remove tables, and a slide-out detail panel.
+
+PART 1: SUBJECT PROPERTY (Top Section)
+Display the subject property in a header bar with:
+SUBJECT: 84692 Pavone Way, Indio, CA 92203
+Single Family | 4 BR / 3 BA | 3 Car Garage | Built 2008 | 2,472 sqft | 7,405 sqft lot
+Pool: Association, Fenced, Heated | List: $599,900 | Owned 15+ years, Trust owned
+
+School District: Desert Sands USD | Tract: Terra Lago | Location: Golf Course Front | Street: Interior (Not Busy)
+This section is static - just displays subject info for reference.
+
+PART 2: TWO-COLUMN LAYOUT
+LEFT COLUMN: KEEP
+
+Header row with checkbox "☐ Select All" and count "(4 comps)"
+Button: "Remove Selected"
+Table columns: Address | Price | Status
+
+Below each row, show WHY KEEPING in smaller text:
+84650 Lago Way          $700,000    SOLD
+✓ Best comp - Model match, same tract, golf course front, flip condition, all features match
+
+84612 Terra Lago Pkwy   $655,000    SOLD  
+✓ Same tract, golf course view, recent flip, 4/3 match
+
+84701 Lago Vista Blvd   $750,000    PENDING
+✓ Golf course front, good condition, pool match, same school district
+RIGHT COLUMN: REMOVE
+
+Header row with checkbox "☐ Select All" and count "(6 comps)"
+Button: "Keep Selected"
+Table columns: Address | Price | Status
+
+Below each row, show WHY REMOVING in smaller text:
+84523 Terra Lago Pkwy   $1,100,000  SOLD
+✗ 5BR/4BA - Subject is 4BR/3BA, different buyer pool, 700+ sqft larger
+
+84312 Avenue 43         $565,000    SOLD
+✗ NO POOL - Subject has pool, NOT golf course location, interior street, 1.2mi away
+
+84234 Via Colinas       $799,000    PENDING
+✗ INTERIOR STREET - Subject is golf course front, location mismatch affects value
+Clicking any row opens the detail panel.
+
+PART 3: SLIDE-OUT DETAIL PANEL (Right Side)
+When user clicks a comp row, slide in a panel from the right:
+Header:
+
+Close X button (top right)
+Previous / Next buttons to navigate through all comps
+Address and status badge
+
+Property Photo:
+
+Large image at top
+
+WHY KEEPING or WHY REMOVING (directly below photo):
+If in KEEP column:
+WHY KEEPING THIS COMP
+─────────────────────
+✓ Model match - Same floor plan as subject (Plan 2)
+✓ Same tract (Terra Lago)
+✓ Golf course front like subject
+✓ Flip condition - Best baseline for ARV
+✓ All features match: 4/3, pool, 3-car garage
+✓ Sold 0.2 mi from subject
+If in REMOVE column:
+WHY REMOVING THIS COMP
+─────────────────────
+✗ Bed/Bath mismatch: 5BR/4BA vs subject 4BR/3BA
+✗ Different buyer pool - larger home appeals to different buyers
+✗ 728 sqft larger than subject
+✗ Price outlier - $1.1M vs subject ARV range $700-800K
+Property Details (below explanation):
+Price: $700,000 / $515,000 (list/sold)
+Bed/Bath: 4/3
+Size: 2,450 sqft
+Lot: 7,200 sqft
+Year Built: 2008
+Pool: Yes - In Ground
+Garage: 3 cars
+DOM: 28 days
+Distance: 0.2 mi
+Closing Date: 11/15/2024
+Comparison to Subject:
+             COMP        SUBJECT     MATCH
+Bed/Bath     4/3         4/3         ✓
+SqFt         2,450       2,472       ✓ (-22)
+Lot          7,200       7,405       ✓
+Pool         Yes         Yes         ✓
+Location     Golf Front  Golf Front  ✓
+Street       Interior    Interior    ✓
+Action Buttons at bottom:
+
+[Keep] [Remove] - toggle which column this comp belongs to
+
+
+SAMPLE DATA:
+javascriptconst subject = {
+  address: "84692 Pavone Way, Indio, CA 92203",
+  type: "Single Family",
+  bed: 4, bath: 3, garage: 3,
+  yearBuilt: 2008,
+  sqft: 2472, lotSqft: 7405,
+  pool: "Association, Fenced, Heated",
+  listPrice: 599900,
+  ownership: "Owned 15+ years, Trust owned",
+  schoolDistrict: "Desert Sands USD",
+  tract: "Terra Lago",
+  location: "Golf Course Front",
+  street: "Interior (Not Busy)"
+};
+
+const comps = [
+  {
+    id: 1,
+    address: "84650 Lago Way",
+    price: 700000,
+    status: "SOLD",
+    bed: 4, bath: 3,
+    sqft: 2450,
+    lotSqft: 7200,
+    pool: true,
+    distance: 0.2,
+    location: "Golf Course Front",
+    street: "Interior",
+    tract: "Terra Lago",
+    condition: "Flip",
+    keep: true,
+    whyKeep: [
+      "Best comp - Model match (Plan 2)",
+      "Same tract (Terra Lago)", 
+      "Golf course front like subject",
+      "Flip condition - best ARV baseline",
+      "All features match: 4/3, pool, 3-car"
+    ],
+    whyRemove: []
+  },
+  {
+    id: 2,
+    address: "84523 Terra Lago Pkwy",
+    price: 1100000,
+    status: "SOLD",
+    bed: 5, bath: 4,
+    sqft: 3200,
+    lotSqft: 8500,
+    pool: true,
+    distance: 0.3,
+    location: "Golf Course Front",
+    street: "Interior",
+    tract: "Terra Lago",
+    condition: "Flip",
+    keep: false,
+    whyKeep: [],
+    whyRemove: [
+      "5BR/4BA - Subject is 4BR/3BA",
+      "Different buyer pool",
+      "728 sqft larger than subject",
+      "Price outlier for subject's size"
+    ]
+  },
+  // ... more comps
+];
+
+STYLING:
+
+Clean, minimal - black/white/gray
+No colorful cards or gradients
+Simple borders and spacing
+Green checkmarks (✓) for positive/keep reasons
+Red X (✗) for negative/remove reasons
+Tables with alternating row backgrounds
+Slide panel with subtle shadow
+
+
+FUNCTIONALITY:
+
+Click "Select All" checkbox → selects all in that column
+Click "Remove Selected" in Keep column → moves selected to Remove column
+Click "Keep Selected" in Remove column → moves selected to Keep column
+Click any row → opens detail panel
+In detail panel, Previous/Next navigates through ALL comps (both columns)
+Keep/Remove buttons in detail panel move comp between columns
+Finalize button at bottom submits final selection
+
+
+Build this as a single React component with useState for managing comp data and selected states. Use Tailwind CSS for styling.Claude is AI and can make mistakes. Please double-check responses.

@@ -26,8 +26,145 @@ import {
   Pencil,
   Hand,
   Check,
-  Sparkles
+  Sparkles,
+  X,
+  Mail,
+  Phone,
+  Building2,
+  ExternalLink
 } from 'lucide-react';
+
+interface CompProperty {
+  id: string;
+  address: string;
+  price: number;
+  pricePerSqft: number;
+  size: number;
+  lotSize: number;
+  bedBath: string;
+  yearBuilt: number;
+  garage: string;
+  domCdom: string;
+  pool: string;
+  financeType: string;
+  distance: string;
+  closingDate: string;
+  lastUpdate: string;
+  listingId: string;
+  listingStatus: string;
+  type: string;
+  conditions: string;
+  agent: {
+    name: string;
+    email: string;
+    id: string;
+    phone: string;
+    office: string;
+  };
+  agentRemarks: string;
+  publicRemarks: string;
+  imageUrl: string;
+  color: 'green' | 'red' | 'blue';
+}
+
+const sampleComps: CompProperty[] = [
+  {
+    id: '38734340',
+    address: '84303 Eremo Way',
+    price: 499000,
+    pricePerSqft: 242.70,
+    size: 2122,
+    lotSize: 7841,
+    bedBath: '4/2',
+    yearBuilt: 2005,
+    garage: '3 cars',
+    domCdom: '31 / -',
+    pool: 'In Ground, Electric Heat, Community',
+    financeType: 'Unknown',
+    distance: '0.44 mi',
+    closingDate: '12/5/2025',
+    lastUpdate: '2025-10-23T00:00:00',
+    listingId: '38734340',
+    listingStatus: 'Closed',
+    type: 'Single Family',
+    conditions: 'Standard',
+    agent: {
+      name: 'The Briggs Group',
+      email: 'info@thebriggsgroup.com',
+      id: 'CDAR-D78166',
+      phone: '(760) 422-4030',
+      office: 'Coldwell Banker Realty'
+    },
+    agentRemarks: 'Go Direct. Gate Code: Guard gated.\n\nFor financed offers, please include recent pre-qual letter + proof of funds statement for down payment. For cash offers, please include recent proof of funds. We cannot guarantee the accuracy of square footage, lot size or other information concerning the condition or features of property provided by Seller or obtained from public records or other sources. Buyer is advised to independently verify the accuracy of all information through personal/professional inspections. Buyer Letters will not be presented to Seller.',
+    publicRemarks: 'Step into this exceptional residence where indoor-outdoor living & vacation-style amenities meet everyday comfort. The open-floor plan invites you into the great room with soaring ceilings and abundant natural light, flowing seamlessly into a well-appointed kitchen with ample cabinetry, breakfast bar and pantry. The den is currently being used as a 4th bedroom. The epoxy coated double car garage also has a tandem side for 3rd vehicle parking. Outside, discover your own backyard escape: a covered patio, space for outdoor dining or lounging, with a large grassy yard perfect for play, and SOUTHERN mountain views beyond.',
+    imageUrl: '',
+    color: 'green'
+  },
+  {
+    id: '38756123',
+    address: '84521 Terra Lago Pkwy',
+    price: 650000,
+    pricePerSqft: 285.50,
+    size: 2276,
+    lotSize: 8500,
+    bedBath: '4/3',
+    yearBuilt: 2007,
+    garage: '2 cars',
+    domCdom: '45 / 12',
+    pool: 'None',
+    financeType: 'Conventional',
+    distance: '0.62 mi',
+    closingDate: '11/15/2025',
+    lastUpdate: '2025-10-15T00:00:00',
+    listingId: '38756123',
+    listingStatus: 'Closed',
+    type: 'Single Family',
+    conditions: 'Standard',
+    agent: {
+      name: 'Desert Realty Group',
+      email: 'contact@desertrealty.com',
+      id: 'CDAR-D89234',
+      phone: '(760) 555-1234',
+      office: 'RE/MAX Desert Properties'
+    },
+    agentRemarks: 'Showing by appointment only. 24-hour notice required.',
+    publicRemarks: 'Beautiful single-story home in the desirable Terra Lago community. Features include granite countertops, stainless steel appliances, and an open floor plan perfect for entertaining.',
+    imageUrl: '',
+    color: 'blue'
+  },
+  {
+    id: '38789456',
+    address: '84892 Lago Way',
+    price: 800000,
+    pricePerSqft: 320.00,
+    size: 2500,
+    lotSize: 10000,
+    bedBath: '5/3',
+    yearBuilt: 2010,
+    garage: '3 cars',
+    domCdom: '28 / 5',
+    pool: 'In Ground, Heated',
+    financeType: 'Cash',
+    distance: '0.85 mi',
+    closingDate: '10/28/2025',
+    lastUpdate: '2025-10-01T00:00:00',
+    listingId: '38789456',
+    listingStatus: 'Closed',
+    type: 'Single Family',
+    conditions: 'Standard',
+    agent: {
+      name: 'Luxury Homes Indio',
+      email: 'sales@luxuryhomesindio.com',
+      id: 'CDAR-D92345',
+      phone: '(760) 555-9876',
+      office: 'Berkshire Hathaway'
+    },
+    agentRemarks: 'Premium listing. Serious buyers only. Pre-approval required.',
+    publicRemarks: 'Stunning luxury home with panoramic mountain views. This property features high-end finishes throughout, a gourmet kitchen, and a resort-style backyard with heated pool and spa.',
+    imageUrl: '',
+    color: 'red'
+  }
+];
 
 function PIQContent() {
   const [, setLocation] = useLocation();
@@ -43,6 +180,27 @@ function PIQContent() {
   const [compsMapType, setCompsMapType] = useState<'map' | 'street' | 'aerial' | 'draw' | 'freehand'>('map');
   const [showCompsIQReport, setShowCompsIQReport] = useState(false);
   const [isCompsIQLoading, setIsCompsIQLoading] = useState(false);
+  const [selectedComp, setSelectedComp] = useState<CompProperty | null>(null);
+  const [selectedCompIndex, setSelectedCompIndex] = useState(0);
+
+  const handleCompClick = (comp: CompProperty, index: number) => {
+    setSelectedComp(comp);
+    setSelectedCompIndex(index);
+  };
+
+  const handlePrevComp = () => {
+    if (selectedCompIndex > 0) {
+      setSelectedCompIndex(selectedCompIndex - 1);
+      setSelectedComp(sampleComps[selectedCompIndex - 1]);
+    }
+  };
+
+  const handleNextComp = () => {
+    if (selectedCompIndex < sampleComps.length - 1) {
+      setSelectedCompIndex(selectedCompIndex + 1);
+      setSelectedComp(sampleComps[selectedCompIndex + 1]);
+    }
+  };
   const [isIQAnalyzed, setIsIQAnalyzed] = useState(fromNewAgent);
   const [isIQAnalyzing, setIsIQAnalyzing] = useState(false);
   const [piqIQRevealKey, setPiqIQRevealKey] = useState(0);
@@ -707,15 +865,27 @@ function PIQContent() {
                         backgroundSize: 'cover'
                       }}></div>
                       
-                      <div className="absolute top-1/4 left-1/4 transform -translate-x-1/2">
-                        <div className="bg-green-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg">$450K</div>
+                      <div 
+                        className="absolute top-1/4 left-1/4 transform -translate-x-1/2 cursor-pointer hover:scale-110 transition-transform"
+                        onClick={() => handleCompClick(sampleComps[0], 0)}
+                        data-testid="comp-marker-1"
+                      >
+                        <div className="bg-green-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg hover:bg-green-700">$499K</div>
                       </div>
-                      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                        <div className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg border-2 border-white">$650K</div>
+                      <div 
+                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer hover:scale-110 transition-transform"
+                        onClick={() => handleCompClick(sampleComps[1], 1)}
+                        data-testid="comp-marker-2"
+                      >
+                        <div className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg border-2 border-white hover:bg-blue-700">$650K</div>
                         <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-blue-600"></div>
                       </div>
-                      <div className="absolute bottom-1/3 right-1/4">
-                        <div className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg">$800K</div>
+                      <div 
+                        className="absolute bottom-1/3 right-1/4 cursor-pointer hover:scale-110 transition-transform"
+                        onClick={() => handleCompClick(sampleComps[2], 2)}
+                        data-testid="comp-marker-3"
+                      >
+                        <div className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg hover:bg-red-600">$800K</div>
                       </div>
                       <div className="absolute top-2/3 left-1/3">
                         <div className="w-6 h-6 bg-gray-800 rounded-full flex items-center justify-center text-white text-[10px] font-bold shadow-lg">S</div>
@@ -1197,6 +1367,251 @@ function PIQContent() {
             <MessageSquare className="w-6 h-6" />
           </button>
         </div>
+
+        {/* Comp Detail Modal */}
+        {selectedComp && (
+          <div className="fixed inset-0 z-50 flex items-start justify-end">
+            <div 
+              className="absolute inset-0 bg-black/50" 
+              onClick={() => setSelectedComp(null)}
+            />
+            <div className="relative bg-white shadow-2xl w-full max-w-xl h-full overflow-y-auto animate-in slide-in-from-right duration-300">
+              <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
+                <div className="flex items-center gap-3">
+                  <span className="text-lg font-bold text-gray-900">{selectedComp.address}</span>
+                  <span className={cn(
+                    "px-2 py-0.5 text-xs font-bold rounded",
+                    selectedComp.listingStatus === 'Closed' ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"
+                  )}>
+                    {selectedComp.listingStatus}
+                  </span>
+                  <span className="text-sm text-gray-500">{selectedComp.closingDate}</span>
+                </div>
+                <button 
+                  onClick={() => setSelectedComp(null)}
+                  className="p-2 hover:bg-gray-100 rounded-full transition"
+                  data-testid="button-close-comp-detail"
+                >
+                  <X className="w-5 h-5 text-gray-500" />
+                </button>
+              </div>
+
+              <div className="px-6 py-4 border-b border-gray-200 flex justify-between">
+                <button 
+                  onClick={handlePrevComp}
+                  disabled={selectedCompIndex === 0}
+                  className={cn(
+                    "px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium transition",
+                    selectedCompIndex === 0 ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-50"
+                  )}
+                  data-testid="button-prev-comp"
+                >
+                  Previous
+                </button>
+                <button 
+                  onClick={handleNextComp}
+                  disabled={selectedCompIndex === sampleComps.length - 1}
+                  className={cn(
+                    "px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium transition",
+                    selectedCompIndex === sampleComps.length - 1 ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-50"
+                  )}
+                  data-testid="button-next-comp"
+                >
+                  Next
+                </button>
+              </div>
+
+              <div className="p-6">
+                {/* Map Preview */}
+                <div className="relative w-full h-48 bg-gray-200 rounded-xl overflow-hidden border border-gray-300 mb-6">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-100 via-blue-50 to-green-50">
+                    <div className="absolute inset-0 opacity-30" style={{
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%23e8f4f8' width='400' height='400'/%3E%3Cpath d='M0 200 Q100 150 200 200 T400 200' stroke='%23a0c4d0' fill='none' stroke-width='2'/%3E%3Cpath d='M0 300 Q150 250 300 300 T400 280' stroke='%23b0d4e0' fill='none' stroke-width='1.5'/%3E%3C/svg%3E")`,
+                      backgroundSize: 'cover'
+                    }}></div>
+                    <div className="absolute top-1/4 left-1/4">
+                      <div className="bg-green-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg">$499K</div>
+                    </div>
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                      <div className={cn(
+                        "text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg border-2 border-white",
+                        selectedComp.color === 'green' ? "bg-green-600" : selectedComp.color === 'red' ? "bg-red-500" : "bg-blue-600"
+                      )}>
+                        ${(selectedComp.price / 1000).toFixed(0)}K
+                      </div>
+                    </div>
+                    <div className="absolute bottom-1/3 right-1/4">
+                      <div className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg">$800K</div>
+                    </div>
+                    <div className="absolute top-2/3 left-1/3">
+                      <div className="w-6 h-6 bg-gray-800 rounded-full flex items-center justify-center text-white text-[10px] font-bold shadow-lg">S</div>
+                    </div>
+                  </div>
+                  <div className="absolute bottom-2 left-2 text-[10px] text-gray-500">Google</div>
+                  <div className="absolute bottom-2 right-2 flex gap-1">
+                    <button className="w-6 h-6 bg-white rounded shadow flex items-center justify-center text-gray-600 text-xs">+</button>
+                    <button className="w-6 h-6 bg-white rounded shadow flex items-center justify-center text-gray-600 text-xs">−</button>
+                  </div>
+                </div>
+
+                {/* Property Details Grid */}
+                <div className="grid grid-cols-2 gap-x-8 gap-y-3 mb-6 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">R_ID:</span>
+                    <span className="font-medium text-gray-900">{selectedComp.id}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Price:</span>
+                    <span className="font-medium text-gray-900">${selectedComp.price.toLocaleString()} / $515,000</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Price/Sqft:</span>
+                    <span className="font-medium text-gray-900">${selectedComp.pricePerSqft.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Bed/Bath:</span>
+                    <span className="font-medium text-gray-900">{selectedComp.bedBath}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Size:</span>
+                    <span className="font-medium text-gray-900">{selectedComp.size.toLocaleString()} sqft</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Lot Size:</span>
+                    <span className="font-medium text-gray-900">{selectedComp.lotSize.toLocaleString()} sqft</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Year Built:</span>
+                    <span className="font-medium text-gray-900">{selectedComp.yearBuilt}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Garage:</span>
+                    <span className="font-medium text-gray-900">{selectedComp.garage}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">DOM/CDOM:</span>
+                    <span className="font-medium text-gray-900">{selectedComp.domCdom}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Pool:</span>
+                    <span className="font-medium text-gray-900 text-right max-w-[150px] truncate" title={selectedComp.pool}>{selectedComp.pool}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Distance:</span>
+                    <span className="font-medium text-gray-900">{selectedComp.distance}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Finance Type:</span>
+                    <span className="font-medium text-gray-900">{selectedComp.financeType}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Closing Date:</span>
+                    <span className="font-medium text-gray-900">{selectedComp.closingDate}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Last Update:</span>
+                    <span className="font-medium text-gray-900">{new Date(selectedComp.lastUpdate).toLocaleDateString()}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Listing ID:</span>
+                    <span className="font-medium text-gray-900">{selectedComp.listingId}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Listing Status:</span>
+                    <span className="font-medium text-gray-900">{selectedComp.listingStatus}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Type:</span>
+                    <span className="font-medium text-gray-900">{selectedComp.type}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Conditions:</span>
+                    <span className="font-medium text-gray-900">{selectedComp.conditions}</span>
+                  </div>
+                </div>
+
+                {/* Agent Section */}
+                <div className="border border-gray-200 rounded-lg p-4 mb-6">
+                  <h3 className="text-sm font-bold text-gray-700 mb-3">Agent</h3>
+                  <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div className="flex items-center gap-2">
+                      <span className="text-gray-500">Name:</span>
+                      <span className="font-medium text-gray-900">{selectedComp.agent.name}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Mail className="w-4 h-4 text-gray-400" />
+                      <a href={`mailto:${selectedComp.agent.email}`} className="text-blue-600 hover:underline">{selectedComp.agent.email}</a>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-gray-500">ID:</span>
+                      <span className="font-medium text-gray-900">{selectedComp.agent.id}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Phone className="w-4 h-4 text-gray-400" />
+                      <span className="font-medium text-gray-900">{selectedComp.agent.phone}</span>
+                    </div>
+                    <div className="flex items-center gap-2 col-span-2">
+                      <Building2 className="w-4 h-4 text-gray-400" />
+                      <span className="text-gray-500">Office:</span>
+                      <span className="font-medium text-gray-900">{selectedComp.agent.office}</span>
+                    </div>
+                  </div>
+                  <button className="mt-3 w-full py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition flex items-center justify-center gap-2">
+                    <ExternalLink className="w-4 h-4" />
+                    See more info
+                  </button>
+                </div>
+
+                {/* Agent Remarks */}
+                <div className="mb-6">
+                  <h3 className="text-sm font-bold text-gray-700 mb-2">Agent Remarks:</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-wrap">{selectedComp.agentRemarks}</p>
+                </div>
+
+                {/* Public Remarks */}
+                <div className="mb-6">
+                  <h3 className="text-sm font-bold text-gray-700 mb-2">Public Remarks:</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">{selectedComp.publicRemarks}</p>
+                </div>
+
+                {/* Conditions Dropdown */}
+                <div className="mb-4">
+                  <label className="text-sm font-bold text-gray-700 mb-2 block">Conditions:</label>
+                  <select 
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    data-testid="select-comp-conditions"
+                  >
+                    <option>Select condition...</option>
+                    <option>Standard</option>
+                    <option>REO/Bank Owned</option>
+                    <option>Short Sale</option>
+                    <option>Probate</option>
+                  </select>
+                </div>
+
+                {/* Status Dropdown */}
+                <div className="mb-4">
+                  <label className="text-sm font-bold text-gray-700 mb-2 block">Status:</label>
+                  <select 
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    data-testid="select-comp-status"
+                  >
+                    <option>Select status...</option>
+                    <option>Include</option>
+                    <option>Exclude</option>
+                    <option>Primary</option>
+                  </select>
+                </div>
+
+                {/* Influences Section */}
+                <div className="border-t border-gray-200 pt-4">
+                  <h3 className="text-sm font-bold text-gray-700 mb-3">INFLUENCES</h3>
+                  <div className="text-sm text-gray-500">No influences recorded</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       </>
   );
