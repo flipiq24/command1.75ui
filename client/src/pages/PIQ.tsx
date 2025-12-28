@@ -1122,35 +1122,8 @@ function PIQContent() {
                     </div>
                   )}
 
-                  {/* Subject Property Info Bar */}
-                  <div className="mt-6 mb-4 grid grid-cols-4 gap-0 border border-gray-200 rounded-lg overflow-hidden bg-white">
-                    <div className="p-3 border-r border-gray-200">
-                      <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-1">Property Details</div>
-                      <div className="text-xs font-medium text-gray-900">Single Family / 4 Br / 2 Ba / 3 Gar</div>
-                      <div className="text-xs text-gray-600">/ 2008 / 2,472 ft² / 7,405 ft² /</div>
-                      <div className="text-xs text-gray-600">Pool: Yes - Heated</div>
-                    </div>
-                    <div className="p-3 border-r border-gray-200">
-                      <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-1">List Price</div>
-                      <div className="text-sm font-bold text-gray-900">$599,900</div>
-                      <div className="text-xs text-gray-600">Owned over 15 years, Trust owned</div>
-                    </div>
-                    <div className="p-3 border-r border-gray-200">
-                      <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-1">Market Info</div>
-                      <div className="text-xs font-medium text-green-600">28 Days / Active</div>
-                      <div className="text-xs text-gray-600">DOM: 28 / CDOM: 12</div>
-                      <div className="text-xs text-gray-600">Sale Type: Standard</div>
-                    </div>
-                    <div className="p-3">
-                      <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-1">Evaluation Metrics</div>
-                      <div className="text-xs text-gray-600">Asking VS ARV: <span className="text-red-600 font-medium">85.7%</span></div>
-                      <div className="text-xs text-gray-600">ARV: <span className="font-medium text-gray-900">$699,900</span></div>
-                      <div className="text-xs text-gray-600">Comp Data: <span className="font-medium">A2, P1, B0, C1</span></div>
-                    </div>
-                  </div>
-
                   {/* Property Comparison Summary */}
-                  <div className="mb-4 grid grid-cols-3 gap-4">
+                  <div className="mt-6 mb-4 grid grid-cols-3 gap-4">
                     <div className="bg-white border border-gray-200 rounded-lg p-3">
                       <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-2 font-medium">Property vs Comp Avg</div>
                       <div className="space-y-1.5 text-xs">
