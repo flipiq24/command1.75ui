@@ -1122,60 +1122,83 @@ function PIQContent() {
                     </div>
                   )}
 
-                  {/* Property Comparison Summary */}
+                  {/* Property Comparison Table */}
                   <div className="mt-6 mb-4 grid grid-cols-3 gap-4">
-                    <div className="bg-white border border-gray-200 rounded-lg p-3">
-                      <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-2 font-medium">Property vs Comp Avg</div>
-                      <div className="space-y-1.5 text-xs">
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Bed/Bath:</span>
-                          <span className="font-medium text-gray-900">4/2 <span className="text-green-600">(same)</span></span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Garage:</span>
-                          <span className="font-medium text-gray-900">3 <span className="text-green-600">(+1)</span></span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Year Built:</span>
-                          <span className="font-medium text-gray-900">2008 <span className="text-green-600">(+2 yrs)</span></span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">SqFt:</span>
-                          <span className="font-medium text-gray-900">2,472 <span className="text-red-600">(-78)</span></span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Lot:</span>
-                          <span className="font-medium text-gray-900">7,405 <span className="text-green-600">(same)</span></span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Condition:</span>
-                          <span className="font-medium text-yellow-600">Fixer (below avg)</span>
+                    <div className="col-span-2 bg-white border border-gray-200 rounded-lg overflow-hidden">
+                      <table className="w-full text-xs">
+                        <thead>
+                          <tr className="bg-gray-700 text-white">
+                            <th className="text-left px-3 py-2 font-medium uppercase tracking-wide">Metric</th>
+                            <th className="text-center px-3 py-2 font-medium uppercase tracking-wide">PIQ</th>
+                            <th className="text-center px-3 py-2 font-medium uppercase tracking-wide">Average Comps</th>
+                            <th className="text-right px-3 py-2 font-medium uppercase tracking-wide">% Difference</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-100">
+                          <tr className="hover:bg-gray-50">
+                            <td className="px-3 py-2 text-gray-700">Property Type</td>
+                            <td className="px-3 py-2 text-center font-medium text-gray-900">Single Family</td>
+                            <td className="px-3 py-2 text-center text-gray-600">Single Family</td>
+                            <td className="px-3 py-2 text-right text-gray-500">N/A</td>
+                          </tr>
+                          <tr className="hover:bg-gray-50">
+                            <td className="px-3 py-2 text-gray-700">Bedrooms</td>
+                            <td className="px-3 py-2 text-center font-medium text-gray-900">4</td>
+                            <td className="px-3 py-2 text-center text-gray-600">4.2</td>
+                            <td className="px-3 py-2 text-right text-red-600 font-medium">-3.8%</td>
+                          </tr>
+                          <tr className="hover:bg-gray-50">
+                            <td className="px-3 py-2 text-gray-700">Bathrooms</td>
+                            <td className="px-3 py-2 text-center font-medium text-gray-900">3</td>
+                            <td className="px-3 py-2 text-center text-gray-600">2.7</td>
+                            <td className="px-3 py-2 text-right text-green-600 font-medium">+10.0%</td>
+                          </tr>
+                          <tr className="hover:bg-gray-50">
+                            <td className="px-3 py-2 text-gray-700">Year Built</td>
+                            <td className="px-3 py-2 text-center font-medium text-gray-900">2008</td>
+                            <td className="px-3 py-2 text-center text-gray-600">2006</td>
+                            <td className="px-3 py-2 text-right text-green-600 font-medium">+0.1%</td>
+                          </tr>
+                          <tr className="hover:bg-gray-50">
+                            <td className="px-3 py-2 text-gray-700">Sqft</td>
+                            <td className="px-3 py-2 text-center font-medium text-gray-900">2,472 sqft</td>
+                            <td className="px-3 py-2 text-center text-gray-600">2,419 sqft</td>
+                            <td className="px-3 py-2 text-right text-green-600 font-medium">+2.2%</td>
+                          </tr>
+                          <tr className="hover:bg-gray-50">
+                            <td className="px-3 py-2 text-gray-700">Lot Size</td>
+                            <td className="px-3 py-2 text-center font-medium text-gray-900">7,405 sqft</td>
+                            <td className="px-3 py-2 text-center text-gray-600">7,458 sqft</td>
+                            <td className="px-3 py-2 text-right text-red-600 font-medium">-0.7%</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div className="space-y-4">
+                      <div className="bg-white border border-gray-200 rounded-lg p-3">
+                        <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-2 font-medium">Location Factors</div>
+                        <div className="space-y-1.5 text-xs">
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-green-600 font-bold">+</span>
+                            <span className="text-gray-700">Golf course front</span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-green-600 font-bold">+</span>
+                            <span className="text-gray-700">Guard gated community</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="bg-white border border-gray-200 rounded-lg p-3">
-                      <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-2 font-medium">Location Factors</div>
-                      <div className="space-y-1.5 text-xs">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-green-600 font-bold">+</span>
-                          <span className="text-gray-700">Golf course front</span>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-green-600 font-bold">+</span>
-                          <span className="text-gray-700">Guard gated community</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-white border border-gray-200 rounded-lg p-3">
-                      <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-2 font-medium">Influences</div>
-                      <div className="space-y-1.5 text-xs">
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">School District:</span>
-                          <span className="font-medium text-gray-900">Desert Sands USD</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Tract:</span>
-                          <span className="font-medium text-gray-900">Terra Lago</span>
+                      <div className="bg-white border border-gray-200 rounded-lg p-3">
+                        <div className="text-[10px] text-gray-500 uppercase tracking-wide mb-2 font-medium">Influences</div>
+                        <div className="space-y-1.5 text-xs">
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">School District:</span>
+                            <span className="font-medium text-gray-900">Desert Sands USD</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">Tract:</span>
+                            <span className="font-medium text-gray-900">Terra Lago</span>
+                          </div>
                         </div>
                       </div>
                     </div>
