@@ -1,0 +1,385 @@
+export type PropertyCondition =
+  | "Fixer"
+  | "As-Is"
+  | "Standard High"
+  | "Standard Low"
+  | "Flip"
+  | "Standard Flip"
+  | "High Flip"
+  | "Low Flip & Staged"
+  | "Standard Flip & Staged"
+  | "High Flip & Staged"
+
+export type InfluenceCategory =
+  | "Additions"
+  | "Bed/Bath"
+  | "Busy Street"
+  | "Check Notes"
+  | "Design"
+  | "Freeway"
+  | "Garage"
+  | "Guest/AUD"
+  | "Location"
+  | "Lot"
+  | "Lot Usable Area"
+  | "Obsolescence Adjacent"
+  | "Parking"
+  | "Pool"
+  | "Power Lines"
+  | "Railroad Tracks"
+  | "View"
+  | "Zoning"
+
+export interface Influence {
+  category: InfluenceCategory
+  type: "positive" | "negative"
+  note: string
+}
+
+export interface Comp {
+  id: number
+  photoUrl: string
+  address: string
+  comp: {
+    type: string
+    soldDate: string
+  }
+  condition: PropertyCondition
+  status: "Active" | "Closed" | "Back Up Offer" | "Pending"
+  date: string
+  type: string
+  listPrice: string
+  salePrice: string
+  bedBath: string
+  yearBuilt: number
+  size: string
+  garage: string
+  domCdom: string
+  pool: string
+  distance: string
+  influences: Influence[]
+}
+
+export const compsData: Comp[] = [
+  {
+    id: 1,
+    photoUrl: "/placeholder.svg?width=64&height=48",
+    address: "3868 3rd Avenue",
+    comp: { type: "Normal", soldDate: "-" },
+    condition: "High Flip & Staged",
+    status: "Active",
+    date: "7/5/2025",
+    type: "Single Family",
+    listPrice: "$750,000",
+    salePrice: "$-",
+    bedBath: "3/2",
+    yearBuilt: 1924,
+    size: "1,268 sqft",
+    garage: "2 cars",
+    domCdom: "-/-",
+    pool: "None",
+    distance: "0.00 mi",
+    influences: [
+      { category: "Location", type: "positive", note: "Located on a quiet, desirable street." },
+      { category: "Design", type: "positive", note: "Modern, open-concept design after full renovation." },
+      { category: "Garage", type: "positive", note: "Spacious 2-car garage." },
+    ],
+  },
+  {
+    id: 2,
+    photoUrl: "/placeholder.svg?width=64&height=48",
+    address: "3864 3rd Avenue",
+    comp: { type: "Normal", soldDate: "-" },
+    condition: "Standard High",
+    status: "Back Up Offer",
+    date: "-",
+    type: "Single Family",
+    listPrice: "$1,199,000",
+    salePrice: "$-",
+    bedBath: "3/2",
+    yearBuilt: 1928,
+    size: "1,898 sqft",
+    garage: "0 cars",
+    domCdom: "36/-",
+    pool: "None",
+    distance: "0.02 mi",
+    influences: [
+      { category: "Lot", type: "positive", note: "Unusually large lot for the area." },
+      { category: "Garage", type: "negative", note: "No garage or dedicated off-street parking." },
+    ],
+  },
+  {
+    id: 3,
+    photoUrl: "/placeholder.svg?width=64&height=48",
+    address: "3867 3rd Avenue",
+    comp: { type: "Normal", soldDate: "3/26/2025" },
+    condition: "Standard Low",
+    status: "Closed",
+    date: "3/26/2025",
+    type: "Single Family",
+    listPrice: "$1,075,000",
+    salePrice: "$1,085,800",
+    bedBath: "3/2",
+    yearBuilt: 1925,
+    size: "1,304 sqft",
+    garage: "0 cars",
+    domCdom: "21/-",
+    pool: "None",
+    distance: "0.04 mi",
+    influences: [{ category: "Check Notes", type: "negative", note: "Some deferred maintenance on exterior." }],
+  },
+  {
+    id: 4,
+    photoUrl: "/placeholder.svg?width=64&height=48",
+    address: "3899 2nd Avenue",
+    comp: { type: "Normal", soldDate: "5/30/2025" },
+    condition: "Fixer",
+    status: "Closed",
+    date: "5/30/2025",
+    type: "Single Family",
+    listPrice: "$889,000",
+    salePrice: "$920,000",
+    bedBath: "3/2",
+    yearBuilt: 1920,
+    size: "1,157 sqft",
+    garage: "0 cars",
+    domCdom: "16/-",
+    pool: "None",
+    distance: "0.07 mi",
+    influences: [
+      { category: "Check Notes", type: "negative", note: "Evidence of foundation issues noted in inspection." },
+      { category: "Design", type: "negative", note: "Outdated floor plan, requires significant work." },
+    ],
+  },
+  {
+    id: 5,
+    photoUrl: "/placeholder.svg?width=64&height=48",
+    address: "3874 Arlington Avenue",
+    comp: { type: "Normal", soldDate: "12/22/2024" },
+    condition: "Standard High",
+    status: "Closed",
+    date: "12/22/2024",
+    type: "Single Family",
+    listPrice: "$975,000",
+    salePrice: "$1,050,000",
+    bedBath: "4/3",
+    yearBuilt: 1922,
+    size: "1,730 sqft",
+    garage: "0 cars",
+    domCdom: "26/-",
+    pool: "None",
+    distance: "0.12 mi",
+    influences: [{ category: "Busy Street", type: "negative", note: "Property is located on a main thoroughfare." }],
+  },
+  // --- New High Comps ---
+  {
+    id: 6,
+    photoUrl: "/placeholder.svg?width=64&height=48",
+    address: "123 Main Street",
+    comp: { type: "Normal", soldDate: "6/15/2025" },
+    condition: "High Flip & Staged",
+    status: "Closed",
+    date: "6/15/2025",
+    type: "Single Family",
+    listPrice: "$850,000",
+    salePrice: "$875,000",
+    bedBath: "4/3",
+    yearBuilt: 1930,
+    size: "1,950 sqft",
+    garage: "2 cars",
+    domCdom: "15/-",
+    pool: "Yes",
+    distance: "0.25 mi",
+    influences: [
+      { category: "Pool", type: "positive", note: "Brand new salt water pool and spa." },
+      { category: "View", type: "positive", note: "City skyline view from the master bedroom." },
+    ],
+  },
+  {
+    id: 7,
+    photoUrl: "/placeholder.svg?width=64&height=48",
+    address: "456 Oak Avenue",
+    comp: { type: "Normal", soldDate: "-" },
+    condition: "High Flip",
+    status: "Active",
+    date: "7/1/2025",
+    type: "Single Family",
+    listPrice: "$920,000",
+    salePrice: "$-",
+    bedBath: "3/2.5",
+    yearBuilt: 1925,
+    size: "1,800 sqft",
+    garage: "1 car",
+    domCdom: "5/-",
+    pool: "None",
+    distance: "0.30 mi",
+    influences: [
+      { category: "Design", type: "positive", note: "Professionally designed interior with high-end finishes." },
+      { category: "Guest/AUD", type: "positive", note: "Permitted guest house with separate entrance." },
+    ],
+  },
+  {
+    id: 8,
+    photoUrl: "/placeholder.svg?width=64&height=48",
+    address: "789 Pine Lane",
+    comp: { type: "Normal", soldDate: "5/20/2025" },
+    condition: "Standard Flip & Staged",
+    status: "Closed",
+    date: "5/20/2025",
+    type: "Single Family",
+    listPrice: "$799,000",
+    salePrice: "$810,000",
+    bedBath: "3/2",
+    yearBuilt: 1940,
+    size: "1,600 sqft",
+    garage: "2 cars",
+    domCdom: "30/-",
+    pool: "None",
+    distance: "0.50 mi",
+    influences: [
+      { category: "Lot Usable Area", type: "positive", note: "Large, flat backyard, perfect for entertaining." },
+      { category: "Freeway", type: "negative", note: "Audible freeway noise during peak hours." },
+    ],
+  },
+  {
+    id: 9,
+    photoUrl: "/placeholder.svg?width=64&height=48",
+    address: "101 Maple Court",
+    comp: { type: "Normal", soldDate: "-" },
+    condition: "High Flip & Staged",
+    status: "Pending",
+    date: "6/25/2025",
+    type: "Townhouse",
+    listPrice: "$650,000",
+    salePrice: "$-",
+    bedBath: "2/2",
+    yearBuilt: 1985,
+    size: "1,400 sqft",
+    garage: "2 cars",
+    domCdom: "10/-",
+    pool: "Community",
+    distance: "1.10 mi",
+    influences: [
+      { category: "Power Lines", type: "negative", note: "High-voltage power lines visible from the property." },
+      { category: "Railroad Tracks", type: "negative", note: "Located within 200 yards of active railroad tracks." },
+    ],
+  },
+  {
+    id: 10,
+    photoUrl: "/placeholder.svg?width=64&height=48",
+    address: "212 Birch Street",
+    comp: { type: "Normal", soldDate: "4/10/2025" },
+    condition: "Standard High",
+    status: "Closed",
+    date: "4/10/2025",
+    type: "Single Family",
+    listPrice: "$1,100,000",
+    salePrice: "$1,100,000",
+    bedBath: "5/4",
+    yearBuilt: 1955,
+    size: "2,500 sqft",
+    garage: "3 cars",
+    domCdom: "45/-",
+    pool: "Yes",
+    distance: "0.80 mi",
+    influences: [
+      { category: "Additions", type: "positive", note: "Large, permitted family room addition." },
+      { category: "Bed/Bath", type: "positive", note: "High bed/bath count for the neighborhood." },
+      { category: "Lot", type: "positive", note: "Corner lot provides extra privacy and light." },
+    ],
+  },
+  // --- New Mid Comps ---
+  {
+    id: 11,
+    photoUrl: "/placeholder.svg?width=64&height=48",
+    address: "333 Cedar Drive",
+    comp: { type: "Normal", soldDate: "6/1/2025" },
+    condition: "Standard High",
+    status: "Closed",
+    date: "6/1/2025",
+    type: "Single Family",
+    listPrice: "$950,000",
+    salePrice: "$945,000",
+    bedBath: "3/2",
+    yearBuilt: 1960,
+    size: "1,750 sqft",
+    garage: "2 cars",
+    domCdom: "22/-",
+    pool: "None",
+    distance: "0.95 mi",
+    influences: [
+      { category: "Location", type: "positive", note: "Walking distance to parks and schools." },
+      { category: "Design", type: "negative", note: "Kitchen is functional but dated." },
+    ],
+  },
+  {
+    id: 12,
+    photoUrl: "/placeholder.svg?width=64&height=48",
+    address: "444 Elm Street",
+    comp: { type: "Normal", soldDate: "-" },
+    condition: "Standard Low",
+    status: "Active",
+    date: "7/2/2025",
+    type: "Single Family",
+    listPrice: "$899,000",
+    salePrice: "$-",
+    bedBath: "3/1",
+    yearBuilt: 1948,
+    size: "1,500 sqft",
+    garage: "1 car",
+    domCdom: "3/-",
+    pool: "None",
+    distance: "1.20 mi",
+    influences: [
+      { category: "Zoning", type: "positive", note: "Zoned for accessory dwelling unit (ADU)." },
+      { category: "Bed/Bath", type: "negative", note: "Only one bathroom." },
+    ],
+  },
+  // --- New Low Comps ---
+  {
+    id: 13,
+    photoUrl: "/placeholder.svg?width=64&height=48",
+    address: "555 Spruce Court",
+    comp: { type: "REO", soldDate: "3/15/2025" },
+    condition: "Fixer",
+    status: "Closed",
+    date: "3/15/2025",
+    type: "Single Family",
+    listPrice: "$700,000",
+    salePrice: "$680,000",
+    bedBath: "2/1",
+    yearBuilt: 1922,
+    size: "1,100 sqft",
+    garage: "0 cars",
+    domCdom: "90/-",
+    pool: "None",
+    distance: "1.50 mi",
+    influences: [
+      { category: "Check Notes", type: "negative", note: "Significant pest damage reported." },
+      { category: "Obsolescence Adjacent", type: "negative", note: "Adjacent to a derelict commercial property." },
+    ],
+  },
+  {
+    id: 14,
+    photoUrl: "/placeholder.svg?width=64&height=48",
+    address: "666 Willow Way",
+    comp: { type: "Short Sale", soldDate: "-" },
+    condition: "As-Is",
+    status: "Pending",
+    date: "6/10/2025",
+    type: "Condo",
+    listPrice: "$550,000",
+    salePrice: "$-",
+    bedBath: "2/2",
+    yearBuilt: 1975,
+    size: "1,250 sqft",
+    garage: "1 car",
+    domCdom: "120/-",
+    pool: "Community",
+    distance: "2.00 mi",
+    influences: [
+      { category: "Check Notes", type: "negative", note: "HOA is in litigation." },
+      { category: "Parking", type: "negative", note: "Limited guest parking available." },
+    ],
+  },
+]

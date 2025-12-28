@@ -34,6 +34,46 @@ import {
   ExternalLink
 } from 'lucide-react';
 
+type PropertyCondition =
+  | "Fixer"
+  | "As-Is"
+  | "Standard High"
+  | "Standard Low"
+  | "Flip"
+  | "Standard Flip"
+  | "High Flip"
+  | "Low Flip & Staged"
+  | "Standard Flip & Staged"
+  | "High Flip & Staged";
+
+type InfluenceCategory =
+  | "Additions"
+  | "Bed/Bath"
+  | "Busy Street"
+  | "Check Notes"
+  | "Design"
+  | "Freeway"
+  | "Garage"
+  | "Guest/AUD"
+  | "Location"
+  | "Lot"
+  | "Lot Usable Area"
+  | "Obsolescence Adjacent"
+  | "Parking"
+  | "Pool"
+  | "Power Lines"
+  | "Railroad Tracks"
+  | "View"
+  | "Zoning";
+
+interface Influence {
+  category: InfluenceCategory;
+  type: "positive" | "negative";
+  note: string;
+}
+
+type CompBucket = "Premium" | "High" | "Mid" | "Low";
+
 interface CompProperty {
   id: string;
   address: string;
@@ -68,6 +108,9 @@ interface CompProperty {
   keep: boolean;
   whyKeep: string[];
   whyRemove: string[];
+  condition: PropertyCondition;
+  influences: Influence[];
+  bucket: CompBucket;
 }
 
 const initialComps: CompProperty[] = [
