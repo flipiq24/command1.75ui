@@ -1748,6 +1748,79 @@ function PIQContent() {
                   </div>
                 </div>
 
+                {/* WHY KEEPING / WHY REMOVING Section */}
+                {selectedComp.keep ? (
+                  <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4">
+                    <h3 className="text-sm font-bold text-green-800 mb-3 flex items-center gap-2">
+                      <span className="text-green-600">✓</span> WHY KEEPING THIS COMP
+                    </h3>
+                    <div className="border-t border-green-200 pt-3">
+                      <ul className="space-y-2">
+                        {selectedComp.whyKeep.map((reason, idx) => (
+                          <li key={idx} className="flex items-start gap-2 text-sm text-green-700">
+                            <span className="text-green-600 mt-0.5">✓</span>
+                            <span>{reason}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
+                    <h3 className="text-sm font-bold text-red-800 mb-3 flex items-center gap-2">
+                      <span className="text-red-600">✗</span> WHY REMOVING THIS COMP
+                    </h3>
+                    <div className="border-t border-red-200 pt-3">
+                      <ul className="space-y-2">
+                        {selectedComp.whyRemove.map((reason, idx) => (
+                          <li key={idx} className="flex items-start gap-2 text-sm text-red-700">
+                            <span className="text-red-600 mt-0.5">✗</span>
+                            <span>{reason}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
+
+                {/* Keep/Remove Action Buttons */}
+                <div className="mb-6 flex gap-3">
+                  <button
+                    onClick={() => {
+                      if (!selectedComp.keep) {
+                        setComps(prev => prev.map(c => c.id === selectedComp.id ? { ...c, keep: true } : c));
+                        setSelectedComp(prev => prev ? { ...prev, keep: true } : null);
+                      }
+                    }}
+                    className={cn(
+                      "flex-1 py-2.5 rounded-lg text-sm font-bold transition flex items-center justify-center gap-2",
+                      selectedComp.keep 
+                        ? "bg-green-600 text-white" 
+                        : "bg-white border-2 border-green-600 text-green-600 hover:bg-green-50"
+                    )}
+                    data-testid="button-keep-comp"
+                  >
+                    <span>✓</span> Keep
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (selectedComp.keep) {
+                        setComps(prev => prev.map(c => c.id === selectedComp.id ? { ...c, keep: false } : c));
+                        setSelectedComp(prev => prev ? { ...prev, keep: false } : null);
+                      }
+                    }}
+                    className={cn(
+                      "flex-1 py-2.5 rounded-lg text-sm font-bold transition flex items-center justify-center gap-2",
+                      !selectedComp.keep 
+                        ? "bg-red-600 text-white" 
+                        : "bg-white border-2 border-red-600 text-red-600 hover:bg-red-50"
+                    )}
+                    data-testid="button-remove-comp"
+                  >
+                    <span>✗</span> Remove
+                  </button>
+                </div>
+
                 {/* Property Details Grid */}
                 <div className="grid grid-cols-2 gap-x-8 gap-y-3 mb-6 text-sm">
                   <div className="flex justify-between">
