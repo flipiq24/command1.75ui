@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useMemo, useLayoutEffect, useRef, useCallback } from 'react';
 import { useLocation, useSearch } from 'wouter';
 import { cn } from "@/lib/utils";
 import { useLayout } from '@/components/Layout';
@@ -719,24 +719,69 @@ function PIQContent() {
   const [selectedRemoveIds, setSelectedRemoveIds] = useState<Set<string>>(new Set());
   const [selectedListIds, setSelectedListIds] = useState<Set<string>>(new Set());
   const [estimatedARV, setEstimatedARV] = useState(765000);
-  const [showARVWarning, setShowARVWarning] = useState(false);
+  const [arvPosition, setArvPosition] = useState(4);
   const [isDraggingARV, setIsDraggingARV] = useState(false);
+  const [isEditingARV, setIsEditingARV] = useState(false);
+  const [arvInputValue, setArvInputValue] = useState('');
+  const tableRef = useRef<HTMLTableElement>(null);
+  const arvRowRef = useRef<HTMLTableRowElement>(null);
 
-  const VALUE_CEILING = 1060000;
-  const ARV_MIN = 500000;
-  const ARV_MAX = 1200000;
+  const allCompsFlat = useMemo(() => {
+    const bucketOrder = ['Premium', 'High', 'Mid', 'Low'] as const;
+    const result: { comp: CompProperty; globalIndex: number; bucket: string }[] = [];
+    let globalIdx = 0;
+    bucketOrder.forEach(bucket => {
+      comps.filter(c => c.bucket === bucket).forEach(comp => {
+        result.push({ comp, globalIndex: globalIdx, bucket });
+        globalIdx++;
+      });
+    });
+    return result;
+  }, [comps]);
 
-  const handleARVDrag = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDraggingARV) return;
-    const container = e.currentTarget.closest('.arv-drag-container') as HTMLElement;
-    if (!container) return;
-    const rect = container.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const percentage = Math.max(0, Math.min(1, x / rect.width));
-    const newValue = Math.round((ARV_MIN + percentage * (ARV_MAX - ARV_MIN)) / 1000) * 1000;
-    setEstimatedARV(newValue);
-    setShowARVWarning(newValue > VALUE_CEILING);
+  const valueCeilingGlobalIndex = useMemo(() => {
+    return allCompsFlat.findIndex(item => item.comp.isValueCeiling);
+  }, [allCompsFlat]);
+
+  const isAboveValueCeiling = arvPosition <= valueCeilingGlobalIndex + 0.5;
+
+  const calculateARVFromPosition = useCallback((pos: number) => {
+    if (allCompsFlat.length === 0) return 750000;
+    const clampedPos = Math.max(0, Math.min(pos, allCompsFlat.length));
+    const aboveIdx = Math.floor(clampedPos) - 1;
+    const belowIdx = Math.floor(clampedPos);
+    const above = allCompsFlat[aboveIdx]?.comp;
+    const below = allCompsFlat[belowIdx]?.comp;
+    if (!above && !below) return 750000;
+    if (!above) return below?.price || 750000;
+    if (!below) return above?.price || 750000;
+    const fraction = clampedPos - Math.floor(clampedPos);
+    const interpolated = above.price - (above.price - below.price) * fraction;
+    return Math.round(interpolated / 1000) * 1000;
+  }, [allCompsFlat]);
+
+  const handleARVManualUpdate = (value: string) => {
+    const numValue = parseInt(value.replace(/[^0-9]/g, ''), 10);
+    if (!isNaN(numValue) && numValue > 0) {
+      setEstimatedARV(numValue);
+      let bestPos = arvPosition;
+      let bestDiff = Infinity;
+      for (let p = 0; p <= allCompsFlat.length; p += 0.5) {
+        const calcValue = calculateARVFromPosition(p);
+        const diff = Math.abs(calcValue - numValue);
+        if (diff < bestDiff) {
+          bestDiff = diff;
+          bestPos = p;
+        }
+      }
+      setArvPosition(bestPos);
+    }
+    setIsEditingARV(false);
   };
+
+  useEffect(() => {
+    setEstimatedARV(calculateARVFromPosition(arvPosition));
+  }, [arvPosition, calculateARVFromPosition]);
 
   const keepComps = comps.filter(c => c.keep);
   
@@ -1835,8 +1880,35 @@ function PIQContent() {
                           </button>
                         </div>
                       )}
-                      <div className="overflow-x-auto">
-                        <table className="w-full text-xs">
+                      <div 
+                        className="overflow-x-auto"
+                        onMouseMove={(e) => {
+                          if (!isDraggingARV || !tableRef.current) return;
+                          const rows = tableRef.current.querySelectorAll('tr[data-comp-index]');
+                          if (rows.length === 0) return;
+                          const mouseY = e.clientY;
+                          let closestPos = arvPosition;
+                          let closestDist = Infinity;
+                          rows.forEach((row) => {
+                            const rect = row.getBoundingClientRect();
+                            const idx = parseInt(row.getAttribute('data-comp-index') || '0', 10);
+                            const topDist = Math.abs(mouseY - rect.top);
+                            const bottomDist = Math.abs(mouseY - rect.bottom);
+                            if (topDist < closestDist) {
+                              closestDist = topDist;
+                              closestPos = idx;
+                            }
+                            if (bottomDist < closestDist) {
+                              closestDist = bottomDist;
+                              closestPos = idx + 1;
+                            }
+                          });
+                          setArvPosition(closestPos);
+                        }}
+                        onMouseUp={() => setIsDraggingARV(false)}
+                        onMouseLeave={() => setIsDraggingARV(false)}
+                      >
+                        <table ref={tableRef} className="w-full text-xs">
                           <thead>
                             <tr className="bg-gray-50 border-b border-gray-200">
                               <th className="px-2 py-2 text-left font-medium text-gray-500 w-8">
@@ -1891,12 +1963,65 @@ function PIQContent() {
                                     </div>
                                   </td>
                                 </tr>
-                                {comps.filter(c => c.bucket === 'Premium').map((comp, idx) => (
+                                {comps.filter(c => c.bucket === 'Premium').map((comp, idx) => {
+                                  const globalIdx = allCompsFlat.findIndex(item => item.comp.id === comp.id);
+                                  return (
+                                  <React.Fragment key={comp.id}>
+                                  {Math.floor(arvPosition) === globalIdx && (
+                                    <tr ref={arvRowRef}>
+                                      <td colSpan={12} className="px-0 py-1">
+                                        <div className="flex items-center gap-2">
+                                          <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
+                                          <div 
+                                            className={cn(
+                                              "flex flex-col items-center px-3 py-1 rounded-lg border cursor-ns-resize select-none transition-all",
+                                              isAboveValueCeiling 
+                                                ? "bg-red-50 border-red-300" 
+                                                : "bg-green-50 border-green-300",
+                                              isDraggingARV && "ring-2 ring-blue-400 scale-105"
+                                            )}
+                                            onMouseDown={(e) => { e.preventDefault(); setIsDraggingARV(true); }}
+                                            onDoubleClick={() => { setIsEditingARV(true); setArvInputValue(estimatedARV.toString()); }}
+                                            data-testid="arv-drag-handle"
+                                          >
+                                            {isEditingARV ? (
+                                              <input
+                                                type="text"
+                                                className="w-24 text-center text-sm font-bold border rounded px-1 py-0.5"
+                                                value={arvInputValue}
+                                                onChange={(e) => setArvInputValue(e.target.value)}
+                                                onBlur={() => handleARVManualUpdate(arvInputValue)}
+                                                onKeyDown={(e) => { if (e.key === 'Enter') handleARVManualUpdate(arvInputValue); if (e.key === 'Escape') setIsEditingARV(false); }}
+                                                autoFocus
+                                                onClick={(e) => e.stopPropagation()}
+                                                data-testid="arv-input"
+                                              />
+                                            ) : (
+                                              <span className={cn("text-sm font-bold", isAboveValueCeiling ? "text-red-600" : "text-green-600")}>
+                                                ${estimatedARV.toLocaleString()}
+                                              </span>
+                                            )}
+                                            <span className={cn("text-[9px] font-medium uppercase tracking-wider", isAboveValueCeiling ? "text-red-700" : "text-green-700")}>
+                                              Estimated ARV
+                                            </span>
+                                          </div>
+                                          <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
+                                        </div>
+                                        {isAboveValueCeiling && (
+                                          <div className="mt-2 mx-4 px-3 py-2 bg-red-100 border border-red-300 rounded-lg text-xs text-red-800 flex items-start gap-2">
+                                            <span className="text-red-600 font-bold">⚠</span>
+                                            <span>The data does not support this value, please be sure to check your comps</span>
+                                          </div>
+                                        )}
+                                        <div className="text-[9px] text-gray-400 text-center mt-1">Drag up/down to adjust • Double-click to edit</div>
+                                      </td>
+                                    </tr>
+                                  )}
                                   <tr 
-                                    key={comp.id}
                                     className="hover:bg-purple-50/50 cursor-pointer transition border-l-2 border-purple-400"
                                     onClick={() => handleCompClick(comp, comps.findIndex(c => c.id === comp.id))}
                                     data-testid={`list-row-${comp.id}`}
+                                    data-comp-index={globalIdx}
                                   >
                                     <td className="px-2 py-2">
                                       <input 
@@ -1932,7 +2057,9 @@ function PIQContent() {
                                     <td className="px-2 py-2 text-gray-600 max-w-[100px] truncate" title={comp.pool}>{comp.pool}</td>
                                     <td className="px-2 py-2 text-right text-gray-600">{comp.distance}</td>
                                   </tr>
-                                ))}
+                                  </React.Fragment>
+                                  );
+                                })}
                               </>
                             )}
 
@@ -1955,12 +2082,65 @@ function PIQContent() {
                                     </div>
                                   </td>
                                 </tr>
-                                {comps.filter(c => c.bucket === 'High').map((comp, idx) => (
+                                {comps.filter(c => c.bucket === 'High').map((comp, idx) => {
+                                  const globalIdx = allCompsFlat.findIndex(item => item.comp.id === comp.id);
+                                  return (
                                   <React.Fragment key={comp.id}>
+                                    {Math.floor(arvPosition) === globalIdx && (
+                                      <tr ref={arvRowRef}>
+                                        <td colSpan={12} className="px-0 py-1">
+                                          <div className="flex items-center gap-2">
+                                            <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
+                                            <div 
+                                              className={cn(
+                                                "flex flex-col items-center px-3 py-1 rounded-lg border cursor-ns-resize select-none transition-all",
+                                                isAboveValueCeiling 
+                                                  ? "bg-red-50 border-red-300" 
+                                                  : "bg-green-50 border-green-300",
+                                                isDraggingARV && "ring-2 ring-blue-400 scale-105"
+                                              )}
+                                              onMouseDown={(e) => { e.preventDefault(); setIsDraggingARV(true); }}
+                                              onDoubleClick={() => { setIsEditingARV(true); setArvInputValue(estimatedARV.toString()); }}
+                                              data-testid="arv-drag-handle"
+                                            >
+                                              {isEditingARV ? (
+                                                <input
+                                                  type="text"
+                                                  className="w-24 text-center text-sm font-bold border rounded px-1 py-0.5"
+                                                  value={arvInputValue}
+                                                  onChange={(e) => setArvInputValue(e.target.value)}
+                                                  onBlur={() => handleARVManualUpdate(arvInputValue)}
+                                                  onKeyDown={(e) => { if (e.key === 'Enter') handleARVManualUpdate(arvInputValue); if (e.key === 'Escape') setIsEditingARV(false); }}
+                                                  autoFocus
+                                                  onClick={(e) => e.stopPropagation()}
+                                                  data-testid="arv-input"
+                                                />
+                                              ) : (
+                                                <span className={cn("text-sm font-bold", isAboveValueCeiling ? "text-red-600" : "text-green-600")}>
+                                                  ${estimatedARV.toLocaleString()}
+                                                </span>
+                                              )}
+                                              <span className={cn("text-[9px] font-medium uppercase tracking-wider", isAboveValueCeiling ? "text-red-700" : "text-green-700")}>
+                                                Estimated ARV
+                                              </span>
+                                            </div>
+                                            <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
+                                          </div>
+                                          {isAboveValueCeiling && (
+                                            <div className="mt-2 mx-4 px-3 py-2 bg-red-100 border border-red-300 rounded-lg text-xs text-red-800 flex items-start gap-2">
+                                              <span className="text-red-600 font-bold">⚠</span>
+                                              <span>The data does not support this value, please be sure to check your comps</span>
+                                            </div>
+                                          )}
+                                          <div className="text-[9px] text-gray-400 text-center mt-1">Drag up/down to adjust • Double-click to edit</div>
+                                        </td>
+                                      </tr>
+                                    )}
                                     <tr 
                                       className="hover:bg-green-50/50 cursor-pointer transition border-l-2 border-green-400"
                                       onClick={() => handleCompClick(comp, comps.findIndex(c => c.id === comp.id))}
                                       data-testid={`list-row-${comp.id}`}
+                                      data-comp-index={globalIdx}
                                     >
                                       <td className="px-2 py-2">
                                         <input 
@@ -2010,50 +2190,9 @@ function PIQContent() {
                                         </td>
                                       </tr>
                                     )}
-                                    {comp.address === '43703 Campo Place' && (
-                                      <tr>
-                                        <td colSpan={12} className="px-0 py-1">
-                                          <div 
-                                            className="relative arv-drag-container select-none"
-                                            onMouseMove={handleARVDrag}
-                                            onMouseUp={() => setIsDraggingARV(false)}
-                                            onMouseLeave={() => setIsDraggingARV(false)}
-                                          >
-                                            <div className="flex items-center gap-2">
-                                              <div className={cn("flex-1 border-t-2", showARVWarning ? "border-orange-500" : "border-green-500")}></div>
-                                              <div 
-                                                className={cn(
-                                                  "flex flex-col items-center px-3 py-1 rounded-lg border cursor-grab active:cursor-grabbing transition-colors",
-                                                  showARVWarning 
-                                                    ? "bg-orange-50 border-orange-300" 
-                                                    : "bg-green-50 border-green-300",
-                                                  isDraggingARV && "ring-2 ring-blue-400"
-                                                )}
-                                                onMouseDown={() => setIsDraggingARV(true)}
-                                                data-testid="arv-drag-handle"
-                                              >
-                                                <span className={cn("text-sm font-bold", showARVWarning ? "text-orange-600" : "text-green-600")}>
-                                                  ${estimatedARV.toLocaleString()}
-                                                </span>
-                                                <span className={cn("text-[9px] font-medium uppercase tracking-wider", showARVWarning ? "text-orange-700" : "text-green-700")}>
-                                                  Estimated ARV
-                                                </span>
-                                              </div>
-                                              <div className={cn("flex-1 border-t-2", showARVWarning ? "border-orange-500" : "border-green-500")}></div>
-                                            </div>
-                                            {showARVWarning && (
-                                              <div className="mt-2 px-3 py-2 bg-orange-100 border border-orange-300 rounded-lg text-xs text-orange-800 flex items-start gap-2">
-                                                <span className="text-orange-600 font-bold">⚠</span>
-                                                <span>The data does not support this value, please be sure to check your comps</span>
-                                              </div>
-                                            )}
-                                            <div className="text-[9px] text-gray-400 text-center mt-1">Drag to adjust ARV</div>
-                                          </div>
-                                        </td>
-                                      </tr>
-                                    )}
                                   </React.Fragment>
-                                ))}
+                                  );
+                                })}
                               </>
                             )}
 
@@ -2076,48 +2215,103 @@ function PIQContent() {
                                     </div>
                                   </td>
                                 </tr>
-                                {comps.filter(c => c.bucket === 'Mid').map((comp, idx) => (
-                                  <tr 
-                                    key={comp.id}
-                                    className="hover:bg-yellow-50/50 cursor-pointer transition border-l-2 border-yellow-400"
-                                    onClick={() => handleCompClick(comp, comps.findIndex(c => c.id === comp.id))}
-                                    data-testid={`list-row-${comp.id}`}
-                                  >
-                                    <td className="px-2 py-2">
-                                      <input 
-                                        type="checkbox" 
-                                        className="w-3.5 h-3.5 rounded border-gray-300" 
-                                        checked={selectedListIds.has(comp.id)}
-                                        onChange={() => toggleListSelection(comp.id)}
-                                        onClick={(e) => e.stopPropagation()} 
-                                      />
-                                    </td>
-                                    <td className="px-2 py-2 text-gray-500">{idx + 1}</td>
-                                    <td className="px-2 py-2">
-                                      <div className="w-16 h-12 bg-gray-200 rounded overflow-hidden">
-                                        <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-gray-500 text-[10px]">Photo</div>
-                                      </div>
-                                    </td>
-                                    <td className="px-3 py-2"><div className="font-medium text-gray-900">{comp.address}</div></td>
-                                    <td className="px-3 py-2">
-                                      <div className="flex flex-col gap-1">
-                                        <span className="text-[10px] font-semibold text-gray-900">{comp.condition}</span>
-                                        <div className="flex flex-wrap gap-1">
-                                          {comp.influences.map((inf, i) => (
-                                            <span key={i} className={cn("text-[9px] font-medium cursor-help", inf.type === 'positive' ? "text-green-600" : "text-red-600")} title={inf.note}>{inf.category}</span>
-                                          ))}
+                                {comps.filter(c => c.bucket === 'Mid').map((comp, idx) => {
+                                  const globalIdx = allCompsFlat.findIndex(item => item.comp.id === comp.id);
+                                  return (
+                                  <React.Fragment key={comp.id}>
+                                    {Math.floor(arvPosition) === globalIdx && (
+                                      <tr>
+                                        <td colSpan={12} className="px-0 py-1">
+                                          <div className="flex items-center gap-2">
+                                            <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
+                                            <div 
+                                              className={cn(
+                                                "flex flex-col items-center px-3 py-1 rounded-lg border cursor-ns-resize select-none transition-all",
+                                                isAboveValueCeiling 
+                                                  ? "bg-red-50 border-red-300" 
+                                                  : "bg-green-50 border-green-300",
+                                                isDraggingARV && "ring-2 ring-blue-400 scale-105"
+                                              )}
+                                              onMouseDown={(e) => { e.preventDefault(); setIsDraggingARV(true); }}
+                                              onDoubleClick={() => { setIsEditingARV(true); setArvInputValue(estimatedARV.toString()); }}
+                                              data-testid="arv-drag-handle"
+                                            >
+                                              {isEditingARV ? (
+                                                <input
+                                                  type="text"
+                                                  className="w-24 text-center text-sm font-bold border rounded px-1 py-0.5"
+                                                  value={arvInputValue}
+                                                  onChange={(e) => setArvInputValue(e.target.value)}
+                                                  onBlur={() => handleARVManualUpdate(arvInputValue)}
+                                                  onKeyDown={(e) => { if (e.key === 'Enter') handleARVManualUpdate(arvInputValue); if (e.key === 'Escape') setIsEditingARV(false); }}
+                                                  autoFocus
+                                                  onClick={(e) => e.stopPropagation()}
+                                                  data-testid="arv-input"
+                                                />
+                                              ) : (
+                                                <span className={cn("text-sm font-bold", isAboveValueCeiling ? "text-red-600" : "text-green-600")}>
+                                                  ${estimatedARV.toLocaleString()}
+                                                </span>
+                                              )}
+                                              <span className={cn("text-[9px] font-medium uppercase tracking-wider", isAboveValueCeiling ? "text-red-700" : "text-green-700")}>
+                                                Estimated ARV
+                                              </span>
+                                            </div>
+                                            <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
+                                          </div>
+                                          {isAboveValueCeiling && (
+                                            <div className="mt-2 mx-4 px-3 py-2 bg-red-100 border border-red-300 rounded-lg text-xs text-red-800 flex items-start gap-2">
+                                              <span className="text-red-600 font-bold">⚠</span>
+                                              <span>The data does not support this value, please be sure to check your comps</span>
+                                            </div>
+                                          )}
+                                          <div className="text-[9px] text-gray-400 text-center mt-1">Drag up/down to adjust • Double-click to edit</div>
+                                        </td>
+                                      </tr>
+                                    )}
+                                    <tr 
+                                      className="hover:bg-yellow-50/50 cursor-pointer transition border-l-2 border-yellow-400"
+                                      onClick={() => handleCompClick(comp, comps.findIndex(c => c.id === comp.id))}
+                                      data-testid={`list-row-${comp.id}`}
+                                      data-comp-index={globalIdx}
+                                    >
+                                      <td className="px-2 py-2">
+                                        <input 
+                                          type="checkbox" 
+                                          className="w-3.5 h-3.5 rounded border-gray-300" 
+                                          checked={selectedListIds.has(comp.id)}
+                                          onChange={() => toggleListSelection(comp.id)}
+                                          onClick={(e) => e.stopPropagation()} 
+                                        />
+                                      </td>
+                                      <td className="px-2 py-2 text-gray-500">{idx + 1}</td>
+                                      <td className="px-2 py-2">
+                                        <div className="w-16 h-12 bg-gray-200 rounded overflow-hidden">
+                                          <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-gray-500 text-[10px]">Photo</div>
                                         </div>
-                                      </div>
-                                    </td>
-                                    <td className="px-3 py-2 text-right font-medium text-gray-900">${comp.price.toLocaleString()}</td>
-                                    <td className="px-2 py-2 text-center text-gray-600">{comp.bedBath}</td>
-                                    <td className="px-2 py-2 text-right text-gray-600">{comp.size.toLocaleString()}</td>
-                                    <td className="px-2 py-2 text-right text-gray-600">{comp.lotSize.toLocaleString()}</td>
-                                    <td className="px-2 py-2 text-center text-gray-600">{comp.garage}</td>
-                                    <td className="px-2 py-2 text-gray-600 max-w-[100px] truncate" title={comp.pool}>{comp.pool}</td>
-                                    <td className="px-2 py-2 text-right text-gray-600">{comp.distance}</td>
-                                  </tr>
-                                ))}
+                                      </td>
+                                      <td className="px-3 py-2"><div className="font-medium text-gray-900">{comp.address}</div></td>
+                                      <td className="px-3 py-2">
+                                        <div className="flex flex-col gap-1">
+                                          <span className="text-[10px] font-semibold text-gray-900">{comp.condition}</span>
+                                          <div className="flex flex-wrap gap-1">
+                                            {comp.influences.map((inf, i) => (
+                                              <span key={i} className={cn("text-[9px] font-medium cursor-help", inf.type === 'positive' ? "text-green-600" : "text-red-600")} title={inf.note}>{inf.category}</span>
+                                            ))}
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td className="px-3 py-2 text-right font-medium text-gray-900">${comp.price.toLocaleString()}</td>
+                                      <td className="px-2 py-2 text-center text-gray-600">{comp.bedBath}</td>
+                                      <td className="px-2 py-2 text-right text-gray-600">{comp.size.toLocaleString()}</td>
+                                      <td className="px-2 py-2 text-right text-gray-600">{comp.lotSize.toLocaleString()}</td>
+                                      <td className="px-2 py-2 text-center text-gray-600">{comp.garage}</td>
+                                      <td className="px-2 py-2 text-gray-600 max-w-[100px] truncate" title={comp.pool}>{comp.pool}</td>
+                                      <td className="px-2 py-2 text-right text-gray-600">{comp.distance}</td>
+                                    </tr>
+                                  </React.Fragment>
+                                  );
+                                })}
                               </>
                             )}
 
@@ -2140,48 +2334,103 @@ function PIQContent() {
                                     </div>
                                   </td>
                                 </tr>
-                                {comps.filter(c => c.bucket === 'Low').map((comp, idx) => (
-                                  <tr 
-                                    key={comp.id}
-                                    className="hover:bg-red-50/50 cursor-pointer transition border-l-2 border-red-400"
-                                    onClick={() => handleCompClick(comp, comps.findIndex(c => c.id === comp.id))}
-                                    data-testid={`list-row-${comp.id}`}
-                                  >
-                                    <td className="px-2 py-2">
-                                      <input 
-                                        type="checkbox" 
-                                        className="w-3.5 h-3.5 rounded border-gray-300" 
-                                        checked={selectedListIds.has(comp.id)}
-                                        onChange={() => toggleListSelection(comp.id)}
-                                        onClick={(e) => e.stopPropagation()} 
-                                      />
-                                    </td>
-                                    <td className="px-2 py-2 text-gray-500">{idx + 1}</td>
-                                    <td className="px-2 py-2">
-                                      <div className="w-16 h-12 bg-gray-200 rounded overflow-hidden">
-                                        <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-gray-500 text-[10px]">Photo</div>
-                                      </div>
-                                    </td>
-                                    <td className="px-3 py-2"><div className="font-medium text-gray-900">{comp.address}</div></td>
-                                    <td className="px-3 py-2">
-                                      <div className="flex flex-col gap-1">
-                                        <span className="text-[10px] font-semibold text-gray-900">{comp.condition}</span>
-                                        <div className="flex flex-wrap gap-1">
-                                          {comp.influences.map((inf, i) => (
-                                            <span key={i} className={cn("text-[9px] font-medium cursor-help", inf.type === 'positive' ? "text-green-600" : "text-red-600")} title={inf.note}>{inf.category}</span>
-                                          ))}
+                                {comps.filter(c => c.bucket === 'Low').map((comp, idx) => {
+                                  const globalIdx = allCompsFlat.findIndex(item => item.comp.id === comp.id);
+                                  return (
+                                  <React.Fragment key={comp.id}>
+                                    {Math.floor(arvPosition) === globalIdx && (
+                                      <tr>
+                                        <td colSpan={12} className="px-0 py-1">
+                                          <div className="flex items-center gap-2">
+                                            <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
+                                            <div 
+                                              className={cn(
+                                                "flex flex-col items-center px-3 py-1 rounded-lg border cursor-ns-resize select-none transition-all",
+                                                isAboveValueCeiling 
+                                                  ? "bg-red-50 border-red-300" 
+                                                  : "bg-green-50 border-green-300",
+                                                isDraggingARV && "ring-2 ring-blue-400 scale-105"
+                                              )}
+                                              onMouseDown={(e) => { e.preventDefault(); setIsDraggingARV(true); }}
+                                              onDoubleClick={() => { setIsEditingARV(true); setArvInputValue(estimatedARV.toString()); }}
+                                              data-testid="arv-drag-handle"
+                                            >
+                                              {isEditingARV ? (
+                                                <input
+                                                  type="text"
+                                                  className="w-24 text-center text-sm font-bold border rounded px-1 py-0.5"
+                                                  value={arvInputValue}
+                                                  onChange={(e) => setArvInputValue(e.target.value)}
+                                                  onBlur={() => handleARVManualUpdate(arvInputValue)}
+                                                  onKeyDown={(e) => { if (e.key === 'Enter') handleARVManualUpdate(arvInputValue); if (e.key === 'Escape') setIsEditingARV(false); }}
+                                                  autoFocus
+                                                  onClick={(e) => e.stopPropagation()}
+                                                  data-testid="arv-input"
+                                                />
+                                              ) : (
+                                                <span className={cn("text-sm font-bold", isAboveValueCeiling ? "text-red-600" : "text-green-600")}>
+                                                  ${estimatedARV.toLocaleString()}
+                                                </span>
+                                              )}
+                                              <span className={cn("text-[9px] font-medium uppercase tracking-wider", isAboveValueCeiling ? "text-red-700" : "text-green-700")}>
+                                                Estimated ARV
+                                              </span>
+                                            </div>
+                                            <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
+                                          </div>
+                                          {isAboveValueCeiling && (
+                                            <div className="mt-2 mx-4 px-3 py-2 bg-red-100 border border-red-300 rounded-lg text-xs text-red-800 flex items-start gap-2">
+                                              <span className="text-red-600 font-bold">⚠</span>
+                                              <span>The data does not support this value, please be sure to check your comps</span>
+                                            </div>
+                                          )}
+                                          <div className="text-[9px] text-gray-400 text-center mt-1">Drag up/down to adjust • Double-click to edit</div>
+                                        </td>
+                                      </tr>
+                                    )}
+                                    <tr 
+                                      className="hover:bg-red-50/50 cursor-pointer transition border-l-2 border-red-400"
+                                      onClick={() => handleCompClick(comp, comps.findIndex(c => c.id === comp.id))}
+                                      data-testid={`list-row-${comp.id}`}
+                                      data-comp-index={globalIdx}
+                                    >
+                                      <td className="px-2 py-2">
+                                        <input 
+                                          type="checkbox" 
+                                          className="w-3.5 h-3.5 rounded border-gray-300" 
+                                          checked={selectedListIds.has(comp.id)}
+                                          onChange={() => toggleListSelection(comp.id)}
+                                          onClick={(e) => e.stopPropagation()} 
+                                        />
+                                      </td>
+                                      <td className="px-2 py-2 text-gray-500">{idx + 1}</td>
+                                      <td className="px-2 py-2">
+                                        <div className="w-16 h-12 bg-gray-200 rounded overflow-hidden">
+                                          <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-gray-500 text-[10px]">Photo</div>
                                         </div>
-                                      </div>
-                                    </td>
-                                    <td className="px-3 py-2 text-right font-medium text-gray-900">${comp.price.toLocaleString()}</td>
-                                    <td className="px-2 py-2 text-center text-gray-600">{comp.bedBath}</td>
-                                    <td className="px-2 py-2 text-right text-gray-600">{comp.size.toLocaleString()}</td>
-                                    <td className="px-2 py-2 text-right text-gray-600">{comp.lotSize.toLocaleString()}</td>
-                                    <td className="px-2 py-2 text-center text-gray-600">{comp.garage}</td>
-                                    <td className="px-2 py-2 text-gray-600 max-w-[100px] truncate" title={comp.pool}>{comp.pool}</td>
-                                    <td className="px-2 py-2 text-right text-gray-600">{comp.distance}</td>
-                                  </tr>
-                                ))}
+                                      </td>
+                                      <td className="px-3 py-2"><div className="font-medium text-gray-900">{comp.address}</div></td>
+                                      <td className="px-3 py-2">
+                                        <div className="flex flex-col gap-1">
+                                          <span className="text-[10px] font-semibold text-gray-900">{comp.condition}</span>
+                                          <div className="flex flex-wrap gap-1">
+                                            {comp.influences.map((inf, i) => (
+                                              <span key={i} className={cn("text-[9px] font-medium cursor-help", inf.type === 'positive' ? "text-green-600" : "text-red-600")} title={inf.note}>{inf.category}</span>
+                                            ))}
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td className="px-3 py-2 text-right font-medium text-gray-900">${comp.price.toLocaleString()}</td>
+                                      <td className="px-2 py-2 text-center text-gray-600">{comp.bedBath}</td>
+                                      <td className="px-2 py-2 text-right text-gray-600">{comp.size.toLocaleString()}</td>
+                                      <td className="px-2 py-2 text-right text-gray-600">{comp.lotSize.toLocaleString()}</td>
+                                      <td className="px-2 py-2 text-center text-gray-600">{comp.garage}</td>
+                                      <td className="px-2 py-2 text-gray-600 max-w-[100px] truncate" title={comp.pool}>{comp.pool}</td>
+                                      <td className="px-2 py-2 text-right text-gray-600">{comp.distance}</td>
+                                    </tr>
+                                  </React.Fragment>
+                                  );
+                                })}
                               </>
                             )}
                           </tbody>
