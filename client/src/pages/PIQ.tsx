@@ -749,16 +749,23 @@ function PIQContent() {
   const calculateARVFromPosition = useCallback((pos: number) => {
     if (allCompsFlat.length === 0) return 750000;
     const clampedPos = Math.max(0, Math.min(pos, allCompsFlat.length));
-    const aboveIdx = Math.floor(clampedPos) - 1;
-    const belowIdx = Math.floor(clampedPos);
-    const above = allCompsFlat[aboveIdx]?.comp;
-    const below = allCompsFlat[belowIdx]?.comp;
-    if (!above && !below) return 750000;
-    if (!above) return below?.price || 750000;
-    if (!below) return above?.price || 750000;
-    const fraction = clampedPos - Math.floor(clampedPos);
-    const interpolated = above.price - (above.price - below.price) * fraction;
-    return Math.round(interpolated / 1000) * 1000;
+    const currentIdx = Math.floor(clampedPos);
+    const fraction = clampedPos - currentIdx;
+    const currentComp = allCompsFlat[currentIdx]?.comp;
+    const nextComp = allCompsFlat[currentIdx + 1]?.comp;
+    const prevComp = allCompsFlat[currentIdx - 1]?.comp;
+    
+    if (currentComp && nextComp) {
+      const interpolated = currentComp.price - (currentComp.price - nextComp.price) * fraction;
+      return Math.round(interpolated / 1000) * 1000;
+    }
+    if (currentComp) {
+      return currentComp.price;
+    }
+    if (prevComp) {
+      return prevComp.price;
+    }
+    return 750000;
   }, [allCompsFlat]);
 
   const handleARVManualUpdate = (value: string) => {
@@ -1917,25 +1924,40 @@ function PIQContent() {
                           const rows = tableRef.current?.querySelectorAll('tr[data-comp-index]');
                           if (!rows || rows.length === 0) return;
                           
-                          let closestPos = arvPosition;
-                          let closestDist = Infinity;
+                          const rowData: { idx: number; top: number; bottom: number }[] = [];
                           rows.forEach((row) => {
                             const rowRect = row.getBoundingClientRect();
                             const rowTop = rowRect.top - wrapperRect.top + tableWrapperRef.current!.scrollTop;
                             const rowBottom = rowRect.bottom - wrapperRect.top + tableWrapperRef.current!.scrollTop;
                             const idx = parseInt(row.getAttribute('data-comp-index') || '0', 10);
-                            const topDist = Math.abs(relativeY - rowTop);
-                            const bottomDist = Math.abs(relativeY - rowBottom);
-                            if (topDist < closestDist) {
-                              closestDist = topDist;
-                              closestPos = idx;
-                            }
-                            if (bottomDist < closestDist) {
-                              closestDist = bottomDist;
-                              closestPos = idx + 1;
-                            }
+                            rowData.push({ idx, top: rowTop, bottom: rowBottom });
                           });
-                          setArvPosition(closestPos);
+                          rowData.sort((a, b) => a.idx - b.idx);
+                          
+                          if (relativeY <= rowData[0].top) {
+                            setArvPosition(rowData[0].idx);
+                            return;
+                          }
+                          if (relativeY >= rowData[rowData.length - 1].bottom) {
+                            setArvPosition(rowData[rowData.length - 1].idx + 1);
+                            return;
+                          }
+                          
+                          for (let i = 0; i < rowData.length; i++) {
+                            const row = rowData[i];
+                            if (relativeY >= row.top && relativeY <= row.bottom) {
+                              const fraction = (relativeY - row.top) / (row.bottom - row.top);
+                              setArvPosition(row.idx + fraction);
+                              return;
+                            }
+                            if (i < rowData.length - 1) {
+                              const nextRow = rowData[i + 1];
+                              if (relativeY > row.bottom && relativeY < nextRow.top) {
+                                setArvPosition(row.idx + 1);
+                                return;
+                              }
+                            }
+                          }
                         }}
                         onMouseUp={() => { setIsDraggingARV(false); setArvPixelY(null); }}
                         onMouseLeave={() => { setIsDraggingARV(false); setArvPixelY(null); }}
