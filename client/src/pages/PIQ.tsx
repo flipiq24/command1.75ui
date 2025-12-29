@@ -720,11 +720,12 @@ function PIQContent() {
   const [selectedListIds, setSelectedListIds] = useState<Set<string>>(new Set());
   const [estimatedARV, setEstimatedARV] = useState(765000);
   const [arvPosition, setArvPosition] = useState(4);
+  const [arvPixelY, setArvPixelY] = useState<number | null>(null);
   const [isDraggingARV, setIsDraggingARV] = useState(false);
   const [isEditingARV, setIsEditingARV] = useState(false);
   const [arvInputValue, setArvInputValue] = useState('');
   const tableRef = useRef<HTMLTableElement>(null);
-  const arvRowRef = useRef<HTMLTableRowElement>(null);
+  const tableWrapperRef = useRef<HTMLDivElement>(null);
 
   const allCompsFlat = useMemo(() => {
     const bucketOrder = ['Premium', 'High', 'Mid', 'Low'] as const;
@@ -782,6 +783,30 @@ function PIQContent() {
   useEffect(() => {
     setEstimatedARV(calculateARVFromPosition(arvPosition));
   }, [arvPosition, calculateARVFromPosition]);
+
+  const getArvOverlayY = useCallback(() => {
+    if (isDraggingARV && arvPixelY !== null) return arvPixelY;
+    if (!tableRef.current || !tableWrapperRef.current) return 100;
+    const rows = tableRef.current.querySelectorAll('tr[data-comp-index]');
+    if (rows.length === 0) return 100;
+    const targetIdx = Math.floor(arvPosition);
+    for (let i = 0; i < rows.length; i++) {
+      const row = rows[i];
+      const idx = parseInt(row.getAttribute('data-comp-index') || '0', 10);
+      if (idx === targetIdx) {
+        const wrapperRect = tableWrapperRef.current.getBoundingClientRect();
+        const rowRect = row.getBoundingClientRect();
+        return rowRect.top - wrapperRect.top + tableWrapperRef.current.scrollTop;
+      }
+    }
+    const lastRow = rows[rows.length - 1];
+    if (lastRow) {
+      const wrapperRect = tableWrapperRef.current.getBoundingClientRect();
+      const rowRect = lastRow.getBoundingClientRect();
+      return rowRect.bottom - wrapperRect.top + tableWrapperRef.current.scrollTop;
+    }
+    return 100;
+  }, [arvPosition, arvPixelY, isDraggingARV]);
 
   const keepComps = comps.filter(c => c.keep);
   
@@ -1881,19 +1906,26 @@ function PIQContent() {
                         </div>
                       )}
                       <div 
-                        className="overflow-x-auto"
+                        ref={tableWrapperRef}
+                        className="overflow-x-auto relative"
                         onMouseMove={(e) => {
-                          if (!isDraggingARV || !tableRef.current) return;
-                          const rows = tableRef.current.querySelectorAll('tr[data-comp-index]');
-                          if (rows.length === 0) return;
-                          const mouseY = e.clientY;
+                          if (!isDraggingARV || !tableWrapperRef.current) return;
+                          const wrapperRect = tableWrapperRef.current.getBoundingClientRect();
+                          const relativeY = e.clientY - wrapperRect.top + tableWrapperRef.current.scrollTop;
+                          setArvPixelY(relativeY);
+                          
+                          const rows = tableRef.current?.querySelectorAll('tr[data-comp-index]');
+                          if (!rows || rows.length === 0) return;
+                          
                           let closestPos = arvPosition;
                           let closestDist = Infinity;
                           rows.forEach((row) => {
-                            const rect = row.getBoundingClientRect();
+                            const rowRect = row.getBoundingClientRect();
+                            const rowTop = rowRect.top - wrapperRect.top + tableWrapperRef.current!.scrollTop;
+                            const rowBottom = rowRect.bottom - wrapperRect.top + tableWrapperRef.current!.scrollTop;
                             const idx = parseInt(row.getAttribute('data-comp-index') || '0', 10);
-                            const topDist = Math.abs(mouseY - rect.top);
-                            const bottomDist = Math.abs(mouseY - rect.bottom);
+                            const topDist = Math.abs(relativeY - rowTop);
+                            const bottomDist = Math.abs(relativeY - rowBottom);
                             if (topDist < closestDist) {
                               closestDist = topDist;
                               closestPos = idx;
@@ -1905,8 +1937,8 @@ function PIQContent() {
                           });
                           setArvPosition(closestPos);
                         }}
-                        onMouseUp={() => setIsDraggingARV(false)}
-                        onMouseLeave={() => setIsDraggingARV(false)}
+                        onMouseUp={() => { setIsDraggingARV(false); setArvPixelY(null); }}
+                        onMouseLeave={() => { setIsDraggingARV(false); setArvPixelY(null); }}
                       >
                         <table ref={tableRef} className="w-full text-xs">
                           <thead>
@@ -1967,56 +1999,6 @@ function PIQContent() {
                                   const globalIdx = allCompsFlat.findIndex(item => item.comp.id === comp.id);
                                   return (
                                   <React.Fragment key={comp.id}>
-                                  {Math.floor(arvPosition) === globalIdx && (
-                                    <tr ref={arvRowRef}>
-                                      <td colSpan={12} className="px-0 py-1">
-                                        <div className="flex items-center gap-2">
-                                          <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
-                                          <div 
-                                            className={cn(
-                                              "flex flex-col items-center px-3 py-1 rounded-lg border cursor-ns-resize select-none transition-all",
-                                              isAboveValueCeiling 
-                                                ? "bg-red-50 border-red-300" 
-                                                : "bg-green-50 border-green-300",
-                                              isDraggingARV && "ring-2 ring-blue-400 scale-105"
-                                            )}
-                                            onMouseDown={(e) => { e.preventDefault(); setIsDraggingARV(true); }}
-                                            onDoubleClick={() => { setIsEditingARV(true); setArvInputValue(estimatedARV.toString()); }}
-                                            data-testid="arv-drag-handle"
-                                          >
-                                            {isEditingARV ? (
-                                              <input
-                                                type="text"
-                                                className="w-24 text-center text-sm font-bold border rounded px-1 py-0.5"
-                                                value={arvInputValue}
-                                                onChange={(e) => setArvInputValue(e.target.value)}
-                                                onBlur={() => handleARVManualUpdate(arvInputValue)}
-                                                onKeyDown={(e) => { if (e.key === 'Enter') handleARVManualUpdate(arvInputValue); if (e.key === 'Escape') setIsEditingARV(false); }}
-                                                autoFocus
-                                                onClick={(e) => e.stopPropagation()}
-                                                data-testid="arv-input"
-                                              />
-                                            ) : (
-                                              <span className={cn("text-sm font-bold", isAboveValueCeiling ? "text-red-600" : "text-green-600")}>
-                                                ${estimatedARV.toLocaleString()}
-                                              </span>
-                                            )}
-                                            <span className={cn("text-[9px] font-medium uppercase tracking-wider", isAboveValueCeiling ? "text-red-700" : "text-green-700")}>
-                                              Estimated ARV
-                                            </span>
-                                          </div>
-                                          <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
-                                        </div>
-                                        {isAboveValueCeiling && (
-                                          <div className="mt-2 mx-4 px-3 py-2 bg-red-100 border border-red-300 rounded-lg text-xs text-red-800 flex items-start gap-2">
-                                            <span className="text-red-600 font-bold">⚠</span>
-                                            <span>The data does not support this value, please be sure to check your comps</span>
-                                          </div>
-                                        )}
-                                        <div className="text-[9px] text-gray-400 text-center mt-1">Drag up/down to adjust • Double-click to edit</div>
-                                      </td>
-                                    </tr>
-                                  )}
                                   <tr 
                                     className="hover:bg-purple-50/50 cursor-pointer transition border-l-2 border-purple-400"
                                     onClick={() => handleCompClick(comp, comps.findIndex(c => c.id === comp.id))}
@@ -2086,56 +2068,6 @@ function PIQContent() {
                                   const globalIdx = allCompsFlat.findIndex(item => item.comp.id === comp.id);
                                   return (
                                   <React.Fragment key={comp.id}>
-                                    {Math.floor(arvPosition) === globalIdx && (
-                                      <tr ref={arvRowRef}>
-                                        <td colSpan={12} className="px-0 py-1">
-                                          <div className="flex items-center gap-2">
-                                            <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
-                                            <div 
-                                              className={cn(
-                                                "flex flex-col items-center px-3 py-1 rounded-lg border cursor-ns-resize select-none transition-all",
-                                                isAboveValueCeiling 
-                                                  ? "bg-red-50 border-red-300" 
-                                                  : "bg-green-50 border-green-300",
-                                                isDraggingARV && "ring-2 ring-blue-400 scale-105"
-                                              )}
-                                              onMouseDown={(e) => { e.preventDefault(); setIsDraggingARV(true); }}
-                                              onDoubleClick={() => { setIsEditingARV(true); setArvInputValue(estimatedARV.toString()); }}
-                                              data-testid="arv-drag-handle"
-                                            >
-                                              {isEditingARV ? (
-                                                <input
-                                                  type="text"
-                                                  className="w-24 text-center text-sm font-bold border rounded px-1 py-0.5"
-                                                  value={arvInputValue}
-                                                  onChange={(e) => setArvInputValue(e.target.value)}
-                                                  onBlur={() => handleARVManualUpdate(arvInputValue)}
-                                                  onKeyDown={(e) => { if (e.key === 'Enter') handleARVManualUpdate(arvInputValue); if (e.key === 'Escape') setIsEditingARV(false); }}
-                                                  autoFocus
-                                                  onClick={(e) => e.stopPropagation()}
-                                                  data-testid="arv-input"
-                                                />
-                                              ) : (
-                                                <span className={cn("text-sm font-bold", isAboveValueCeiling ? "text-red-600" : "text-green-600")}>
-                                                  ${estimatedARV.toLocaleString()}
-                                                </span>
-                                              )}
-                                              <span className={cn("text-[9px] font-medium uppercase tracking-wider", isAboveValueCeiling ? "text-red-700" : "text-green-700")}>
-                                                Estimated ARV
-                                              </span>
-                                            </div>
-                                            <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
-                                          </div>
-                                          {isAboveValueCeiling && (
-                                            <div className="mt-2 mx-4 px-3 py-2 bg-red-100 border border-red-300 rounded-lg text-xs text-red-800 flex items-start gap-2">
-                                              <span className="text-red-600 font-bold">⚠</span>
-                                              <span>The data does not support this value, please be sure to check your comps</span>
-                                            </div>
-                                          )}
-                                          <div className="text-[9px] text-gray-400 text-center mt-1">Drag up/down to adjust • Double-click to edit</div>
-                                        </td>
-                                      </tr>
-                                    )}
                                     <tr 
                                       className="hover:bg-green-50/50 cursor-pointer transition border-l-2 border-green-400"
                                       onClick={() => handleCompClick(comp, comps.findIndex(c => c.id === comp.id))}
@@ -2219,56 +2151,6 @@ function PIQContent() {
                                   const globalIdx = allCompsFlat.findIndex(item => item.comp.id === comp.id);
                                   return (
                                   <React.Fragment key={comp.id}>
-                                    {Math.floor(arvPosition) === globalIdx && (
-                                      <tr>
-                                        <td colSpan={12} className="px-0 py-1">
-                                          <div className="flex items-center gap-2">
-                                            <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
-                                            <div 
-                                              className={cn(
-                                                "flex flex-col items-center px-3 py-1 rounded-lg border cursor-ns-resize select-none transition-all",
-                                                isAboveValueCeiling 
-                                                  ? "bg-red-50 border-red-300" 
-                                                  : "bg-green-50 border-green-300",
-                                                isDraggingARV && "ring-2 ring-blue-400 scale-105"
-                                              )}
-                                              onMouseDown={(e) => { e.preventDefault(); setIsDraggingARV(true); }}
-                                              onDoubleClick={() => { setIsEditingARV(true); setArvInputValue(estimatedARV.toString()); }}
-                                              data-testid="arv-drag-handle"
-                                            >
-                                              {isEditingARV ? (
-                                                <input
-                                                  type="text"
-                                                  className="w-24 text-center text-sm font-bold border rounded px-1 py-0.5"
-                                                  value={arvInputValue}
-                                                  onChange={(e) => setArvInputValue(e.target.value)}
-                                                  onBlur={() => handleARVManualUpdate(arvInputValue)}
-                                                  onKeyDown={(e) => { if (e.key === 'Enter') handleARVManualUpdate(arvInputValue); if (e.key === 'Escape') setIsEditingARV(false); }}
-                                                  autoFocus
-                                                  onClick={(e) => e.stopPropagation()}
-                                                  data-testid="arv-input"
-                                                />
-                                              ) : (
-                                                <span className={cn("text-sm font-bold", isAboveValueCeiling ? "text-red-600" : "text-green-600")}>
-                                                  ${estimatedARV.toLocaleString()}
-                                                </span>
-                                              )}
-                                              <span className={cn("text-[9px] font-medium uppercase tracking-wider", isAboveValueCeiling ? "text-red-700" : "text-green-700")}>
-                                                Estimated ARV
-                                              </span>
-                                            </div>
-                                            <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
-                                          </div>
-                                          {isAboveValueCeiling && (
-                                            <div className="mt-2 mx-4 px-3 py-2 bg-red-100 border border-red-300 rounded-lg text-xs text-red-800 flex items-start gap-2">
-                                              <span className="text-red-600 font-bold">⚠</span>
-                                              <span>The data does not support this value, please be sure to check your comps</span>
-                                            </div>
-                                          )}
-                                          <div className="text-[9px] text-gray-400 text-center mt-1">Drag up/down to adjust • Double-click to edit</div>
-                                        </td>
-                                      </tr>
-                                    )}
                                     <tr 
                                       className="hover:bg-yellow-50/50 cursor-pointer transition border-l-2 border-yellow-400"
                                       onClick={() => handleCompClick(comp, comps.findIndex(c => c.id === comp.id))}
@@ -2338,56 +2220,6 @@ function PIQContent() {
                                   const globalIdx = allCompsFlat.findIndex(item => item.comp.id === comp.id);
                                   return (
                                   <React.Fragment key={comp.id}>
-                                    {Math.floor(arvPosition) === globalIdx && (
-                                      <tr>
-                                        <td colSpan={12} className="px-0 py-1">
-                                          <div className="flex items-center gap-2">
-                                            <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
-                                            <div 
-                                              className={cn(
-                                                "flex flex-col items-center px-3 py-1 rounded-lg border cursor-ns-resize select-none transition-all",
-                                                isAboveValueCeiling 
-                                                  ? "bg-red-50 border-red-300" 
-                                                  : "bg-green-50 border-green-300",
-                                                isDraggingARV && "ring-2 ring-blue-400 scale-105"
-                                              )}
-                                              onMouseDown={(e) => { e.preventDefault(); setIsDraggingARV(true); }}
-                                              onDoubleClick={() => { setIsEditingARV(true); setArvInputValue(estimatedARV.toString()); }}
-                                              data-testid="arv-drag-handle"
-                                            >
-                                              {isEditingARV ? (
-                                                <input
-                                                  type="text"
-                                                  className="w-24 text-center text-sm font-bold border rounded px-1 py-0.5"
-                                                  value={arvInputValue}
-                                                  onChange={(e) => setArvInputValue(e.target.value)}
-                                                  onBlur={() => handleARVManualUpdate(arvInputValue)}
-                                                  onKeyDown={(e) => { if (e.key === 'Enter') handleARVManualUpdate(arvInputValue); if (e.key === 'Escape') setIsEditingARV(false); }}
-                                                  autoFocus
-                                                  onClick={(e) => e.stopPropagation()}
-                                                  data-testid="arv-input"
-                                                />
-                                              ) : (
-                                                <span className={cn("text-sm font-bold", isAboveValueCeiling ? "text-red-600" : "text-green-600")}>
-                                                  ${estimatedARV.toLocaleString()}
-                                                </span>
-                                              )}
-                                              <span className={cn("text-[9px] font-medium uppercase tracking-wider", isAboveValueCeiling ? "text-red-700" : "text-green-700")}>
-                                                Estimated ARV
-                                              </span>
-                                            </div>
-                                            <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
-                                          </div>
-                                          {isAboveValueCeiling && (
-                                            <div className="mt-2 mx-4 px-3 py-2 bg-red-100 border border-red-300 rounded-lg text-xs text-red-800 flex items-start gap-2">
-                                              <span className="text-red-600 font-bold">⚠</span>
-                                              <span>The data does not support this value, please be sure to check your comps</span>
-                                            </div>
-                                          )}
-                                          <div className="text-[9px] text-gray-400 text-center mt-1">Drag up/down to adjust • Double-click to edit</div>
-                                        </td>
-                                      </tr>
-                                    )}
                                     <tr 
                                       className="hover:bg-red-50/50 cursor-pointer transition border-l-2 border-red-400"
                                       onClick={() => handleCompClick(comp, comps.findIndex(c => c.id === comp.id))}
@@ -2435,6 +2267,59 @@ function PIQContent() {
                             )}
                           </tbody>
                         </table>
+                        
+                        {/* ARV Overlay */}
+                        {compsMapView === 'list' && (
+                          <div 
+                            className="absolute left-0 right-0 pointer-events-none z-10"
+                            style={{ top: getArvOverlayY() - 20 }}
+                          >
+                            <div className="flex items-center gap-2 px-2">
+                              <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
+                              <div 
+                                className={cn(
+                                  "pointer-events-auto flex flex-col items-center px-3 py-1 rounded-lg border cursor-ns-resize select-none transition-all shadow-lg",
+                                  isAboveValueCeiling 
+                                    ? "bg-red-50 border-red-300" 
+                                    : "bg-green-50 border-green-300",
+                                  isDraggingARV && "ring-2 ring-blue-400 scale-105"
+                                )}
+                                onMouseDown={(e) => { e.preventDefault(); setIsDraggingARV(true); }}
+                                onDoubleClick={() => { setIsEditingARV(true); setArvInputValue(estimatedARV.toString()); }}
+                                data-testid="arv-drag-handle"
+                              >
+                                {isEditingARV ? (
+                                  <input
+                                    type="text"
+                                    className="w-24 text-center text-sm font-bold border rounded px-1 py-0.5"
+                                    value={arvInputValue}
+                                    onChange={(e) => setArvInputValue(e.target.value)}
+                                    onBlur={() => handleARVManualUpdate(arvInputValue)}
+                                    onKeyDown={(e) => { if (e.key === 'Enter') handleARVManualUpdate(arvInputValue); if (e.key === 'Escape') setIsEditingARV(false); }}
+                                    autoFocus
+                                    onClick={(e) => e.stopPropagation()}
+                                    data-testid="arv-input"
+                                  />
+                                ) : (
+                                  <span className={cn("text-sm font-bold", isAboveValueCeiling ? "text-red-600" : "text-green-600")}>
+                                    ${estimatedARV.toLocaleString()}
+                                  </span>
+                                )}
+                                <span className={cn("text-[9px] font-medium uppercase tracking-wider", isAboveValueCeiling ? "text-red-700" : "text-green-700")}>
+                                  Estimated ARV
+                                </span>
+                              </div>
+                              <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
+                            </div>
+                            {isAboveValueCeiling && (
+                              <div className="mt-2 mx-4 px-3 py-2 bg-red-100 border border-red-300 rounded-lg text-xs text-red-800 flex items-start gap-2 pointer-events-none">
+                                <span className="text-red-600 font-bold">⚠</span>
+                                <span>The data does not support this value, please be sure to check your comps</span>
+                              </div>
+                            )}
+                            <div className="text-[9px] text-gray-400 text-center mt-1 pointer-events-none">Drag up/down to adjust • Double-click to edit</div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}
