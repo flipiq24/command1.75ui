@@ -718,6 +718,25 @@ function PIQContent() {
   const [selectedKeepIds, setSelectedKeepIds] = useState<Set<string>>(new Set());
   const [selectedRemoveIds, setSelectedRemoveIds] = useState<Set<string>>(new Set());
   const [selectedListIds, setSelectedListIds] = useState<Set<string>>(new Set());
+  const [estimatedARV, setEstimatedARV] = useState(765000);
+  const [showARVWarning, setShowARVWarning] = useState(false);
+  const [isDraggingARV, setIsDraggingARV] = useState(false);
+
+  const VALUE_CEILING = 1060000;
+  const ARV_MIN = 500000;
+  const ARV_MAX = 1200000;
+
+  const handleARVDrag = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDraggingARV) return;
+    const container = e.currentTarget.closest('.arv-drag-container') as HTMLElement;
+    if (!container) return;
+    const rect = container.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const percentage = Math.max(0, Math.min(1, x / rect.width));
+    const newValue = Math.round((ARV_MIN + percentage * (ARV_MAX - ARV_MIN)) / 1000) * 1000;
+    setEstimatedARV(newValue);
+    setShowARVWarning(newValue > VALUE_CEILING);
+  };
 
   const keepComps = comps.filter(c => c.keep);
   
@@ -1994,15 +2013,41 @@ function PIQContent() {
                                     {comp.address === '43703 Campo Place' && (
                                       <tr>
                                         <td colSpan={12} className="px-0 py-1">
-                                          <div className="relative">
+                                          <div 
+                                            className="relative arv-drag-container select-none"
+                                            onMouseMove={handleARVDrag}
+                                            onMouseUp={() => setIsDraggingARV(false)}
+                                            onMouseLeave={() => setIsDraggingARV(false)}
+                                          >
                                             <div className="flex items-center gap-2">
-                                              <div className="flex-1 border-t-2 border-green-500"></div>
-                                              <div className="flex flex-col items-center px-3 py-1 bg-green-50 rounded-lg border border-green-300">
-                                                <span className="text-sm font-bold text-green-600">$765,000</span>
-                                                <span className="text-[9px] font-medium text-green-700 uppercase tracking-wider">Estimated ARV</span>
+                                              <div className={cn("flex-1 border-t-2", showARVWarning ? "border-orange-500" : "border-green-500")}></div>
+                                              <div 
+                                                className={cn(
+                                                  "flex flex-col items-center px-3 py-1 rounded-lg border cursor-grab active:cursor-grabbing transition-colors",
+                                                  showARVWarning 
+                                                    ? "bg-orange-50 border-orange-300" 
+                                                    : "bg-green-50 border-green-300",
+                                                  isDraggingARV && "ring-2 ring-blue-400"
+                                                )}
+                                                onMouseDown={() => setIsDraggingARV(true)}
+                                                data-testid="arv-drag-handle"
+                                              >
+                                                <span className={cn("text-sm font-bold", showARVWarning ? "text-orange-600" : "text-green-600")}>
+                                                  ${estimatedARV.toLocaleString()}
+                                                </span>
+                                                <span className={cn("text-[9px] font-medium uppercase tracking-wider", showARVWarning ? "text-orange-700" : "text-green-700")}>
+                                                  Estimated ARV
+                                                </span>
                                               </div>
-                                              <div className="flex-1 border-t-2 border-green-500"></div>
+                                              <div className={cn("flex-1 border-t-2", showARVWarning ? "border-orange-500" : "border-green-500")}></div>
                                             </div>
+                                            {showARVWarning && (
+                                              <div className="mt-2 px-3 py-2 bg-orange-100 border border-orange-300 rounded-lg text-xs text-orange-800 flex items-start gap-2">
+                                                <span className="text-orange-600 font-bold">⚠</span>
+                                                <span>The data does not support this value, please be sure to check your comps</span>
+                                              </div>
+                                            )}
+                                            <div className="text-[9px] text-gray-400 text-center mt-1">Drag to adjust ARV</div>
                                           </div>
                                         </td>
                                       </tr>
