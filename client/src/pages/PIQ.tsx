@@ -796,19 +796,38 @@ function PIQContent() {
     if (!tableRef.current || !tableWrapperRef.current) return 100;
     const rows = tableRef.current.querySelectorAll('tr[data-comp-index]');
     if (rows.length === 0) return 100;
-    const targetIdx = Math.floor(arvPosition);
+    
+    const currentIdx = Math.floor(arvPosition);
+    const fraction = arvPosition - currentIdx;
+    const wrapperRect = tableWrapperRef.current.getBoundingClientRect();
+    
+    let currentRow: Element | null = null;
+    let nextRow: Element | null = null;
+    
     for (let i = 0; i < rows.length; i++) {
       const row = rows[i];
       const idx = parseInt(row.getAttribute('data-comp-index') || '0', 10);
-      if (idx === targetIdx) {
-        const wrapperRect = tableWrapperRef.current.getBoundingClientRect();
-        const rowRect = row.getBoundingClientRect();
-        return rowRect.top - wrapperRect.top + tableWrapperRef.current.scrollTop;
-      }
+      if (idx === currentIdx) currentRow = row;
+      if (idx === currentIdx + 1) nextRow = row;
     }
+    
+    if (currentRow && nextRow) {
+      const currentRect = currentRow.getBoundingClientRect();
+      const nextRect = nextRow.getBoundingClientRect();
+      const currentTop = currentRect.top - wrapperRect.top + tableWrapperRef.current.scrollTop;
+      const nextTop = nextRect.top - wrapperRect.top + tableWrapperRef.current.scrollTop;
+      return currentTop + (nextTop - currentTop) * fraction;
+    }
+    
+    if (currentRow) {
+      const rowRect = currentRow.getBoundingClientRect();
+      const rowTop = rowRect.top - wrapperRect.top + tableWrapperRef.current.scrollTop;
+      const rowHeight = rowRect.height;
+      return rowTop + rowHeight * fraction;
+    }
+    
     const lastRow = rows[rows.length - 1];
     if (lastRow) {
-      const wrapperRect = tableWrapperRef.current.getBoundingClientRect();
       const rowRect = lastRow.getBoundingClientRect();
       return rowRect.bottom - wrapperRect.top + tableWrapperRef.current.scrollTop;
     }
