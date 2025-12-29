@@ -1991,6 +1991,22 @@ function PIQContent() {
                                         </td>
                                       </tr>
                                     )}
+                                    {comp.address === '43703 Campo Place' && (
+                                      <tr>
+                                        <td colSpan={12} className="px-0 py-1">
+                                          <div className="relative">
+                                            <div className="flex items-center gap-2">
+                                              <div className="flex-1 border-t-2 border-green-500"></div>
+                                              <div className="flex flex-col items-center px-3 py-1 bg-green-50 rounded-lg border border-green-300">
+                                                <span className="text-sm font-bold text-green-600">$765,000</span>
+                                                <span className="text-[9px] font-medium text-green-700 uppercase tracking-wider">Estimated ARV</span>
+                                              </div>
+                                              <div className="flex-1 border-t-2 border-green-500"></div>
+                                            </div>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    )}
                                   </React.Fragment>
                                 ))}
                               </>
