@@ -750,21 +750,28 @@ function PIQContent() {
   const calculateARVFromPosition = useCallback((pos: number) => {
     if (allCompsFlat.length === 0) return 750000;
     const clampedPos = Math.max(0, Math.min(pos, allCompsFlat.length));
-    const currentIdx = Math.floor(clampedPos);
-    const fraction = clampedPos - currentIdx;
-    const currentComp = allCompsFlat[currentIdx]?.comp;
-    const nextComp = allCompsFlat[currentIdx + 1]?.comp;
-    const prevComp = allCompsFlat[currentIdx - 1]?.comp;
     
-    if (currentComp && nextComp) {
-      const interpolated = currentComp.price - (currentComp.price - nextComp.price) * fraction;
+    // Position represents where we are between row centers
+    // pos = 0 means at the center of first row (comp[0].price)
+    // pos = 0.5 means halfway between comp[0] and comp[1]
+    // pos = 1 means at center of second row (comp[1].price)
+    const lowerIdx = Math.floor(clampedPos);
+    const upperIdx = Math.ceil(clampedPos);
+    const fraction = clampedPos - lowerIdx;
+    
+    const lowerComp = allCompsFlat[lowerIdx]?.comp;
+    const upperComp = allCompsFlat[upperIdx]?.comp;
+    
+    if (lowerComp && upperComp && lowerIdx !== upperIdx) {
+      // Interpolate between the two prices
+      const interpolated = lowerComp.price + (upperComp.price - lowerComp.price) * fraction;
       return Math.round(interpolated / 1000) * 1000;
     }
-    if (currentComp) {
-      return currentComp.price;
+    if (lowerComp) {
+      return lowerComp.price;
     }
-    if (prevComp) {
-      return prevComp.price;
+    if (upperComp) {
+      return upperComp.price;
     }
     return 750000;
   }, [allCompsFlat]);
@@ -804,39 +811,35 @@ function PIQContent() {
     const rows = tableRef.current.querySelectorAll('tr[data-comp-index]');
     if (rows.length === 0) return 100;
     
-    const currentIdx = Math.floor(arvPosition);
-    const fraction = arvPosition - currentIdx;
+    const lowerIdx = Math.floor(arvPosition);
+    const upperIdx = Math.ceil(arvPosition);
+    const fraction = arvPosition - lowerIdx;
     const wrapperRect = tableWrapperRef.current.getBoundingClientRect();
     
-    let currentRow: Element | null = null;
-    let nextRow: Element | null = null;
-    
+    // Build row center positions
+    const rowCenters: { idx: number; center: number }[] = [];
     for (let i = 0; i < rows.length; i++) {
       const row = rows[i];
       const idx = parseInt(row.getAttribute('data-comp-index') || '0', 10);
-      if (idx === currentIdx) currentRow = row;
-      if (idx === currentIdx + 1) nextRow = row;
+      const rowRect = row.getBoundingClientRect();
+      const rowCenter = rowRect.top + rowRect.height / 2 - wrapperRect.top + tableWrapperRef.current.scrollTop;
+      rowCenters.push({ idx, center: rowCenter });
     }
     
-    if (currentRow && nextRow) {
-      const currentRect = currentRow.getBoundingClientRect();
-      const nextRect = nextRow.getBoundingClientRect();
-      const currentTop = currentRect.top - wrapperRect.top + tableWrapperRef.current.scrollTop;
-      const nextTop = nextRect.top - wrapperRect.top + tableWrapperRef.current.scrollTop;
-      return currentTop + (nextTop - currentTop) * fraction;
+    const lowerRowData = rowCenters.find(r => r.idx === lowerIdx);
+    const upperRowData = rowCenters.find(r => r.idx === upperIdx);
+    
+    if (lowerRowData && upperRowData && lowerIdx !== upperIdx) {
+      return lowerRowData.center + (upperRowData.center - lowerRowData.center) * fraction;
     }
     
-    if (currentRow) {
-      const rowRect = currentRow.getBoundingClientRect();
-      const rowTop = rowRect.top - wrapperRect.top + tableWrapperRef.current.scrollTop;
-      const rowHeight = rowRect.height;
-      return rowTop + rowHeight * fraction;
+    if (lowerRowData) {
+      return lowerRowData.center;
     }
     
-    const lastRow = rows[rows.length - 1];
-    if (lastRow) {
-      const rowRect = lastRow.getBoundingClientRect();
-      return rowRect.bottom - wrapperRect.top + tableWrapperRef.current.scrollTop;
+    const lastRowData = rowCenters[rowCenters.length - 1];
+    if (lastRowData) {
+      return lastRowData.center;
     }
     return 100;
   }, [arvPosition, arvPixelY, isDraggingARV]);
@@ -1950,38 +1953,38 @@ function PIQContent() {
                           const rows = tableRef.current?.querySelectorAll('tr[data-comp-index]');
                           if (!rows || rows.length === 0) return;
                           
-                          const rowData: { idx: number; top: number; bottom: number }[] = [];
+                          // Build array of row centers with their comp indices
+                          const rowCenters: { idx: number; center: number }[] = [];
                           rows.forEach((row) => {
                             const rowRect = row.getBoundingClientRect();
                             const rowTop = rowRect.top - wrapperRect.top + tableWrapperRef.current!.scrollTop;
-                            const rowBottom = rowRect.bottom - wrapperRect.top + tableWrapperRef.current!.scrollTop;
+                            const rowCenter = rowTop + rowRect.height / 2;
                             const idx = parseInt(row.getAttribute('data-comp-index') || '0', 10);
-                            rowData.push({ idx, top: rowTop, bottom: rowBottom });
+                            rowCenters.push({ idx, center: rowCenter });
                           });
-                          rowData.sort((a, b) => a.idx - b.idx);
+                          rowCenters.sort((a, b) => a.center - b.center);
                           
-                          if (relativeY <= rowData[0].top) {
-                            setArvPosition(rowData[0].idx);
+                          if (rowCenters.length === 0) return;
+                          
+                          // If above first row center, position is at first comp
+                          if (relativeY <= rowCenters[0].center) {
+                            setArvPosition(rowCenters[0].idx);
                             return;
                           }
-                          if (relativeY >= rowData[rowData.length - 1].bottom) {
-                            setArvPosition(rowData[rowData.length - 1].idx + 1);
+                          // If below last row center, position is at last comp
+                          if (relativeY >= rowCenters[rowCenters.length - 1].center) {
+                            setArvPosition(rowCenters[rowCenters.length - 1].idx);
                             return;
                           }
                           
-                          for (let i = 0; i < rowData.length; i++) {
-                            const row = rowData[i];
-                            if (relativeY >= row.top && relativeY <= row.bottom) {
-                              const fraction = (relativeY - row.top) / (row.bottom - row.top);
-                              setArvPosition(row.idx + fraction);
+                          // Find which two row centers we're between and interpolate
+                          for (let i = 0; i < rowCenters.length - 1; i++) {
+                            const current = rowCenters[i];
+                            const next = rowCenters[i + 1];
+                            if (relativeY >= current.center && relativeY <= next.center) {
+                              const fraction = (relativeY - current.center) / (next.center - current.center);
+                              setArvPosition(current.idx + fraction);
                               return;
-                            }
-                            if (i < rowData.length - 1) {
-                              const nextRow = rowData[i + 1];
-                              if (relativeY > row.bottom && relativeY < nextRow.top) {
-                                setArvPosition(row.idx + 1);
-                                return;
-                              }
                             }
                           }
                         }}
@@ -2359,36 +2362,20 @@ function PIQContent() {
                                       >
                                         <div className={cn(
                                           "ml-2",
-                                          line.type === 'major' ? "w-5 h-0.5 bg-gray-400" : 
-                                          line.type === 'minor' ? "w-3 h-[1px] bg-gray-300" : 
-                                          "w-2 h-[1px] bg-gray-200"
+                                          line.type === 'major' ? "w-6 h-0.5 bg-gray-500" : 
+                                          line.type === 'minor' ? "w-4 h-[1.5px] bg-gray-400" : 
+                                          "w-2.5 h-[1px] bg-gray-300"
                                         )}></div>
                                         {line.type === 'major' && (
-                                          <span className="ml-1 text-[10px] font-semibold text-gray-500">
+                                          <span className="ml-1 text-[10px] font-semibold text-gray-600">
                                             ${(line.price / 1000).toFixed(0)}K
                                           </span>
                                         )}
                                         {line.type === 'minor' && (
-                                          <span className="ml-1 text-[9px] text-gray-400">
+                                          <span className="ml-1 text-[9px] text-gray-500">
                                             ${(line.price / 1000).toFixed(0)}K
                                           </span>
                                         )}
-                                      </div>
-                                    );
-                                  })}
-                                  
-                                  {nearbyComps.map((item) => {
-                                    const pricePos = ((maxPrice - item.comp.price) / priceRange) * 100;
-                                    return (
-                                      <div
-                                        key={`scale-${item.comp.id}`}
-                                        className="absolute left-0 right-0 flex items-center"
-                                        style={{ top: `${Math.max(1, Math.min(99, pricePos))}%` }}
-                                      >
-                                        <div className="w-8 h-1.5 bg-blue-500 ml-2 rounded"></div>
-                                        <span className="ml-1 text-[11px] font-bold text-blue-700 bg-blue-50 px-1 rounded">
-                                          ${item.comp.price.toLocaleString()}
-                                        </span>
                                       </div>
                                     );
                                   })}
