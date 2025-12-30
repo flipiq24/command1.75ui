@@ -725,6 +725,9 @@ function PIQContent() {
   const [warningDismissed, setWarningDismissed] = useState(false);
   const [isEditingARV, setIsEditingARV] = useState(false);
   const [arvInputValue, setArvInputValue] = useState('');
+  const lastDragY = useRef<number | null>(null);
+  const lastDragTime = useRef<number | null>(null);
+  const dragVelocity = useRef<number>(0);
   const tableRef = useRef<HTMLTableElement>(null);
   const tableWrapperRef = useRef<HTMLDivElement>(null);
 
@@ -747,7 +750,7 @@ function PIQContent() {
 
   const isAboveValueCeiling = arvPosition <= valueCeilingGlobalIndex + 0.5;
 
-  const calculateARVFromPosition = useCallback((pos: number) => {
+  const calculateARVFromPosition = useCallback((pos: number, velocity?: number) => {
     if (allCompsFlat.length === 0) return 750000;
     const clampedPos = Math.max(0, Math.min(pos, allCompsFlat.length));
     const currentIdx = Math.floor(clampedPos);
@@ -756,17 +759,17 @@ function PIQContent() {
     const nextComp = allCompsFlat[currentIdx + 1]?.comp;
     const prevComp = allCompsFlat[currentIdx - 1]?.comp;
     
+    let rawValue = 750000;
     if (currentComp && nextComp) {
-      const interpolated = currentComp.price - (currentComp.price - nextComp.price) * fraction;
-      return Math.round(interpolated / 1000) * 1000;
+      rawValue = currentComp.price - (currentComp.price - nextComp.price) * fraction;
+    } else if (currentComp) {
+      rawValue = currentComp.price;
+    } else if (prevComp) {
+      rawValue = prevComp.price;
     }
-    if (currentComp) {
-      return currentComp.price;
-    }
-    if (prevComp) {
-      return prevComp.price;
-    }
-    return 750000;
+    
+    const snapIncrement = (velocity !== undefined && velocity > 80) ? 5000 : 1000;
+    return Math.round(rawValue / snapIncrement) * snapIncrement;
   }, [allCompsFlat]);
 
   const handleARVManualUpdate = (value: string) => {
@@ -789,7 +792,7 @@ function PIQContent() {
   };
 
   useEffect(() => {
-    setEstimatedARV(calculateARVFromPosition(arvPosition));
+    setEstimatedARV(calculateARVFromPosition(arvPosition, dragVelocity.current));
   }, [arvPosition, calculateARVFromPosition]);
 
   useEffect(() => {
@@ -1947,6 +1950,17 @@ function PIQContent() {
                           const relativeY = e.clientY - wrapperRect.top + tableWrapperRef.current.scrollTop;
                           setArvPixelY(relativeY);
                           
+                          const now = Date.now();
+                          if (lastDragY.current !== null && lastDragTime.current !== null) {
+                            const dt = now - lastDragTime.current;
+                            if (dt > 0) {
+                              const dy = Math.abs(relativeY - lastDragY.current);
+                              dragVelocity.current = dy / dt * 1000;
+                            }
+                          }
+                          lastDragY.current = relativeY;
+                          lastDragTime.current = now;
+                          
                           const rows = tableRef.current?.querySelectorAll('tr[data-comp-index]');
                           if (!rows || rows.length === 0) return;
                           
@@ -1985,8 +1999,8 @@ function PIQContent() {
                             }
                           }
                         }}
-                        onMouseUp={() => { setIsDraggingARV(false); setArvPixelY(null); }}
-                        onMouseLeave={() => { setIsDraggingARV(false); setArvPixelY(null); }}
+                        onMouseUp={() => { setIsDraggingARV(false); setArvPixelY(null); lastDragY.current = null; lastDragTime.current = null; dragVelocity.current = 0; }}
+                        onMouseLeave={() => { setIsDraggingARV(false); setArvPixelY(null); lastDragY.current = null; lastDragTime.current = null; dragVelocity.current = 0; }}
                       >
                         <table ref={tableRef} className="w-full text-xs">
                           <thead>
@@ -2377,21 +2391,6 @@ function PIQContent() {
                                     );
                                   })}
                                   
-                                  {nearbyComps.map((item) => {
-                                    const pricePos = ((maxPrice - item.comp.price) / priceRange) * 100;
-                                    return (
-                                      <div
-                                        key={`scale-${item.comp.id}`}
-                                        className="absolute left-0 right-0 flex items-center"
-                                        style={{ top: `${Math.max(1, Math.min(99, pricePos))}%` }}
-                                      >
-                                        <div className="w-8 h-1.5 bg-blue-500 ml-2 rounded"></div>
-                                        <span className="ml-1 text-[11px] font-bold text-blue-700 bg-blue-50 px-1 rounded">
-                                          ${item.comp.price.toLocaleString()}
-                                        </span>
-                                      </div>
-                                    );
-                                  })}
                                   
                                   {(() => {
                                     const arvPos = ((maxPrice - estimatedARV) / priceRange) * 100;
