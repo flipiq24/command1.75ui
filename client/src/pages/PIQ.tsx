@@ -722,6 +722,7 @@ function PIQContent() {
   const [arvPosition, setArvPosition] = useState(4);
   const [arvPixelY, setArvPixelY] = useState<number | null>(null);
   const [isDraggingARV, setIsDraggingARV] = useState(false);
+  const [warningDismissed, setWarningDismissed] = useState(false);
   const [isEditingARV, setIsEditingARV] = useState(false);
   const [arvInputValue, setArvInputValue] = useState('');
   const tableRef = useRef<HTMLTableElement>(null);
@@ -790,6 +791,12 @@ function PIQContent() {
   useEffect(() => {
     setEstimatedARV(calculateARVFromPosition(arvPosition));
   }, [arvPosition, calculateARVFromPosition]);
+
+  useEffect(() => {
+    if (!isAboveValueCeiling) {
+      setWarningDismissed(false);
+    }
+  }, [isAboveValueCeiling]);
 
   const getArvOverlayY = useCallback(() => {
     if (isDraggingARV && arvPixelY !== null) return arvPixelY;
@@ -2452,10 +2459,17 @@ function PIQContent() {
                               </div>
                               <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
                             </div>
-                            {isAboveValueCeiling && (
-                              <div className="mt-2 mx-4 px-3 py-2 bg-red-100 border border-red-300 rounded-lg text-xs text-red-800 flex items-start gap-2 pointer-events-none">
+                            {isAboveValueCeiling && !warningDismissed && (
+                              <div className="mt-2 mx-4 px-3 py-2 bg-red-100 border border-red-300 rounded-lg text-xs text-red-800 flex items-start gap-2 pointer-events-auto">
                                 <span className="text-red-600 font-bold">⚠</span>
-                                <span>The data does not support this value, please be sure to check your comps</span>
+                                <span className="flex-1">The data does not support this value, please be sure to check your comps</span>
+                                <button 
+                                  onClick={() => setWarningDismissed(true)}
+                                  className="text-red-500 hover:text-red-700 font-bold text-sm leading-none ml-2"
+                                  data-testid="dismiss-warning"
+                                >
+                                  ×
+                                </button>
                               </div>
                             )}
                           </div>
