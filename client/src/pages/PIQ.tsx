@@ -754,35 +754,25 @@ function PIQContent() {
   const calculateARVFromPosition = useCallback((pos: number, velocity?: number) => {
     if (allCompsFlat.length === 0) return 750000;
     
-    const lowerIdx = Math.floor(pos);
-    const upperIdx = Math.ceil(pos);
-    const fraction = pos - lowerIdx;
+    const aboveIdx = Math.floor(pos);
+    const belowIdx = Math.ceil(pos);
+    const fraction = pos - aboveIdx;
     
-    const upperComp = allCompsFlat[lowerIdx]?.comp;
-    const lowerComp = allCompsFlat[upperIdx]?.comp;
+    const aboveComp = allCompsFlat[aboveIdx]?.comp;
+    const belowComp = allCompsFlat[belowIdx]?.comp;
     
     let rawValue = 750000;
-    if (upperComp && lowerComp && lowerIdx !== upperIdx) {
-      rawValue = upperComp.price + (lowerComp.price - upperComp.price) * fraction;
-    } else if (upperComp) {
-      rawValue = upperComp.price;
-    } else if (lowerComp) {
-      rawValue = lowerComp.price;
+    if (aboveComp && belowComp && aboveIdx !== belowIdx) {
+      rawValue = aboveComp.price - (aboveComp.price - belowComp.price) * fraction;
+    } else if (aboveComp) {
+      rawValue = aboveComp.price;
+    } else if (belowComp) {
+      rawValue = belowComp.price;
     }
     
     const isFast = velocity !== undefined && velocity > 40;
     const increment = isFast ? 5000 : 1000;
-    const currentSnapped = lastSnappedARV.current;
-    const diff = rawValue - currentSnapped;
-    
-    if (Math.abs(diff) >= increment) {
-      const steps = Math.floor(Math.abs(diff) / increment);
-      const newValue = currentSnapped + (diff > 0 ? steps * increment : -steps * increment);
-      lastSnappedARV.current = newValue;
-      return newValue;
-    }
-    
-    return currentSnapped;
+    return Math.round(rawValue / increment) * increment;
   }, [allCompsFlat]);
 
   const handleARVManualUpdate = (value: string) => {
