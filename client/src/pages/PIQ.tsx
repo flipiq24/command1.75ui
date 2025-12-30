@@ -722,6 +722,7 @@ function PIQContent() {
   const [arvPosition, setArvPosition] = useState(4);
   const [arvPixelY, setArvPixelY] = useState<number | null>(null);
   const [isDraggingARV, setIsDraggingARV] = useState(false);
+  const [showFineTunePopup, setShowFineTunePopup] = useState(false);
   const [warningDismissed, setWarningDismissed] = useState(false);
   const [isEditingARV, setIsEditingARV] = useState(false);
   const [arvInputValue, setArvInputValue] = useState('');
@@ -2319,16 +2320,13 @@ function PIQContent() {
                           </tbody>
                         </table>
                         
-                        {/* Proportional Price Scale - hyper focused $50K range with $1K precision */}
-                        {isDraggingARV && compsMapView === 'list' && (() => {
+                        {/* Fine Tune Popup - Interactive price scale */}
+                        {(showFineTunePopup || isDraggingARV) && compsMapView === 'list' && (() => {
                           const focusRange = 25000;
-                          const maxPrice = estimatedARV + focusRange;
-                          const minPrice = estimatedARV - focusRange;
+                          const centerPrice = estimatedARV;
+                          const maxPrice = centerPrice + focusRange;
+                          const minPrice = centerPrice - focusRange;
                           const priceRange = maxPrice - minPrice;
-                          
-                          const nearbyComps = allCompsFlat.filter(item => {
-                            return item.comp.price >= minPrice && item.comp.price <= maxPrice;
-                          });
                           
                           const gridLines: { price: number; type: 'major' | 'minor' | 'micro' }[] = [];
                           const roundedMin = Math.floor(minPrice / 10000) * 10000;
@@ -2343,13 +2341,67 @@ function PIQContent() {
                             }
                           }
                           
+                          const handleScaleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+                            const rect = e.currentTarget.getBoundingClientRect();
+                            const relativeY = e.clientY - rect.top;
+                            const percentage = relativeY / rect.height;
+                            const newPrice = maxPrice - (percentage * priceRange);
+                            const roundedPrice = Math.round(newPrice / 1000) * 1000;
+                            setEstimatedARV(Math.max(minPrice, Math.min(maxPrice, roundedPrice)));
+                          };
+                          
+                          const handleScaleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+                            if (e.buttons !== 1) return;
+                            handleScaleClick(e);
+                          };
+                          
                           return (
-                            <div className="absolute right-4 z-20 pointer-events-none" style={{ top: 10, bottom: 10 }}>
-                              <div className="relative h-full w-48 bg-white/95 border border-gray-200 rounded-lg shadow-xl p-3">
-                                <div className="text-[9px] font-bold text-gray-600 text-center mb-1 uppercase tracking-wide">Fine Tune ($50K Range)</div>
-                                <div className="text-[8px] text-gray-400 text-center mb-2">${minPrice.toLocaleString()} - ${maxPrice.toLocaleString()}</div>
-                                <div className="relative h-[calc(100%-28px)]">
-                                  <div className="absolute left-0 top-0 bottom-0 border-l-2 border-gray-300 ml-3"></div>
+                            <div className="absolute right-4 z-20" style={{ top: 10, bottom: 10 }}>
+                              <div className="relative h-full w-56 bg-white border border-gray-300 rounded-xl shadow-2xl p-3 pointer-events-auto">
+                                <button 
+                                  onClick={() => { setShowFineTunePopup(false); setIsDraggingARV(false); }}
+                                  className="absolute top-2 right-2 w-5 h-5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 text-xs flex items-center justify-center"
+                                  data-testid="close-fine-tune"
+                                >×</button>
+                                <div className="text-[10px] font-bold text-gray-700 text-center mb-1 uppercase tracking-wide">Fine Tune ARV</div>
+                                <div className="text-[9px] text-gray-500 text-center mb-2">${minPrice.toLocaleString()} - ${maxPrice.toLocaleString()}</div>
+                                
+                                {/* +/- Buttons and current value */}
+                                <div className="flex items-center justify-center gap-2 mb-3">
+                                  <button 
+                                    onClick={() => setEstimatedARV(prev => prev - 1000)}
+                                    className="w-7 h-7 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center"
+                                    data-testid="arv-minus-1k"
+                                  >−</button>
+                                  <div className={cn("px-3 py-1 rounded-lg font-bold text-sm", isAboveValueCeiling ? "bg-red-100 text-red-600" : "bg-green-100 text-green-600")}>
+                                    ${estimatedARV.toLocaleString()}
+                                  </div>
+                                  <button 
+                                    onClick={() => setEstimatedARV(prev => prev + 1000)}
+                                    className="w-7 h-7 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center"
+                                    data-testid="arv-plus-1k"
+                                  >+</button>
+                                </div>
+                                
+                                {/* Snap buttons */}
+                                <div className="flex items-center justify-center gap-1 mb-3">
+                                  <button 
+                                    onClick={() => setEstimatedARV(Math.round(estimatedARV / 5000) * 5000)}
+                                    className="px-2 py-0.5 text-[9px] bg-gray-100 hover:bg-gray-200 rounded text-gray-600"
+                                  >Snap $5K</button>
+                                  <button 
+                                    onClick={() => setEstimatedARV(Math.round(estimatedARV / 10000) * 10000)}
+                                    className="px-2 py-0.5 text-[9px] bg-gray-100 hover:bg-gray-200 rounded text-gray-600"
+                                  >Snap $10K</button>
+                                </div>
+                                
+                                {/* Draggable scale */}
+                                <div 
+                                  className="relative h-[calc(100%-90px)] cursor-ns-resize select-none"
+                                  onClick={handleScaleClick}
+                                  onMouseMove={handleScaleMouseMove}
+                                >
+                                  <div className="absolute left-4 top-0 bottom-0 border-l-2 border-gray-400"></div>
                                   
                                   {gridLines.map((line) => {
                                     const pos = ((maxPrice - line.price) / priceRange) * 100;
@@ -2357,11 +2409,11 @@ function PIQContent() {
                                     return (
                                       <div
                                         key={`grid-${line.price}`}
-                                        className="absolute left-0 right-0 flex items-center"
+                                        className="absolute left-0 right-0 flex items-center pointer-events-none"
                                         style={{ top: `${pos}%` }}
                                       >
                                         <div className={cn(
-                                          "ml-2",
+                                          "ml-3",
                                           line.type === 'major' ? "w-6 h-0.5 bg-gray-500" : 
                                           line.type === 'minor' ? "w-4 h-[1.5px] bg-gray-400" : 
                                           "w-2.5 h-[1px] bg-gray-300"
@@ -2380,21 +2432,22 @@ function PIQContent() {
                                     );
                                   })}
                                   
+                                  {/* ARV indicator on scale */}
                                   {(() => {
                                     const arvPos = ((maxPrice - estimatedARV) / priceRange) * 100;
                                     return (
                                       <div
-                                        className="absolute left-0 right-0 flex items-center"
-                                        style={{ top: `${Math.max(1, Math.min(99, arvPos))}%` }}
+                                        className="absolute left-0 right-0 flex items-center pointer-events-none"
+                                        style={{ top: `${Math.max(2, Math.min(98, arvPos))}%` }}
                                       >
-                                        <div className={cn("w-full h-1.5 rounded", isAboveValueCeiling ? "bg-red-400" : "bg-green-400/70")}></div>
-                                        <span className={cn("absolute right-0 text-[11px] font-bold px-2 py-0.5 rounded shadow-md", isAboveValueCeiling ? "text-red-600 bg-red-100" : "text-green-600 bg-green-100")}>
-                                          ${estimatedARV.toLocaleString()}
-                                        </span>
+                                        <div className={cn("w-full h-2 rounded-full", isAboveValueCeiling ? "bg-red-400" : "bg-green-400")}></div>
+                                        <div className={cn("absolute right-0 w-3 h-3 rounded-full border-2 border-white shadow", isAboveValueCeiling ? "bg-red-500" : "bg-green-500")}></div>
                                       </div>
                                     );
                                   })()}
                                 </div>
+                                
+                                <div className="text-[8px] text-gray-400 text-center mt-2">Click or drag on scale to adjust</div>
                               </div>
                             </div>
                           );
@@ -2410,13 +2463,13 @@ function PIQContent() {
                               <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-300/60")}></div>
                               <div 
                                 className={cn(
-                                  "pointer-events-auto flex flex-col items-center px-3 py-1 rounded-lg border cursor-ns-resize select-none transition-all shadow-lg group relative",
+                                  "pointer-events-auto flex flex-col items-center px-3 py-1 rounded-lg border cursor-pointer select-none transition-all shadow-lg group relative",
                                   isAboveValueCeiling 
                                     ? "bg-red-50 border-red-300" 
                                     : "bg-green-50/60 border-green-200",
-                                  isDraggingARV && "ring-2 ring-blue-400 scale-105"
+                                  (isDraggingARV || showFineTunePopup) && "ring-2 ring-blue-400 scale-105"
                                 )}
-                                onMouseDown={(e) => { e.preventDefault(); setIsDraggingARV(true); }}
+                                onClick={() => setShowFineTunePopup(prev => !prev)}
                                 onDoubleClick={() => { setIsEditingARV(true); setArvInputValue(estimatedARV.toString()); }}
                                 data-testid="arv-drag-handle"
                               >
@@ -2441,7 +2494,7 @@ function PIQContent() {
                                   Estimated ARV
                                 </span>
                                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-20">
-                                  Drag to adjust • Double-click to edit
+                                  Click to fine tune • Double-click to edit
                                 </div>
                               </div>
                               <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-300/60")}></div>
