@@ -2315,8 +2315,8 @@ function PIQContent() {
                           const maxPrice = Math.max(...prices);
                           const minPrice = Math.min(...prices);
                           const priceRange = maxPrice - minPrice || 1;
-                          const scaleHeight = 400;
-                          const scaleTop = 80;
+                          const scaleHeight = 600;
+                          const scaleTop = 40;
                           
                           return (
                             <div className="absolute right-4 z-20 pointer-events-none" style={{ top: scaleTop, height: scaleHeight }}>
