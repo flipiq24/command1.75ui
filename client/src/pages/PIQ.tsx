@@ -2309,31 +2309,35 @@ function PIQContent() {
                           </tbody>
                         </table>
                         
-                        {/* Proportional Price Scale - only show when dragging */}
+                        {/* Proportional Price Scale - only show when dragging, focused on nearby prices */}
                         {isDraggingARV && compsMapView === 'list' && (() => {
-                          const prices = allCompsFlat.map(item => item.comp.price);
-                          const maxPrice = Math.max(...prices);
-                          const minPrice = Math.min(...prices);
+                          const nearbyComps = allCompsFlat.filter(item => {
+                            const diff = Math.abs(item.comp.price - estimatedARV);
+                            return diff <= 300000;
+                          });
+                          const compsToShow = nearbyComps.length >= 3 ? nearbyComps : allCompsFlat;
+                          const prices = compsToShow.map(item => item.comp.price);
+                          const padding = 50000;
+                          const maxPrice = Math.max(...prices, estimatedARV) + padding;
+                          const minPrice = Math.min(...prices, estimatedARV) - padding;
                           const priceRange = maxPrice - minPrice || 1;
-                          const scaleHeight = 600;
-                          const scaleTop = 40;
                           
                           return (
-                            <div className="absolute right-4 z-20 pointer-events-none" style={{ top: scaleTop, height: scaleHeight }}>
-                              <div className="relative h-full w-32 bg-white/95 border border-gray-200 rounded-lg shadow-xl p-2">
-                                <div className="text-[9px] font-bold text-gray-600 text-center mb-2 uppercase tracking-wide">Price Scale</div>
-                                <div className="relative h-[calc(100%-24px)]">
-                                  <div className="absolute left-0 right-0 top-0 bottom-0 border-l-2 border-gray-300 ml-2"></div>
-                                  {allCompsFlat.map((item, idx) => {
+                            <div className="absolute right-4 z-20 pointer-events-none" style={{ top: 20, bottom: 20 }}>
+                              <div className="relative h-full w-36 bg-white/95 border border-gray-200 rounded-lg shadow-xl p-3">
+                                <div className="text-[9px] font-bold text-gray-600 text-center mb-2 uppercase tracking-wide">Price Scale (Focused)</div>
+                                <div className="relative h-[calc(100%-28px)]">
+                                  <div className="absolute left-0 top-0 bottom-0 border-l-2 border-gray-300 ml-2"></div>
+                                  {compsToShow.map((item) => {
                                     const pricePos = ((maxPrice - item.comp.price) / priceRange) * 100;
                                     return (
                                       <div
                                         key={`scale-${item.comp.id}`}
                                         className="absolute left-0 right-0 flex items-center"
-                                        style={{ top: `${pricePos}%` }}
+                                        style={{ top: `${Math.max(2, Math.min(98, pricePos))}%` }}
                                       >
-                                        <div className="w-3 h-0.5 bg-gray-400 ml-1"></div>
-                                        <span className="ml-1 text-[10px] font-medium text-gray-700">
+                                        <div className="w-4 h-0.5 bg-gray-400 ml-1"></div>
+                                        <span className="ml-1 text-[11px] font-medium text-gray-700">
                                           ${(item.comp.price / 1000).toFixed(0)}K
                                         </span>
                                       </div>
@@ -2344,10 +2348,10 @@ function PIQContent() {
                                     return (
                                       <div
                                         className="absolute left-0 right-0 flex items-center"
-                                        style={{ top: `${Math.max(0, Math.min(100, arvPos))}%` }}
+                                        style={{ top: `${Math.max(2, Math.min(98, arvPos))}%` }}
                                       >
-                                        <div className={cn("w-full h-0.5", isAboveValueCeiling ? "bg-red-500" : "bg-green-500")}></div>
-                                        <span className={cn("absolute right-0 text-[10px] font-bold px-1 rounded", isAboveValueCeiling ? "text-red-600 bg-red-50" : "text-green-600 bg-green-50")}>
+                                        <div className={cn("w-full h-1 rounded", isAboveValueCeiling ? "bg-red-500" : "bg-green-500")}></div>
+                                        <span className={cn("absolute right-0 text-[11px] font-bold px-1.5 py-0.5 rounded shadow", isAboveValueCeiling ? "text-red-600 bg-red-100" : "text-green-600 bg-green-100")}>
                                           ${(estimatedARV / 1000).toFixed(0)}K
                                         </span>
                                       </div>
