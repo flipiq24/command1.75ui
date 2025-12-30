@@ -2309,36 +2309,55 @@ function PIQContent() {
                           </tbody>
                         </table>
                         
-                        {/* Price Guide Lines - only show when dragging */}
-                        {isDraggingARV && compsMapView === 'list' && allCompsFlat.map((item, idx) => {
-                          const rows = tableRef.current?.querySelectorAll('tr[data-comp-index]');
-                          if (!rows || !tableWrapperRef.current) return null;
-                          const wrapperRect = tableWrapperRef.current.getBoundingClientRect();
-                          let rowY = 0;
-                          for (let i = 0; i < rows.length; i++) {
-                            const rowIdx = parseInt(rows[i].getAttribute('data-comp-index') || '0', 10);
-                            if (rowIdx === idx) {
-                              const rowRect = rows[i].getBoundingClientRect();
-                              rowY = rowRect.top - wrapperRect.top + tableWrapperRef.current.scrollTop + rowRect.height / 2;
-                              break;
-                            }
-                          }
+                        {/* Proportional Price Scale - only show when dragging */}
+                        {isDraggingARV && compsMapView === 'list' && (() => {
+                          const prices = allCompsFlat.map(item => item.comp.price);
+                          const maxPrice = Math.max(...prices);
+                          const minPrice = Math.min(...prices);
+                          const priceRange = maxPrice - minPrice || 1;
+                          const scaleHeight = 400;
+                          const scaleTop = 80;
+                          
                           return (
-                            <div
-                              key={`price-guide-${item.comp.id}`}
-                              className="absolute left-0 right-0 pointer-events-none z-5 transition-opacity duration-150"
-                              style={{ top: rowY }}
-                            >
-                              <div className="flex items-center">
-                                <div className="flex-1 border-t border-dashed border-gray-300"></div>
-                                <span className="px-2 py-0.5 text-[10px] font-medium text-gray-500 bg-white rounded">
-                                  ${item.comp.price.toLocaleString()}
-                                </span>
-                                <div className="flex-1 border-t border-dashed border-gray-300"></div>
+                            <div className="absolute right-4 z-20 pointer-events-none" style={{ top: scaleTop, height: scaleHeight }}>
+                              <div className="relative h-full w-32 bg-white/95 border border-gray-200 rounded-lg shadow-xl p-2">
+                                <div className="text-[9px] font-bold text-gray-600 text-center mb-2 uppercase tracking-wide">Price Scale</div>
+                                <div className="relative h-[calc(100%-24px)]">
+                                  <div className="absolute left-0 right-0 top-0 bottom-0 border-l-2 border-gray-300 ml-2"></div>
+                                  {allCompsFlat.map((item, idx) => {
+                                    const pricePos = ((maxPrice - item.comp.price) / priceRange) * 100;
+                                    return (
+                                      <div
+                                        key={`scale-${item.comp.id}`}
+                                        className="absolute left-0 right-0 flex items-center"
+                                        style={{ top: `${pricePos}%` }}
+                                      >
+                                        <div className="w-3 h-0.5 bg-gray-400 ml-1"></div>
+                                        <span className="ml-1 text-[10px] font-medium text-gray-700">
+                                          ${(item.comp.price / 1000).toFixed(0)}K
+                                        </span>
+                                      </div>
+                                    );
+                                  })}
+                                  {(() => {
+                                    const arvPos = ((maxPrice - estimatedARV) / priceRange) * 100;
+                                    return (
+                                      <div
+                                        className="absolute left-0 right-0 flex items-center"
+                                        style={{ top: `${Math.max(0, Math.min(100, arvPos))}%` }}
+                                      >
+                                        <div className={cn("w-full h-0.5", isAboveValueCeiling ? "bg-red-500" : "bg-green-500")}></div>
+                                        <span className={cn("absolute right-0 text-[10px] font-bold px-1 rounded", isAboveValueCeiling ? "text-red-600 bg-red-50" : "text-green-600 bg-green-50")}>
+                                          ${(estimatedARV / 1000).toFixed(0)}K
+                                        </span>
+                                      </div>
+                                    );
+                                  })()}
+                                </div>
                               </div>
                             </div>
                           );
-                        })}
+                        })()}
 
                         {/* ARV Overlay */}
                         {compsMapView === 'list' && (
@@ -2350,7 +2369,7 @@ function PIQContent() {
                               <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
                               <div 
                                 className={cn(
-                                  "pointer-events-auto flex flex-col items-center px-3 py-1 rounded-lg border cursor-ns-resize select-none transition-all shadow-lg",
+                                  "pointer-events-auto flex flex-col items-center px-3 py-1 rounded-lg border cursor-ns-resize select-none transition-all shadow-lg group relative",
                                   isAboveValueCeiling 
                                     ? "bg-red-50 border-red-300" 
                                     : "bg-green-50 border-green-300",
@@ -2380,6 +2399,9 @@ function PIQContent() {
                                 <span className={cn("text-[9px] font-medium uppercase tracking-wider", isAboveValueCeiling ? "text-red-700" : "text-green-700")}>
                                   Estimated ARV
                                 </span>
+                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-20">
+                                  Drag to adjust • Double-click to edit
+                                </div>
                               </div>
                               <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
                             </div>
@@ -2389,7 +2411,6 @@ function PIQContent() {
                                 <span>The data does not support this value, please be sure to check your comps</span>
                               </div>
                             )}
-                            <div className="text-[9px] text-gray-400 text-center mt-1 pointer-events-none">Drag up/down to adjust • Double-click to edit</div>
                           </div>
                         )}
                       </div>
