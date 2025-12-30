@@ -2309,6 +2309,37 @@ function PIQContent() {
                           </tbody>
                         </table>
                         
+                        {/* Price Guide Lines - only show when dragging */}
+                        {isDraggingARV && compsMapView === 'list' && allCompsFlat.map((item, idx) => {
+                          const rows = tableRef.current?.querySelectorAll('tr[data-comp-index]');
+                          if (!rows || !tableWrapperRef.current) return null;
+                          const wrapperRect = tableWrapperRef.current.getBoundingClientRect();
+                          let rowY = 0;
+                          for (let i = 0; i < rows.length; i++) {
+                            const rowIdx = parseInt(rows[i].getAttribute('data-comp-index') || '0', 10);
+                            if (rowIdx === idx) {
+                              const rowRect = rows[i].getBoundingClientRect();
+                              rowY = rowRect.top - wrapperRect.top + tableWrapperRef.current.scrollTop + rowRect.height / 2;
+                              break;
+                            }
+                          }
+                          return (
+                            <div
+                              key={`price-guide-${item.comp.id}`}
+                              className="absolute left-0 right-0 pointer-events-none z-5 transition-opacity duration-150"
+                              style={{ top: rowY }}
+                            >
+                              <div className="flex items-center">
+                                <div className="flex-1 border-t border-dashed border-gray-300"></div>
+                                <span className="px-2 py-0.5 text-[10px] font-medium text-gray-500 bg-white rounded">
+                                  ${item.comp.price.toLocaleString()}
+                                </span>
+                                <div className="flex-1 border-t border-dashed border-gray-300"></div>
+                              </div>
+                            </div>
+                          );
+                        })}
+
                         {/* ARV Overlay */}
                         {compsMapView === 'list' && (
                           <div 
