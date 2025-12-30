@@ -2309,26 +2309,24 @@ function PIQContent() {
                           </tbody>
                         </table>
                         
-                        {/* Proportional Price Scale - only show when dragging, focused on nearby prices */}
+                        {/* Proportional Price Scale - hyper focused $50K range with $1K precision */}
                         {isDraggingARV && compsMapView === 'list' && (() => {
+                          const focusRange = 25000;
+                          const maxPrice = estimatedARV + focusRange;
+                          const minPrice = estimatedARV - focusRange;
+                          const priceRange = maxPrice - minPrice;
+                          
                           const nearbyComps = allCompsFlat.filter(item => {
-                            const diff = Math.abs(item.comp.price - estimatedARV);
-                            return diff <= 200000;
+                            return item.comp.price >= minPrice && item.comp.price <= maxPrice;
                           });
-                          const compsToShow = nearbyComps.length >= 2 ? nearbyComps : allCompsFlat;
-                          const prices = compsToShow.map(item => item.comp.price);
-                          const padding = 30000;
-                          const maxPrice = Math.max(...prices, estimatedARV) + padding;
-                          const minPrice = Math.min(...prices, estimatedARV) - padding;
-                          const priceRange = maxPrice - minPrice || 1;
                           
                           const gridLines: { price: number; type: 'major' | 'minor' | 'micro' }[] = [];
-                          const roundedMin = Math.floor(minPrice / 25000) * 25000;
-                          const roundedMax = Math.ceil(maxPrice / 25000) * 25000;
-                          for (let p = roundedMin; p <= roundedMax; p += 5000) {
-                            if (p % 25000 === 0) {
+                          const roundedMin = Math.floor(minPrice / 10000) * 10000;
+                          const roundedMax = Math.ceil(maxPrice / 10000) * 10000;
+                          for (let p = roundedMin; p <= roundedMax; p += 1000) {
+                            if (p % 10000 === 0) {
                               gridLines.push({ price: p, type: 'major' });
-                            } else if (p % 10000 === 0) {
+                            } else if (p % 5000 === 0) {
                               gridLines.push({ price: p, type: 'minor' });
                             } else {
                               gridLines.push({ price: p, type: 'micro' });
@@ -2337,8 +2335,9 @@ function PIQContent() {
                           
                           return (
                             <div className="absolute right-4 z-20 pointer-events-none" style={{ top: 10, bottom: 10 }}>
-                              <div className="relative h-full w-44 bg-white/95 border border-gray-200 rounded-lg shadow-xl p-3">
-                                <div className="text-[9px] font-bold text-gray-600 text-center mb-2 uppercase tracking-wide">Price Scale</div>
+                              <div className="relative h-full w-48 bg-white/95 border border-gray-200 rounded-lg shadow-xl p-3">
+                                <div className="text-[9px] font-bold text-gray-600 text-center mb-1 uppercase tracking-wide">Fine Tune ($50K Range)</div>
+                                <div className="text-[8px] text-gray-400 text-center mb-2">${minPrice.toLocaleString()} - ${maxPrice.toLocaleString()}</div>
                                 <div className="relative h-[calc(100%-28px)]">
                                   <div className="absolute left-0 top-0 bottom-0 border-l-2 border-gray-300 ml-3"></div>
                                   
@@ -2371,7 +2370,7 @@ function PIQContent() {
                                     );
                                   })}
                                   
-                                  {compsToShow.map((item) => {
+                                  {nearbyComps.map((item) => {
                                     const pricePos = ((maxPrice - item.comp.price) / priceRange) * 100;
                                     return (
                                       <div
@@ -2379,9 +2378,9 @@ function PIQContent() {
                                         className="absolute left-0 right-0 flex items-center"
                                         style={{ top: `${Math.max(1, Math.min(99, pricePos))}%` }}
                                       >
-                                        <div className="w-6 h-1 bg-blue-500 ml-2 rounded"></div>
-                                        <span className="ml-1 text-[10px] font-bold text-blue-700">
-                                          ${(item.comp.price / 1000).toFixed(0)}K
+                                        <div className="w-8 h-1.5 bg-blue-500 ml-2 rounded"></div>
+                                        <span className="ml-1 text-[11px] font-bold text-blue-700 bg-blue-50 px-1 rounded">
+                                          ${item.comp.price.toLocaleString()}
                                         </span>
                                       </div>
                                     );
@@ -2394,9 +2393,9 @@ function PIQContent() {
                                         className="absolute left-0 right-0 flex items-center"
                                         style={{ top: `${Math.max(1, Math.min(99, arvPos))}%` }}
                                       >
-                                        <div className={cn("w-full h-1 rounded", isAboveValueCeiling ? "bg-red-400" : "bg-green-400/70")}></div>
-                                        <span className={cn("absolute right-0 text-[11px] font-bold px-1.5 py-0.5 rounded shadow", isAboveValueCeiling ? "text-red-600 bg-red-100" : "text-green-600 bg-green-100/80")}>
-                                          ${(estimatedARV / 1000).toFixed(0)}K
+                                        <div className={cn("w-full h-1.5 rounded", isAboveValueCeiling ? "bg-red-400" : "bg-green-400/70")}></div>
+                                        <span className={cn("absolute right-0 text-[11px] font-bold px-2 py-0.5 rounded shadow-md", isAboveValueCeiling ? "text-red-600 bg-red-100" : "text-green-600 bg-green-100")}>
+                                          ${estimatedARV.toLocaleString()}
                                         </span>
                                       </div>
                                     );
