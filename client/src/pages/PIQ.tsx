@@ -2369,17 +2369,17 @@ function PIQContent() {
                                 {/* +/- Buttons and current value */}
                                 <div className="flex items-center justify-center gap-2 mb-3">
                                   <button 
-                                    onClick={() => setEstimatedARV(prev => prev - 5000)}
+                                    onClick={() => setEstimatedARV(prev => prev - 1000)}
                                     className="w-7 h-7 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center"
-                                    data-testid="arv-minus-5k"
+                                    data-testid="arv-minus-1k"
                                   >−</button>
                                   <div className={cn("px-3 py-1 rounded-lg font-bold text-sm", isAboveValueCeiling ? "bg-red-100 text-red-600" : "bg-green-100 text-green-600")}>
                                     ${estimatedARV.toLocaleString()}
                                   </div>
                                   <button 
-                                    onClick={() => setEstimatedARV(prev => prev + 5000)}
+                                    onClick={() => setEstimatedARV(prev => prev + 1000)}
                                     className="w-7 h-7 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-sm flex items-center justify-center"
-                                    data-testid="arv-plus-5k"
+                                    data-testid="arv-plus-1k"
                                   >+</button>
                                 </div>
                                 
