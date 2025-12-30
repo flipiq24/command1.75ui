@@ -2420,13 +2420,13 @@ function PIQContent() {
                             style={{ top: getArvOverlayY() - 20 }}
                           >
                             <div className="flex items-center gap-2 px-2">
-                              <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
+                              <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-300/60")}></div>
                               <div 
                                 className={cn(
                                   "pointer-events-auto flex flex-col items-center px-3 py-1 rounded-lg border cursor-ns-resize select-none transition-all shadow-lg group relative",
                                   isAboveValueCeiling 
                                     ? "bg-red-50 border-red-300" 
-                                    : "bg-green-50 border-green-300",
+                                    : "bg-green-50/60 border-green-200",
                                   isDraggingARV && "ring-2 ring-blue-400 scale-105"
                                 )}
                                 onMouseDown={(e) => { e.preventDefault(); setIsDraggingARV(true); }}
@@ -2446,18 +2446,18 @@ function PIQContent() {
                                     data-testid="arv-input"
                                   />
                                 ) : (
-                                  <span className={cn("text-sm font-bold", isAboveValueCeiling ? "text-red-600" : "text-green-600")}>
+                                  <span className={cn("text-sm font-bold", isAboveValueCeiling ? "text-red-600" : "text-green-500/80")}>
                                     ${estimatedARV.toLocaleString()}
                                   </span>
                                 )}
-                                <span className={cn("text-[9px] font-medium uppercase tracking-wider", isAboveValueCeiling ? "text-red-700" : "text-green-700")}>
+                                <span className={cn("text-[9px] font-medium uppercase tracking-wider", isAboveValueCeiling ? "text-red-700" : "text-green-600/70")}>
                                   Estimated ARV
                                 </span>
                                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-[10px] rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-20">
                                   Drag to adjust • Double-click to edit
                                 </div>
                               </div>
-                              <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-500")}></div>
+                              <div className={cn("flex-1 border-t-2", isAboveValueCeiling ? "border-red-500" : "border-green-300/60")}></div>
                             </div>
                             {isAboveValueCeiling && !warningDismissed && (
                               <div className="mt-2 mx-4 px-3 py-2 bg-red-100 border border-red-300 rounded-lg text-xs text-red-800 flex items-start gap-2 pointer-events-auto">
