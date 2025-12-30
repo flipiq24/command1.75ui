@@ -728,6 +728,7 @@ function PIQContent() {
   const lastDragY = useRef<number | null>(null);
   const lastDragTime = useRef<number | null>(null);
   const dragVelocity = useRef<number>(0);
+  const lastSnappedARV = useRef<number>(765000);
   const tableRef = useRef<HTMLTableElement>(null);
   const tableWrapperRef = useRef<HTMLDivElement>(null);
 
@@ -769,25 +770,27 @@ function PIQContent() {
       rawValue = lowerComp.price;
     }
     
-    const snapIncrement = (velocity !== undefined && velocity > 50) ? 5000 : 1000;
-    return Math.round(rawValue / snapIncrement) * snapIncrement;
+    const isFast = velocity !== undefined && velocity > 40;
+    const increment = isFast ? 5000 : 1000;
+    const currentSnapped = lastSnappedARV.current;
+    const diff = rawValue - currentSnapped;
+    
+    if (Math.abs(diff) >= increment) {
+      const steps = Math.floor(Math.abs(diff) / increment);
+      const newValue = currentSnapped + (diff > 0 ? steps * increment : -steps * increment);
+      lastSnappedARV.current = newValue;
+      return newValue;
+    }
+    
+    return currentSnapped;
   }, [allCompsFlat]);
 
   const handleARVManualUpdate = (value: string) => {
     const numValue = parseInt(value.replace(/[^0-9]/g, ''), 10);
     if (!isNaN(numValue) && numValue > 0) {
-      setEstimatedARV(numValue);
-      let bestPos = arvPosition;
-      let bestDiff = Infinity;
-      for (let p = 0; p <= allCompsFlat.length; p += 0.5) {
-        const calcValue = calculateARVFromPosition(p);
-        const diff = Math.abs(calcValue - numValue);
-        if (diff < bestDiff) {
-          bestDiff = diff;
-          bestPos = p;
-        }
-      }
-      setArvPosition(bestPos);
+      const snappedValue = Math.round(numValue / 1000) * 1000;
+      setEstimatedARV(snappedValue);
+      lastSnappedARV.current = snappedValue;
     }
     setIsEditingARV(false);
   };
@@ -2429,7 +2432,7 @@ function PIQContent() {
                                     : "bg-green-50/60 border-green-200",
                                   isDraggingARV && "ring-2 ring-blue-400 scale-105"
                                 )}
-                                onMouseDown={(e) => { e.preventDefault(); setIsDraggingARV(true); }}
+                                onMouseDown={(e) => { e.preventDefault(); setIsDraggingARV(true); lastSnappedARV.current = estimatedARV; }}
                                 onDoubleClick={() => { setIsEditingARV(true); setArvInputValue(estimatedARV.toString()); }}
                                 data-testid="arv-drag-handle"
                               >
