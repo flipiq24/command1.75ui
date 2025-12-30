@@ -752,23 +752,24 @@ function PIQContent() {
 
   const calculateARVFromPosition = useCallback((pos: number, velocity?: number) => {
     if (allCompsFlat.length === 0) return 750000;
-    const clampedPos = Math.max(0, Math.min(pos, allCompsFlat.length));
-    const currentIdx = Math.floor(clampedPos);
-    const fraction = clampedPos - currentIdx;
-    const currentComp = allCompsFlat[currentIdx]?.comp;
-    const nextComp = allCompsFlat[currentIdx + 1]?.comp;
-    const prevComp = allCompsFlat[currentIdx - 1]?.comp;
+    
+    const lowerIdx = Math.floor(pos);
+    const upperIdx = Math.ceil(pos);
+    const fraction = pos - lowerIdx;
+    
+    const upperComp = allCompsFlat[lowerIdx]?.comp;
+    const lowerComp = allCompsFlat[upperIdx]?.comp;
     
     let rawValue = 750000;
-    if (currentComp && nextComp) {
-      rawValue = currentComp.price - (currentComp.price - nextComp.price) * fraction;
-    } else if (currentComp) {
-      rawValue = currentComp.price;
-    } else if (prevComp) {
-      rawValue = prevComp.price;
+    if (upperComp && lowerComp && lowerIdx !== upperIdx) {
+      rawValue = upperComp.price + (lowerComp.price - upperComp.price) * fraction;
+    } else if (upperComp) {
+      rawValue = upperComp.price;
+    } else if (lowerComp) {
+      rawValue = lowerComp.price;
     }
     
-    const snapIncrement = (velocity !== undefined && velocity > 80) ? 5000 : 1000;
+    const snapIncrement = (velocity !== undefined && velocity > 50) ? 5000 : 1000;
     return Math.round(rawValue / snapIncrement) * snapIncrement;
   }, [allCompsFlat]);
 
