@@ -180,10 +180,10 @@ export default function OutreachActionPlan({
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-8 mb-6">
+      <div className="grid grid-cols-3 gap-0 mb-6">
         
         {/* Agent Relationships Section - Columns 1 & 2 */}
-        <div className="col-span-2 grid grid-cols-2 gap-8 pr-8 border-r border-gray-200">
+        <div className="col-span-2 grid grid-cols-2 gap-8 p-6 bg-gradient-to-b from-blue-50/50 to-white rounded-l-xl border-r border-gray-200">
           <div className="col-span-2 text-center mb-4">
             <h3 className="text-base font-bold text-gray-700 uppercase tracking-wide">Agent Relationships</h3>
           </div>
@@ -300,7 +300,7 @@ export default function OutreachActionPlan({
         </div>
 
         {/* New Deals Section - Column 3 */}
-        <div className="flex flex-col items-center pl-4">
+        <div className="flex flex-col items-center p-6 bg-gradient-to-b from-orange-50/50 to-white rounded-r-xl">
           <h3 className="text-base font-bold text-gray-700 uppercase tracking-wide mb-4">New Deals</h3>
           <div className={cn(
             "relative w-28 h-28 mb-4 transition-transform hover:scale-105",
