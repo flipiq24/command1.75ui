@@ -2676,43 +2676,48 @@ function PIQContent() {
                                     </span>
                                   </div>
                                 </div>
-                                <div className="text-[11px] text-gray-600 mb-2">
-                                  Single Family / {comp.bedBath.split('/')[0]} Br / {comp.bedBath.split('/')[1]} Ba / {comp.garage} / {comp.yearBuilt} / {comp.size.toLocaleString()} ft² / {comp.lotSize.toLocaleString()} ft² / Pool: {comp.pool === 'None' ? 'None' : 'Yes'}
-                                </div>
                                 
-                                <div className="relative group/img mb-3">
-                                  <img 
-                                    src={comp.imageUrl} 
-                                    alt={comp.address}
-                                    className="w-full h-32 object-cover rounded-lg border border-gray-200 cursor-pointer hover:border-green-400 transition"
-                                  />
-                                  <div className="absolute bottom-full left-0 mb-2 w-full p-3 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0 group-hover/img:opacity-100 transition-opacity pointer-events-none z-50">
-                                    <div className="text-[10px] font-semibold text-gray-500 uppercase mb-1">Public Remarks</div>
-                                    <p className="text-xs text-gray-700 mb-2 line-clamp-3">{comp.publicRemarks || 'No public remarks available'}</p>
-                                    <div className="text-[10px] font-semibold text-gray-500 uppercase mb-1">Agent Remarks</div>
-                                    <p className="text-xs text-gray-600 italic line-clamp-3">{comp.agentRemarks || 'No agent remarks available'}</p>
-                                  </div>
-                                </div>
-                                
-                                <div className="space-y-1.5 text-xs">
-                                  {comp.whyKeep.slice(0, 3).map((reason, i) => (
-                                    <div key={i} className="flex items-start gap-1.5 text-gray-700">
-                                      <span className="text-green-600 font-bold mt-0.5">✓</span>
-                                      <span>{reason}</span>
+                                <div className="flex gap-3">
+                                  <div className="flex-1">
+                                    <div className="text-[11px] text-gray-600 mb-2">
+                                      Single Family / {comp.bedBath.split('/')[0]} Br / {comp.bedBath.split('/')[1]} Ba / {comp.garage} / {comp.yearBuilt} / {comp.size.toLocaleString()} ft² / {comp.lotSize.toLocaleString()} ft² / Pool: {comp.pool === 'None' ? 'None' : 'Yes'}
                                     </div>
-                                  ))}
-                                  
-                                  <div className="flex items-start gap-1.5 text-gray-700">
-                                    <span className="text-green-600 font-bold mt-0.5">✓</span>
-                                    <span><span className="font-medium">CONDITION:</span> {comp.conditions} — {comp.distance} from subject</span>
+                                    
+                                    <div className="space-y-1.5 text-xs">
+                                      {comp.whyKeep.slice(0, 3).map((reason, i) => (
+                                        <div key={i} className="flex items-start gap-1.5 text-gray-700">
+                                          <span className="text-green-600 font-bold mt-0.5">✓</span>
+                                          <span>{reason}</span>
+                                        </div>
+                                      ))}
+                                      
+                                      <div className="flex items-start gap-1.5 text-gray-700">
+                                        <span className="text-green-600 font-bold mt-0.5">✓</span>
+                                        <span><span className="font-medium">CONDITION:</span> {comp.conditions} — {comp.distance} from subject</span>
+                                      </div>
+                                      
+                                      {comp.whyKeep.length > 0 && (
+                                        <div className="flex items-start gap-1.5 pt-1 border-t border-green-100 mt-1">
+                                          <span className="text-green-600 font-bold mt-0.5">✓</span>
+                                          <span className="font-medium text-green-800">WHY KEPT: {comp.whyKeep[0]}</span>
+                                        </div>
+                                      )}
+                                    </div>
                                   </div>
                                   
-                                  {comp.whyKeep.length > 0 && (
-                                    <div className="flex items-start gap-1.5 pt-1 border-t border-green-100 mt-1">
-                                      <span className="text-green-600 font-bold mt-0.5">✓</span>
-                                      <span className="font-medium text-green-800">WHY KEPT: {comp.whyKeep[0]}</span>
+                                  <div className="relative group/img w-1/4 flex-shrink-0">
+                                    <img 
+                                      src={`https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=300&h=200&fit=crop&auto=format&q=80&sig=${comp.id}`}
+                                      alt={comp.address}
+                                      className="w-full h-20 object-cover rounded-lg border border-gray-200 cursor-pointer hover:border-green-400 transition"
+                                    />
+                                    <div className="absolute bottom-full right-0 mb-2 w-64 p-3 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0 group-hover/img:opacity-100 transition-opacity pointer-events-none z-50">
+                                      <div className="text-[10px] font-semibold text-gray-500 uppercase mb-1">Public Remarks</div>
+                                      <p className="text-xs text-gray-700 mb-2 line-clamp-3">{comp.publicRemarks || 'No public remarks available'}</p>
+                                      <div className="text-[10px] font-semibold text-gray-500 uppercase mb-1">Agent Remarks</div>
+                                      <p className="text-xs text-gray-600 italic line-clamp-3">{comp.agentRemarks || 'No agent remarks available'}</p>
                                     </div>
-                                  )}
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -2802,43 +2807,48 @@ function PIQContent() {
                                     </span>
                                   </div>
                                 </div>
-                                <div className="text-[11px] text-gray-500 mb-2">
-                                  Single Family / {comp.bedBath.split('/')[0]} Br / {comp.bedBath.split('/')[1]} Ba / {comp.garage} / {comp.yearBuilt} / {comp.size.toLocaleString()} ft² / {comp.lotSize.toLocaleString()} ft² / Pool: {comp.pool === 'None' ? 'None' : 'Yes'}
-                                </div>
                                 
-                                <div className="relative group/img mb-3">
-                                  <img 
-                                    src={comp.imageUrl} 
-                                    alt={comp.address}
-                                    className="w-full h-32 object-cover rounded-lg border border-gray-200 cursor-pointer hover:border-red-400 transition"
-                                  />
-                                  <div className="absolute bottom-full left-0 mb-2 w-full p-3 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0 group-hover/img:opacity-100 transition-opacity pointer-events-none z-50">
-                                    <div className="text-[10px] font-semibold text-gray-500 uppercase mb-1">Public Remarks</div>
-                                    <p className="text-xs text-gray-700 mb-2 line-clamp-3">{comp.publicRemarks || 'No public remarks available'}</p>
-                                    <div className="text-[10px] font-semibold text-gray-500 uppercase mb-1">Agent Remarks</div>
-                                    <p className="text-xs text-gray-600 italic line-clamp-3">{comp.agentRemarks || 'No agent remarks available'}</p>
-                                  </div>
-                                </div>
-                                
-                                <div className="space-y-1.5 text-xs">
-                                  {comp.whyRemove.slice(0, 3).map((reason, i) => (
-                                    <div key={i} className="flex items-start gap-1.5 text-gray-600">
-                                      <span className="text-red-500 font-bold mt-0.5">✗</span>
-                                      <span>{reason}</span>
+                                <div className="flex gap-3">
+                                  <div className="flex-1">
+                                    <div className="text-[11px] text-gray-500 mb-2">
+                                      Single Family / {comp.bedBath.split('/')[0]} Br / {comp.bedBath.split('/')[1]} Ba / {comp.garage} / {comp.yearBuilt} / {comp.size.toLocaleString()} ft² / {comp.lotSize.toLocaleString()} ft² / Pool: {comp.pool === 'None' ? 'None' : 'Yes'}
                                     </div>
-                                  ))}
-                                  
-                                  <div className="flex items-start gap-1.5 text-gray-600">
-                                    <span className="text-red-500 font-bold mt-0.5">✗</span>
-                                    <span><span className="font-medium">CONDITION:</span> {comp.conditions} — {comp.distance} from subject</span>
+                                    
+                                    <div className="space-y-1.5 text-xs">
+                                      {comp.whyRemove.slice(0, 3).map((reason, i) => (
+                                        <div key={i} className="flex items-start gap-1.5 text-gray-600">
+                                          <span className="text-red-500 font-bold mt-0.5">✗</span>
+                                          <span>{reason}</span>
+                                        </div>
+                                      ))}
+                                      
+                                      <div className="flex items-start gap-1.5 text-gray-600">
+                                        <span className="text-red-500 font-bold mt-0.5">✗</span>
+                                        <span><span className="font-medium">CONDITION:</span> {comp.conditions} — {comp.distance} from subject</span>
+                                      </div>
+                                      
+                                      {comp.whyRemove.length > 0 && (
+                                        <div className="flex items-start gap-1.5 pt-1 border-t border-red-100 mt-1">
+                                          <span className="text-red-500 font-bold mt-0.5">✗</span>
+                                          <span className="font-medium text-red-700">WHY REMOVED: {comp.whyRemove[0]}</span>
+                                        </div>
+                                      )}
+                                    </div>
                                   </div>
                                   
-                                  {comp.whyRemove.length > 0 && (
-                                    <div className="flex items-start gap-1.5 pt-1 border-t border-red-100 mt-1">
-                                      <span className="text-red-500 font-bold mt-0.5">✗</span>
-                                      <span className="font-medium text-red-700">WHY REMOVED: {comp.whyRemove[0]}</span>
+                                  <div className="relative group/img w-1/4 flex-shrink-0">
+                                    <img 
+                                      src={`https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=300&h=200&fit=crop&auto=format&q=80&sig=${comp.id}`}
+                                      alt={comp.address}
+                                      className="w-full h-20 object-cover rounded-lg border border-gray-200 cursor-pointer hover:border-red-400 transition"
+                                    />
+                                    <div className="absolute bottom-full right-0 mb-2 w-64 p-3 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0 group-hover/img:opacity-100 transition-opacity pointer-events-none z-50">
+                                      <div className="text-[10px] font-semibold text-gray-500 uppercase mb-1">Public Remarks</div>
+                                      <p className="text-xs text-gray-700 mb-2 line-clamp-3">{comp.publicRemarks || 'No public remarks available'}</p>
+                                      <div className="text-[10px] font-semibold text-gray-500 uppercase mb-1">Agent Remarks</div>
+                                      <p className="text-xs text-gray-600 italic line-clamp-3">{comp.agentRemarks || 'No agent remarks available'}</p>
                                     </div>
-                                  )}
+                                  </div>
                                 </div>
                               </div>
                             </div>
