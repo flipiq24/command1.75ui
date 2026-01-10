@@ -2654,44 +2654,43 @@ function PIQContent() {
                                 data-testid={`checkbox-keep-${comp.id}`}
                               />
                               <div className="flex-1">
-                                <div className="flex items-start justify-between gap-3 mb-1">
-                                  <div className="flex-1">
-                                    <div className="flex items-center gap-2 mb-1">
-                                      <span className="text-sm font-bold text-gray-900">{comp.address}</span>
-                                      <span className={cn(
-                                        "px-1.5 py-0.5 text-[9px] font-medium rounded",
-                                        idx === 0 ? "bg-green-100 text-green-700" : 
-                                        idx === 1 ? "bg-green-50 text-green-600" : 
-                                        "bg-yellow-50 text-yellow-700"
-                                      )}>
-                                        Confidence: {idx === 0 ? 'High' : idx === 1 ? 'High' : 'Moderate'}
-                                      </span>
-                                    </div>
-                                    <div className="flex items-center gap-2 mb-2">
-                                      <span className="text-sm font-bold text-gray-900">${(comp.price / 1000).toFixed(0)}K</span>
-                                      <span className={cn(
-                                        "px-2 py-0.5 text-[10px] font-bold rounded",
-                                        comp.listingStatus === 'Closed' ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"
-                                      )}>
-                                        {comp.listingStatus === 'Closed' ? 'SOLD' : comp.listingStatus.toUpperCase()}
-                                      </span>
-                                    </div>
-                                    <div className="text-[11px] text-gray-600 mb-2">
-                                      Single Family / {comp.bedBath.split('/')[0]} Br / {comp.bedBath.split('/')[1]} Ba / {comp.garage} / {comp.yearBuilt} / {comp.size.toLocaleString()} ft² / {comp.lotSize.toLocaleString()} ft² / Pool: {comp.pool === 'None' ? 'None' : 'Yes'}
-                                    </div>
+                                <div className="flex items-center justify-between mb-1">
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-sm font-bold text-gray-900">{comp.address}</span>
+                                    <span className={cn(
+                                      "px-1.5 py-0.5 text-[9px] font-medium rounded",
+                                      idx === 0 ? "bg-green-100 text-green-700" : 
+                                      idx === 1 ? "bg-green-50 text-green-600" : 
+                                      "bg-yellow-50 text-yellow-700"
+                                    )}>
+                                      Confidence: {idx === 0 ? 'High' : idx === 1 ? 'High' : 'Moderate'}
+                                    </span>
                                   </div>
-                                  <div className="relative group/img flex-shrink-0">
-                                    <img 
-                                      src={comp.imageUrl} 
-                                      alt={comp.address}
-                                      className="w-20 h-16 object-cover rounded-lg border border-gray-200 cursor-pointer hover:border-green-400 transition"
-                                    />
-                                    <div className="absolute bottom-full right-0 mb-2 w-72 p-3 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0 group-hover/img:opacity-100 transition-opacity pointer-events-none z-50">
-                                      <div className="text-[10px] font-semibold text-gray-500 uppercase mb-1">Public Remarks</div>
-                                      <p className="text-xs text-gray-700 mb-2 line-clamp-3">{comp.publicRemarks || 'No public remarks available'}</p>
-                                      <div className="text-[10px] font-semibold text-gray-500 uppercase mb-1">Agent Remarks</div>
-                                      <p className="text-xs text-gray-600 italic line-clamp-3">{comp.agentRemarks || 'No agent remarks available'}</p>
-                                    </div>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-sm font-bold text-gray-900">${(comp.price / 1000).toFixed(0)}K</span>
+                                    <span className={cn(
+                                      "px-2 py-0.5 text-[10px] font-bold rounded",
+                                      comp.listingStatus === 'Closed' ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"
+                                    )}>
+                                      {comp.listingStatus === 'Closed' ? 'SOLD' : comp.listingStatus.toUpperCase()}
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="text-[11px] text-gray-600 mb-2">
+                                  Single Family / {comp.bedBath.split('/')[0]} Br / {comp.bedBath.split('/')[1]} Ba / {comp.garage} / {comp.yearBuilt} / {comp.size.toLocaleString()} ft² / {comp.lotSize.toLocaleString()} ft² / Pool: {comp.pool === 'None' ? 'None' : 'Yes'}
+                                </div>
+                                
+                                <div className="relative group/img mb-3">
+                                  <img 
+                                    src={comp.imageUrl} 
+                                    alt={comp.address}
+                                    className="w-full h-32 object-cover rounded-lg border border-gray-200 cursor-pointer hover:border-green-400 transition"
+                                  />
+                                  <div className="absolute bottom-full left-0 mb-2 w-full p-3 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0 group-hover/img:opacity-100 transition-opacity pointer-events-none z-50">
+                                    <div className="text-[10px] font-semibold text-gray-500 uppercase mb-1">Public Remarks</div>
+                                    <p className="text-xs text-gray-700 mb-2 line-clamp-3">{comp.publicRemarks || 'No public remarks available'}</p>
+                                    <div className="text-[10px] font-semibold text-gray-500 uppercase mb-1">Agent Remarks</div>
+                                    <p className="text-xs text-gray-600 italic line-clamp-3">{comp.agentRemarks || 'No agent remarks available'}</p>
                                   </div>
                                 </div>
                                 
@@ -2786,39 +2785,38 @@ function PIQContent() {
                                 data-testid={`checkbox-remove-${comp.id}`}
                               />
                               <div className="flex-1">
-                                <div className="flex items-start justify-between gap-3 mb-1">
-                                  <div className="flex-1">
-                                    <div className="flex items-center gap-2 mb-1">
-                                      <span className="text-sm font-bold text-gray-700">{comp.address}</span>
-                                      <span className="px-1.5 py-0.5 text-[9px] font-medium rounded bg-orange-50 text-orange-600">
-                                        Confidence: Weak
-                                      </span>
-                                    </div>
-                                    <div className="flex items-center gap-2 mb-2">
-                                      <span className="text-sm font-bold text-gray-700">${(comp.price / 1000).toFixed(0)}K</span>
-                                      <span className={cn(
-                                        "px-2 py-0.5 text-[10px] font-bold rounded",
-                                        comp.listingStatus === 'Closed' ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"
-                                      )}>
-                                        {comp.listingStatus === 'Closed' ? 'SOLD' : comp.listingStatus.toUpperCase()}
-                                      </span>
-                                    </div>
-                                    <div className="text-[11px] text-gray-500 mb-2">
-                                      Single Family / {comp.bedBath.split('/')[0]} Br / {comp.bedBath.split('/')[1]} Ba / {comp.garage} / {comp.yearBuilt} / {comp.size.toLocaleString()} ft² / {comp.lotSize.toLocaleString()} ft² / Pool: {comp.pool === 'None' ? 'None' : 'Yes'}
-                                    </div>
+                                <div className="flex items-center justify-between mb-1">
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-sm font-bold text-gray-700">{comp.address}</span>
+                                    <span className="px-1.5 py-0.5 text-[9px] font-medium rounded bg-orange-50 text-orange-600">
+                                      Confidence: Weak
+                                    </span>
                                   </div>
-                                  <div className="relative group/img flex-shrink-0">
-                                    <img 
-                                      src={comp.imageUrl} 
-                                      alt={comp.address}
-                                      className="w-20 h-16 object-cover rounded-lg border border-gray-200 cursor-pointer hover:border-red-400 transition"
-                                    />
-                                    <div className="absolute bottom-full right-0 mb-2 w-72 p-3 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0 group-hover/img:opacity-100 transition-opacity pointer-events-none z-50">
-                                      <div className="text-[10px] font-semibold text-gray-500 uppercase mb-1">Public Remarks</div>
-                                      <p className="text-xs text-gray-700 mb-2 line-clamp-3">{comp.publicRemarks || 'No public remarks available'}</p>
-                                      <div className="text-[10px] font-semibold text-gray-500 uppercase mb-1">Agent Remarks</div>
-                                      <p className="text-xs text-gray-600 italic line-clamp-3">{comp.agentRemarks || 'No agent remarks available'}</p>
-                                    </div>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-sm font-bold text-gray-700">${(comp.price / 1000).toFixed(0)}K</span>
+                                    <span className={cn(
+                                      "px-2 py-0.5 text-[10px] font-bold rounded",
+                                      comp.listingStatus === 'Closed' ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"
+                                    )}>
+                                      {comp.listingStatus === 'Closed' ? 'SOLD' : comp.listingStatus.toUpperCase()}
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="text-[11px] text-gray-500 mb-2">
+                                  Single Family / {comp.bedBath.split('/')[0]} Br / {comp.bedBath.split('/')[1]} Ba / {comp.garage} / {comp.yearBuilt} / {comp.size.toLocaleString()} ft² / {comp.lotSize.toLocaleString()} ft² / Pool: {comp.pool === 'None' ? 'None' : 'Yes'}
+                                </div>
+                                
+                                <div className="relative group/img mb-3">
+                                  <img 
+                                    src={comp.imageUrl} 
+                                    alt={comp.address}
+                                    className="w-full h-32 object-cover rounded-lg border border-gray-200 cursor-pointer hover:border-red-400 transition"
+                                  />
+                                  <div className="absolute bottom-full left-0 mb-2 w-full p-3 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0 group-hover/img:opacity-100 transition-opacity pointer-events-none z-50">
+                                    <div className="text-[10px] font-semibold text-gray-500 uppercase mb-1">Public Remarks</div>
+                                    <p className="text-xs text-gray-700 mb-2 line-clamp-3">{comp.publicRemarks || 'No public remarks available'}</p>
+                                    <div className="text-[10px] font-semibold text-gray-500 uppercase mb-1">Agent Remarks</div>
+                                    <p className="text-xs text-gray-600 italic line-clamp-3">{comp.agentRemarks || 'No agent remarks available'}</p>
                                   </div>
                                 </div>
                                 
