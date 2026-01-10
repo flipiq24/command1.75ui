@@ -182,8 +182,14 @@ export default function OutreachActionPlan({
 
       <div className="grid grid-cols-3 gap-8 mb-6">
         
-        {/* Column 1: Send Campaigns */}
-        <div className="flex flex-col items-center">
+        {/* Agent Relationships Section - Columns 1 & 2 */}
+        <div className="col-span-2 grid grid-cols-2 gap-8">
+          <div className="col-span-2 text-center mb-2">
+            <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wide">Agent Relationships</h3>
+          </div>
+          
+          {/* Column 1: Send Campaigns */}
+          <div className="flex flex-col items-center">
           <div className={cn(
             "relative w-28 h-28 mb-4 transition-transform hover:scale-105",
             activeFilter === 'topOfMind' && "scale-105"
@@ -290,10 +296,12 @@ export default function OutreachActionPlan({
               </>
             )}
           </button>
+          </div>
         </div>
 
-        {/* Column 3: Build Relationships While Chasing Deals */}
+        {/* Deals Section - Column 3 */}
         <div className="flex flex-col items-center">
+          <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-2">Deals</h3>
           <div className={cn(
             "relative w-28 h-28 mb-4 transition-transform hover:scale-105",
             activeFilter === 'connections' && "scale-105"
@@ -343,7 +351,7 @@ export default function OutreachActionPlan({
             ) : (
               <>
                 <Users className="w-4 h-4" />
-                <span>Start New Relationships Building</span>
+                <span>Start Deal Driven Relationship Building</span>
               </>
             )}
           </button>
