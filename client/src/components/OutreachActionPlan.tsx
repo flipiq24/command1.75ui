@@ -360,9 +360,9 @@ export default function OutreachActionPlan({
       </div>
 
       {!hasStarted && (
-        <div className="grid grid-cols-3 gap-4 pt-4 border-t border-gray-100">
+        <div className="grid grid-cols-3 gap-0">
           
-          <div className="p-4 bg-gray-50 rounded-lg">
+          <div className="p-4 bg-blue-50/30 border-r border-gray-200">
             <p className="text-sm text-blue-600 font-semibold mb-2">Relationship Maintenance</p>
             
             <p className="text-sm text-gray-600 mb-3 leading-relaxed">
@@ -380,7 +380,7 @@ export default function OutreachActionPlan({
             </div>
           </div>
 
-          <div className="p-4 bg-gray-50 rounded-lg">
+          <div className="p-4 bg-blue-50/30 border-r border-gray-200">
             <p className="text-sm text-amber-600 font-semibold mb-2">High-Value Relationship Building</p>
             
             <p className="text-sm text-gray-600 mb-3 leading-relaxed">
@@ -397,7 +397,7 @@ export default function OutreachActionPlan({
             </div>
           </div>
 
-          <div className="p-4 bg-gray-50 rounded-lg">
+          <div className="p-4 bg-orange-50/50">
             <p className="text-sm text-red-600 font-semibold mb-2">Deal-Driven Relationship Entry</p>
             
             <p className="text-sm text-gray-600 mb-3 leading-relaxed">
