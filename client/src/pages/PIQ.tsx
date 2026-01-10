@@ -1791,20 +1791,7 @@ function PIQContent() {
                                 <td className="px-3 py-2.5 text-right text-gray-600">14.67</td>
                                 <td className="px-3 py-2.5 text-right text-gray-600">6</td>
                               </tr>
-                              {/* Estimated ARV Line - positioned between $750K and $785K range */}
-                              <tr className="bg-green-50 border-t-2 border-b-2 border-green-400">
-                                <td colSpan={11} className="px-3 py-2">
-                                  <div className="flex items-center gap-3">
-                                    <div className="flex-1 h-0.5 bg-green-400"></div>
-                                    <div className="flex flex-col items-center">
-                                      <span className="text-lg font-bold text-green-600">$765,000</span>
-                                      <span className="text-[10px] font-medium text-green-700 uppercase tracking-wider">Estimated ARV</span>
-                                    </div>
-                                    <div className="flex-1 h-0.5 bg-green-400"></div>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr className="bg-gray-50 font-medium">
+                                                            <tr className="bg-gray-50 font-medium">
                                 <td className="px-3 py-2.5 text-gray-900">Average</td>
                                 <td className="px-3 py-2.5 text-right text-gray-900">$212.69</td>
                                 <td className="px-3 py-2.5 text-right text-gray-900">$308.02</td>
