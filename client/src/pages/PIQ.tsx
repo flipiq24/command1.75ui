@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useLayoutEffect, useRef, useCallback } from 'react';
 import { useLocation, useSearch } from 'wouter';
 import { cn } from "@/lib/utils";
+import compsMapImage from '@assets/generated_images/google_maps_bloomington_area.png';
 import { useLayout } from '@/components/Layout';
 import MilestoneCompletionModal from '@/components/MilestoneCompletionModal';
 import StatusPipelineWidget from '@/components/StatusPipelineWidget';
@@ -1599,7 +1600,7 @@ function PIQContent() {
                   {compsMapView === 'map' ? (
                     <div className="relative w-full h-[450px] bg-gray-200 rounded-xl overflow-hidden border border-gray-300">
                       <img 
-                        src="/attached_assets/image_1768088669073.png" 
+                        src={compsMapImage}
                         alt="Comps Map"
                         className="absolute inset-0 w-full h-full object-cover"
                       />
