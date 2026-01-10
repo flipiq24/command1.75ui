@@ -337,9 +337,7 @@ export default function OutreachActionPlan({
                 ? "bg-red-600 text-white shadow-lg"
                 : isConnectionsComplete 
                   ? "bg-green-50 text-green-600 border border-green-200"
-                  : !hasStarted
-                    ? "bg-red-600 text-white shadow-xl shadow-red-500/50 animate-pulse hover:bg-red-700"
-                    : "bg-white text-red-600 border-2 border-red-500 hover:bg-red-50"
+                  : "bg-white text-red-500 border-2 border-red-400 hover:bg-red-50"
             )}
             data-testid="button-new-relationships"
           >
@@ -350,8 +348,8 @@ export default function OutreachActionPlan({
               </>
             ) : (
               <>
-                <Users className="w-4 h-4" />
-                <span>Start Deal Driven Relationship Building</span>
+                <Phone className="w-4 h-4" />
+                <span>Start New Relationships Building</span>
               </>
             )}
           </button>
