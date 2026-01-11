@@ -316,7 +316,7 @@ export default function OutreachActionPlan({
         </div>
 
         {/* New Deals Section - Column 3 */}
-        <div className="flex flex-col items-center p-6 bg-gradient-to-b from-orange-50/50 to-white rounded-r-xl relative">
+        <div className="flex flex-col items-center p-6 bg-gradient-to-br from-red-50/60 to-rose-100/40 rounded-r-xl relative">
           <h3 className="text-base font-bold text-gray-700 uppercase tracking-wide mb-4">New Deals</h3>
           <div className={cn(
             "relative w-28 h-28 mb-4 transition-transform hover:scale-105",
@@ -331,7 +331,7 @@ export default function OutreachActionPlan({
               />
               <circle 
                 cx="56" cy="56" r="48" 
-                stroke={isConnectionsComplete ? "#22c55e" : "#f97316"}
+                stroke={isConnectionsComplete ? "#22c55e" : "#ef4444"}
                 strokeWidth="8" 
                 fill="none" 
                 strokeDasharray={`${(connectionsCompleted / connectionsTotal) * 301.6} 301.6`}
@@ -379,7 +379,7 @@ export default function OutreachActionPlan({
             >
               <div className={cn(
                 "w-4 h-4 rounded border flex items-center justify-center",
-                focusMode === 'deal' ? "bg-orange-500 border-orange-500" : "border-gray-300"
+                focusMode === 'deal' ? "bg-red-500 border-red-500" : "border-gray-300"
               )}>
                 {focusMode === 'deal' && <Check className="w-3 h-3 text-white" />}
               </div>
@@ -392,7 +392,7 @@ export default function OutreachActionPlan({
             >
               <div className={cn(
                 "w-4 h-4 rounded border flex items-center justify-center",
-                focusMode === 'relationship' ? "bg-orange-500 border-orange-500" : "border-gray-300"
+                focusMode === 'relationship' ? "bg-red-500 border-red-500" : "border-gray-300"
               )}>
                 {focusMode === 'relationship' && <Check className="w-3 h-3 text-white" />}
               </div>
@@ -405,7 +405,7 @@ export default function OutreachActionPlan({
             >
               <div className={cn(
                 "w-4 h-4 rounded border flex items-center justify-center",
-                practiceMode ? "bg-orange-500 border-orange-500" : "border-gray-300"
+                practiceMode ? "bg-red-500 border-red-500" : "border-gray-300"
               )}>
                 {practiceMode && <Check className="w-3 h-3 text-white" />}
               </div>
