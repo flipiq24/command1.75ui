@@ -373,35 +373,36 @@ export default function OutreachActionPlan({
           <div className="flex gap-2 w-full">
             <button
               onClick={() => setFocusMode('deal')}
-              className={cn(
-                "flex-1 flex items-center justify-center gap-1.5 px-2 py-2 text-xs font-medium rounded-lg transition border",
-                focusMode === 'deal'
-                  ? "bg-orange-100 text-orange-700 border-orange-300"
-                  : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
-              )}
+              className="flex-1 flex items-center justify-center gap-1.5 px-2 py-2 text-xs font-medium rounded-lg transition border bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
               data-testid="button-focus-deal"
             >
-              <Target className="w-3.5 h-3.5" />
+              <div className={cn(
+                "w-4 h-4 rounded border flex items-center justify-center",
+                focusMode === 'deal' ? "bg-orange-500 border-orange-500" : "border-gray-300"
+              )}>
+                {focusMode === 'deal' && <Check className="w-3 h-3 text-white" />}
+              </div>
               <span>Focus on Deals</span>
             </button>
             <button
               onClick={() => setFocusMode('relationship')}
-              className={cn(
-                "flex-1 flex items-center justify-center gap-1.5 px-2 py-2 text-xs font-medium rounded-lg transition border",
-                focusMode === 'relationship'
-                  ? "bg-orange-100 text-orange-700 border-orange-300"
-                  : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
-              )}
+              className="flex-1 flex items-center justify-center gap-1.5 px-2 py-2 text-xs font-medium rounded-lg transition border bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
               data-testid="button-focus-relationship"
             >
-              <Heart className="w-3.5 h-3.5" />
+              <div className={cn(
+                "w-4 h-4 rounded border flex items-center justify-center",
+                focusMode === 'relationship' ? "bg-orange-500 border-orange-500" : "border-gray-300"
+              )}>
+                {focusMode === 'relationship' && <Check className="w-3 h-3 text-white" />}
+              </div>
               <span>Focus on Relationships</span>
             </button>
             <button
-              className="flex-1 flex items-center justify-center gap-1.5 px-2 py-2 text-xs font-medium rounded-lg transition border bg-white text-purple-600 border-purple-200 hover:bg-purple-50"
+              className="flex-1 flex items-center justify-center gap-1.5 px-2 py-2 text-xs font-medium rounded-lg transition border bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
               data-testid="button-practice-mode"
             >
-              <PlayCircle className="w-3.5 h-3.5" />
+              <div className="w-4 h-4 rounded border border-gray-300 flex items-center justify-center">
+              </div>
               <span>Practice Mode</span>
             </button>
           </div>
