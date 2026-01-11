@@ -350,10 +350,10 @@ export default function OutreachActionPlan({
             className={cn(
               "px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2 mb-4",
               activeFilter === 'connections'
-                ? "bg-white text-orange-500 border-2 border-orange-500 shadow-lg"
+                ? "bg-white text-red-500 border-2 border-red-500 shadow-lg"
                 : isConnectionsComplete 
                   ? "bg-green-50 text-green-600 border border-green-200"
-                  : "bg-white text-orange-500 border-2 border-orange-400 hover:bg-orange-50"
+                  : "bg-white text-red-500 border-2 border-red-400 hover:bg-red-50"
             )}
             data-testid="button-new-relationships"
           >
@@ -455,7 +455,7 @@ export default function OutreachActionPlan({
           </div>
 
           <div className="p-4 bg-orange-50/50">
-            <p className="text-sm text-orange-600 font-semibold mb-2">Chase Deals and Build Relationships</p>
+            <p className="text-sm text-red-500 font-semibold mb-2">Chase Deals and Build Relationships</p>
             
             <p className="text-sm text-gray-600 mb-3 leading-relaxed">
               Use active deals as conversation starters to build new agent relationships. The system surfaces high-propensity opportunities at strategic moments:
