@@ -373,7 +373,7 @@ export default function OutreachActionPlan({
             ) : (
               <>
                 <Phone className="w-4 h-4" />
-                <span>Start New Relationships Building</span>
+                <span>Chase Deals While Building Relationships</span>
               </>
             )}
           </button>
