@@ -348,7 +348,7 @@ export default function OutreachActionPlan({
             </div>
           </div>
           <button 
-            onClick={() => setShowRelationshipModal(true)}
+            onClick={() => handleButtonClick('connections')}
             className={cn(
               "px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2 mb-4",
               activeFilter === 'connections'
@@ -433,145 +433,82 @@ export default function OutreachActionPlan({
 
       </div>
 
-      
-      {/* Build New Relationships Modal */}
-      {showRelationshipModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div 
-            className="absolute inset-0 bg-black/50" 
-            onClick={() => setShowRelationshipModal(false)}
-          />
-          <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-lg mx-4 animate-in fade-in zoom-in-95 duration-200">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-2">
-                <h2 className="text-xl font-bold text-gray-900">Build New Relationships</h2>
-                <button 
-                  onClick={() => setShowRelationshipModal(false)}
-                  className="p-1.5 hover:bg-gray-100 rounded-full transition"
-                  data-testid="button-close-relationship-modal"
-                >
-                  <X className="w-5 h-5 text-gray-500" />
-                </button>
-              </div>
-              <p className="text-sm text-gray-500 mb-6">Configure how you want to start agent conversations.</p>
-
-              {/* Section 1: Agent Pool */}
-              <div className="mb-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <p className="text-sm font-semibold text-gray-700">1. Which agents should we include?</p>
-                  <div className="relative group">
-                    <HelpCircle className="w-4 h-4 text-gray-400 cursor-help" />
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
-                      Select which agent pool Command should pull from. This determines whether you are expanding new relationships or working existing assignments.
-                    </div>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition">
-                    <input 
-                      type="checkbox" 
-                      checked={includeNewAgents}
-                      onChange={(e) => setIncludeNewAgents(e.target.checked)}
-                      className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-                      data-testid="checkbox-new-agents"
-                    />
-                    <span className="text-sm text-gray-700">New agent relationships</span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition">
-                    <input 
-                      type="checkbox" 
-                      checked={includeAssignedAgents}
-                      onChange={(e) => setIncludeAssignedAgents(e.target.checked)}
-                      className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-                      data-testid="checkbox-assigned-agents"
-                    />
-                    <span className="text-sm text-gray-700">Agents assigned to me</span>
-                  </label>
-                </div>
-              </div>
-
-              {/* Section 2: Agent Type */}
-              <div className="mb-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <p className="text-sm font-semibold text-gray-700">2. Who do you want to call?</p>
-                  <div className="relative group">
-                    <HelpCircle className="w-4 h-4 text-gray-400 cursor-help" />
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50">
-                      Choose the agent value tier. This affects conversation difficulty, expectations, and potential deal volume — not the properties shown.
-                    </div>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="flex items-start gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition">
-                    <input 
-                      type="radio" 
-                      name="agentType" 
-                      checked={agentType === 'high'}
-                      onChange={() => setAgentType('high')}
-                      className="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500 mt-0.5"
-                      data-testid="radio-high-value"
-                    />
-                    <div>
-                      <span className="text-sm text-gray-700 font-medium">High-Value Agents</span>
-                      <p className="text-xs text-gray-400 mt-0.5">Proven investor activity, higher standards, higher upside</p>
-                    </div>
-                  </label>
-                  <label className="flex items-start gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition">
-                    <input 
-                      type="radio" 
-                      name="agentType" 
-                      checked={agentType === 'mid'}
-                      onChange={() => setAgentType('mid')}
-                      className="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500 mt-0.5"
-                      data-testid="radio-mid-value"
-                    />
-                    <div>
-                      <span className="text-sm text-gray-700 font-medium">Mid-Value Agents</span>
-                      <p className="text-xs text-gray-400 mt-0.5">Active agents building investor experience</p>
-                    </div>
-                  </label>
-                  <label className="flex items-start gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition">
-                    <input 
-                      type="radio" 
-                      name="agentType" 
-                      checked={agentType === 'low'}
-                      onChange={() => setAgentType('low')}
-                      className="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500 mt-0.5"
-                      data-testid="radio-low-value"
-                    />
-                    <div>
-                      <span className="text-sm text-gray-700 font-medium">Low-Value Agents (Practice)</span>
-                      <p className="text-xs text-gray-400 mt-0.5">Lower risk, ideal for reps and confidence</p>
-                    </div>
-                  </label>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex gap-3">
-                <button
-                  onClick={() => setShowRelationshipModal(false)}
-                  className="flex-1 px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium rounded-lg transition"
-                  data-testid="button-cancel-relationship"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => {
-                    setShowRelationshipModal(false);
-                    if (onCallStyleChange) {
-                      onCallStyleChange(callStyle);
-                    }
-                    handleButtonClick('connections');
-                  }}
-                  className="flex-1 px-4 py-2.5 bg-[#FF6600] hover:bg-[#e55c00] text-white text-sm font-bold rounded-lg transition"
-                  data-testid="button-start-calling"
-                >
-                  Start Calling
-                </button>
-              </div>
+      {!hasStarted && (
+        <div className="grid grid-cols-3 gap-0">
+          
+          <div className="p-4 bg-blue-50/30 border-r border-gray-200">
+            <p className="text-sm text-blue-600 font-semibold mb-2">Relationship Maintenance</p>
+            
+            <p className="text-sm text-gray-600 mb-3 leading-relaxed">
+              The system selects agents from your Hot, Warm, and Cold called relationships.
+              These are lower-value agents where you have already made initial contact and planted the seed.
+              You can send templated or custom messages.
+            </p>
+            
+            <div className="border-t border-gray-200 pt-3 mt-3">
+              <p className="text-sm font-semibold text-gray-700 mb-1">Why It Matters</p>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                By staying in touch every few weeks, you stay top-of-mind.
+                When these agents trip over a deal — and often lack strong buyer relationships — you are the squeaky wheel they remember to send it to.
+              </p>
             </div>
           </div>
+
+          <div className="p-4 bg-blue-50/30 border-r border-gray-200">
+            <p className="text-sm text-amber-600 font-semibold mb-2">High-Value Relationship Building</p>
+            
+            <p className="text-sm text-gray-600 mb-3 leading-relaxed">
+              Priority Agents are investor-friendly, high-volume agents you are building relationships with or actively chasing.
+            </p>
+            
+            <div className="border-t border-gray-200 pt-3 mt-3">
+              <p className="text-sm font-semibold text-gray-700 mb-1">Why It Matters</p>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                Your job is to build the relationship and provide real value.
+                These agents require phone calls, not texts or emails.
+                The goal is that they send you the deal first.
+              </p>
+            </div>
+          </div>
+
+          <div className="p-4 bg-gradient-to-br from-red-50/30 to-rose-50/20">
+            <p className="text-sm text-red-500 font-semibold mb-2">Chase Deals and Build Relationships</p>
+            
+            <p className="text-sm text-gray-600 mb-3 leading-relaxed">
+              Use active deals as conversation starters to build new agent relationships. The system surfaces high-propensity opportunities at strategic moments:
+            </p>
+            
+            <ul className="text-sm text-gray-600 mb-3 space-y-1 list-disc list-inside">
+              <li>Aged listings (70+ days)</li>
+              <li>3 days after escrow opens (did the buyer put down the deposit?)</li>
+              <li>10 days after escrow opens (did the buyer remove contingencies?)</li>
+              <li>20+ days after escrow opens (why has the investor not closed?)</li>
+            </ul>
+            
+            <p className="text-sm text-gray-600 mb-3 leading-relaxed">
+              Wholesalers and investors often overpay to tie up deals. You want to be there when those deals start to fall apart — when agents are not being bombarded like they are on new listings.
+            </p>
+            
+            <div className="border-t border-gray-200 pt-3 mt-3">
+              <p className="text-sm font-semibold text-gray-700 mb-1">Why It Matters</p>
+              <p className="text-sm text-gray-500 leading-relaxed mb-2">
+                This approach puts you in front of agents at the right time, not when a listing first hits the market and everyone is calling.
+              </p>
+              <p className="text-sm text-gray-500 leading-relaxed mb-2">
+                The system helps you identify high-propensity opportunities and equips you with:
+              </p>
+              <ul className="text-sm text-gray-500 space-y-0.5 list-disc list-inside mb-2">
+                <li>Property key points</li>
+                <li>Seller pain points</li>
+                <li>How the agent makes money</li>
+                <li>A script to communicate value</li>
+              </ul>
+              <p className="text-sm text-gray-700 font-medium italic">
+                Always chase the relationship first, using the deal as the entry point — even if it's an overpriced fixer.
+              </p>
+            </div>
+          </div>
+
         </div>
       )}
 
