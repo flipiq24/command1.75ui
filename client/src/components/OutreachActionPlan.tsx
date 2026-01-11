@@ -455,10 +455,10 @@ export default function OutreachActionPlan({
           </div>
 
           <div className="p-4 bg-orange-50/50">
-            <p className="text-sm text-red-600 font-semibold mb-2">Deal-Driven Relationship Entry</p>
+            <p className="text-sm text-orange-600 font-semibold mb-2">Chase Deals to Build Relationships</p>
             
             <p className="text-sm text-gray-600 mb-3 leading-relaxed">
-              Command uses your buy box to surface investor-grade properties (light to heavy fixers) at critical moments:
+              Use active deals as conversation starters to build new agent relationships. The system surfaces high-propensity opportunities at strategic moments:
             </p>
             
             <ul className="text-sm text-gray-600 mb-3 space-y-1 list-disc list-inside">
