@@ -316,15 +316,6 @@ export default function OutreachActionPlan({
 
         {/* New Deals Section - Column 3 */}
         <div className="flex flex-col items-center p-6 bg-gradient-to-b from-orange-50/50 to-white rounded-r-xl relative">
-          {/* Practice Mode Button */}
-          <button 
-            className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-purple-600 bg-purple-50 hover:bg-purple-100 rounded-full transition"
-            data-testid="button-practice-mode"
-          >
-            <PlayCircle className="w-3.5 h-3.5" />
-            <span>Practice Mode</span>
-          </button>
-          
           <h3 className="text-base font-bold text-gray-700 uppercase tracking-wide mb-4">New Deals</h3>
           <div className={cn(
             "relative w-28 h-28 mb-4 transition-transform hover:scale-105",
@@ -378,12 +369,12 @@ export default function OutreachActionPlan({
             )}
           </button>
           
-          {/* Focus Mode Options */}
+          {/* Three Chips Row */}
           <div className="flex gap-2 w-full">
             <button
               onClick={() => setFocusMode('deal')}
               className={cn(
-                "flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium rounded-lg transition border",
+                "flex-1 flex items-center justify-center gap-1.5 px-2 py-2 text-xs font-medium rounded-lg transition border",
                 focusMode === 'deal'
                   ? "bg-orange-100 text-orange-700 border-orange-300"
                   : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
@@ -391,12 +382,12 @@ export default function OutreachActionPlan({
               data-testid="button-focus-deal"
             >
               <Target className="w-3.5 h-3.5" />
-              <span>Focus on Deal</span>
+              <span>Deal</span>
             </button>
             <button
               onClick={() => setFocusMode('relationship')}
               className={cn(
-                "flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium rounded-lg transition border",
+                "flex-1 flex items-center justify-center gap-1.5 px-2 py-2 text-xs font-medium rounded-lg transition border",
                 focusMode === 'relationship'
                   ? "bg-orange-100 text-orange-700 border-orange-300"
                   : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
@@ -404,7 +395,14 @@ export default function OutreachActionPlan({
               data-testid="button-focus-relationship"
             >
               <Heart className="w-3.5 h-3.5" />
-              <span>Focus on Relationship</span>
+              <span>Relationship</span>
+            </button>
+            <button
+              className="flex-1 flex items-center justify-center gap-1.5 px-2 py-2 text-xs font-medium rounded-lg transition border bg-white text-purple-600 border-purple-200 hover:bg-purple-50"
+              data-testid="button-practice-mode"
+            >
+              <PlayCircle className="w-3.5 h-3.5" />
+              <span>Practice</span>
             </button>
           </div>
         </div>
