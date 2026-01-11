@@ -7,7 +7,10 @@ import {
   Users,
   MessageSquare,
   Search,
-  X
+  X,
+  PlayCircle,
+  Target,
+  Heart
 } from 'lucide-react';
 
 export type OutreachType = 'connections' | 'priority' | 'topOfMind' | 'newRelationships';
@@ -44,6 +47,7 @@ export default function OutreachActionPlan({
   const [callStyle, setCallStyle] = useState<'with-property' | 'without-property'>('with-property');
   const [includeNewAgents, setIncludeNewAgents] = useState(true);
   const [includeAssignedAgents, setIncludeAssignedAgents] = useState(true);
+  const [focusMode, setFocusMode] = useState<'deal' | 'relationship'>('deal');
   
   const connectionsCompleted = connectionsMade;
   const connectionsTotal = dailyGoal;
@@ -311,7 +315,16 @@ export default function OutreachActionPlan({
         </div>
 
         {/* New Deals Section - Column 3 */}
-        <div className="flex flex-col items-center p-6 bg-gradient-to-b from-orange-50/50 to-white rounded-r-xl">
+        <div className="flex flex-col items-center p-6 bg-gradient-to-b from-orange-50/50 to-white rounded-r-xl relative">
+          {/* Practice Mode Button */}
+          <button 
+            className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-purple-600 bg-purple-50 hover:bg-purple-100 rounded-full transition"
+            data-testid="button-practice-mode"
+          >
+            <PlayCircle className="w-3.5 h-3.5" />
+            <span>Practice Mode</span>
+          </button>
+          
           <h3 className="text-base font-bold text-gray-700 uppercase tracking-wide mb-4">New Deals</h3>
           <div className={cn(
             "relative w-28 h-28 mb-4 transition-transform hover:scale-105",
@@ -343,7 +356,7 @@ export default function OutreachActionPlan({
           <button 
             onClick={() => setShowRelationshipModal(true)}
             className={cn(
-              "px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2",
+              "px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2 mb-4",
               activeFilter === 'connections'
                 ? "bg-orange-500 text-white shadow-lg"
                 : isConnectionsComplete 
@@ -364,6 +377,36 @@ export default function OutreachActionPlan({
               </>
             )}
           </button>
+          
+          {/* Focus Mode Options */}
+          <div className="flex gap-2 w-full">
+            <button
+              onClick={() => setFocusMode('deal')}
+              className={cn(
+                "flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium rounded-lg transition border",
+                focusMode === 'deal'
+                  ? "bg-orange-100 text-orange-700 border-orange-300"
+                  : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
+              )}
+              data-testid="button-focus-deal"
+            >
+              <Target className="w-3.5 h-3.5" />
+              <span>Focus on Deal</span>
+            </button>
+            <button
+              onClick={() => setFocusMode('relationship')}
+              className={cn(
+                "flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium rounded-lg transition border",
+                focusMode === 'relationship'
+                  ? "bg-orange-100 text-orange-700 border-orange-300"
+                  : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
+              )}
+              data-testid="button-focus-relationship"
+            >
+              <Heart className="w-3.5 h-3.5" />
+              <span>Focus on Relationship</span>
+            </button>
+          </div>
         </div>
 
       </div>
