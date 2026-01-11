@@ -382,7 +382,7 @@ export default function OutreachActionPlan({
               data-testid="button-focus-deal"
             >
               <Target className="w-3.5 h-3.5" />
-              <span>Deal</span>
+              <span>Focus on Deals</span>
             </button>
             <button
               onClick={() => setFocusMode('relationship')}
@@ -395,14 +395,14 @@ export default function OutreachActionPlan({
               data-testid="button-focus-relationship"
             >
               <Heart className="w-3.5 h-3.5" />
-              <span>Relationship</span>
+              <span>Focus on Relationships</span>
             </button>
             <button
               className="flex-1 flex items-center justify-center gap-1.5 px-2 py-2 text-xs font-medium rounded-lg transition border bg-white text-purple-600 border-purple-200 hover:bg-purple-50"
               data-testid="button-practice-mode"
             >
               <PlayCircle className="w-3.5 h-3.5" />
-              <span>Practice</span>
+              <span>Practice Mode</span>
             </button>
           </div>
         </div>
