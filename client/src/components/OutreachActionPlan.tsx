@@ -348,12 +348,12 @@ export default function OutreachActionPlan({
           <button 
             onClick={() => setShowRelationshipModal(true)}
             className={cn(
-              "px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2 mb-4",
+              "px-6 py-3 rounded-full text-sm font-medium transition-all flex items-center gap-2 mb-4",
               activeFilter === 'connections'
                 ? "bg-orange-500 text-white shadow-lg"
                 : isConnectionsComplete 
                   ? "bg-green-50 text-green-600 border border-green-200"
-                  : "bg-white text-orange-500 border border-orange-300 hover:bg-orange-50"
+                  : "bg-white text-orange-500 border border-orange-400 hover:bg-orange-50"
             )}
             data-testid="button-new-relationships"
           >
@@ -374,12 +374,12 @@ export default function OutreachActionPlan({
           <div className="flex gap-2 w-full">
             <button
               onClick={() => setFocusMode('deal')}
-              className="flex-1 flex items-center justify-center gap-1.5 px-2 py-2 text-xs font-medium rounded-lg transition border bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
+              className="flex-1 flex items-center justify-center gap-1.5 px-2 py-2 text-xs font-medium rounded-lg transition border bg-white text-red-500 border-red-400 hover:bg-red-50"
               data-testid="button-focus-deal"
             >
               <div className={cn(
                 "w-4 h-4 rounded border flex items-center justify-center",
-                focusMode === 'deal' ? "bg-orange-500 border-orange-500" : "border-gray-300"
+                focusMode === 'deal' ? "bg-red-500 border-red-500" : "border-red-400"
               )}>
                 {focusMode === 'deal' && <Check className="w-3 h-3 text-white" />}
               </div>
@@ -387,12 +387,12 @@ export default function OutreachActionPlan({
             </button>
             <button
               onClick={() => setFocusMode('relationship')}
-              className="flex-1 flex items-center justify-center gap-1.5 px-2 py-2 text-xs font-medium rounded-lg transition border bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
+              className="flex-1 flex items-center justify-center gap-1.5 px-2 py-2 text-xs font-medium rounded-lg transition border bg-white text-red-500 border-red-400 hover:bg-red-50"
               data-testid="button-focus-relationship"
             >
               <div className={cn(
                 "w-4 h-4 rounded border flex items-center justify-center",
-                focusMode === 'relationship' ? "bg-orange-500 border-orange-500" : "border-gray-300"
+                focusMode === 'relationship' ? "bg-red-500 border-red-500" : "border-red-400"
               )}>
                 {focusMode === 'relationship' && <Check className="w-3 h-3 text-white" />}
               </div>
@@ -400,12 +400,12 @@ export default function OutreachActionPlan({
             </button>
             <button
               onClick={() => setPracticeMode(!practiceMode)}
-              className="flex-1 flex items-center justify-center gap-1.5 px-2 py-2 text-xs font-medium rounded-lg transition border bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
+              className="flex-1 flex items-center justify-center gap-1.5 px-2 py-2 text-xs font-medium rounded-lg transition border bg-white text-red-500 border-red-400 hover:bg-red-50"
               data-testid="button-practice-mode"
             >
               <div className={cn(
                 "w-4 h-4 rounded border flex items-center justify-center",
-                practiceMode ? "bg-orange-500 border-orange-500" : "border-gray-300"
+                practiceMode ? "bg-red-500 border-red-500" : "border-red-400"
               )}>
                 {practiceMode && <Check className="w-3 h-3 text-white" />}
               </div>
