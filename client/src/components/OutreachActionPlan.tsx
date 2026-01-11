@@ -412,7 +412,7 @@ export default function OutreachActionPlan({
             </div>
             <div className="flex-1 relative group">
               <button
-                onClick={() => setShowPracticeModal(true)}
+                onClick={() => practiceMode ? setPracticeMode(false) : setShowPracticeModal(true)}
                 className="w-full flex items-center justify-center gap-1.5 px-2 py-2 text-xs font-medium rounded-lg transition border bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
                 data-testid="button-practice-mode"
               >
