@@ -345,10 +345,10 @@ export default function OutreachActionPlan({
             className={cn(
               "px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2",
               activeFilter === 'connections'
-                ? "bg-orange-600 text-white shadow-lg"
+                ? "bg-orange-500 text-white shadow-lg"
                 : isConnectionsComplete 
                   ? "bg-green-50 text-green-600 border border-green-200"
-                  : "bg-white text-orange-500 border-2 border-orange-400 hover:bg-orange-50"
+                  : "bg-white text-orange-500 border border-orange-300 hover:bg-orange-50"
             )}
             data-testid="button-new-relationships"
           >
