@@ -316,7 +316,7 @@ export default function OutreachActionPlan({
         </div>
 
         {/* New Deals Section - Column 3 */}
-        <div className="flex flex-col items-center p-6 bg-gradient-to-br from-red-50/60 to-rose-100/40 rounded-r-xl relative">
+        <div className="flex flex-col items-center p-6 bg-gradient-to-br from-red-50/30 to-rose-50/20 rounded-r-xl relative">
           <h3 className="text-base font-bold text-gray-700 uppercase tracking-wide mb-4">New Deals</h3>
           <div className={cn(
             "relative w-28 h-28 mb-4 transition-transform hover:scale-105",
@@ -454,7 +454,7 @@ export default function OutreachActionPlan({
             </div>
           </div>
 
-          <div className="p-4 bg-gradient-to-br from-red-50/60 to-rose-100/40">
+          <div className="p-4 bg-gradient-to-br from-red-50/30 to-rose-50/20">
             <p className="text-sm text-red-500 font-semibold mb-2">Chase Deals and Build Relationships</p>
             
             <p className="text-sm text-gray-600 mb-3 leading-relaxed">
