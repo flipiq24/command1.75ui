@@ -454,7 +454,7 @@ export default function OutreachActionPlan({
             </div>
           </div>
 
-          <div className="p-4 bg-orange-50/50">
+          <div className="p-4 bg-gradient-to-br from-red-50/60 to-rose-100/40">
             <p className="text-sm text-red-500 font-semibold mb-2">Chase Deals and Build Relationships</p>
             
             <p className="text-sm text-gray-600 mb-3 leading-relaxed">
