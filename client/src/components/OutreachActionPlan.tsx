@@ -317,9 +317,9 @@ export default function OutreachActionPlan({
           </div>
         </div>
 
-        {/* New Deals Section - Column 3 */}
+        {/* New Leads Section - Column 3 */}
         <div className="flex flex-col items-center p-6 bg-gradient-to-br from-red-50/30 to-rose-50/20 rounded-r-xl relative">
-          <h3 className="text-base font-bold text-gray-700 uppercase tracking-wide mb-4">New Deals</h3>
+          <h3 className="text-base font-bold text-gray-700 uppercase tracking-wide mb-4">New Leads</h3>
           <div className={cn(
             "relative w-28 h-28 mb-4 transition-transform hover:scale-105",
             activeFilter === 'connections' && "scale-105"
