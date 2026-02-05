@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { 
-  ListTodo, 
-  Phone, 
-  Users, 
+import {
+  ListTodo,
+  Phone,
+  Users,
   Search,
   Zap,
   ChevronLeft,
@@ -11,11 +11,13 @@ import {
   BarChart2,
   FileText,
   Lightbulb,
-  Folder
+  Folder,
+  GraduationCap
 } from 'lucide-react';
 import { Link, useLocation } from "wouter";
 import logoUrl from '@assets/flipiQlogo_1764227557148.JPG';
 import { cn } from "@/lib/utils";
+import { useGuide } from "@/context/GuideContext";
 
 interface SidebarProps {
   onIQClick?: () => void;
@@ -28,6 +30,7 @@ interface SidebarProps {
 export default function Sidebar({ onIQClick, onCloseIQ, isIQActive = false, onCollapseChange, onAddPropertyClick }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [location] = useLocation();
+  const { isGuideEnabled, toggleGuide, currentStep } = useGuide();
 
   const toggleSidebar = () => {
     const newState = !isCollapsed;
@@ -282,7 +285,37 @@ export default function Sidebar({ onIQClick, onCloseIQ, isIQActive = false, onCo
 
         {/* Sidebar Footer */}
         <div className="p-3 mt-auto border-t border-gray-100">
-           <button 
+           {/* Guide Toggle Button */}
+           <button
+             onClick={toggleGuide}
+             className={cn(
+               "group relative w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors mb-2",
+               isGuideEnabled
+                 ? "bg-gradient-to-r from-[#FF6600] to-[#FF8533] text-white hover:from-[#e65c00] hover:to-[#FF6600]"
+                 : "text-gray-500 hover:bg-gray-50",
+               isCollapsed && "justify-center"
+             )}
+             data-testid="button-guide-toggle"
+           >
+              <GraduationCap className={cn("w-5 h-5 flex-shrink-0", isGuideEnabled && "animate-pulse")} />
+              {!isCollapsed && (
+                <span className="flex items-center gap-2">
+                  Guide
+                  {isGuideEnabled && currentStep && (
+                    <span className="text-xs bg-white/20 px-1.5 py-0.5 rounded">
+                      {currentStep.id}
+                    </span>
+                  )}
+                </span>
+              )}
+              {/* Tooltip */}
+              <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 w-64 bg-gray-900 text-white text-xs p-3 rounded shadow-xl opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 normal-case font-normal leading-relaxed">
+                  <span className="font-bold text-[#FF6600]">Guided Tour:</span><br/>
+                  {isGuideEnabled ? "Click to turn off the guided navigation" : "Click to start the guided workflow walkthrough"}
+              </div>
+           </button>
+
+           <button
              onClick={toggleSidebar}
              className={cn("w-full flex items-center gap-3 px-3 py-2 text-gray-500 hover:bg-gray-50 rounded-lg text-sm font-medium transition-colors mb-4", isCollapsed && "justify-center")}
            >

@@ -2,6 +2,10 @@ import React, { useState, createContext, useContext, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import IQOverlay from './IQOverlay';
 import AddPropertyModal from './AddPropertyModal';
+import { GuideProvider } from '@/context/GuideContext';
+import GuidePanel from '@/components/guide/GuidePanel';
+import GuideHighlight from '@/components/guide/GuideHighlight';
+import { useGuideTriggers } from '@/hooks/useGuideTriggers';
 
 interface LayoutContextType {
   isIQOpen: boolean;
@@ -39,12 +43,16 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default function Layout({ children }: LayoutProps) {
+// Inner component that can use guide hooks (must be inside GuideProvider)
+function LayoutInner({ children }: LayoutProps) {
   const [isIQOpen, setIsIQOpen] = useState(true);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [showDealComplete, setShowDealComplete] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [isAddPropertyOpen, setIsAddPropertyOpen] = useState(false);
+
+  // Initialize guide triggers to listen for user actions
+  useGuideTriggers();
 
   const openIQ = () => setIsIQOpen(true);
   const closeIQ = () => {
@@ -62,27 +70,27 @@ export default function Layout({ children }: LayoutProps) {
   };
   const resetDealComplete = () => setShowDealComplete(false);
   const resetCelebration = () => setShowCelebration(false);
-  
+
   const openAddProperty = () => setIsAddPropertyOpen(true);
   const closeAddProperty = () => setIsAddPropertyOpen(false);
 
   return (
     <LayoutContext.Provider value={{ isIQOpen, openIQ, closeIQ, openIQWithDealComplete, openIQWithCelebration, resetDealComplete, resetCelebration, showDealComplete, showCelebration, isAddPropertyOpen, openAddProperty, closeAddProperty }}>
       <div className="min-h-screen flex bg-gray-100">
-        <Sidebar 
-          onIQClick={openIQ} 
+        <Sidebar
+          onIQClick={openIQ}
           onCloseIQ={closeIQ}
-          isIQActive={isIQOpen} 
+          isIQActive={isIQOpen}
           onCollapseChange={setIsSidebarCollapsed}
           onAddPropertyClick={openAddProperty}
         />
-        
+
         <main className="flex-1 relative">
           {children}
         </main>
-        
-        <IQOverlay 
-          isOpen={isIQOpen} 
+
+        <IQOverlay
+          isOpen={isIQOpen}
           onClose={closeIQ}
           userName="Tony"
           sidebarCollapsed={isSidebarCollapsed}
@@ -91,12 +99,25 @@ export default function Layout({ children }: LayoutProps) {
           onDealCompleteFinished={resetDealComplete}
           onCelebrationFinished={resetCelebration}
         />
-        
-        <AddPropertyModal 
+
+        <AddPropertyModal
           isOpen={isAddPropertyOpen}
           onClose={closeAddProperty}
         />
+
+        {/* Guide Components */}
+        <GuidePanel />
+        <GuideHighlight />
       </div>
     </LayoutContext.Provider>
+  );
+}
+
+// Main Layout wrapper with GuideProvider
+export default function Layout({ children }: LayoutProps) {
+  return (
+    <GuideProvider>
+      <LayoutInner>{children}</LayoutInner>
+    </GuideProvider>
   );
 }
