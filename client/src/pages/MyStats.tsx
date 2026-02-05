@@ -27,114 +27,110 @@ interface Message {
 
 const MOCK_STATS = {
   calls: {
-    value: 32,
-    percentDiff: 7.0,
-    chartData: [28, 30, 29, 31, 30, 32, 29, 30, 31, 30, 32, 31, 30, 32]
+    value: 0,
+    percentDiff: 0,
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   },
   relationships: {
-    value: 3,
-    percentDiff: -50.0,
-    chartData: [2, 3, 2, 3, 4, 3, 2, 3, 3, 4, 3, 4, 3, 3]
+    value: 1,
+    percentDiff: 0,
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
   },
   offersSent: {
-    value: 3,
-    percentDiff: 7.7,
-    chartData: [2, 3, 2, 3, 4, 3, 2, 3, 3, 4, 3, 4, 3, 3]
+    value: 0,
+    percentDiff: 0,
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   },
   inNegotiations: {
-    value: 2,
-    percentDiff: 15.0,
-    chartData: [1, 2, 1, 2, 2, 2, 1, 2, 2, 1, 2, 2, 2, 2]
+    value: 0,
+    percentDiff: 0,
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   },
   offersAccepted: {
-    value: 1,
-    percentDiff: 25.0,
-    chartData: [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1]
+    value: 0,
+    percentDiff: 0,
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   },
   acquired: {
-    value: 1,
-    percentDiff: 50.0,
-    chartData: [0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1]
+    value: 0,
+    percentDiff: 0,
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   },
   time: {
-    value: 145,
-    percentDiff: 12.5,
-    chartData: [120, 135, 140, 145, 130, 145, 140, 135, 145, 150, 145, 140, 145, 145]
+    value: 29.6,
+    unit: 'hrs',
+    percentDiff: 0,
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 29.6]
   }
 };
 
 const DAILY_STATS = {
   calls: { 
-    total: 32, 
-    conversations: 8, 
-    connectedPercent: 25,
-    avgCallTime: '2:37',
-    texts: 12, 
-    emails: 15,
+    total: 0, 
+    conversations: 0, 
+    connectedPercent: 0,
+    avgCallTime: '0:00',
+    texts: 0, 
+    emails: 0,
     teamAvg: 29,
-    teamAvgPercent: 107
+    teamAvgPercent: 0
   },
   relationships: { 
-    newRelationships: 3, 
-    upgrades: 3,
+    newRelationships: 1, 
+    upgrades: 1,
     priority: 1,
     hot: 0,
-    warm: 2,
+    warm: 0,
     cold: 0,
     teamAvg: 6,
-    teamAvgPercent: 50
+    teamAvgPercent: 100
   },
   offersSent: { 
-    sent: 3, 
-    termsOut: 3, 
+    sent: 0, 
+    termsOut: 0, 
     contractSubmitted: 0,
     teamAvg: 2.7,
-    teamAvgPercent: 107
+    teamAvgPercent: 0
   },
   inNegotiations: {
-    count: 2,
+    count: 0,
     teamAvg: 1.5,
-    teamAvgPercent: 133
+    teamAvgPercent: 0
   },
   offersAccepted: {
-    count: 1,
+    count: 0,
     teamAvg: 0.8,
-    teamAvgPercent: 125
+    teamAvgPercent: 0
   },
   acquired: {
-    count: 1,
+    count: 0,
     teamAvg: 0.5,
-    teamAvgPercent: 200
+    teamAvgPercent: 0
   },
   dealSource: {
-    mls: 2,
-    directMail: 1,
+    total: 0,
+    mls: 0,
+    directMail: 0,
     coldCall: 0,
     referral: 0,
     teamAvg: 2.5,
-    teamAvgPercent: 120
+    teamAvgPercent: 0
   },
   time: { 
-    totalMinutes: 145,
-    piq: 42,
-    comps: 78,
-    investmentAnalysis: 5,
-    offerTerms: 25,
-    agents: 10,
+    totalMinutes: 858,
+    piq: 32,
+    comps: 175,
+    investmentAnalysis: 545,
+    offerTerms: 8,
+    agents: 99,
     teamAvg: 130,
-    teamAvgPercent: 112
+    teamAvgPercent: 100
   }
 };
 
 const TEAM_LEADERBOARD = [
-  { rank: 1, name: 'Maria', calls: 38, relationships: 6, offersSent: 5, inNegotiations: 3, offersAccepted: 2, acquired: 1, time: 180, isUser: false },
-  { rank: 2, name: 'Tony (You)', calls: 32, relationships: 3, offersSent: 3, inNegotiations: 2, offersAccepted: 1, acquired: 1, time: 145, isUser: true },
-  { rank: 3, name: 'James', calls: 28, relationships: 4, offersSent: 3, inNegotiations: 2, offersAccepted: 1, acquired: 0, time: 160, isUser: false },
-  { rank: 4, name: 'Sarah', calls: 30, relationships: 5, offersSent: 2, inNegotiations: 1, offersAccepted: 1, acquired: 1, time: 155, isUser: false },
-  { rank: 5, name: 'Mike', calls: 25, relationships: 3, offersSent: 2, inNegotiations: 1, offersAccepted: 0, acquired: 0, time: 140, isUser: false },
-  { rank: 6, name: 'Jennifer', calls: 22, relationships: 2, offersSent: 1, inNegotiations: 1, offersAccepted: 0, acquired: 0, time: 130, isUser: false },
-  { rank: 7, name: 'David', calls: 18, relationships: 1, offersSent: 1, inNegotiations: 0, offersAccepted: 0, acquired: 0, time: 120, isUser: false },
-  { rank: 8, name: 'Lisa', calls: 15, relationships: 2, offersSent: 0, inNegotiations: 0, offersAccepted: 0, acquired: 0, time: 110, isUser: false }
+  { rank: 1, name: 'Faisal Nazik', calls: 0, relationships: 0, offersSent: 0, inNegotiations: 0, offersAccepted: 0, acquired: 0, time: '0m', isUser: false },
+  { rank: 2, name: 'Haris Aqeel', calls: 0, relationships: 0, offersSent: 0, inNegotiations: 0, offersAccepted: 0, acquired: 0, time: '0m', isUser: false }
 ];
 
 const MiniSparkline = ({ data, isPositive }: { data: number[], isPositive: boolean }) => {
@@ -240,7 +236,7 @@ function MyStatsContent() {
     {
       id: '1',
       role: 'ai',
-      content: `Hey Tony! Here's your acquisition pipeline overview.\n\nYou're currently #2 on the team leaderboard. Your pipeline shows:\n• Calls: 32 (107% of Team Avg)\n• Relationships: 3 new\n• Offers Sent: 3\n• In Negotiations: 2\n• Offers Accepted: 1\n• Acquired: 1\n\nGreat conversion rate from negotiations to accepted!`
+      content: `Good morning, Josh! I'm your Performance Coach.\n\nYour biggest opportunity is Calls where you're at 0% of team average.\n\nWhat would you like to focus on today? I can help you:\n• Analyze your performance gaps\n• Create a plan to climb the leaderboard\n• Deep dive into any specific metric`
     }
   ]);
   const [inputValue, setInputValue] = useState('');
@@ -381,7 +377,7 @@ function MyStatsContent() {
             icon={Clock}
             label="Time"
             value={MOCK_STATS.time.value}
-            unit="min"
+            unit="hrs"
             percentDiff={MOCK_STATS.time.percentDiff}
             chartData={MOCK_STATS.time.chartData}
             tooltip={<p>Total time spent across all modules.</p>}
@@ -441,7 +437,7 @@ function MyStatsContent() {
                   <span><strong className="text-gray-900">{member.inNegotiations}</strong></span>
                   <span><strong className="text-gray-900">{member.offersAccepted}</strong></span>
                   <span><strong className="text-gray-900">{member.acquired}</strong></span>
-                  <span><strong className="text-gray-900">{member.time}</strong>m</span>
+                  <span><strong className="text-gray-900">{member.time}</strong></span>
                 </div>
               </div>
             ))}
@@ -478,7 +474,7 @@ function MyStatsContent() {
                 <div>Texts: {DAILY_STATS.calls.texts}</div>
                 <div>Emails: {DAILY_STATS.calls.emails}</div>
               </div>
-              <div className="text-xs text-green-600 font-medium pt-1">
+              <div className={cn("text-xs font-medium pt-1", DAILY_STATS.calls.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
                 {DAILY_STATS.calls.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.calls.teamAvg})
               </div>
             </div>
@@ -508,7 +504,7 @@ function MyStatsContent() {
                 <div className="pl-2">Hot: {DAILY_STATS.relationships.hot}</div>
                 <div className="pl-2">Warm: {DAILY_STATS.relationships.warm}</div>
               </div>
-              <div className="text-xs text-red-500 font-medium pt-1">
+              <div className={cn("text-xs font-medium pt-1", DAILY_STATS.relationships.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
                 {DAILY_STATS.relationships.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.relationships.teamAvg})
               </div>
             </div>
@@ -537,7 +533,7 @@ function MyStatsContent() {
                 <div>Offer Terms Sent: {DAILY_STATS.offersSent.termsOut}</div>
                 <div>Contract Submitted: {DAILY_STATS.offersSent.contractSubmitted}</div>
               </div>
-              <div className="text-xs text-green-600 font-medium pt-1">
+              <div className={cn("text-xs font-medium pt-1", DAILY_STATS.offersSent.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
                 {DAILY_STATS.offersSent.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.offersSent.teamAvg})
               </div>
             </div>
@@ -560,7 +556,7 @@ function MyStatsContent() {
                 <span className="text-lg font-semibold text-gray-900">{DAILY_STATS.inNegotiations.count}</span>
                 <span className="text-xs text-gray-400">deals</span>
               </div>
-              <div className="text-xs text-green-600 font-medium pt-1">
+              <div className={cn("text-xs font-medium pt-1", DAILY_STATS.inNegotiations.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
                 {DAILY_STATS.inNegotiations.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.inNegotiations.teamAvg})
               </div>
             </div>
@@ -590,7 +586,7 @@ function MyStatsContent() {
                 <span className="text-lg font-semibold text-gray-900">{DAILY_STATS.offersAccepted.count}</span>
                 <span className="text-xs text-gray-400">accepted</span>
               </div>
-              <div className="text-xs text-green-600 font-medium pt-1">
+              <div className={cn("text-xs font-medium pt-1", DAILY_STATS.offersAccepted.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
                 {DAILY_STATS.offersAccepted.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.offersAccepted.teamAvg})
               </div>
             </div>
@@ -614,7 +610,7 @@ function MyStatsContent() {
                 <span className="text-lg font-semibold text-gray-900">{DAILY_STATS.acquired.count}</span>
                 <span className="text-xs text-gray-400">closed</span>
               </div>
-              <div className="text-xs text-green-600 font-medium pt-1">
+              <div className={cn("text-xs font-medium pt-1", DAILY_STATS.acquired.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
                 {DAILY_STATS.acquired.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.acquired.teamAvg})
               </div>
             </div>
@@ -643,7 +639,7 @@ function MyStatsContent() {
                 <div>Cold Call: {DAILY_STATS.dealSource.coldCall}</div>
                 <div>Referral: {DAILY_STATS.dealSource.referral}</div>
               </div>
-              <div className="text-xs text-green-600 font-medium pt-1">
+              <div className={cn("text-xs font-medium pt-1", DAILY_STATS.dealSource.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
                 {DAILY_STATS.dealSource.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.dealSource.teamAvg})
               </div>
             </div>
@@ -674,7 +670,7 @@ function MyStatsContent() {
                 <div>Offer Terms: {DAILY_STATS.time.offerTerms}</div>
                 <div>Agents: {DAILY_STATS.time.agents}</div>
               </div>
-              <div className="text-xs text-green-600 font-medium pt-1">
+              <div className={cn("text-xs font-medium pt-1", DAILY_STATS.time.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
                 {DAILY_STATS.time.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.time.teamAvg})
               </div>
             </div>
