@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { cn } from "@/lib/utils";
 import { 
   Phone, 
@@ -16,7 +16,10 @@ import {
   MessageSquare,
   Handshake,
   Home,
-  Target
+  Target,
+  Mail,
+  UserPlus,
+  TrendingUp
 } from 'lucide-react';
 
 interface Message {
@@ -25,65 +28,111 @@ interface Message {
   content: string;
 }
 
-const MOCK_STATS = {
-  calls: {
-    value: 0,
-    percentDiff: 0,
-    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+type DateFilter = 'yesterday' | 'today' | 'weekly' | 'monthly' | 'yearly' | 'custom';
+
+const DEAL_PIPELINE_STATS = {
+  texts: { 
+    value: 0, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
   },
-  relationships: {
-    value: 1,
-    percentDiff: 0,
-    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  emails: { 
+    value: 0, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
   },
-  offersSent: {
-    value: 0,
-    percentDiff: 0,
-    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  calls: { 
+    value: 0, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
   },
-  inNegotiations: {
-    value: 0,
-    percentDiff: 0,
-    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  offersSent: { 
+    value: 0, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
   },
-  offersAccepted: {
-    value: 0,
-    percentDiff: 0,
-    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  inNegotiations: { 
+    value: 0, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
   },
-  acquired: {
-    value: 0,
-    percentDiff: 0,
-    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  accepted: { 
+    value: 0, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
   },
-  time: {
-    value: 29.6,
-    unit: 'hrs',
-    percentDiff: 0,
-    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 29.6]
+  acquired: { 
+    value: 0, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
   }
 };
 
-const DAILY_STATS = {
+const AGENT_OUTREACH_STATS = {
+  texts: { 
+    value: 0, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
+  },
+  emails: { 
+    value: 0, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
+  },
+  calls: { 
+    value: 0, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
+  },
+  newRelationships: { 
+    value: 1, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] 
+  },
+  relationshipsUpgraded: { 
+    value: 1, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] 
+  }
+};
+
+const PERFORMANCE_STATS = {
+  texts: {
+    total: 0,
+    dealPipeline: 0,
+    agentOutreach: 0,
+    teamAvg: 15,
+    teamAvgPercent: 0
+  },
+  emails: {
+    total: 0,
+    dealPipeline: 0,
+    agentOutreach: 0,
+    teamAvg: 20,
+    teamAvgPercent: 0
+  },
   calls: { 
     total: 0, 
     conversations: 0, 
     connectedPercent: 0,
     avgCallTime: '0:00',
-    texts: 0, 
-    emails: 0,
+    dealPipeline: 0,
+    agentOutreach: 0,
     teamAvg: 29,
     teamAvgPercent: 0
   },
-  relationships: { 
-    newRelationships: 1, 
-    upgrades: 1,
+  newRelationships: { 
+    count: 1, 
+    teamAvg: 3,
+    teamAvgPercent: 33
+  },
+  relationshipsUpgraded: { 
+    total: 1,
     priority: 1,
     hot: 0,
     warm: 0,
-    cold: 0,
-    teamAvg: 6,
-    teamAvgPercent: 100
+    teamAvg: 3,
+    teamAvgPercent: 33
   },
   offersSent: { 
     sent: 0, 
@@ -117,20 +166,44 @@ const DAILY_STATS = {
     teamAvgPercent: 0
   },
   time: { 
-    totalMinutes: 858,
-    piq: 32,
-    comps: 175,
-    investmentAnalysis: 545,
-    offerTerms: 8,
-    agents: 99,
-    teamAvg: 130,
+    totalHours: 16.1,
+    piq: 0.5,
+    comps: 4.7,
+    investmentAnalysis: 9.1,
+    offerTerms: 0.1,
+    agents: 1.7,
+    teamAvg: 2.2,
     teamAvgPercent: 100
   }
 };
 
 const TEAM_LEADERBOARD = [
-  { rank: 1, name: 'Faisal Nazik', calls: 0, relationships: 0, offersSent: 0, inNegotiations: 0, offersAccepted: 0, acquired: 0, time: '0m', isUser: false },
-  { rank: 2, name: 'Haris Aqeel', calls: 0, relationships: 0, offersSent: 0, inNegotiations: 0, offersAccepted: 0, acquired: 0, time: '0m', isUser: false }
+  { 
+    rank: 1, 
+    name: 'Faisal Nazik', 
+    calls: 0, 
+    newRelationships: 0,
+    relationshipsUpgraded: 0,
+    offersSent: 0, 
+    inNegotiations: 0, 
+    offersAccepted: 0, 
+    acquired: 0, 
+    time: '0h',
+    isUser: false 
+  },
+  { 
+    rank: 2, 
+    name: 'Haris Aqeel', 
+    calls: 0, 
+    newRelationships: 0,
+    relationshipsUpgraded: 0,
+    offersSent: 0, 
+    inNegotiations: 0, 
+    offersAccepted: 0, 
+    acquired: 0, 
+    time: '0h',
+    isUser: false 
+  }
 ];
 
 const MiniSparkline = ({ data, isPositive }: { data: number[], isPositive: boolean }) => {
@@ -230,13 +303,138 @@ const Tooltip = ({ children, content }: { children: React.ReactNode; content: Re
   </div>
 );
 
+const getTimeOfDay = (): 'morning' | 'afternoon' | 'evening' => {
+  const hour = new Date().getHours();
+  if (hour < 12) return 'morning';
+  if (hour < 17) return 'afternoon';
+  return 'evening';
+};
+
+const getDefaultDateFilter = (): DateFilter => {
+  const hour = new Date().getHours();
+  return hour < 12 ? 'yesterday' : 'today';
+};
+
+const formatDateRange = (filter: DateFilter): string => {
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+  
+  const formatSingleDate = (date: Date): string => {
+    return date.toLocaleDateString('en-US', { 
+      month: 'short', 
+      day: '2-digit', 
+      year: 'numeric' 
+    });
+  };
+  
+  const getWeekRange = (date: Date): string => {
+    const startOfWeek = new Date(date);
+    const day = startOfWeek.getDay();
+    const diff = startOfWeek.getDate() - day + (day === 0 ? -6 : 1);
+    startOfWeek.setDate(diff);
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
+    return `${startOfWeek.toLocaleDateString('en-US', { month: 'short', day: '2-digit' })} - ${endOfWeek.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })}`;
+  };
+  
+  switch(filter) {
+    case 'yesterday':
+      return formatSingleDate(yesterday);
+    case 'today':
+      return formatSingleDate(today);
+    case 'weekly':
+      return getWeekRange(today);
+    case 'monthly':
+      return today.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    case 'yearly':
+      return today.getFullYear().toString();
+    case 'custom':
+      return 'Select dates...';
+    default:
+      return formatSingleDate(today);
+  }
+};
+
+const getFilterLabel = (filter: DateFilter): string => {
+  switch(filter) {
+    case 'yesterday': return 'Yesterday';
+    case 'today': return 'Today';
+    case 'weekly': return 'Weekly';
+    case 'monthly': return 'Monthly';
+    case 'yearly': return 'Yearly';
+    case 'custom': return 'Custom';
+    default: return 'Today';
+  }
+};
+
+const generateCoachMessage = (timeOfDay: 'morning' | 'afternoon' | 'evening'): string => {
+  if (timeOfDay === 'morning') {
+    return `Good morning, Josh! I'm your Performance Coach. Let's review yesterday's performance.
+
+📊 Yesterday's Results:
+✓ Calls: 0 (0% of target)
+✓ New Relationships: 1 (33% of target)
+✗ Offers Sent: 0 (0% of target) - 3 short of goal
+
+Your biggest opportunity is Calls where you hit 0% of team average.
+
+🎯 Recommended focus for today:
+1. Make 29 calls to hit team average
+2. Send 3 offer terms on ready deals
+3. Follow up with 2 warm relationships
+
+What would you like to dive deeper into?`;
+  } else if (timeOfDay === 'afternoon') {
+    return `Good afternoon, Josh! Here's your progress so far today.
+
+📈 Today's Progress:
+✓ Calls: 0/29 (0% complete)
+- Offers: 0/3 - need 3 more to hit target
+- Relationships: 1/3 - on track!
+
+⏰ To hit your daily targets:
+- 29 more calls needed (~60 minutes)
+- 3 more offers to send
+- 2 follow-ups pending
+
+💡 Quick wins available:
+- 2 deals ready for offer terms
+- 1 warm relationship ready for upgrade
+
+What would you like to focus on?`;
+  } else {
+    return `Great work today, Josh! Here's your end-of-day summary.
+
+📋 Today's Final Results:
+✓ Calls: 0 (0% of target) Missed
+✓ Offers Sent: 0 (0% of target) Missed
+✓ New Relationships: 1 (33% of target)
+✓ Relationships Upgraded: 1
+✓ Time Invested: 16.1 hours
+
+🏆 Wins:
+- Upgraded 1 relationship to Priority
+
+📅 Tomorrow's Priorities (based on today):
+1. Focus on calls - you were 100% below target
+2. Send 3 offer terms on ready deals
+3. 2 hot relationships ready for outreach
+
+See you tomorrow! 🚀`;
+  }
+};
+
 function MyStatsContent() {
-  const [dateRange] = useState('Weekly');
+  const [dateFilter, setDateFilter] = useState<DateFilter>(getDefaultDateFilter);
+  const [showDateDropdown, setShowDateDropdown] = useState(false);
+  const timeOfDay = useMemo(() => getTimeOfDay(), []);
+  
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
       role: 'ai',
-      content: `Good morning, Josh! I'm your Performance Coach.\n\nYour biggest opportunity is Calls where you're at 0% of team average.\n\nWhat would you like to focus on today? I can help you:\n• Analyze your performance gaps\n• Create a plan to climb the leaderboard\n• Deep dive into any specific metric`
+      content: generateCoachMessage(timeOfDay)
     }
   ]);
   const [inputValue, setInputValue] = useState('');
@@ -266,19 +464,23 @@ function MyStatsContent() {
       const lowerMessage = userMessage.toLowerCase();
 
       if (lowerMessage.includes('call') || lowerMessage.includes('calls')) {
-        response = `Call Statistics:\n\nToday you made 32 calls with 8 conversations (25% connected).\nAverage call time: 2:37\n\nBreakdown:\n• Connected: 8 (25%)\n• Texts: 12\n• Emails: 15\n\n107% of Team Average (Team Avg = 29)`;
+        response = `Call Statistics:\n\nYou made 0 calls with 0 conversations (0% connected).\nAverage call time: 0:00\n\nBreakdown:\n• Deal Pipeline: 0\n• Agent Outreach: 0\n\n0% of Team Average (Team Avg = 29)`;
       } else if (lowerMessage.includes('offer') || lowerMessage.includes('offers')) {
-        response = `Offer Pipeline:\n\n• Offers Sent: 3 (107% of Team Avg)\n• In Negotiations: 2 (133% of Team Avg)\n• Offers Accepted: 1 (125% of Team Avg)\n• Acquired: 1 (200% of Team Avg)\n\nYour conversion rate from sent to acquired: 33%`;
+        response = `Offer Pipeline:\n\n• Offers Sent: 0 (0% of Team Avg)\n• In Negotiations: 0 (0% of Team Avg)\n• Offers Accepted: 0 (0% of Team Avg)\n• Acquired: 0 (0% of Team Avg)\n\nYour conversion rate from sent to acquired: N/A`;
       } else if (lowerMessage.includes('relationship') || lowerMessage.includes('agent')) {
-        response = `Relationship Statistics:\n\n• New Relationships: 3\n• Upgraded Relationships: 3\n  - Priority: 1\n  - Hot: 0\n  - Warm: 2\n\n50% of Team Average (Team Avg = 6)`;
+        response = `Relationship Statistics:\n\n• New Relationships: 1\n• Upgraded Relationships: 1\n  - Priority: 1\n  - Hot: 0\n  - Warm: 0\n\n33% of Team Average (Team Avg = 3)`;
       } else if (lowerMessage.includes('negotiat')) {
-        response = `Negotiations Status:\n\n• Currently In Negotiations: 2 deals\n• 133% of Team Average (Team Avg = 1.5)\n\nThese are offers that have been received and are actively being negotiated.`;
+        response = `Negotiations Status:\n\n• Currently In Negotiations: 0 deals\n• 0% of Team Average (Team Avg = 1.5)\n\nNo deals currently being negotiated.`;
       } else if (lowerMessage.includes('acquired') || lowerMessage.includes('closed')) {
-        response = `Acquired Deals:\n\n• Acquired Today: 1\n• 200% of Team Average (Team Avg = 0.5)\n\nExcellent! You're closing at twice the team rate.`;
+        response = `Acquired Deals:\n\n• Acquired: 0\n• 0% of Team Average (Team Avg = 0.5)\n\nNo deals closed yet this period.`;
       } else if (lowerMessage.includes('time')) {
-        response = `Time Statistics:\n\nTotal: 145 minutes\n\nBreakdown:\n• PIQ: 42 min\n• Comps: 78 min\n• Investment Analysis: 5 min\n• Offer Terms: 25 min\n• Agents: 10 min\n\n112% of Team Average (Team Avg = 130)`;
+        response = `Time Statistics:\n\nTotal: 16.1 hours\n\nBreakdown:\n• PIQ: 0.5 hrs\n• Comps: 4.7 hrs\n• Investment Analysis: 9.1 hrs\n• Offer Terms: 0.1 hrs\n• Agents: 1.7 hrs\n\n100% of Team Average (Team Avg = 2.2 hrs)`;
+      } else if (lowerMessage.includes('text') || lowerMessage.includes('email')) {
+        response = `Communication Statistics:\n\nTexts:\n• Total: 0\n• Deal Pipeline: 0\n• Agent Outreach: 0\n\nEmails:\n• Total: 0\n• Deal Pipeline: 0\n• Agent Outreach: 0\n\n0% of Team Average`;
+      } else if (lowerMessage.includes('improve') || lowerMessage.includes('better') || lowerMessage.includes('help')) {
+        response = `Here's your improvement plan:\n\n1. Focus on Calls - You're at 0% of team average\n   → Make 29 calls to hit team average\n\n2. Send more offers - 3 deals may be ready\n   → Review PIQ for offer-ready deals\n\n3. Upgrade relationships - 1 warm contact ready\n   → Schedule follow-up calls\n\nWant me to dive deeper into any of these?`;
       } else {
-        response = `I can help you understand your acquisition pipeline! Try asking about:\n\n• "How are my calls looking?"\n• "Show me my offer pipeline"\n• "How am I doing on relationships?"\n• "What's my negotiation status?"\n• "How many deals have I acquired?"\n• "How did I spend my time?"`;
+        response = `I can help you understand your acquisition pipeline! Try asking about:\n\n• "How are my calls looking?"\n• "Show me my offer pipeline"\n• "How am I doing on relationships?"\n• "What about my texts and emails?"\n• "How did I spend my time?"\n• "How can I improve?"`;
       }
 
       setMessages(prev => [...prev, {
@@ -297,19 +499,47 @@ function MyStatsContent() {
     }
   };
 
+  const dateFilterOptions: DateFilter[] = ['yesterday', 'today', 'weekly', 'monthly', 'yearly', 'custom'];
+
   return (
     <div className="h-full bg-white flex flex-col">
       {/* Header - Fixed */}
       <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-white flex-shrink-0">
         <h1 className="text-lg font-semibold text-gray-900">My Stats</h1>
         <div className="flex items-center gap-4">
-          <button className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-600 bg-white border border-gray-200 rounded hover:bg-gray-50">
-            <span>{dateRange}</span>
-            <ChevronDown className="w-3.5 h-3.5" />
-          </button>
+          <div className="relative">
+            <button 
+              onClick={() => setShowDateDropdown(!showDateDropdown)}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-600 bg-white border border-gray-200 rounded hover:bg-gray-50"
+              data-testid="date-filter-dropdown"
+            >
+              <span>{getFilterLabel(dateFilter)}</span>
+              <ChevronDown className="w-3.5 h-3.5" />
+            </button>
+            {showDateDropdown && (
+              <div className="absolute top-full right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 min-w-[120px]">
+                {dateFilterOptions.map((option) => (
+                  <button
+                    key={option}
+                    onClick={() => {
+                      setDateFilter(option);
+                      setShowDateDropdown(false);
+                    }}
+                    className={cn(
+                      "w-full px-3 py-2 text-left text-sm hover:bg-gray-50",
+                      dateFilter === option && "bg-gray-50 font-medium"
+                    )}
+                    data-testid={`date-filter-${option}`}
+                  >
+                    {getFilterLabel(option)}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           <div className="flex items-center gap-1.5 text-sm text-gray-500">
             <Calendar className="w-4 h-4" />
-            <span>Feb 02 - Feb 08, 2026</span>
+            <span>{formatDateRange(dateFilter)}</span>
           </div>
           <button className="text-sm text-gray-600 hover:text-gray-900">
             Open all stats
@@ -317,70 +547,123 @@ function MyStatsContent() {
         </div>
       </div>
 
-      {/* Stats Cards - WORKFLOW ORDER: 4 on top, 3 underneath */}
-      <div className="flex-shrink-0">
-        {/* Top row - 4 cards */}
+      {/* DEAL PIPELINE Section */}
+      <div className="flex-shrink-0 border-b border-gray-100">
+        <div className="px-6 pt-3 pb-1 flex items-center gap-2">
+          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Deal Pipeline</span>
+          <Tooltip content={<p>This information is specific to deals that are in your pipeline assigned to you</p>}>
+            <Info className="w-3 h-3 text-gray-400 cursor-help" />
+          </Tooltip>
+        </div>
         <div className="flex border-b border-gray-100">
+          <StatCard
+            icon={MessageSquare}
+            label="Texts"
+            value={DEAL_PIPELINE_STATS.texts.value}
+            percentDiff={DEAL_PIPELINE_STATS.texts.percentDiff}
+            chartData={DEAL_PIPELINE_STATS.texts.chartData}
+            tooltip={<p>Text messages sent on deals in your pipeline</p>}
+          />
+          <StatCard
+            icon={Mail}
+            label="Emails"
+            value={DEAL_PIPELINE_STATS.emails.value}
+            percentDiff={DEAL_PIPELINE_STATS.emails.percentDiff}
+            chartData={DEAL_PIPELINE_STATS.emails.chartData}
+            tooltip={<p>Emails sent on deals in your pipeline</p>}
+          />
           <StatCard
             icon={Phone}
             label="Calls"
-            value={MOCK_STATS.calls.value}
-            percentDiff={MOCK_STATS.calls.percentDiff}
-            chartData={MOCK_STATS.calls.chartData}
-            tooltip={<p>Total outbound calls placed today.</p>}
-          />
-          <StatCard
-            icon={Users}
-            label="Relationships"
-            value={MOCK_STATS.relationships.value}
-            percentDiff={MOCK_STATS.relationships.percentDiff}
-            chartData={MOCK_STATS.relationships.chartData}
-            tooltip={<p>New relationships created today.</p>}
+            value={DEAL_PIPELINE_STATS.calls.value}
+            percentDiff={DEAL_PIPELINE_STATS.calls.percentDiff}
+            chartData={DEAL_PIPELINE_STATS.calls.chartData}
+            tooltip={<p>Calls made on deals in your pipeline</p>}
           />
           <StatCard
             icon={Send}
             label="Offers Sent"
-            value={MOCK_STATS.offersSent.value}
-            percentDiff={MOCK_STATS.offersSent.percentDiff}
-            chartData={MOCK_STATS.offersSent.chartData}
-            tooltip={<p>Offer Terms Sent + Contract Submitted.</p>}
+            value={DEAL_PIPELINE_STATS.offersSent.value}
+            percentDiff={DEAL_PIPELINE_STATS.offersSent.percentDiff}
+            chartData={DEAL_PIPELINE_STATS.offersSent.chartData}
+            tooltip={<p>Offer Terms Sent + Contract Submitted</p>}
           />
           <StatCard
             icon={MessageSquare}
             label="In Negotiations"
-            value={MOCK_STATS.inNegotiations.value}
-            percentDiff={MOCK_STATS.inNegotiations.percentDiff}
-            chartData={MOCK_STATS.inNegotiations.chartData}
-            tooltip={<p>Offers currently being negotiated.</p>}
-            isLast
+            value={DEAL_PIPELINE_STATS.inNegotiations.value}
+            percentDiff={DEAL_PIPELINE_STATS.inNegotiations.percentDiff}
+            chartData={DEAL_PIPELINE_STATS.inNegotiations.chartData}
+            tooltip={<p>Deals currently being negotiated</p>}
           />
-        </div>
-        {/* Bottom row - 3 cards */}
-        <div className="flex border-b border-gray-100">
           <StatCard
             icon={Handshake}
             label="Accepted"
-            value={MOCK_STATS.offersAccepted.value}
-            percentDiff={MOCK_STATS.offersAccepted.percentDiff}
-            chartData={MOCK_STATS.offersAccepted.chartData}
-            tooltip={<p>Offers accepted, under contract.</p>}
+            value={DEAL_PIPELINE_STATS.accepted.value}
+            percentDiff={DEAL_PIPELINE_STATS.accepted.percentDiff}
+            chartData={DEAL_PIPELINE_STATS.accepted.chartData}
+            tooltip={<p>Offers accepted, under contract</p>}
           />
           <StatCard
             icon={Home}
             label="Acquired"
-            value={MOCK_STATS.acquired.value}
-            percentDiff={MOCK_STATS.acquired.percentDiff}
-            chartData={MOCK_STATS.acquired.chartData}
-            tooltip={<p>Deals closed and acquired.</p>}
+            value={DEAL_PIPELINE_STATS.acquired.value}
+            percentDiff={DEAL_PIPELINE_STATS.acquired.percentDiff}
+            chartData={DEAL_PIPELINE_STATS.acquired.chartData}
+            tooltip={<p>Deals closed and acquired</p>}
+            isLast
+          />
+        </div>
+      </div>
+
+      {/* AGENT OUTREACH Section */}
+      <div className="flex-shrink-0 border-b border-gray-100">
+        <div className="px-6 pt-3 pb-1 flex items-center gap-2">
+          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Agent Outreach</span>
+          <Tooltip content={<p>Communication metrics for agent relationship building</p>}>
+            <Info className="w-3 h-3 text-gray-400 cursor-help" />
+          </Tooltip>
+        </div>
+        <div className="flex">
+          <StatCard
+            icon={MessageSquare}
+            label="Texts"
+            value={AGENT_OUTREACH_STATS.texts.value}
+            percentDiff={AGENT_OUTREACH_STATS.texts.percentDiff}
+            chartData={AGENT_OUTREACH_STATS.texts.chartData}
+            tooltip={<p>Text messages sent to agents</p>}
           />
           <StatCard
-            icon={Clock}
-            label="Time"
-            value={MOCK_STATS.time.value}
-            unit="hrs"
-            percentDiff={MOCK_STATS.time.percentDiff}
-            chartData={MOCK_STATS.time.chartData}
-            tooltip={<p>Total time spent across all modules.</p>}
+            icon={Mail}
+            label="Emails"
+            value={AGENT_OUTREACH_STATS.emails.value}
+            percentDiff={AGENT_OUTREACH_STATS.emails.percentDiff}
+            chartData={AGENT_OUTREACH_STATS.emails.chartData}
+            tooltip={<p>Emails sent to agents</p>}
+          />
+          <StatCard
+            icon={Phone}
+            label="Calls"
+            value={AGENT_OUTREACH_STATS.calls.value}
+            percentDiff={AGENT_OUTREACH_STATS.calls.percentDiff}
+            chartData={AGENT_OUTREACH_STATS.calls.chartData}
+            tooltip={<p>Calls made to agents</p>}
+          />
+          <StatCard
+            icon={UserPlus}
+            label="New Relationships"
+            value={AGENT_OUTREACH_STATS.newRelationships.value}
+            percentDiff={AGENT_OUTREACH_STATS.newRelationships.percentDiff}
+            chartData={AGENT_OUTREACH_STATS.newRelationships.chartData}
+            tooltip={<p>Brand new agent relationships created</p>}
+          />
+          <StatCard
+            icon={TrendingUp}
+            label="Rel. Upgraded"
+            value={AGENT_OUTREACH_STATS.relationshipsUpgraded.value}
+            percentDiff={AGENT_OUTREACH_STATS.relationshipsUpgraded.percentDiff}
+            chartData={AGENT_OUTREACH_STATS.relationshipsUpgraded.chartData}
+            tooltip={<p>Existing relationships upgraded to higher tier</p>}
             isLast
           />
         </div>
@@ -388,11 +671,11 @@ function MyStatsContent() {
 
       {/* Scrollable Content Area */}
       <div className="flex-1 flex flex-col min-h-0 p-6 pb-24 overflow-y-auto">
-        {/* Team Leaderboard - WORKFLOW ORDER */}
+        {/* Team Leaderboard */}
         <div className="bg-white rounded-lg border border-gray-100 p-5 mb-6 flex-shrink-0">
           <h3 className="text-sm font-semibold text-gray-900 mb-4 flex items-center gap-2">
             <Trophy className="w-4 h-4 text-yellow-500" />
-            Team Leaderboard Today
+            Team Leaderboard
           </h3>
           
           {/* Column Headers */}
@@ -401,9 +684,10 @@ function MyStatsContent() {
               <span className="w-5"></span>
               <span>Name</span>
             </div>
-            <div className="flex-1 grid grid-cols-7 gap-1 text-center">
+            <div className="flex-1 grid grid-cols-8 gap-1 text-center">
               <span>Calls</span>
-              <span>Relations</span>
+              <span>New Rel.</span>
+              <span>Upgraded</span>
               <span>Offers</span>
               <span>Negot.</span>
               <span>Accepted</span>
@@ -430,9 +714,10 @@ function MyStatsContent() {
                     {member.name}
                   </span>
                 </div>
-                <div className="flex-1 grid grid-cols-7 gap-1 text-center text-[10px] text-gray-500">
+                <div className="flex-1 grid grid-cols-8 gap-1 text-center text-[10px] text-gray-500">
                   <span><strong className="text-gray-900">{member.calls}</strong></span>
-                  <span><strong className="text-gray-900">{member.relationships}</strong></span>
+                  <span><strong className="text-gray-900">{member.newRelationships}</strong></span>
+                  <span><strong className="text-gray-900">{member.relationshipsUpgraded}</strong></span>
                   <span><strong className="text-gray-900">{member.offersSent}</strong></span>
                   <span><strong className="text-gray-900">{member.inNegotiations}</strong></span>
                   <span><strong className="text-gray-900">{member.offersAccepted}</strong></span>
@@ -444,120 +729,98 @@ function MyStatsContent() {
           </div>
         </div>
 
-        {/* Daily Performance Report - WORKFLOW ORDER */}
+        {/* Performance Report */}
         <div className="bg-white rounded-lg border border-gray-100 p-5 mb-6 flex-shrink-0">
-          <h3 className="text-sm font-semibold text-gray-900 mb-4">Daily Performance Report</h3>
+          <h3 className="text-sm font-semibold text-gray-900 mb-4">Performance Report</h3>
           
+          {/* Row 1: Texts, Emails, Calls, New Relationships */}
           <div className="grid grid-cols-4 gap-4 mb-4">
-            {/* 1. CALLS */}
+            {/* TEXTS */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-1">
+                <MessageSquare className="w-3 h-3 text-gray-400" />
+                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Texts</span>
+                <Tooltip content={<p>Total text messages sent (Deal Pipeline + Agent Outreach)</p>}>
+                  <Info className="w-3 h-3 text-gray-400 cursor-help" />
+                </Tooltip>
+              </div>
+              <div className="flex items-baseline gap-1">
+                <span className="text-lg font-bold text-green-600">✓</span>
+                <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.texts.total}</span>
+                <span className="text-xs text-gray-400">texts</span>
+              </div>
+              <div className="text-xs text-gray-500 space-y-0.5">
+                <div>Deal Pipeline: {PERFORMANCE_STATS.texts.dealPipeline}</div>
+                <div>Agent Outreach: {PERFORMANCE_STATS.texts.agentOutreach}</div>
+              </div>
+              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.texts.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.texts.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.texts.teamAvg})
+              </div>
+            </div>
+
+            {/* EMAILS */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-1">
+                <Mail className="w-3 h-3 text-gray-400" />
+                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Emails</span>
+                <Tooltip content={<p>Total emails sent (Deal Pipeline + Agent Outreach)</p>}>
+                  <Info className="w-3 h-3 text-gray-400 cursor-help" />
+                </Tooltip>
+              </div>
+              <div className="flex items-baseline gap-1">
+                <span className="text-lg font-bold text-green-600">✓</span>
+                <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.emails.total}</span>
+                <span className="text-xs text-gray-400">emails</span>
+              </div>
+              <div className="text-xs text-gray-500 space-y-0.5">
+                <div>Deal Pipeline: {PERFORMANCE_STATS.emails.dealPipeline}</div>
+                <div>Agent Outreach: {PERFORMANCE_STATS.emails.agentOutreach}</div>
+              </div>
+              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.emails.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.emails.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.emails.teamAvg})
+              </div>
+            </div>
+
+            {/* CALLS */}
             <div className="space-y-2">
               <div className="flex items-center gap-1">
                 <Phone className="w-3 h-3 text-gray-400" />
                 <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Calls</span>
-                <Tooltip content={
-                  <div className="space-y-1">
-                    <p className="font-medium">Calls</p>
-                    <p className="text-gray-300 text-[10px]">Source: My Stats → IDX Note (call agent)</p>
-                  </div>
-                }>
+                <Tooltip content={<p>Total calls made (Deal Pipeline + Agent Outreach)</p>}>
                   <Info className="w-3 h-3 text-gray-400 cursor-help" />
                 </Tooltip>
               </div>
               <div className="flex items-baseline gap-1">
                 <span className="text-lg font-bold text-green-600">✓</span>
-                <span className="text-lg font-semibold text-gray-900">{DAILY_STATS.calls.total}</span>
+                <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.calls.total}</span>
                 <span className="text-xs text-gray-400">calls</span>
               </div>
               <div className="text-xs text-gray-500 space-y-0.5">
-                <div>Conversations: {DAILY_STATS.calls.conversations} ({DAILY_STATS.calls.connectedPercent}% connected)</div>
-                <div>Avg Call Time: {DAILY_STATS.calls.avgCallTime}</div>
-                <div>Texts: {DAILY_STATS.calls.texts}</div>
-                <div>Emails: {DAILY_STATS.calls.emails}</div>
+                <div>Conversations: {PERFORMANCE_STATS.calls.conversations} ({PERFORMANCE_STATS.calls.connectedPercent}% connected)</div>
+                <div>Avg Call Time: {PERFORMANCE_STATS.calls.avgCallTime}</div>
+                <div>Deal Pipeline: {PERFORMANCE_STATS.calls.dealPipeline}</div>
+                <div>Agent Outreach: {PERFORMANCE_STATS.calls.agentOutreach}</div>
               </div>
-              <div className={cn("text-xs font-medium pt-1", DAILY_STATS.calls.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
-                {DAILY_STATS.calls.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.calls.teamAvg})
+              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.calls.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.calls.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.calls.teamAvg})
               </div>
             </div>
 
-            {/* 2. RELATIONSHIPS */}
+            {/* NEW RELATIONSHIPS */}
             <div className="space-y-2">
               <div className="flex items-center gap-1">
-                <Users className="w-3 h-3 text-gray-400" />
-                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Relationships</span>
-                <Tooltip content={
-                  <div className="space-y-1">
-                    <p className="font-medium">Relationships</p>
-                    <p className="text-gray-300 text-[10px]">New = Total Added Today (not upgrades)</p>
-                    <p className="text-gray-300 text-[10px]">Upgraded = Tier increases</p>
-                  </div>
-                }>
+                <UserPlus className="w-3 h-3 text-gray-400" />
+                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">New Relationships</span>
+                <Tooltip content={<p>Brand new agent relationships created during this period</p>}>
                   <Info className="w-3 h-3 text-gray-400 cursor-help" />
                 </Tooltip>
               </div>
               <div className="flex items-baseline gap-1">
-                <span className="text-lg font-semibold text-gray-900">{DAILY_STATS.relationships.newRelationships}</span>
+                <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.newRelationships.count}</span>
                 <span className="text-xs text-gray-400">new</span>
               </div>
-              <div className="text-xs text-gray-500 space-y-0.5">
-                <div>Upgraded: {DAILY_STATS.relationships.upgrades}</div>
-                <div className="pl-2">Priority: {DAILY_STATS.relationships.priority}</div>
-                <div className="pl-2">Hot: {DAILY_STATS.relationships.hot}</div>
-                <div className="pl-2">Warm: {DAILY_STATS.relationships.warm}</div>
-              </div>
-              <div className={cn("text-xs font-medium pt-1", DAILY_STATS.relationships.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
-                {DAILY_STATS.relationships.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.relationships.teamAvg})
-              </div>
-            </div>
-
-            {/* 3. OFFERS SENT */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-1">
-                <Send className="w-3 h-3 text-gray-400" />
-                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Offers Sent</span>
-                <Tooltip content={
-                  <div className="space-y-1">
-                    <p className="font-medium">Offers Sent</p>
-                    <p className="text-gray-300 text-[10px]">= Offer Terms Sent + Contract Submitted</p>
-                    <p className="text-gray-400 text-[10px]">Source: Offer Status Change KPIs</p>
-                  </div>
-                }>
-                  <Info className="w-3 h-3 text-gray-400 cursor-help" />
-                </Tooltip>
-              </div>
-              <div className="flex items-baseline gap-1">
-                <span className="text-lg font-bold text-green-600">✓</span>
-                <span className="text-lg font-semibold text-gray-900">{DAILY_STATS.offersSent.sent}</span>
-                <span className="text-xs text-gray-400">sent</span>
-              </div>
-              <div className="text-xs text-gray-500 space-y-0.5">
-                <div>Offer Terms Sent: {DAILY_STATS.offersSent.termsOut}</div>
-                <div>Contract Submitted: {DAILY_STATS.offersSent.contractSubmitted}</div>
-              </div>
-              <div className={cn("text-xs font-medium pt-1", DAILY_STATS.offersSent.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
-                {DAILY_STATS.offersSent.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.offersSent.teamAvg})
-              </div>
-            </div>
-
-            {/* 4. IN NEGOTIATIONS */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-1">
-                <MessageSquare className="w-3 h-3 text-gray-400" />
-                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">In Negotiations</span>
-                <Tooltip content={
-                  <div className="space-y-1">
-                    <p className="font-medium">In Negotiations</p>
-                    <p className="text-gray-300 text-[10px]">Offers received and being negotiated.</p>
-                  </div>
-                }>
-                  <Info className="w-3 h-3 text-gray-400 cursor-help" />
-                </Tooltip>
-              </div>
-              <div className="flex items-baseline gap-1">
-                <span className="text-lg font-semibold text-gray-900">{DAILY_STATS.inNegotiations.count}</span>
-                <span className="text-xs text-gray-400">deals</span>
-              </div>
-              <div className={cn("text-xs font-medium pt-1", DAILY_STATS.inNegotiations.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
-                {DAILY_STATS.inNegotiations.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.inNegotiations.teamAvg})
+              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.newRelationships.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.newRelationships.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.newRelationships.teamAvg})
               </div>
             </div>
           </div>
@@ -565,113 +828,162 @@ function MyStatsContent() {
           {/* Faint divider line */}
           <div className="border-t border-gray-100 my-4"></div>
 
-          {/* Second row: Offers Accepted, Acquired, Time */}
-          <div className="grid grid-cols-4 gap-4">
-            {/* 5. OFFERS ACCEPTED */}
+          {/* Row 2: Relationships Upgraded, Offers Sent, In Negotiations, Accepted */}
+          <div className="grid grid-cols-4 gap-4 mb-4">
+            {/* RELATIONSHIPS UPGRADED */}
             <div className="space-y-2">
               <div className="flex items-center gap-1">
-                <Handshake className="w-3 h-3 text-gray-400" />
-                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Offers Accepted</span>
-                <Tooltip content={
-                  <div className="space-y-1">
-                    <p className="font-medium">Offers Accepted</p>
-                    <p className="text-gray-300 text-[10px]">Negotiation successful → Under contract.</p>
-                  </div>
-                }>
+                <TrendingUp className="w-3 h-3 text-gray-400" />
+                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Rel. Upgraded</span>
+                <Tooltip content={<p>Existing agent relationships upgraded to higher tier (Priority, Hot, or Warm)</p>}>
+                  <Info className="w-3 h-3 text-gray-400 cursor-help" />
+                </Tooltip>
+              </div>
+              <div className="flex items-baseline gap-1">
+                <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.relationshipsUpgraded.total}</span>
+                <span className="text-xs text-gray-400">upgraded</span>
+              </div>
+              <div className="text-xs text-gray-500 space-y-0.5">
+                <div>Priority: {PERFORMANCE_STATS.relationshipsUpgraded.priority}</div>
+                <div>Hot: {PERFORMANCE_STATS.relationshipsUpgraded.hot}</div>
+                <div>Warm: {PERFORMANCE_STATS.relationshipsUpgraded.warm}</div>
+              </div>
+              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.relationshipsUpgraded.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.relationshipsUpgraded.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.relationshipsUpgraded.teamAvg})
+              </div>
+            </div>
+
+            {/* OFFERS SENT */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-1">
+                <Send className="w-3 h-3 text-gray-400" />
+                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Offers Sent</span>
+                <Tooltip content={<p>Offer Terms Sent + Contract Submitted</p>}>
                   <Info className="w-3 h-3 text-gray-400 cursor-help" />
                 </Tooltip>
               </div>
               <div className="flex items-baseline gap-1">
                 <span className="text-lg font-bold text-green-600">✓</span>
-                <span className="text-lg font-semibold text-gray-900">{DAILY_STATS.offersAccepted.count}</span>
-                <span className="text-xs text-gray-400">accepted</span>
+                <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.offersSent.sent}</span>
+                <span className="text-xs text-gray-400">sent</span>
               </div>
-              <div className={cn("text-xs font-medium pt-1", DAILY_STATS.offersAccepted.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
-                {DAILY_STATS.offersAccepted.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.offersAccepted.teamAvg})
+              <div className="text-xs text-gray-500 space-y-0.5">
+                <div>Offer Terms Sent: {PERFORMANCE_STATS.offersSent.termsOut}</div>
+                <div>Contract Submitted: {PERFORMANCE_STATS.offersSent.contractSubmitted}</div>
+              </div>
+              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.offersSent.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.offersSent.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.offersSent.teamAvg})
               </div>
             </div>
 
-            {/* 6. ACQUIRED */}
+            {/* IN NEGOTIATIONS */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-1">
+                <MessageSquare className="w-3 h-3 text-gray-400" />
+                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">In Negotiations</span>
+                <Tooltip content={<p>Offers received and currently being negotiated</p>}>
+                  <Info className="w-3 h-3 text-gray-400 cursor-help" />
+                </Tooltip>
+              </div>
+              <div className="flex items-baseline gap-1">
+                <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.inNegotiations.count}</span>
+                <span className="text-xs text-gray-400">deals</span>
+              </div>
+              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.inNegotiations.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.inNegotiations.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.inNegotiations.teamAvg})
+              </div>
+            </div>
+
+            {/* OFFERS ACCEPTED */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-1">
+                <Handshake className="w-3 h-3 text-gray-400" />
+                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Accepted</span>
+                <Tooltip content={<p>Negotiation successful → Under contract</p>}>
+                  <Info className="w-3 h-3 text-gray-400 cursor-help" />
+                </Tooltip>
+              </div>
+              <div className="flex items-baseline gap-1">
+                <span className="text-lg font-bold text-green-600">✓</span>
+                <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.offersAccepted.count}</span>
+                <span className="text-xs text-gray-400">accepted</span>
+              </div>
+              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.offersAccepted.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.offersAccepted.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.offersAccepted.teamAvg})
+              </div>
+            </div>
+          </div>
+
+          {/* Faint divider line */}
+          <div className="border-t border-gray-100 my-4"></div>
+
+          {/* Row 3: Acquired, Deal Source, Time */}
+          <div className="grid grid-cols-3 gap-4">
+            {/* ACQUIRED */}
             <div className="space-y-2">
               <div className="flex items-center gap-1">
                 <Home className="w-3 h-3 text-gray-400" />
                 <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Acquired</span>
-                <Tooltip content={
-                  <div className="space-y-1">
-                    <p className="font-medium">Acquired</p>
-                    <p className="text-gray-300 text-[10px]">Deal closed and acquired.</p>
-                  </div>
-                }>
+                <Tooltip content={<p>Deals closed and acquired</p>}>
                   <Info className="w-3 h-3 text-gray-400 cursor-help" />
                 </Tooltip>
               </div>
               <div className="flex items-baseline gap-1">
                 <span className="text-lg font-bold text-green-600">✓</span>
-                <span className="text-lg font-semibold text-gray-900">{DAILY_STATS.acquired.count}</span>
+                <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.acquired.count}</span>
                 <span className="text-xs text-gray-400">closed</span>
               </div>
-              <div className={cn("text-xs font-medium pt-1", DAILY_STATS.acquired.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
-                {DAILY_STATS.acquired.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.acquired.teamAvg})
+              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.acquired.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.acquired.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.acquired.teamAvg})
               </div>
             </div>
 
-            {/* 7. DEAL SOURCE */}
+            {/* DEAL SOURCE */}
             <div className="space-y-2">
               <div className="flex items-center gap-1">
                 <Target className="w-3 h-3 text-gray-400" />
                 <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Deal Source</span>
-                <Tooltip content={
-                  <div className="space-y-1">
-                    <p className="font-medium">Deal Source</p>
-                    <p className="text-gray-300 text-[10px]">Where acquired deals originated from.</p>
-                  </div>
-                }>
+                <Tooltip content={<p>Where acquired deals originated from</p>}>
                   <Info className="w-3 h-3 text-gray-400 cursor-help" />
                 </Tooltip>
               </div>
               <div className="flex items-baseline gap-1">
-                <span className="text-lg font-semibold text-gray-900">{DAILY_STATS.dealSource.mls + DAILY_STATS.dealSource.directMail + DAILY_STATS.dealSource.coldCall + DAILY_STATS.dealSource.referral}</span>
+                <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.dealSource.total}</span>
                 <span className="text-xs text-gray-400">total</span>
               </div>
               <div className="text-xs text-gray-500 space-y-0.5">
-                <div>MLS: {DAILY_STATS.dealSource.mls}</div>
-                <div>Direct Mail: {DAILY_STATS.dealSource.directMail}</div>
-                <div>Cold Call: {DAILY_STATS.dealSource.coldCall}</div>
-                <div>Referral: {DAILY_STATS.dealSource.referral}</div>
+                <div>MLS: {PERFORMANCE_STATS.dealSource.mls}</div>
+                <div>Direct Mail: {PERFORMANCE_STATS.dealSource.directMail}</div>
+                <div>Cold Call: {PERFORMANCE_STATS.dealSource.coldCall}</div>
+                <div>Referral: {PERFORMANCE_STATS.dealSource.referral}</div>
               </div>
-              <div className={cn("text-xs font-medium pt-1", DAILY_STATS.dealSource.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
-                {DAILY_STATS.dealSource.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.dealSource.teamAvg})
+              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.dealSource.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.dealSource.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.dealSource.teamAvg})
               </div>
             </div>
 
-            {/* 8. TIME - with full breakdown */}
+            {/* TIME */}
             <div className="space-y-2">
               <div className="flex items-center gap-1">
                 <Clock className="w-3 h-3 text-gray-400" />
                 <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Time</span>
-                <Tooltip content={
-                  <div className="space-y-1">
-                    <p className="font-medium">Time Spent</p>
-                    <p className="text-gray-300 text-[10px]">= SUM of all module minutes for today</p>
-                    <p className="text-gray-400 text-[10px]">Source: Time Spent per Module</p>
-                  </div>
-                }>
+                <Tooltip content={<p>Total time spent across all modules</p>}>
                   <Info className="w-3 h-3 text-gray-400 cursor-help" />
                 </Tooltip>
               </div>
               <div className="flex items-baseline gap-1">
-                <span className="text-lg font-semibold text-gray-900">{DAILY_STATS.time.totalMinutes}</span>
-                <span className="text-xs text-gray-400">minutes</span>
+                <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.time.totalHours}</span>
+                <span className="text-xs text-gray-400">hours</span>
               </div>
               <div className="text-xs text-gray-500 space-y-0.5">
-                <div>PIQ: {DAILY_STATS.time.piq}</div>
-                <div>Comps: {DAILY_STATS.time.comps}</div>
-                <div>Investment Analysis: {DAILY_STATS.time.investmentAnalysis}</div>
-                <div>Offer Terms: {DAILY_STATS.time.offerTerms}</div>
-                <div>Agents: {DAILY_STATS.time.agents}</div>
+                <div>PIQ: {PERFORMANCE_STATS.time.piq} hrs</div>
+                <div>Comps: {PERFORMANCE_STATS.time.comps} hrs</div>
+                <div>Investment Analysis: {PERFORMANCE_STATS.time.investmentAnalysis} hrs</div>
+                <div>Offer Terms: {PERFORMANCE_STATS.time.offerTerms} hrs</div>
+                <div>Agents: {PERFORMANCE_STATS.time.agents} hrs</div>
               </div>
-              <div className={cn("text-xs font-medium pt-1", DAILY_STATS.time.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
-                {DAILY_STATS.time.teamAvgPercent}% of Team Average (Team Avg = {DAILY_STATS.time.teamAvg})
+              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.time.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.time.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.time.teamAvg} hrs)
               </div>
             </div>
           </div>
@@ -679,6 +991,10 @@ function MyStatsContent() {
 
         {/* AI Chat Section - Fills remaining space */}
         <div className="bg-white rounded-lg border border-gray-100 p-5 flex-1 min-h-0 flex flex-col">
+          <h3 className="text-sm font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <Lightbulb className="w-4 h-4 text-orange-500" />
+            AI Performance Coach
+          </h3>
           <div 
             ref={chatContainerRef}
             className="flex-1 overflow-y-auto"
@@ -718,69 +1034,39 @@ function MyStatsContent() {
                   </div>
                   <div className="bg-gray-50 rounded-xl rounded-tl-sm px-3 py-2">
                     <div className="flex gap-1">
-                      <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                      <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                      <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                      <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                      <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                      <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
                     </div>
                   </div>
                 </div>
               )}
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Fixed Input Bar */}
-      <div className="absolute bottom-6 left-6 right-6 z-20">
-        <div className="max-w-3xl mx-auto">
-          <div 
-            className="flex items-center gap-2 bg-white rounded-full px-4 py-3 border border-gray-200"
-            style={{
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08), 0 -1px 0 rgba(255, 255, 255, 0.8) inset',
-              background: 'linear-gradient(to bottom, #ffffff, #fafafa)'
-            }}
-          >
-            <button className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition rounded-full hover:bg-gray-100">
-              <Plus className="w-4 h-4" />
+          
+          {/* Input Area */}
+          <div className="mt-3 flex gap-2">
+            <div className="flex-1 flex items-center gap-2 bg-gray-50 rounded-full px-3 py-1.5 border border-gray-200">
+              <Plus className="w-4 h-4 text-gray-400 cursor-pointer hover:text-gray-600" />
+              <input
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Ask about your stats..."
+                className="flex-1 bg-transparent text-xs outline-none placeholder:text-gray-400"
+                data-testid="coach-input"
+              />
+              <Mic className="w-4 h-4 text-gray-400 cursor-pointer hover:text-gray-600" />
+              <AudioLines className="w-4 h-4 text-gray-400 cursor-pointer hover:text-gray-600" />
+            </div>
+            <button
+              onClick={handleSend}
+              className="w-8 h-8 bg-[#FF6600] text-white rounded-full flex items-center justify-center hover:bg-[#FF7722] transition"
+              data-testid="coach-send-button"
+            >
+              <Send className="w-3.5 h-3.5" />
             </button>
-            
-            <input
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Ask about your stats..."
-              className="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none"
-              data-testid="input-stats-chat"
-            />
-            
-            <button className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition rounded-full hover:bg-gray-100">
-              <Mic className="w-4 h-4" />
-            </button>
-            
-            {inputValue.trim() ? (
-              <button
-                onClick={handleSend}
-                disabled={isTyping}
-                className="w-9 h-9 rounded-full bg-gray-900 hover:bg-gray-800 text-white flex items-center justify-center transition shadow-md"
-                style={{
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1)'
-                }}
-                data-testid="button-send-stats"
-              >
-                <Send className="w-4 h-4" />
-              </button>
-            ) : (
-              <button
-                className="w-9 h-9 rounded-full bg-gray-900 hover:bg-gray-800 text-white flex items-center justify-center transition shadow-md"
-                style={{
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1)'
-                }}
-                data-testid="button-voice-stats"
-              >
-                <AudioLines className="w-4 h-4" />
-              </button>
-            )}
           </div>
         </div>
       </div>
