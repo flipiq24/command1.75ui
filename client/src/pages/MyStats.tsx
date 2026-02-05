@@ -309,7 +309,7 @@ function MyStatsContent() {
           </button>
           <div className="flex items-center gap-1.5 text-sm text-gray-500">
             <Calendar className="w-4 h-4" />
-            <span>Nov 17 - Nov 23, 2025</span>
+            <span>Feb 02 - Feb 08, 2026</span>
           </div>
           <button className="text-sm text-gray-600 hover:text-gray-900">
             Open all stats
