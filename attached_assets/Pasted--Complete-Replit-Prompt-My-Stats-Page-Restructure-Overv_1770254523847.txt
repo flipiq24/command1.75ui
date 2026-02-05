@@ -1,0 +1,794 @@
+
+Complete Replit Prompt: My Stats Page Restructure
+Overview
+Update the My Stats page to reorganize metrics into logical categories (Deal Pipeline & Agent Outreach), improve date filtering with smart defaults, split Relationships into New and Upgraded, convert time to hours, and enhance the AI coach for end-of-day actionable guidance.
+
+1. DATE FILTER CHANGES
+Current State: Static "Weekly" dropdown with "Refresh" button and fixed date display "Feb 02 - Feb 08, 2026"
+New State: Dynamic dropdown with smart defaults based on time of day
+Dropdown Options:
+
+Yesterday (default if before 12:00 PM local time)
+Today (default if 12:00 PM or later local time)
+Weekly
+Monthly
+Yearly
+Custom (opens date range picker)
+
+Implementation Logic:
+typescriptconst [dateFilter, setDateFilter] = useState<'yesterday' | 'today' | 'weekly' | 'monthly' | 'yearly' | 'custom'>(() => {
+  const hour = new Date().getHours();
+  return hour < 12 ? 'yesterday' : 'today';
+});
+
+const getDateRangeDisplay = (filter: string): string => {
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+  
+  switch(filter) {
+    case 'yesterday':
+      return formatDate(yesterday);
+    case 'today':
+      return formatDate(today);
+    case 'weekly':
+      // Return week range
+    case 'monthly':
+      // Return month range
+    case 'yearly':
+      // Return year range
+    case 'custom':
+      // Return custom selected range
+  }
+};
+```
+
+**Key Behaviors:**
+- Date display dynamically updates based on dropdown selection
+- All sections (Stats Cards, Team Leaderboard, Performance Report) filter based on this single dropdown
+- Remove the separate "Refresh" button (data auto-refreshes on filter change)
+
+---
+
+### 2. TOP STATS SECTION - COMPLETE RESTRUCTURE
+
+**REMOVE:** Time card from top stats (already exists in Performance Report)
+
+**REORGANIZE into TWO labeled sections:**
+
+---
+
+#### Section A: DEAL PIPELINE
+
+**Header:** "Deal Pipeline" with info icon tooltip
+**Tooltip text:** "This information is specific to deals that are in your pipeline assigned to you"
+
+**Layout:** 7 cards in a single row
+
+| Order | Metric | Icon | Tooltip Description |
+|-------|--------|------|---------------------|
+| 1 | Texts | MessageSquare | Text messages sent on deals in your pipeline |
+| 2 | Emails | Mail | Emails sent on deals in your pipeline |
+| 3 | Calls | Phone | Calls made on deals in your pipeline |
+| 4 | Offers Sent | Send | Offer Terms Sent + Contract Submitted |
+| 5 | In Negotiations | MessageSquare | Deals currently being negotiated |
+| 6 | Accepted | Handshake | Offers accepted, under contract |
+| 7 | Acquired | Home | Deals closed and acquired |
+
+**Visual Layout:**
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ DEAL PIPELINE ⓘ                                                             │
+│ ┌────────┬────────┬────────┬────────┬────────┬──────────┬─────────┐        │
+│ │ Texts  │ Emails │ Calls  │ Offers │ Negot. │ Accepted │ Acquired│        │
+│ │   0    │   0    │   0    │   0    │   0    │    0     │    0    │        │
+│ │  +0%   │  +0%   │  +0%   │  +0%   │  +0%   │   +0%    │   +0%   │        │
+│ └────────┴────────┴────────┴────────┴────────┴──────────┴─────────┘        │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+#### Section B: AGENT OUTREACH
+
+**Header:** "Agent Outreach" with info icon tooltip
+**Tooltip text:** "Communication metrics for agent relationship building"
+
+**Layout:** 5 cards in a single row
+
+| Order | Metric | Icon | Tooltip Description |
+|-------|--------|------|---------------------|
+| 1 | Texts | MessageSquare | Text messages sent to agents |
+| 2 | Emails | Mail | Emails sent to agents |
+| 3 | Calls | Phone | Calls made to agents |
+| 4 | New Relationships | UserPlus | Brand new agent relationships created |
+| 5 | Relationships Upgraded | TrendingUp | Existing relationships upgraded to higher tier |
+
+**Visual Layout:**
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ AGENT OUTREACH ⓘ                                                            │
+│ ┌──────────┬──────────┬──────────┬───────────────┬──────────────────┐      │
+│ │  Texts   │  Emails  │  Calls   │ New Relations │ Rel. Upgraded    │      │
+│ │    0     │    0     │    0     │       1       │        1         │      │
+│ │   +0%    │   +0%    │   +0%    │      +0%      │       +0%        │      │
+│ └──────────┴──────────┴──────────┴───────────────┴──────────────────┘      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+3. TEAM LEADERBOARD CHANGES
+Current Header: "Team Leaderboard Today"
+New Header: "Team Leaderboard" (remove "Today" - date context comes from top filter)
+Updated Columns (in workflow order):
+| Name | Calls | New Rel. | Upgraded | Offers | Negot. | Accepted | Acquired | Time |
+Data Structure:
+typescriptconst TEAM_LEADERBOARD = [
+  { 
+    rank: 1, 
+    name: 'Faisal Nazik', 
+    calls: 0, 
+    newRelationships: 0,
+    relationshipsUpgraded: 0,
+    offersSent: 0, 
+    inNegotiations: 0, 
+    offersAccepted: 0, 
+    acquired: 0, 
+    time: '0h',  // Changed from '0m' to hours
+    isUser: false 
+  },
+  // ... more team members
+];
+```
+
+**Visual Layout:**
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 🏆 Team Leaderboard                                                         │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ Name          │ Calls │ New Rel.│Upgraded│ Offers │ Negot.│Accepted│Acquired│ Time │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 🥇 Faisal Nazik │   0   │    0    │   0    │   0    │   0   │   0    │   0    │  0h  │
+│ 🥈 Haris Aqeel  │   0   │    0    │   0    │   0    │   0   │   0    │   0    │  0h  │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+### 4. PERFORMANCE REPORT CHANGES
+
+**Current Header:** "Daily Performance Report"
+**New Header:** "Performance Report" (remove "Daily" - date context comes from top filter)
+
+**ADD Cards:**
+- TEXTS card (Total: Deal Pipeline + Agent Outreach combined)
+- EMAILS card (Total: Deal Pipeline + Agent Outreach combined)
+
+**SPLIT Relationships into:**
+- NEW RELATIONSHIPS card
+- RELATIONSHIPS UPGRADED card (with breakdown: Priority, Hot, Warm)
+
+**Updated Card Layout (11 cards total):**
+
+**Row 1 (4 cards):**
+| TEXTS | EMAILS | CALLS | NEW RELATIONSHIPS |
+
+**Row 2 (4 cards):**
+| RELATIONSHIPS UPGRADED | OFFERS SENT | IN NEGOTIATIONS | ACCEPTED |
+
+**Row 3 (3 cards):**
+| ACQUIRED | DEAL SOURCE | TIME |
+
+---
+
+#### Individual Card Specifications:
+
+**TEXTS Card:**
+```
+📱 TEXTS ⓘ
+✓ [X] texts
+
+Deal Pipeline: [X]
+Agent Outreach: [X]
+
+[X]% of Team Average (Team Avg = [X])
+```
+Tooltip: "Total text messages sent (Deal Pipeline + Agent Outreach)"
+
+---
+
+**EMAILS Card:**
+```
+✉️ EMAILS ⓘ
+✓ [X] emails
+
+Deal Pipeline: [X]
+Agent Outreach: [X]
+
+[X]% of Team Average (Team Avg = [X])
+```
+Tooltip: "Total emails sent (Deal Pipeline + Agent Outreach)"
+
+---
+
+**CALLS Card:**
+```
+📞 CALLS ⓘ
+✓ [X] calls
+
+Conversations: [X] ([X]% connected)
+Avg Call Time: [X:XX]
+Deal Pipeline: [X]
+Agent Outreach: [X]
+
+[X]% of Team Average (Team Avg = [X])
+```
+Tooltip: "Total calls made (Deal Pipeline + Agent Outreach)"
+
+---
+
+**NEW RELATIONSHIPS Card:**
+```
+👤+ NEW RELATIONSHIPS ⓘ
+[X] new
+
+[X]% of Team Average (Team Avg = [X])
+```
+Tooltip: "Brand new agent relationships created during this period"
+
+---
+
+**RELATIONSHIPS UPGRADED Card:**
+```
+📈 RELATIONSHIPS UPGRADED ⓘ
+[X] upgraded
+
+Breakdown:
+  Priority: [X]
+  Hot: [X]
+  Warm: [X]
+
+[X]% of Team Average (Team Avg = [X])
+```
+Tooltip: "Existing agent relationships upgraded to higher tier (Priority, Hot, or Warm)"
+
+---
+
+**OFFERS SENT Card:**
+```
+📤 OFFERS SENT ⓘ
+✓ [X] sent
+
+Offer Terms Sent: [X]
+Contract Submitted: [X]
+
+[X]% of Team Average (Team Avg = [X])
+```
+Tooltip: "Offer Terms Sent + Contract Submitted"
+
+---
+
+**IN NEGOTIATIONS Card:**
+```
+💬 IN NEGOTIATIONS ⓘ
+[X] deals
+
+[X]% of Team Average (Team Avg = [X])
+```
+Tooltip: "Offers received and currently being negotiated"
+
+---
+
+**ACCEPTED Card:**
+```
+🤝 OFFERS ACCEPTED ⓘ
+✓ [X] accepted
+
+[X]% of Team Average (Team Avg = [X])
+```
+Tooltip: "Negotiation successful → Under contract"
+
+---
+
+**ACQUIRED Card:**
+```
+🏠 ACQUIRED ⓘ
+✓ [X] closed
+
+[X]% of Team Average (Team Avg = [X])
+```
+Tooltip: "Deals closed and acquired"
+
+---
+
+**DEAL SOURCE Card:**
+```
+🎯 DEAL SOURCE ⓘ
+[X] total
+
+MLS: [X]
+Direct Mail: [X]
+Cold Call: [X]
+Referral: [X]
+
+[X]% of Team Average (Team Avg = [X])
+```
+Tooltip: "Where acquired deals originated from"
+
+---
+
+**TIME Card (CONVERTED TO HOURS):**
+```
+🕐 TIME ⓘ
+[X.X] hours
+
+Breakdown:
+  PIQ: [X.X] hrs
+  Comps: [X.X] hrs
+  Investment Analysis: [X.X] hrs
+  Offer Terms: [X.X] hrs
+  Agents: [X.X] hrs
+
+[X]% of Team Average (Team Avg = [X] hrs)
+Tooltip: "Total time spent across all modules"
+Time Conversion Helper:
+typescriptconst minutesToHours = (minutes: number): string => {
+  return (minutes / 60).toFixed(1);
+};
+
+// Example usage:
+// 964 minutes → "16.1" hours
+// 32 minutes → "0.5" hours
+// 281 minutes → "4.7" hours
+```
+
+---
+
+### 5. AI PERFORMANCE COACH ENHANCEMENTS
+
+**Location:** Bottom of page, chat interface
+
+**Current behavior:** Generic greeting with static suggestions
+
+**New behavior:** Time-aware, data-driven, actionable guidance
+
+---
+
+#### Morning Mode (Before 12:00 PM) - Reviewing Yesterday:
+```
+Good morning, [Name]! I'm your Performance Coach. Let's review yesterday's performance.
+
+📊 Yesterday's Results:
+✓ Calls: [X] ([Y]% of target)
+✓ New Relationships: [X] ([Y]% of target)
+✗ Offers Sent: [X] ([Y]% of target) - [Z] short of goal
+
+Your biggest opportunity is [lowest % metric] where you hit [X]% of team average.
+
+🎯 Recommended focus for today:
+1. [Specific actionable task based on biggest gap]
+2. [Second priority based on pipeline data]
+3. [Third priority based on follow-up needs]
+
+What would you like to dive deeper into?
+```
+
+---
+
+#### Afternoon Mode (12:00 PM - 5:00 PM) - Reviewing Today:
+```
+Good afternoon, [Name]! Here's your progress so far today.
+
+📈 Today's Progress:
+✓ Calls: [X]/[goal] ([Y]% complete)
+- Offers: [X]/[goal] - need [Z] more to hit target
+- Relationships: [X]/[goal] - on track!
+
+⏰ To hit your daily targets:
+- [X] more calls needed (~[Y] minutes)
+- [Z] more offers to send
+- [N] follow-ups pending
+
+💡 Quick wins available:
+- [Specific suggestion based on pipeline - e.g., "3 deals ready for offer terms"]
+- [Suggestion based on agent data - e.g., "2 warm relationships ready for upgrade"]
+
+What would you like to focus on?
+```
+
+---
+
+#### End of Day Mode (After 5:00 PM):
+```
+Great work today, [Name]! Here's your end-of-day summary.
+
+📋 Today's Final Results:
+✓ Calls: [X] ([Y]% of target) [Met/Exceeded/Missed]
+✓ Offers Sent: [X] ([Y]% of target) [Met/Exceeded/Missed]
+✓ New Relationships: [X] ([Y]% of target) [Met/Exceeded/Missed]
+✓ Relationships Upgraded: [X]
+✓ Time Invested: [X.X] hours
+
+🏆 Wins:
+- [Highlight achievements - e.g., "Upgraded 2 relationships to Priority"]
+- [Another win]
+
+📅 Tomorrow's Priorities (based on today):
+1. [Priority based on gaps - e.g., "Focus on calls - you were 30% below target"]
+2. [Priority based on pipeline - e.g., "5 deals in negotiation need follow-up"]
+3. [Priority based on relationships - e.g., "3 hot relationships ready for outreach"]
+
+See you tomorrow! 🚀
+
+Chat Response Logic:
+typescriptconst generateCoachResponse = (userMessage: string, stats: StatsData, timeOfDay: 'morning' | 'afternoon' | 'evening'): string => {
+  const lowerMessage = userMessage.toLowerCase();
+  
+  // Topic detection
+  if (lowerMessage.includes('call')) {
+    return generateCallsInsight(stats, timeOfDay);
+  }
+  if (lowerMessage.includes('relationship') || lowerMessage.includes('agent')) {
+    return generateRelationshipsInsight(stats, timeOfDay);
+  }
+  if (lowerMessage.includes('offer')) {
+    return generateOffersInsight(stats, timeOfDay);
+  }
+  if (lowerMessage.includes('time')) {
+    return generateTimeInsight(stats, timeOfDay);
+  }
+  if (lowerMessage.includes('improve') || lowerMessage.includes('better') || lowerMessage.includes('help')) {
+    return generateImprovementPlan(stats, timeOfDay);
+  }
+  
+  // Default helpful response
+  return generateDefaultHelp();
+};
+
+6. COMPLETE DATA STRUCTURE
+typescript// ============== TOP STATS DATA ==============
+
+const DEAL_PIPELINE_STATS = {
+  texts: { 
+    value: 0, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
+  },
+  emails: { 
+    value: 0, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
+  },
+  calls: { 
+    value: 0, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
+  },
+  offersSent: { 
+    value: 0, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
+  },
+  inNegotiations: { 
+    value: 0, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
+  },
+  accepted: { 
+    value: 0, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
+  },
+  acquired: { 
+    value: 0, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
+  }
+};
+
+const AGENT_OUTREACH_STATS = {
+  texts: { 
+    value: 0, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
+  },
+  emails: { 
+    value: 0, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
+  },
+  calls: { 
+    value: 0, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
+  },
+  newRelationships: { 
+    value: 1, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] 
+  },
+  relationshipsUpgraded: { 
+    value: 1, 
+    percentDiff: 0, 
+    chartData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] 
+  }
+};
+
+// ============== PERFORMANCE REPORT DATA ==============
+
+const PERFORMANCE_STATS = {
+  texts: {
+    total: 0,
+    dealPipeline: 0,
+    agentOutreach: 0,
+    teamAvg: 15,
+    teamAvgPercent: 0
+  },
+  emails: {
+    total: 0,
+    dealPipeline: 0,
+    agentOutreach: 0,
+    teamAvg: 20,
+    teamAvgPercent: 0
+  },
+  calls: { 
+    total: 0, 
+    conversations: 0, 
+    connectedPercent: 0,
+    avgCallTime: '0:00',
+    dealPipeline: 0,
+    agentOutreach: 0,
+    teamAvg: 29,
+    teamAvgPercent: 0
+  },
+  newRelationships: { 
+    count: 1, 
+    teamAvg: 3,
+    teamAvgPercent: 33
+  },
+  relationshipsUpgraded: { 
+    total: 1,
+    priority: 1,
+    hot: 0,
+    warm: 0,
+    teamAvg: 3,
+    teamAvgPercent: 33
+  },
+  offersSent: { 
+    sent: 0, 
+    termsOut: 0, 
+    contractSubmitted: 0,
+    teamAvg: 2.7,
+    teamAvgPercent: 0
+  },
+  inNegotiations: {
+    count: 0,
+    teamAvg: 1.5,
+    teamAvgPercent: 0
+  },
+  offersAccepted: {
+    count: 0,
+    teamAvg: 0.8,
+    teamAvgPercent: 0
+  },
+  acquired: {
+    count: 0,
+    teamAvg: 0.5,
+    teamAvgPercent: 0
+  },
+  dealSource: {
+    total: 0,
+    mls: 0,
+    directMail: 0,
+    coldCall: 0,
+    referral: 0,
+    teamAvg: 2.5,
+    teamAvgPercent: 0
+  },
+  time: { 
+    totalHours: 16.1,  // Converted from 964 minutes
+    piq: 0.5,          // 32 min → 0.5 hrs
+    comps: 4.7,        // 281 min → 4.7 hrs
+    investmentAnalysis: 9.1,  // 545 min → 9.1 hrs
+    offerTerms: 0.1,   // 8 min → 0.1 hrs
+    agents: 1.7,       // 99 min → 1.7 hrs
+    teamAvg: 2.2,      // 130 min → 2.2 hrs
+    teamAvgPercent: 100
+  }
+};
+
+// ============== TEAM LEADERBOARD DATA ==============
+
+const TEAM_LEADERBOARD = [
+  { 
+    rank: 1, 
+    name: 'Faisal Nazik', 
+    calls: 0, 
+    newRelationships: 0,
+    relationshipsUpgraded: 0,
+    offersSent: 0, 
+    inNegotiations: 0, 
+    offersAccepted: 0, 
+    acquired: 0, 
+    time: '0h',
+    isUser: false 
+  },
+  { 
+    rank: 2, 
+    name: 'Haris Aqeel', 
+    calls: 0, 
+    newRelationships: 0,
+    relationshipsUpgraded: 0,
+    offersSent: 0, 
+    inNegotiations: 0, 
+    offersAccepted: 0, 
+    acquired: 0, 
+    time: '0h',
+    isUser: false 
+  }
+];
+```
+
+---
+
+### 7. COMPLETE VISUAL LAYOUT
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ My Stats                                    [Yesterday ▼]  Feb 03, 2026     │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│ DEAL PIPELINE ⓘ "This information is specific to deals in your pipeline"   │
+│ ┌────────┬────────┬────────┬────────┬────────┬──────────┬─────────┐        │
+│ │ Texts  │ Emails │ Calls  │ Offers │ Negot. │ Accepted │ Acquired│        │
+│ │   0    │   0    │   0    │   0    │   0    │    0     │    0    │        │
+│ │  +0%   │  +0%   │  +0%   │  +0%   │  +0%   │   +0%    │   +0%   │        │
+│ │  ───   │  ───   │  ───   │  ───   │  ───   │   ───    │   ───   │        │
+│ └────────┴────────┴────────┴────────┴────────┴──────────┴─────────┘        │
+│                                                                             │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│ AGENT OUTREACH ⓘ "Communication metrics for agent relationship building"   │
+│ ┌──────────┬──────────┬──────────┬───────────────┬──────────────────┐      │
+│ │  Texts   │  Emails  │  Calls   │ New Relations │ Rel. Upgraded    │      │
+│ │    0     │    0     │    0     │       1       │        1         │      │
+│ │   +0%    │   +0%    │   +0%    │      +0%      │       +0%        │      │
+│ │   ───    │   ───    │   ───    │      ───      │       ───        │      │
+│ └──────────┴──────────┴──────────┴───────────────┴──────────────────┘      │
+│                                                                             │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│ 🏆 Team Leaderboard                                                         │
+│ ┌──────────────┬───────┬─────────┬──────────┬────────┬────────┬──────────┬──────────┬──────┐
+│ │ Name         │ Calls │ New Rel.│ Upgraded │ Offers │ Negot. │ Accepted │ Acquired │ Time │
+│ ├──────────────┼───────┼─────────┼──────────┼────────┼────────┼──────────┼──────────┼──────┤
+│ │🥇 Faisal Nazik│   0   │    0    │    0     │   0    │   0    │    0     │    0     │  0h  │
+│ │🥈 Haris Aqeel │   0   │    0    │    0     │   0    │   0    │    0     │    0     │  0h  │
+│ └──────────────┴───────┴─────────┴──────────┴────────┴────────┴──────────┴──────────┴──────┘
+│                                                                             │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│ Performance Report                                                          │
+│                                                                             │
+│ Row 1:                                                                      │
+│ ┌─────────────────┬─────────────────┬─────────────────┬─────────────────┐  │
+│ │ 📱 TEXTS        │ ✉️ EMAILS       │ 📞 CALLS        │ 👤+ NEW RELS    │  │
+│ │ ✓ 0 texts       │ ✓ 0 emails      │ ✓ 0 calls       │ 1 new           │  │
+│ │                 │                 │ Conv: 0 (0%)    │                 │  │
+│ │ Deal: 0         │ Deal: 0         │ Avg: 0:00       │                 │  │
+│ │ Agent: 0        │ Agent: 0        │ Deal: 0         │                 │  │
+│ │                 │                 │ Agent: 0        │                 │  │
+│ │ 0% of Team Avg  │ 0% of Team Avg  │ 0% of Team Avg  │ 33% of Team Avg │  │
+│ └─────────────────┴─────────────────┴─────────────────┴─────────────────┘  │
+│                                                                             │
+│ Row 2:                                                                      │
+│ ┌─────────────────┬─────────────────┬─────────────────┬─────────────────┐  │
+│ │ 📈 RELS UPGRADED│ 📤 OFFERS SENT  │ 💬 IN NEGOT.    │ 🤝 ACCEPTED     │  │
+│ │ 1 upgraded      │ ✓ 0 sent        │ 0 deals         │ ✓ 0 accepted    │  │
+│ │                 │                 │                 │                 │  │
+│ │ Priority: 1     │ Terms: 0        │                 │                 │  │
+│ │ Hot: 0          │ Contract: 0     │                 │                 │  │
+│ │ Warm: 0         │                 │                 │                 │  │
+│ │ 33% of Team Avg │ 0% of Team Avg  │ 0% of Team Avg  │ 0% of Team Avg  │  │
+│ └─────────────────┴─────────────────┴─────────────────┴─────────────────┘  │
+│                                                                             │
+│ Row 3:                                                                      │
+│ ┌─────────────────┬─────────────────┬─────────────────┐                    │
+│ │ 🏠 ACQUIRED     │ 🎯 DEAL SOURCE  │ 🕐 TIME         │                    │
+│ │ ✓ 0 closed      │ 0 total         │ 16.1 hours      │                    │
+│ │                 │                 │                 │                    │
+│ │                 │ MLS: 0          │ PIQ: 0.5 hrs    │                    │
+│ │                 │ Direct Mail: 0  │ Comps: 4.7 hrs  │                    │
+│ │                 │ Cold Call: 0    │ Inv Anly: 9.1hrs│                    │
+│ │                 │ Referral: 0     │ Offer: 0.1 hrs  │                    │
+│ │                 │                 │ Agents: 1.7 hrs │                    │
+│ │ 0% of Team Avg  │ 0% of Team Avg  │ 100% of Team Avg│                    │
+│ └─────────────────┴─────────────────┴─────────────────┘                    │
+│                                                                             │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│ 💡 AI Performance Coach                                                     │
+│ ┌─────────────────────────────────────────────────────────────────────────┐│
+│ │ [AI Avatar] Good morning, Josh! I'm your Performance Coach.             ││
+│ │                                                                         ││
+│ │ 📊 Yesterday's Results:                                                 ││
+│ │ ✓ Calls: 0 (0% of target)                                              ││
+│ │ ✓ New Relationships: 1 (33% of target)                                 ││
+│ │ ✗ Offers Sent: 0 (0% of target)                                        ││
+│ │                                                                         ││
+│ │ Your biggest opportunity is Calls where you hit 0% of team average.    ││
+│ │                                                                         ││
+│ │ 🎯 Recommended focus for today:                                        ││
+│ │ 1. Make 29 calls to hit team average                                   ││
+│ │ 2. Send 3 offer terms on ready deals                                   ││
+│ │ 3. Follow up with 2 warm relationships                                 ││
+│ │                                                                         ││
+│ │ What would you like to dive deeper into?                               ││
+│ └─────────────────────────────────────────────────────────────────────────┘│
+│                                                                             │
+│ ┌─────────────────────────────────────────────────────────────────────────┐│
+│ │ [+] Ask about your stats...                              [🎤] [➤]      ││
+│ └─────────────────────────────────────────────────────────────────────────┘│
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+8. REQUIRED ICON IMPORTS
+Add these to existing imports:
+typescriptimport { 
+  Phone, 
+  Users, 
+  Calendar,
+  ChevronDown,
+  Send,
+  Lightbulb,
+  Plus,
+  Mic,
+  AudioLines,
+  Trophy,
+  Clock,
+  Info,
+  MessageSquare,
+  Handshake,
+  Home,
+  Target,
+  Mail,          // NEW - for Emails
+  UserPlus,      // NEW - for New Relationships
+  TrendingUp     // NEW - for Relationships Upgraded
+} from 'lucide-react';
+
+9. ACCEPTANCE CRITERIA
+Date Filter:
+
+ Dropdown defaults to "Yesterday" before 12:00 PM local time
+ Dropdown defaults to "Today" at 12:00 PM or later local time
+ All filter options work: Yesterday, Today, Weekly, Monthly, Yearly, Custom
+ Date display updates dynamically based on selection
+ All sections filter consistently based on dropdown selection
+
+Top Stats Section:
+
+ "Deal Pipeline" section with 7 cards: Texts, Emails, Calls, Offers Sent, In Negotiations, Accepted, Acquired
+ "Agent Outreach" section with 5 cards: Texts, Emails, Calls, New Relationships, Relationships Upgraded
+ Both sections have header with info icon tooltip
+ Time card REMOVED from top stats
+
+Team Leaderboard:
+
+ "Today" removed from header (now just "Team Leaderboard")
+ Columns updated: Name, Calls, New Rel., Upgraded, Offers, Negot., Accepted, Acquired, Time
+ Time displays in hours (not minutes)
+
+Performance Report:
+
+ "Daily" removed from header (now just "Performance Report")
+ TEXTS card added with Deal Pipeline + Agent Outreach breakdown
+ EMAILS card added with Deal Pipeline + Agent Outreach breakdown
+ NEW RELATIONSHIPS card (separate from upgraded)
+ RELATIONSHIPS UPGRADED card with Priority/Hot/Warm breakdown
+ Time displays in hours with breakdown also in hours
+ All totals = Deal Pipeline + Agent Outreach combined
+
+AI Performance Coach:
+
+ Morning mode (before noon): Reviews yesterday, suggests today's focus
+ Afternoon mode (noon-5pm): Shows today's progress, time remaining to hit targets
+ Evening mode (after 5pm): End-of-day summary, tomorrow's priorities
+ Responds to specific questions about calls, offers, relationships, time
+ Provides actionable, data-driven recommendations
