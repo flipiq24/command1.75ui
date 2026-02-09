@@ -566,9 +566,9 @@ function MyStatsContent() {
                 <tr className="border-b border-gray-200">
                   <th className="py-1 px-2 text-left font-normal text-gray-400" rowSpan={2}></th>
                   <th className="py-1 px-2 text-left font-normal text-gray-400" rowSpan={2}>Name</th>
-                  <th className="py-1 px-1 text-center font-semibold text-gray-400 uppercase tracking-wider text-[9px] border-b border-gray-100" colSpan={3}>Communication</th>
-                  <th className="py-1 px-1 text-center font-semibold text-gray-400 uppercase tracking-wider text-[9px] border-b border-gray-100 border-l border-gray-100" colSpan={2}>Relationships</th>
-                  <th className="py-1 px-1 text-center font-semibold text-gray-400 uppercase tracking-wider text-[9px] border-b border-gray-100 border-l border-gray-100" colSpan={4}>Deal Progress</th>
+                  <th className="py-1 px-1 text-center font-semibold text-blue-400 uppercase tracking-wider text-[9px] border-b border-gray-100" colSpan={3}>Communication</th>
+                  <th className="py-1 px-1 text-center font-semibold text-emerald-400 uppercase tracking-wider text-[9px] border-b border-gray-100 border-l border-gray-100" colSpan={2}>Relationships</th>
+                  <th className="py-1 px-1 text-center font-semibold text-orange-400 uppercase tracking-wider text-[9px] border-b border-gray-100 border-l border-gray-100" colSpan={4}>Deal Progress</th>
                   <th className="py-1 px-1 text-center font-normal text-gray-400 border-l border-gray-100" rowSpan={2}>Time</th>
                 </tr>
                 <tr className="border-b border-gray-200">
@@ -622,19 +622,19 @@ function MyStatsContent() {
           <div className="bg-white rounded-lg border border-gray-100 p-5">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Deal Pipeline</span>
-              <Tooltip content={<p>This information is specific to deals that are in your pipeline assigned to you</p>}>
+              <Tooltip content={<p>Metrics specific to deals assigned to you — tracks your communication, offers, and closings</p>}>
                 <Info className="w-3 h-3 text-gray-400 cursor-help" />
               </Tooltip>
             </div>
             <div className="space-y-3">
               {[
-                { icon: MessageSquare, label: 'Texts', stat: DEAL_PIPELINE_STATS.texts, tip: 'Text messages sent on deals in your pipeline' },
-                { icon: Mail, label: 'Emails', stat: DEAL_PIPELINE_STATS.emails, tip: 'Emails sent on deals in your pipeline' },
-                { icon: Phone, label: 'Calls', stat: DEAL_PIPELINE_STATS.calls, tip: 'Calls made on deals in your pipeline' },
-                { icon: Send, label: 'Offers Sent', stat: DEAL_PIPELINE_STATS.offersSent, tip: 'Offer Terms Sent + Contract Submitted' },
-                { icon: MessageSquare, label: 'In Negotiations', stat: DEAL_PIPELINE_STATS.inNegotiations, tip: 'Deals currently being negotiated' },
-                { icon: Handshake, label: 'Accepted', stat: DEAL_PIPELINE_STATS.accepted, tip: 'Offers accepted, under contract' },
-                { icon: Home, label: 'Acquired', stat: DEAL_PIPELINE_STATS.acquired, tip: 'Deals closed and acquired' },
+                { icon: MessageSquare, label: 'Texts', stat: DEAL_PIPELINE_STATS.texts, tip: 'Total text messages sent to leads and agents in your deal pipeline' },
+                { icon: Mail, label: 'Emails', stat: DEAL_PIPELINE_STATS.emails, tip: 'Total emails sent for outreach and follow-ups on pipeline deals' },
+                { icon: Phone, label: 'Calls', stat: DEAL_PIPELINE_STATS.calls, tip: 'Total calls made including connected conversations and missed attempts' },
+                { icon: Send, label: 'Offers Sent', stat: DEAL_PIPELINE_STATS.offersSent, tip: 'Formal offers submitted to sellers — terms sent and contracts submitted' },
+                { icon: MessageSquare, label: 'In Negotiations', stat: DEAL_PIPELINE_STATS.inNegotiations, tip: 'Deals currently in active negotiation — counter-offers or terms being discussed' },
+                { icon: Handshake, label: 'Accepted', stat: DEAL_PIPELINE_STATS.accepted, tip: 'Offers accepted and moving toward closing — deals now under contract' },
+                { icon: Home, label: 'Acquired', stat: DEAL_PIPELINE_STATS.acquired, tip: 'Deals fully closed and acquired — property is now in your portfolio' },
               ].map((item, idx) => {
                 const Icon = item.icon;
                 const isPositive = item.stat.percentDiff >= 0;
@@ -665,17 +665,17 @@ function MyStatsContent() {
           <div className="bg-white rounded-lg border border-gray-100 p-5">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Agent Outreach</span>
-              <Tooltip content={<p>Communication metrics for agent relationship building</p>}>
+              <Tooltip content={<p>Your outreach activity with agents — texts, emails, calls, and relationship progress</p>}>
                 <Info className="w-3 h-3 text-gray-400 cursor-help" />
               </Tooltip>
             </div>
             <div className="space-y-3">
               {[
-                { icon: MessageSquare, label: 'Texts', stat: AGENT_OUTREACH_STATS.texts, tip: 'Text messages sent to agents' },
-                { icon: Mail, label: 'Emails', stat: AGENT_OUTREACH_STATS.emails, tip: 'Emails sent to agents' },
-                { icon: Phone, label: 'Calls', stat: AGENT_OUTREACH_STATS.calls, tip: 'Calls made to agents' },
-                { icon: UserPlus, label: 'New Relationships', stat: AGENT_OUTREACH_STATS.newRelationships, tip: 'Brand new agent relationships created' },
-                { icon: TrendingUp, label: 'Rel. Upgraded', stat: AGENT_OUTREACH_STATS.relationshipsUpgraded, tip: 'Existing relationships upgraded to higher tier' },
+                { icon: MessageSquare, label: 'Texts', stat: AGENT_OUTREACH_STATS.texts, tip: 'Total text messages sent to agents for relationship building' },
+                { icon: Mail, label: 'Emails', stat: AGENT_OUTREACH_STATS.emails, tip: 'Total emails sent to agents for outreach and follow-ups' },
+                { icon: Phone, label: 'Calls', stat: AGENT_OUTREACH_STATS.calls, tip: 'Total calls made to agents including connected and missed' },
+                { icon: UserPlus, label: 'New Relationships', stat: AGENT_OUTREACH_STATS.newRelationships, tip: 'New agent connections made — first-time contacts added to your network' },
+                { icon: TrendingUp, label: 'Rel. Upgraded', stat: AGENT_OUTREACH_STATS.relationshipsUpgraded, tip: 'Agent relationships moved to a higher priority tier (e.g. Warm → Hot → Priority)' },
               ].map((item, idx) => {
                 const Icon = item.icon;
                 const isPositive = item.stat.percentDiff >= 0;
@@ -709,7 +709,7 @@ function MyStatsContent() {
           
           {/* COMMUNICATION */}
           <div className="mb-4">
-            <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Communication</span>
+            <span className="text-[10px] font-semibold text-blue-500 uppercase tracking-wider">Communication</span>
             <div className="grid grid-cols-3 gap-3 mt-2">
               <div className="bg-gray-50 rounded-lg p-3 space-y-2">
                 <div className="flex items-center gap-1">
@@ -737,7 +737,7 @@ function MyStatsContent() {
                 <div className="flex items-center gap-1">
                   <Mail className="w-3 h-3 text-gray-400" />
                   <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Emails</span>
-                  <Tooltip content={<p>Total emails sent (Deal Pipeline + Agent Outreach)</p>}>
+                  <Tooltip content={<p>Total emails sent for outreach and follow-ups across deals and agents</p>}>
                     <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                   </Tooltip>
                 </div>
@@ -759,7 +759,7 @@ function MyStatsContent() {
                 <div className="flex items-center gap-1">
                   <Phone className="w-3 h-3 text-gray-400" />
                   <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Calls</span>
-                  <Tooltip content={<p>Total calls made (Deal Pipeline + Agent Outreach)</p>}>
+                  <Tooltip content={<p>Total calls made including connected conversations and missed attempts</p>}>
                     <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                   </Tooltip>
                 </div>
@@ -783,13 +783,13 @@ function MyStatsContent() {
 
           {/* RELATIONSHIPS */}
           <div className="mb-4">
-            <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Relationships</span>
+            <span className="text-[10px] font-semibold text-emerald-500 uppercase tracking-wider">Relationships</span>
             <div className="grid grid-cols-2 gap-3 mt-2">
               <div className="bg-gray-50 rounded-lg p-3 space-y-2">
                 <div className="flex items-center gap-1">
                   <UserPlus className="w-3 h-3 text-gray-400" />
                   <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">New Relationships</span>
-                  <Tooltip content={<p>Brand new agent relationships created during this period</p>}>
+                  <Tooltip content={<p>New agent connections made during this period — first-time contacts added to your network</p>}>
                     <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                   </Tooltip>
                 </div>
@@ -806,7 +806,7 @@ function MyStatsContent() {
                 <div className="flex items-center gap-1">
                   <TrendingUp className="w-3 h-3 text-gray-400" />
                   <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Upgraded</span>
-                  <Tooltip content={<p>Existing agent relationships upgraded to higher tier</p>}>
+                  <Tooltip content={<p>Agent relationships moved to a higher priority tier (e.g. Warm → Hot → Priority)</p>}>
                     <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                   </Tooltip>
                 </div>
@@ -828,13 +828,13 @@ function MyStatsContent() {
 
           {/* DEAL PROGRESS */}
           <div className="mb-4">
-            <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Deal Progress</span>
+            <span className="text-[10px] font-semibold text-orange-500 uppercase tracking-wider">Deal Progress</span>
             <div className="grid grid-cols-4 gap-3 mt-2">
               <div className="bg-gray-50 rounded-lg p-3 space-y-2">
                 <div className="flex items-center gap-1">
                   <Send className="w-3 h-3 text-gray-400" />
                   <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Offers Sent</span>
-                  <Tooltip content={<p>Offer Terms Sent + Contract Submitted</p>}>
+                  <Tooltip content={<p>Formal offers submitted to sellers — includes offer terms sent and contracts submitted</p>}>
                     <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                   </Tooltip>
                 </div>
@@ -856,7 +856,7 @@ function MyStatsContent() {
                 <div className="flex items-center gap-1">
                   <MessageSquare className="w-3 h-3 text-gray-400" />
                   <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Negotiations</span>
-                  <Tooltip content={<p>Offers received and currently being negotiated</p>}>
+                  <Tooltip content={<p>Deals currently in active negotiation — counter-offers or terms being discussed</p>}>
                     <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                   </Tooltip>
                 </div>
@@ -873,7 +873,7 @@ function MyStatsContent() {
                 <div className="flex items-center gap-1">
                   <Handshake className="w-3 h-3 text-gray-400" />
                   <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Accepted</span>
-                  <Tooltip content={<p>Negotiation successful - Under contract</p>}>
+                  <Tooltip content={<p>Offers accepted and moving toward closing — deals now under contract</p>}>
                     <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                   </Tooltip>
                 </div>
@@ -891,7 +891,7 @@ function MyStatsContent() {
                 <div className="flex items-center gap-1">
                   <Home className="w-3 h-3 text-gray-400" />
                   <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Acquired</span>
-                  <Tooltip content={<p>Deals closed and acquired</p>}>
+                  <Tooltip content={<p>Deals fully closed and acquired — property is now in your portfolio</p>}>
                     <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                   </Tooltip>
                 </div>
@@ -909,13 +909,13 @@ function MyStatsContent() {
 
           {/* OTHER */}
           <div>
-            <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Other</span>
+            <span className="text-[10px] font-semibold text-purple-500 uppercase tracking-wider">Other</span>
             <div className="grid grid-cols-2 gap-3 mt-2">
               <div className="bg-gray-50 rounded-lg p-3 space-y-2">
                 <div className="flex items-center gap-1">
                   <Target className="w-3 h-3 text-gray-400" />
                   <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Deal Source</span>
-                  <Tooltip content={<p>Where acquired deals originated from</p>}>
+                  <Tooltip content={<p>Where your deals originated — MLS, Direct Mail, Cold Call, or Referral sources</p>}>
                     <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                   </Tooltip>
                 </div>
@@ -938,7 +938,7 @@ function MyStatsContent() {
                 <div className="flex items-center gap-1">
                   <Clock className="w-3 h-3 text-gray-400" />
                   <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Time</span>
-                  <Tooltip content={<p>Total time spent across all modules</p>}>
+                  <Tooltip content={<p>Total hours spent on deals and outreach — PIQ, Comps, Analysis, Offers, and Agent work</p>}>
                     <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                   </Tooltip>
                 </div>
