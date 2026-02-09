@@ -694,261 +694,248 @@ function MyStatsContent() {
           </div>
         </div>
 
-        {/* Performance Report */}
+        {/* Performance Report - Horizontal Scroll */}
         <div className="bg-white rounded-lg border border-gray-100 p-5 mb-6 flex-shrink-0">
           <h3 className="text-sm font-semibold text-gray-900 mb-4">Performance Report</h3>
           
-          {/* Row 1: Texts, Emails, Calls, New Relationships */}
-          <div className="grid grid-cols-4 gap-4 mb-4">
+          <div className="flex gap-3 overflow-x-auto pb-2">
             {/* TEXTS */}
-            <div className="space-y-2">
+            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <MessageSquare className="w-3 h-3 text-gray-400" />
-                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Texts</span>
+                <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Texts</span>
                 <Tooltip content={<p>Total text messages sent (Deal Pipeline + Agent Outreach)</p>}>
-                  <Info className="w-3 h-3 text-gray-400 cursor-help" />
+                  <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                 </Tooltip>
               </div>
               <div className="flex items-baseline gap-1">
                 <span className="text-lg font-bold text-green-600">✓</span>
                 <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.texts.total}</span>
-                <span className="text-xs text-gray-400">texts</span>
+                <span className="text-[10px] text-gray-400">texts</span>
               </div>
-              <div className="text-xs text-gray-500 space-y-0.5">
+              <div className="text-[10px] text-gray-500 space-y-0.5">
                 <div>Deal Pipeline: {PERFORMANCE_STATS.texts.dealPipeline}</div>
                 <div>Agent Outreach: {PERFORMANCE_STATS.texts.agentOutreach}</div>
               </div>
-              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.texts.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
-                {PERFORMANCE_STATS.texts.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.texts.teamAvg})
+              <div className={cn("text-[10px] font-medium pt-1", PERFORMANCE_STATS.texts.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.texts.teamAvgPercent}% of Team Avg ({PERFORMANCE_STATS.texts.teamAvg})
               </div>
             </div>
 
             {/* EMAILS */}
-            <div className="space-y-2">
+            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <Mail className="w-3 h-3 text-gray-400" />
-                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Emails</span>
+                <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Emails</span>
                 <Tooltip content={<p>Total emails sent (Deal Pipeline + Agent Outreach)</p>}>
-                  <Info className="w-3 h-3 text-gray-400 cursor-help" />
+                  <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                 </Tooltip>
               </div>
               <div className="flex items-baseline gap-1">
                 <span className="text-lg font-bold text-green-600">✓</span>
                 <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.emails.total}</span>
-                <span className="text-xs text-gray-400">emails</span>
+                <span className="text-[10px] text-gray-400">emails</span>
               </div>
-              <div className="text-xs text-gray-500 space-y-0.5">
+              <div className="text-[10px] text-gray-500 space-y-0.5">
                 <div>Deal Pipeline: {PERFORMANCE_STATS.emails.dealPipeline}</div>
                 <div>Agent Outreach: {PERFORMANCE_STATS.emails.agentOutreach}</div>
               </div>
-              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.emails.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
-                {PERFORMANCE_STATS.emails.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.emails.teamAvg})
+              <div className={cn("text-[10px] font-medium pt-1", PERFORMANCE_STATS.emails.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.emails.teamAvgPercent}% of Team Avg ({PERFORMANCE_STATS.emails.teamAvg})
               </div>
             </div>
 
             {/* CALLS */}
-            <div className="space-y-2">
+            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <Phone className="w-3 h-3 text-gray-400" />
-                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Calls</span>
+                <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Calls</span>
                 <Tooltip content={<p>Total calls made (Deal Pipeline + Agent Outreach)</p>}>
-                  <Info className="w-3 h-3 text-gray-400 cursor-help" />
+                  <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                 </Tooltip>
               </div>
               <div className="flex items-baseline gap-1">
                 <span className="text-lg font-bold text-green-600">✓</span>
                 <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.calls.total}</span>
-                <span className="text-xs text-gray-400">calls</span>
+                <span className="text-[10px] text-gray-400">calls</span>
               </div>
-              <div className="text-xs text-gray-500 space-y-0.5">
-                <div>Conversations: {PERFORMANCE_STATS.calls.conversations} ({PERFORMANCE_STATS.calls.connectedPercent}% connected)</div>
-                <div>Avg Call Time: {PERFORMANCE_STATS.calls.avgCallTime}</div>
-                <div>Deal Pipeline: {PERFORMANCE_STATS.calls.dealPipeline}</div>
-                <div>Agent Outreach: {PERFORMANCE_STATS.calls.agentOutreach}</div>
+              <div className="text-[10px] text-gray-500 space-y-0.5">
+                <div>Conv: {PERFORMANCE_STATS.calls.conversations} ({PERFORMANCE_STATS.calls.connectedPercent}%)</div>
+                <div>Avg: {PERFORMANCE_STATS.calls.avgCallTime}</div>
+                <div>Deal: {PERFORMANCE_STATS.calls.dealPipeline}</div>
+                <div>Agent: {PERFORMANCE_STATS.calls.agentOutreach}</div>
               </div>
-              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.calls.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
-                {PERFORMANCE_STATS.calls.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.calls.teamAvg})
+              <div className={cn("text-[10px] font-medium pt-1", PERFORMANCE_STATS.calls.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.calls.teamAvgPercent}% of Team Avg ({PERFORMANCE_STATS.calls.teamAvg})
               </div>
             </div>
 
             {/* NEW RELATIONSHIPS */}
-            <div className="space-y-2">
+            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <UserPlus className="w-3 h-3 text-gray-400" />
-                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">New Relationships</span>
+                <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">New Rel.</span>
                 <Tooltip content={<p>Brand new agent relationships created during this period</p>}>
-                  <Info className="w-3 h-3 text-gray-400 cursor-help" />
+                  <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                 </Tooltip>
               </div>
               <div className="flex items-baseline gap-1">
                 <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.newRelationships.count}</span>
-                <span className="text-xs text-gray-400">new</span>
+                <span className="text-[10px] text-gray-400">new</span>
               </div>
-              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.newRelationships.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
-                {PERFORMANCE_STATS.newRelationships.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.newRelationships.teamAvg})
+              <div className={cn("text-[10px] font-medium pt-1", PERFORMANCE_STATS.newRelationships.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.newRelationships.teamAvgPercent}% of Team Avg ({PERFORMANCE_STATS.newRelationships.teamAvg})
               </div>
             </div>
-          </div>
 
-          {/* Faint divider line */}
-          <div className="border-t border-gray-100 my-4"></div>
-
-          {/* Row 2: Relationships Upgraded, Offers Sent, In Negotiations, Accepted */}
-          <div className="grid grid-cols-4 gap-4 mb-4">
             {/* RELATIONSHIPS UPGRADED */}
-            <div className="space-y-2">
+            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <TrendingUp className="w-3 h-3 text-gray-400" />
-                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Rel. Upgraded</span>
-                <Tooltip content={<p>Existing agent relationships upgraded to higher tier (Priority, Hot, or Warm)</p>}>
-                  <Info className="w-3 h-3 text-gray-400 cursor-help" />
+                <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Upgraded</span>
+                <Tooltip content={<p>Existing agent relationships upgraded to higher tier</p>}>
+                  <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                 </Tooltip>
               </div>
               <div className="flex items-baseline gap-1">
                 <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.relationshipsUpgraded.total}</span>
-                <span className="text-xs text-gray-400">upgraded</span>
+                <span className="text-[10px] text-gray-400">upgraded</span>
               </div>
-              <div className="text-xs text-gray-500 space-y-0.5">
+              <div className="text-[10px] text-gray-500 space-y-0.5">
                 <div>Priority: {PERFORMANCE_STATS.relationshipsUpgraded.priority}</div>
                 <div>Hot: {PERFORMANCE_STATS.relationshipsUpgraded.hot}</div>
                 <div>Warm: {PERFORMANCE_STATS.relationshipsUpgraded.warm}</div>
               </div>
-              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.relationshipsUpgraded.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
-                {PERFORMANCE_STATS.relationshipsUpgraded.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.relationshipsUpgraded.teamAvg})
+              <div className={cn("text-[10px] font-medium pt-1", PERFORMANCE_STATS.relationshipsUpgraded.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.relationshipsUpgraded.teamAvgPercent}% of Team Avg ({PERFORMANCE_STATS.relationshipsUpgraded.teamAvg})
               </div>
             </div>
 
             {/* OFFERS SENT */}
-            <div className="space-y-2">
+            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <Send className="w-3 h-3 text-gray-400" />
-                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Offers Sent</span>
+                <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Offers Sent</span>
                 <Tooltip content={<p>Offer Terms Sent + Contract Submitted</p>}>
-                  <Info className="w-3 h-3 text-gray-400 cursor-help" />
+                  <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                 </Tooltip>
               </div>
               <div className="flex items-baseline gap-1">
                 <span className="text-lg font-bold text-green-600">✓</span>
                 <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.offersSent.sent}</span>
-                <span className="text-xs text-gray-400">sent</span>
+                <span className="text-[10px] text-gray-400">sent</span>
               </div>
-              <div className="text-xs text-gray-500 space-y-0.5">
-                <div>Offer Terms Sent: {PERFORMANCE_STATS.offersSent.termsOut}</div>
-                <div>Contract Submitted: {PERFORMANCE_STATS.offersSent.contractSubmitted}</div>
+              <div className="text-[10px] text-gray-500 space-y-0.5">
+                <div>Terms: {PERFORMANCE_STATS.offersSent.termsOut}</div>
+                <div>Contract: {PERFORMANCE_STATS.offersSent.contractSubmitted}</div>
               </div>
-              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.offersSent.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
-                {PERFORMANCE_STATS.offersSent.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.offersSent.teamAvg})
+              <div className={cn("text-[10px] font-medium pt-1", PERFORMANCE_STATS.offersSent.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.offersSent.teamAvgPercent}% of Team Avg ({PERFORMANCE_STATS.offersSent.teamAvg})
               </div>
             </div>
 
             {/* IN NEGOTIATIONS */}
-            <div className="space-y-2">
+            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <MessageSquare className="w-3 h-3 text-gray-400" />
-                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">In Negotiations</span>
+                <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Negot.</span>
                 <Tooltip content={<p>Offers received and currently being negotiated</p>}>
-                  <Info className="w-3 h-3 text-gray-400 cursor-help" />
+                  <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                 </Tooltip>
               </div>
               <div className="flex items-baseline gap-1">
                 <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.inNegotiations.count}</span>
-                <span className="text-xs text-gray-400">deals</span>
+                <span className="text-[10px] text-gray-400">deals</span>
               </div>
-              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.inNegotiations.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
-                {PERFORMANCE_STATS.inNegotiations.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.inNegotiations.teamAvg})
+              <div className={cn("text-[10px] font-medium pt-1", PERFORMANCE_STATS.inNegotiations.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.inNegotiations.teamAvgPercent}% of Team Avg ({PERFORMANCE_STATS.inNegotiations.teamAvg})
               </div>
             </div>
 
-            {/* OFFERS ACCEPTED */}
-            <div className="space-y-2">
+            {/* ACCEPTED */}
+            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <Handshake className="w-3 h-3 text-gray-400" />
-                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Accepted</span>
-                <Tooltip content={<p>Negotiation successful → Under contract</p>}>
-                  <Info className="w-3 h-3 text-gray-400 cursor-help" />
+                <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Accepted</span>
+                <Tooltip content={<p>Negotiation successful - Under contract</p>}>
+                  <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                 </Tooltip>
               </div>
               <div className="flex items-baseline gap-1">
                 <span className="text-lg font-bold text-green-600">✓</span>
                 <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.offersAccepted.count}</span>
-                <span className="text-xs text-gray-400">accepted</span>
+                <span className="text-[10px] text-gray-400">accepted</span>
               </div>
-              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.offersAccepted.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
-                {PERFORMANCE_STATS.offersAccepted.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.offersAccepted.teamAvg})
+              <div className={cn("text-[10px] font-medium pt-1", PERFORMANCE_STATS.offersAccepted.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.offersAccepted.teamAvgPercent}% of Team Avg ({PERFORMANCE_STATS.offersAccepted.teamAvg})
               </div>
             </div>
-          </div>
 
-          {/* Faint divider line */}
-          <div className="border-t border-gray-100 my-4"></div>
-
-          {/* Row 3: Acquired, Deal Source, Time */}
-          <div className="grid grid-cols-3 gap-4">
             {/* ACQUIRED */}
-            <div className="space-y-2">
+            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <Home className="w-3 h-3 text-gray-400" />
-                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Acquired</span>
+                <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Acquired</span>
                 <Tooltip content={<p>Deals closed and acquired</p>}>
-                  <Info className="w-3 h-3 text-gray-400 cursor-help" />
+                  <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                 </Tooltip>
               </div>
               <div className="flex items-baseline gap-1">
                 <span className="text-lg font-bold text-green-600">✓</span>
                 <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.acquired.count}</span>
-                <span className="text-xs text-gray-400">closed</span>
+                <span className="text-[10px] text-gray-400">closed</span>
               </div>
-              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.acquired.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
-                {PERFORMANCE_STATS.acquired.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.acquired.teamAvg})
+              <div className={cn("text-[10px] font-medium pt-1", PERFORMANCE_STATS.acquired.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.acquired.teamAvgPercent}% of Team Avg ({PERFORMANCE_STATS.acquired.teamAvg})
               </div>
             </div>
 
             {/* DEAL SOURCE */}
-            <div className="space-y-2">
+            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <Target className="w-3 h-3 text-gray-400" />
-                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Deal Source</span>
+                <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Deal Source</span>
                 <Tooltip content={<p>Where acquired deals originated from</p>}>
-                  <Info className="w-3 h-3 text-gray-400 cursor-help" />
+                  <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                 </Tooltip>
               </div>
               <div className="flex items-baseline gap-1">
                 <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.dealSource.total}</span>
-                <span className="text-xs text-gray-400">total</span>
+                <span className="text-[10px] text-gray-400">total</span>
               </div>
-              <div className="text-xs text-gray-500 space-y-0.5">
+              <div className="text-[10px] text-gray-500 space-y-0.5">
                 <div>MLS: {PERFORMANCE_STATS.dealSource.mls}</div>
                 <div>Direct Mail: {PERFORMANCE_STATS.dealSource.directMail}</div>
                 <div>Cold Call: {PERFORMANCE_STATS.dealSource.coldCall}</div>
                 <div>Referral: {PERFORMANCE_STATS.dealSource.referral}</div>
               </div>
-              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.dealSource.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
-                {PERFORMANCE_STATS.dealSource.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.dealSource.teamAvg})
+              <div className={cn("text-[10px] font-medium pt-1", PERFORMANCE_STATS.dealSource.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.dealSource.teamAvgPercent}% of Team Avg ({PERFORMANCE_STATS.dealSource.teamAvg})
               </div>
             </div>
 
             {/* TIME */}
-            <div className="space-y-2">
+            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <Clock className="w-3 h-3 text-gray-400" />
-                <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Time</span>
+                <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Time</span>
                 <Tooltip content={<p>Total time spent across all modules</p>}>
-                  <Info className="w-3 h-3 text-gray-400 cursor-help" />
+                  <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                 </Tooltip>
               </div>
               <div className="flex items-baseline gap-1">
                 <span className="text-lg font-semibold text-gray-900">{PERFORMANCE_STATS.time.totalHours}</span>
-                <span className="text-xs text-gray-400">hours</span>
+                <span className="text-[10px] text-gray-400">hours</span>
               </div>
-              <div className="text-xs text-gray-500 space-y-0.5">
+              <div className="text-[10px] text-gray-500 space-y-0.5">
                 <div>PIQ: {PERFORMANCE_STATS.time.piq} hrs</div>
                 <div>Comps: {PERFORMANCE_STATS.time.comps} hrs</div>
-                <div>Investment Analysis: {PERFORMANCE_STATS.time.investmentAnalysis} hrs</div>
-                <div>Offer Terms: {PERFORMANCE_STATS.time.offerTerms} hrs</div>
+                <div>Inv Anly: {PERFORMANCE_STATS.time.investmentAnalysis} hrs</div>
+                <div>Offer: {PERFORMANCE_STATS.time.offerTerms} hrs</div>
                 <div>Agents: {PERFORMANCE_STATS.time.agents} hrs</div>
               </div>
-              <div className={cn("text-xs font-medium pt-1", PERFORMANCE_STATS.time.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
-                {PERFORMANCE_STATS.time.teamAvgPercent}% of Team Average (Team Avg = {PERFORMANCE_STATS.time.teamAvg} hrs)
+              <div className={cn("text-[10px] font-medium pt-1", PERFORMANCE_STATS.time.teamAvgPercent >= 100 ? "text-green-600" : "text-red-500")}>
+                {PERFORMANCE_STATS.time.teamAvgPercent}% of Team Avg ({PERFORMANCE_STATS.time.teamAvg} hrs)
               </div>
             </div>
           </div>
