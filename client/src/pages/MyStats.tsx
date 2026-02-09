@@ -715,7 +715,7 @@ function MyStatsContent() {
                 <div className="flex items-center gap-1">
                   <MessageSquare className="w-3 h-3 text-gray-400" />
                   <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Texts</span>
-                  <Tooltip content={<p>Total text messages sent (Deal Pipeline + Agent Outreach)</p>}>
+                  <Tooltip content={<p>Total text messages sent to leads and agents in your deal pipeline</p>}>
                     <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
                   </Tooltip>
                 </div>
