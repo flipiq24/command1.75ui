@@ -181,6 +181,8 @@ const TEAM_LEADERBOARD = [
   { 
     rank: 1, 
     name: 'Faisal Nazik', 
+    texts: 0,
+    emails: 0,
     calls: 0, 
     newRelationships: 0,
     relationshipsUpgraded: 0,
@@ -194,6 +196,8 @@ const TEAM_LEADERBOARD = [
   { 
     rank: 2, 
     name: 'Haris Aqeel', 
+    texts: 0,
+    emails: 0,
     calls: 0, 
     newRelationships: 0,
     relationshipsUpgraded: 0,
@@ -556,54 +560,59 @@ function MyStatsContent() {
             Team Leaderboard
           </h3>
           
-          {/* Column Headers */}
-          <div className="flex items-center py-2 px-2 text-[10px] text-gray-400 border-b border-gray-100 mb-1">
-            <div className="flex items-center gap-2 w-28 flex-shrink-0">
-              <span className="w-5"></span>
-              <span>Name</span>
-            </div>
-            <div className="flex-1 grid grid-cols-8 gap-1 text-center">
-              <span>Calls</span>
-              <span>New Rel.</span>
-              <span>Upgraded</span>
-              <span>Offers</span>
-              <span>Negot.</span>
-              <span>Accepted</span>
-              <span>Acquired</span>
-              <span>Time</span>
-            </div>
-          </div>
-
-          <div className="space-y-0.5">
-            {TEAM_LEADERBOARD.map((member) => (
-              <div 
-                key={member.rank}
-                className={cn(
-                  "flex items-center py-1.5 px-2 rounded transition text-xs",
-                  member.isUser ? "bg-orange-50" : "hover:bg-gray-50"
-                )}
-                data-testid={`leaderboard-row-${member.rank}`}
-              >
-                <div className="flex items-center gap-2 w-28 flex-shrink-0">
-                  <span className="w-5 text-center text-gray-400 text-[10px]">
-                    {member.rank === 1 ? '🥇' : member.rank === 2 ? '🥈' : member.rank === 3 ? '🥉' : `#${member.rank}`}
-                  </span>
-                  <span className={cn("font-medium text-xs truncate", member.isUser ? "text-orange-600" : "text-gray-700")}>
-                    {member.name}
-                  </span>
-                </div>
-                <div className="flex-1 grid grid-cols-8 gap-1 text-center text-[10px] text-gray-500">
-                  <span><strong className="text-gray-900">{member.calls}</strong></span>
-                  <span><strong className="text-gray-900">{member.newRelationships}</strong></span>
-                  <span><strong className="text-gray-900">{member.relationshipsUpgraded}</strong></span>
-                  <span><strong className="text-gray-900">{member.offersSent}</strong></span>
-                  <span><strong className="text-gray-900">{member.inNegotiations}</strong></span>
-                  <span><strong className="text-gray-900">{member.offersAccepted}</strong></span>
-                  <span><strong className="text-gray-900">{member.acquired}</strong></span>
-                  <span><strong className="text-gray-900">{member.time}</strong></span>
-                </div>
-              </div>
-            ))}
+          <div className="overflow-x-auto">
+            <table className="w-full text-[11px]">
+              <thead>
+                <tr className="border-b border-gray-200">
+                  <th className="py-1 px-2 text-left font-normal text-gray-400" rowSpan={2}></th>
+                  <th className="py-1 px-2 text-left font-normal text-gray-400" rowSpan={2}>Name</th>
+                  <th className="py-1 px-1 text-center font-semibold text-gray-400 uppercase tracking-wider text-[9px] border-b border-gray-100" colSpan={3}>Communication</th>
+                  <th className="py-1 px-1 text-center font-semibold text-gray-400 uppercase tracking-wider text-[9px] border-b border-gray-100 border-l border-gray-100" colSpan={2}>Relationships</th>
+                  <th className="py-1 px-1 text-center font-semibold text-gray-400 uppercase tracking-wider text-[9px] border-b border-gray-100 border-l border-gray-100" colSpan={4}>Deal Progress</th>
+                  <th className="py-1 px-1 text-center font-normal text-gray-400 border-l border-gray-100" rowSpan={2}>Time</th>
+                </tr>
+                <tr className="border-b border-gray-200">
+                  <th className="py-1 px-1 text-center font-normal text-gray-400">Texts</th>
+                  <th className="py-1 px-1 text-center font-normal text-gray-400">Emails</th>
+                  <th className="py-1 px-1 text-center font-normal text-gray-400">Calls</th>
+                  <th className="py-1 px-1 text-center font-normal text-gray-400 border-l border-gray-100">New</th>
+                  <th className="py-1 px-1 text-center font-normal text-gray-400">Upgr.</th>
+                  <th className="py-1 px-1 text-center font-normal text-gray-400 border-l border-gray-100">Offers</th>
+                  <th className="py-1 px-1 text-center font-normal text-gray-400">Negot.</th>
+                  <th className="py-1 px-1 text-center font-normal text-gray-400">Accept.</th>
+                  <th className="py-1 px-1 text-center font-normal text-gray-400">Acq.</th>
+                </tr>
+              </thead>
+              <tbody>
+                {TEAM_LEADERBOARD.map((member) => (
+                  <tr 
+                    key={member.rank}
+                    className={cn(
+                      "transition",
+                      member.isUser ? "bg-orange-50" : "hover:bg-gray-50"
+                    )}
+                    data-testid={`leaderboard-row-${member.rank}`}
+                  >
+                    <td className="py-2 px-2 text-center text-gray-400 text-[10px]">
+                      {member.rank === 1 ? '🥇' : member.rank === 2 ? '🥈' : member.rank === 3 ? '🥉' : `#${member.rank}`}
+                    </td>
+                    <td className={cn("py-2 px-2 font-medium text-xs whitespace-nowrap", member.isUser ? "text-orange-600" : "text-gray-700")}>
+                      {member.name}
+                    </td>
+                    <td className="py-2 px-1 text-center font-semibold text-gray-900">{member.texts}</td>
+                    <td className="py-2 px-1 text-center font-semibold text-gray-900">{member.emails}</td>
+                    <td className="py-2 px-1 text-center font-semibold text-gray-900">{member.calls}</td>
+                    <td className="py-2 px-1 text-center font-semibold text-gray-900 border-l border-gray-100">{member.newRelationships}</td>
+                    <td className="py-2 px-1 text-center font-semibold text-gray-900">{member.relationshipsUpgraded}</td>
+                    <td className="py-2 px-1 text-center font-semibold text-gray-900 border-l border-gray-100">{member.offersSent}</td>
+                    <td className="py-2 px-1 text-center font-semibold text-gray-900">{member.inNegotiations}</td>
+                    <td className="py-2 px-1 text-center font-semibold text-gray-900">{member.offersAccepted}</td>
+                    <td className="py-2 px-1 text-center font-semibold text-gray-900">{member.acquired}</td>
+                    <td className="py-2 px-1 text-center font-semibold text-gray-900 border-l border-gray-100">{member.time}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
 
