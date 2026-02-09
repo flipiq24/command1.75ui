@@ -547,131 +547,9 @@ function MyStatsContent() {
         </div>
       </div>
 
-      {/* DEAL PIPELINE Section */}
-      <div className="flex-shrink-0 border-b border-gray-100">
-        <div className="px-6 pt-3 pb-1 flex items-center gap-2">
-          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Deal Pipeline</span>
-          <Tooltip content={<p>This information is specific to deals that are in your pipeline assigned to you</p>}>
-            <Info className="w-3 h-3 text-gray-400 cursor-help" />
-          </Tooltip>
-        </div>
-        <div className="flex border-b border-gray-100">
-          <StatCard
-            icon={MessageSquare}
-            label="Texts"
-            value={DEAL_PIPELINE_STATS.texts.value}
-            percentDiff={DEAL_PIPELINE_STATS.texts.percentDiff}
-            chartData={DEAL_PIPELINE_STATS.texts.chartData}
-            tooltip={<p>Text messages sent on deals in your pipeline</p>}
-          />
-          <StatCard
-            icon={Mail}
-            label="Emails"
-            value={DEAL_PIPELINE_STATS.emails.value}
-            percentDiff={DEAL_PIPELINE_STATS.emails.percentDiff}
-            chartData={DEAL_PIPELINE_STATS.emails.chartData}
-            tooltip={<p>Emails sent on deals in your pipeline</p>}
-          />
-          <StatCard
-            icon={Phone}
-            label="Calls"
-            value={DEAL_PIPELINE_STATS.calls.value}
-            percentDiff={DEAL_PIPELINE_STATS.calls.percentDiff}
-            chartData={DEAL_PIPELINE_STATS.calls.chartData}
-            tooltip={<p>Calls made on deals in your pipeline</p>}
-          />
-          <StatCard
-            icon={Send}
-            label="Offers Sent"
-            value={DEAL_PIPELINE_STATS.offersSent.value}
-            percentDiff={DEAL_PIPELINE_STATS.offersSent.percentDiff}
-            chartData={DEAL_PIPELINE_STATS.offersSent.chartData}
-            tooltip={<p>Offer Terms Sent + Contract Submitted</p>}
-          />
-          <StatCard
-            icon={MessageSquare}
-            label="In Negotiations"
-            value={DEAL_PIPELINE_STATS.inNegotiations.value}
-            percentDiff={DEAL_PIPELINE_STATS.inNegotiations.percentDiff}
-            chartData={DEAL_PIPELINE_STATS.inNegotiations.chartData}
-            tooltip={<p>Deals currently being negotiated</p>}
-          />
-          <StatCard
-            icon={Handshake}
-            label="Accepted"
-            value={DEAL_PIPELINE_STATS.accepted.value}
-            percentDiff={DEAL_PIPELINE_STATS.accepted.percentDiff}
-            chartData={DEAL_PIPELINE_STATS.accepted.chartData}
-            tooltip={<p>Offers accepted, under contract</p>}
-          />
-          <StatCard
-            icon={Home}
-            label="Acquired"
-            value={DEAL_PIPELINE_STATS.acquired.value}
-            percentDiff={DEAL_PIPELINE_STATS.acquired.percentDiff}
-            chartData={DEAL_PIPELINE_STATS.acquired.chartData}
-            tooltip={<p>Deals closed and acquired</p>}
-            isLast
-          />
-        </div>
-      </div>
-
-      {/* AGENT OUTREACH Section */}
-      <div className="flex-shrink-0 border-b border-gray-100">
-        <div className="px-6 pt-3 pb-1 flex items-center gap-2">
-          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Agent Outreach</span>
-          <Tooltip content={<p>Communication metrics for agent relationship building</p>}>
-            <Info className="w-3 h-3 text-gray-400 cursor-help" />
-          </Tooltip>
-        </div>
-        <div className="flex">
-          <StatCard
-            icon={MessageSquare}
-            label="Texts"
-            value={AGENT_OUTREACH_STATS.texts.value}
-            percentDiff={AGENT_OUTREACH_STATS.texts.percentDiff}
-            chartData={AGENT_OUTREACH_STATS.texts.chartData}
-            tooltip={<p>Text messages sent to agents</p>}
-          />
-          <StatCard
-            icon={Mail}
-            label="Emails"
-            value={AGENT_OUTREACH_STATS.emails.value}
-            percentDiff={AGENT_OUTREACH_STATS.emails.percentDiff}
-            chartData={AGENT_OUTREACH_STATS.emails.chartData}
-            tooltip={<p>Emails sent to agents</p>}
-          />
-          <StatCard
-            icon={Phone}
-            label="Calls"
-            value={AGENT_OUTREACH_STATS.calls.value}
-            percentDiff={AGENT_OUTREACH_STATS.calls.percentDiff}
-            chartData={AGENT_OUTREACH_STATS.calls.chartData}
-            tooltip={<p>Calls made to agents</p>}
-          />
-          <StatCard
-            icon={UserPlus}
-            label="New Relationships"
-            value={AGENT_OUTREACH_STATS.newRelationships.value}
-            percentDiff={AGENT_OUTREACH_STATS.newRelationships.percentDiff}
-            chartData={AGENT_OUTREACH_STATS.newRelationships.chartData}
-            tooltip={<p>Brand new agent relationships created</p>}
-          />
-          <StatCard
-            icon={TrendingUp}
-            label="Rel. Upgraded"
-            value={AGENT_OUTREACH_STATS.relationshipsUpgraded.value}
-            percentDiff={AGENT_OUTREACH_STATS.relationshipsUpgraded.percentDiff}
-            chartData={AGENT_OUTREACH_STATS.relationshipsUpgraded.chartData}
-            tooltip={<p>Existing relationships upgraded to higher tier</p>}
-            isLast
-          />
-        </div>
-      </div>
-
       {/* Scrollable Content Area */}
       <div className="flex-1 flex flex-col min-h-0 p-6 pb-24 overflow-y-auto">
-        {/* Team Leaderboard */}
+        {/* Team Leaderboard - TOP */}
         <div className="bg-white rounded-lg border border-gray-100 p-5 mb-6 flex-shrink-0">
           <h3 className="text-sm font-semibold text-gray-900 mb-4 flex items-center gap-2">
             <Trophy className="w-4 h-4 text-yellow-500" />
@@ -726,6 +604,93 @@ function MyStatsContent() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Deal Pipeline & Agent Outreach - Side by Side Stats */}
+        <div className="grid grid-cols-2 gap-6 mb-6 flex-shrink-0">
+          {/* DEAL PIPELINE Column */}
+          <div className="bg-white rounded-lg border border-gray-100 p-5">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Deal Pipeline</span>
+              <Tooltip content={<p>This information is specific to deals that are in your pipeline assigned to you</p>}>
+                <Info className="w-3 h-3 text-gray-400 cursor-help" />
+              </Tooltip>
+            </div>
+            <div className="space-y-3">
+              {[
+                { icon: MessageSquare, label: 'Texts', stat: DEAL_PIPELINE_STATS.texts, tip: 'Text messages sent on deals in your pipeline' },
+                { icon: Mail, label: 'Emails', stat: DEAL_PIPELINE_STATS.emails, tip: 'Emails sent on deals in your pipeline' },
+                { icon: Phone, label: 'Calls', stat: DEAL_PIPELINE_STATS.calls, tip: 'Calls made on deals in your pipeline' },
+                { icon: Send, label: 'Offers Sent', stat: DEAL_PIPELINE_STATS.offersSent, tip: 'Offer Terms Sent + Contract Submitted' },
+                { icon: MessageSquare, label: 'In Negotiations', stat: DEAL_PIPELINE_STATS.inNegotiations, tip: 'Deals currently being negotiated' },
+                { icon: Handshake, label: 'Accepted', stat: DEAL_PIPELINE_STATS.accepted, tip: 'Offers accepted, under contract' },
+                { icon: Home, label: 'Acquired', stat: DEAL_PIPELINE_STATS.acquired, tip: 'Deals closed and acquired' },
+              ].map((item, idx) => {
+                const Icon = item.icon;
+                const isPositive = item.stat.percentDiff >= 0;
+                const sign = isPositive ? '+' : '';
+                return (
+                  <div key={idx} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+                    <div className="flex items-center gap-2">
+                      <Icon className="w-3.5 h-3.5 text-gray-400" strokeWidth={1.5} />
+                      <span className="text-xs text-gray-600">{item.label}</span>
+                      <Tooltip content={<p>{item.tip}</p>}>
+                        <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
+                      </Tooltip>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm font-semibold text-gray-900">{item.stat.value}</span>
+                      <span className={cn("text-[10px]", isPositive ? "text-green-600" : "text-red-500")}>
+                        {sign}{Math.abs(item.stat.percentDiff).toFixed(0)}%
+                      </span>
+                      <MiniSparkline data={item.stat.chartData} isPositive={isPositive} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* AGENT OUTREACH Column */}
+          <div className="bg-white rounded-lg border border-gray-100 p-5">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Agent Outreach</span>
+              <Tooltip content={<p>Communication metrics for agent relationship building</p>}>
+                <Info className="w-3 h-3 text-gray-400 cursor-help" />
+              </Tooltip>
+            </div>
+            <div className="space-y-3">
+              {[
+                { icon: MessageSquare, label: 'Texts', stat: AGENT_OUTREACH_STATS.texts, tip: 'Text messages sent to agents' },
+                { icon: Mail, label: 'Emails', stat: AGENT_OUTREACH_STATS.emails, tip: 'Emails sent to agents' },
+                { icon: Phone, label: 'Calls', stat: AGENT_OUTREACH_STATS.calls, tip: 'Calls made to agents' },
+                { icon: UserPlus, label: 'New Relationships', stat: AGENT_OUTREACH_STATS.newRelationships, tip: 'Brand new agent relationships created' },
+                { icon: TrendingUp, label: 'Rel. Upgraded', stat: AGENT_OUTREACH_STATS.relationshipsUpgraded, tip: 'Existing relationships upgraded to higher tier' },
+              ].map((item, idx) => {
+                const Icon = item.icon;
+                const isPositive = item.stat.percentDiff >= 0;
+                const sign = isPositive ? '+' : '';
+                return (
+                  <div key={idx} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+                    <div className="flex items-center gap-2">
+                      <Icon className="w-3.5 h-3.5 text-gray-400" strokeWidth={1.5} />
+                      <span className="text-xs text-gray-600">{item.label}</span>
+                      <Tooltip content={<p>{item.tip}</p>}>
+                        <Info className="w-2.5 h-2.5 text-gray-300 cursor-help" />
+                      </Tooltip>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm font-semibold text-gray-900">{item.stat.value}</span>
+                      <span className={cn("text-[10px]", isPositive ? "text-green-600" : "text-red-500")}>
+                        {sign}{Math.abs(item.stat.percentDiff).toFixed(0)}%
+                      </span>
+                      <MiniSparkline data={item.stat.chartData} isPositive={isPositive} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
 
