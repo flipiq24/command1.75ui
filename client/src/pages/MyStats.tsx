@@ -509,7 +509,11 @@ function MyStatsContent() {
     <div className="h-full bg-white flex flex-col">
       {/* Header - Fixed */}
       <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-white flex-shrink-0">
-        <h1 className="text-lg font-semibold text-gray-900">My Stats</h1>
+        <h1 className="text-lg font-semibold text-gray-900 flex items-center gap-2">My Stats
+          <Tooltip content={<p>Your personal performance dashboard — track activity, compare against teammates, and get AI coaching to improve</p>}>
+            <Info className="w-3.5 h-3.5 text-gray-400 cursor-help" />
+          </Tooltip>
+        </h1>
         <div className="flex items-center gap-4">
           <div className="relative">
             <button 
@@ -558,6 +562,9 @@ function MyStatsContent() {
           <h3 className="text-sm font-semibold text-gray-900 mb-4 flex items-center gap-2">
             <Trophy className="w-4 h-4 text-yellow-500" />
             Team Leaderboard
+            <Tooltip content={<p>Compare your performance against team members — average across all team members shown as benchmarks throughout</p>}>
+              <Info className="w-3 h-3 text-gray-400 cursor-help" />
+            </Tooltip>
           </h3>
           
           <div className="overflow-x-auto">
@@ -705,7 +712,12 @@ function MyStatsContent() {
 
         {/* Performance Report - Organized by Category */}
         <div className="bg-white rounded-lg border border-gray-100 p-5 mb-6 flex-shrink-0">
-          <h3 className="text-sm font-semibold text-gray-900 mb-4">Performance Report</h3>
+          <h3 className="text-sm font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            Performance Report
+            <Tooltip content={<p>Detailed breakdown of your activity across all categories — communication, relationships, deal progress, and time investment compared to team averages</p>}>
+              <Info className="w-3 h-3 text-gray-400 cursor-help" />
+            </Tooltip>
+          </h3>
           
           {/* COMMUNICATION */}
           <div className="mb-4">
@@ -966,6 +978,9 @@ function MyStatsContent() {
           <h3 className="text-sm font-semibold text-gray-900 mb-4 flex items-center gap-2">
             <Lightbulb className="w-4 h-4 text-orange-500" />
             AI Performance Coach
+            <Tooltip content={<p>Your personal AI coach — reviews your stats, highlights wins and gaps, and recommends what to focus on next</p>}>
+              <Info className="w-3 h-3 text-gray-400 cursor-help" />
+            </Tooltip>
           </h3>
           <div 
             ref={chatContainerRef}
