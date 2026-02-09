@@ -698,9 +698,9 @@ function MyStatsContent() {
         <div className="bg-white rounded-lg border border-gray-100 p-5 mb-6 flex-shrink-0">
           <h3 className="text-sm font-semibold text-gray-900 mb-4">Performance Report</h3>
           
-          <div className="flex gap-3 overflow-x-auto pb-2">
+          <div className="grid grid-cols-4 gap-3">
             {/* TEXTS */}
-            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
+            <div className="bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <MessageSquare className="w-3 h-3 text-gray-400" />
                 <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Texts</span>
@@ -723,7 +723,7 @@ function MyStatsContent() {
             </div>
 
             {/* EMAILS */}
-            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
+            <div className="bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <Mail className="w-3 h-3 text-gray-400" />
                 <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Emails</span>
@@ -746,7 +746,7 @@ function MyStatsContent() {
             </div>
 
             {/* CALLS */}
-            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
+            <div className="bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <Phone className="w-3 h-3 text-gray-400" />
                 <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Calls</span>
@@ -771,7 +771,7 @@ function MyStatsContent() {
             </div>
 
             {/* NEW RELATIONSHIPS */}
-            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
+            <div className="bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <UserPlus className="w-3 h-3 text-gray-400" />
                 <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">New Rel.</span>
@@ -789,7 +789,7 @@ function MyStatsContent() {
             </div>
 
             {/* RELATIONSHIPS UPGRADED */}
-            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
+            <div className="bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <TrendingUp className="w-3 h-3 text-gray-400" />
                 <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Upgraded</span>
@@ -812,7 +812,7 @@ function MyStatsContent() {
             </div>
 
             {/* OFFERS SENT */}
-            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
+            <div className="bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <Send className="w-3 h-3 text-gray-400" />
                 <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Offers Sent</span>
@@ -835,7 +835,7 @@ function MyStatsContent() {
             </div>
 
             {/* IN NEGOTIATIONS */}
-            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
+            <div className="bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <MessageSquare className="w-3 h-3 text-gray-400" />
                 <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Negot.</span>
@@ -853,7 +853,7 @@ function MyStatsContent() {
             </div>
 
             {/* ACCEPTED */}
-            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
+            <div className="bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <Handshake className="w-3 h-3 text-gray-400" />
                 <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Accepted</span>
@@ -872,7 +872,7 @@ function MyStatsContent() {
             </div>
 
             {/* ACQUIRED */}
-            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
+            <div className="bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <Home className="w-3 h-3 text-gray-400" />
                 <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Acquired</span>
@@ -891,7 +891,7 @@ function MyStatsContent() {
             </div>
 
             {/* DEAL SOURCE */}
-            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
+            <div className="bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <Target className="w-3 h-3 text-gray-400" />
                 <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Deal Source</span>
@@ -915,7 +915,7 @@ function MyStatsContent() {
             </div>
 
             {/* TIME */}
-            <div className="min-w-[160px] flex-shrink-0 bg-gray-50 rounded-lg p-3 space-y-2">
+            <div className="bg-gray-50 rounded-lg p-3 space-y-2">
               <div className="flex items-center gap-1">
                 <Clock className="w-3 h-3 text-gray-400" />
                 <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">Time</span>
