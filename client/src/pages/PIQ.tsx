@@ -959,8 +959,11 @@ function PIQContent() {
   const [showCelebration, setShowCelebration] = useState(false);
   const [loanProgram, setLoanProgram] = useState('Cash');
   const [targetReturnPercent, setTargetReturnPercent] = useState('12');
+  const [targetCashNet, setTargetCashNet] = useState(35000);
+  const [targetCashNetDisplay, setTargetCashNetDisplay] = useState('$35,000');
   const [showLowRoiWarning, setShowLowRoiWarning] = useState(false);
   const [suppressLowRoiWarning, setSuppressLowRoiWarning] = useState(false);
+  const leveredProfit = Math.round(targetCashNet * 0.7);
   const [otherCosts, setOtherCosts] = useState<{id: number, type: string, customName: string, amount: string}[]>([]);
   const [nextCostId, setNextCostId] = useState(1);
   
@@ -3018,7 +3021,16 @@ function PIQContent() {
                               <span className="text-[10px] text-gray-400 uppercase tracking-wider font-medium mb-2">Cash Net</span>
                               <input 
                                 type="text" 
-                                defaultValue="$35,000" 
+                                value={targetCashNetDisplay}
+                                onChange={(e) => {
+                                  const raw = e.target.value.replace(/[^0-9.-]/g, '');
+                                  const num = parseFloat(raw);
+                                  setTargetCashNetDisplay(e.target.value);
+                                  if (!isNaN(num)) setTargetCashNet(num);
+                                }}
+                                onBlur={() => {
+                                  setTargetCashNetDisplay('$' + targetCashNet.toLocaleString());
+                                }}
                                 className="w-full text-center text-xl font-bold text-gray-900 bg-transparent focus:outline-none"
                                 data-testid="input-target-profit-amount"
                               />
@@ -3026,7 +3038,8 @@ function PIQContent() {
                             {loanProgram !== 'Cash' && (
                             <div className="border border-gray-200 rounded-lg px-3 py-4 bg-gray-50 flex flex-col items-center justify-center">
                               <span className="text-[10px] text-gray-400 uppercase tracking-wider font-medium mb-2">Levered</span>
-                              <div className="text-xl font-bold text-gray-900" data-testid="display-levered-profit-target">$40,734</div>
+                              <div className="text-xl font-bold text-gray-900" data-testid="display-levered-profit-target">${leveredProfit.toLocaleString()}</div>
+                              <span className="text-[9px] text-gray-400 mt-1">70% of Cash Net</span>
                             </div>
                             )}
                           </div>
