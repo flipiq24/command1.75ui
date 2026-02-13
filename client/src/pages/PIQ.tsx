@@ -2974,33 +2974,34 @@ function PIQContent() {
                         )}
                       </div>
                       
-                      {/* Target Profit Input Section */}
+                      {/* Target Profit Input Section - Only shows when financing is selected */}
+                      {loanProgram !== 'Cash' && (
                       <div className="space-y-3 mb-4 pt-3 border-t border-gray-200">
                         <div>
                           <span className="text-sm text-gray-600 block mb-2">Target Profit Goal</span>
-                          <div className="flex items-center gap-2">
-                            <div className="w-20 flex items-center border border-gray-300 rounded-md bg-white overflow-hidden">
+                          <div className="grid grid-cols-3 gap-2">
+                            <div className="border border-gray-300 rounded-lg bg-white p-3 text-center">
+                              <span className="text-[10px] text-gray-400 uppercase tracking-wider block mb-1">Return %</span>
                               <input 
                                 type="text" 
                                 defaultValue="12" 
-                                className="w-full px-2 py-2 text-sm text-right bg-transparent text-gray-700 focus:outline-none"
+                                className="w-full text-center text-lg font-bold text-gray-900 bg-transparent focus:outline-none"
                                 data-testid="input-target-profit-percent"
                               />
-                              <div className="border-l border-gray-200 px-2 py-2 bg-gray-50">
-                                <span className="text-xs text-gray-500 font-medium">%</span>
-                              </div>
+                              <span className="text-xs text-gray-400">%</span>
                             </div>
-                            <span className="text-gray-400 text-sm">or</span>
-                            <div className="flex-1 flex items-center border border-gray-300 rounded-md bg-white overflow-hidden">
+                            <div className="border border-gray-300 rounded-lg bg-white p-3 text-center">
+                              <span className="text-[10px] text-gray-400 uppercase tracking-wider block mb-1">Cash Net Profits</span>
                               <input 
                                 type="text" 
                                 defaultValue="$35,000" 
-                                className="flex-1 px-3 py-2 text-sm text-right bg-transparent font-semibold text-gray-900 focus:outline-none"
+                                className="w-full text-center text-lg font-bold text-gray-900 bg-transparent focus:outline-none"
                                 data-testid="input-target-profit-amount"
                               />
-                              <div className="border-l border-gray-200 px-2 py-2 bg-gray-50">
-                                <span className="text-xs text-gray-500 font-medium">$</span>
-                              </div>
+                            </div>
+                            <div className="border border-gray-300 rounded-lg bg-gray-50 p-3 text-center">
+                              <span className="text-[10px] text-gray-400 uppercase tracking-wider block mb-1">Levered Profit</span>
+                              <div className="text-lg font-bold text-gray-900" data-testid="display-levered-profit-target">$40,734</div>
                             </div>
                           </div>
                         </div>
@@ -3041,6 +3042,7 @@ function PIQContent() {
                           Calculate
                         </button>
                       </div>
+                      )}
                       
                       {/* The Results */}
                       <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4">
