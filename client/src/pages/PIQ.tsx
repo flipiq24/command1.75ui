@@ -3039,7 +3039,6 @@ function PIQContent() {
                             <div className="border border-gray-200 rounded-lg px-3 py-4 bg-gray-50 flex flex-col items-center justify-center">
                               <span className="text-[10px] text-gray-400 uppercase tracking-wider font-medium mb-2">Levered</span>
                               <div className="text-xl font-bold text-gray-900" data-testid="display-levered-profit-target">${leveredProfit.toLocaleString()}</div>
-                              <span className="text-[9px] text-gray-400 mt-1">70% of Cash Net</span>
                             </div>
                             )}
                           </div>
