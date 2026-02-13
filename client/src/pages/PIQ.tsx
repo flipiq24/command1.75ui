@@ -2981,56 +2981,52 @@ function PIQContent() {
                       <div className="space-y-3 mb-4 pt-3 border-t border-gray-200">
                         <div>
                           <span className="text-sm text-gray-600 block mb-2">Target Profit Goal</span>
-                          <div className={`grid gap-2 ${loanProgram !== 'Cash' ? 'grid-cols-3' : 'grid-cols-2'}`}>
-                            <div className={`rounded-lg p-3 text-center border-2 ${
+                          <div className={`grid gap-3 ${loanProgram !== 'Cash' ? 'grid-cols-3' : 'grid-cols-2'}`}>
+                            <div className={`rounded-lg px-3 py-4 border-2 flex flex-col items-center justify-center ${
                               parseFloat(targetReturnPercent) < 10 
                                 ? 'border-red-400 bg-red-50' 
                                 : parseFloat(targetReturnPercent) < 12 
                                   ? 'border-yellow-400 bg-yellow-50' 
                                   : 'border-green-400 bg-green-50'
                             }`}>
-                              <span className={`text-[10px] uppercase tracking-wider block mb-1 ${
+                              <span className={`text-[10px] uppercase tracking-wider font-medium mb-2 ${
                                 parseFloat(targetReturnPercent) < 10 
-                                  ? 'text-red-500 font-semibold' 
+                                  ? 'text-red-500' 
                                   : parseFloat(targetReturnPercent) < 12 
                                     ? 'text-yellow-600' 
                                     : 'text-green-600'
-                              }`}>Return %</span>
-                              <input 
-                                type="text" 
-                                value={targetReturnPercent}
-                                onChange={(e) => {
-                                  const val = e.target.value;
-                                  setTargetReturnPercent(val);
-                                  const num = parseFloat(val);
-                                  if (!isNaN(num) && num < 10 && !suppressLowRoiWarning) {
-                                    setShowLowRoiWarning(true);
-                                  }
-                                }}
-                                className="w-full text-center text-lg font-bold text-gray-900 bg-transparent focus:outline-none"
-                                data-testid="input-target-profit-percent"
-                              />
-                              <span className={`text-xs ${
-                                parseFloat(targetReturnPercent) < 10 
-                                  ? 'text-red-400' 
-                                  : parseFloat(targetReturnPercent) < 12 
-                                    ? 'text-yellow-500' 
-                                    : 'text-green-500'
-                              }`}>%</span>
+                              }`}>Return</span>
+                              <div className="flex items-baseline gap-0.5">
+                                <input 
+                                  type="text" 
+                                  value={targetReturnPercent}
+                                  onChange={(e) => {
+                                    const val = e.target.value;
+                                    setTargetReturnPercent(val);
+                                    const num = parseFloat(val);
+                                    if (!isNaN(num) && num < 10 && !suppressLowRoiWarning) {
+                                      setShowLowRoiWarning(true);
+                                    }
+                                  }}
+                                  className="w-10 text-center text-xl font-bold text-gray-900 bg-transparent focus:outline-none"
+                                  data-testid="input-target-profit-percent"
+                                />
+                                <span className="text-sm font-semibold text-gray-500">%</span>
+                              </div>
                             </div>
-                            <div className="border border-gray-300 rounded-lg bg-white p-3 text-center">
-                              <span className="text-[10px] text-gray-400 uppercase tracking-wider block mb-1">Cash Net Profits</span>
+                            <div className="border border-gray-200 rounded-lg px-3 py-4 bg-white flex flex-col items-center justify-center">
+                              <span className="text-[10px] text-gray-400 uppercase tracking-wider font-medium mb-2">Cash Net</span>
                               <input 
                                 type="text" 
                                 defaultValue="$35,000" 
-                                className="w-full text-center text-lg font-bold text-gray-900 bg-transparent focus:outline-none"
+                                className="w-full text-center text-xl font-bold text-gray-900 bg-transparent focus:outline-none"
                                 data-testid="input-target-profit-amount"
                               />
                             </div>
                             {loanProgram !== 'Cash' && (
-                            <div className="border border-gray-300 rounded-lg bg-gray-50 p-3 text-center">
-                              <span className="text-[10px] text-gray-400 uppercase tracking-wider block mb-1">Levered Profit</span>
-                              <div className="text-lg font-bold text-gray-900" data-testid="display-levered-profit-target">$40,734</div>
+                            <div className="border border-gray-200 rounded-lg px-3 py-4 bg-gray-50 flex flex-col items-center justify-center">
+                              <span className="text-[10px] text-gray-400 uppercase tracking-wider font-medium mb-2">Levered</span>
+                              <div className="text-xl font-bold text-gray-900" data-testid="display-levered-profit-target">$40,734</div>
                             </div>
                             )}
                           </div>
