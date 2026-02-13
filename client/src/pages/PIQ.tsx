@@ -2974,12 +2974,11 @@ function PIQContent() {
                         )}
                       </div>
                       
-                      {/* Target Profit Input Section - Only shows when financing is selected */}
-                      {loanProgram !== 'Cash' && (
+                      {/* Target Profit Input Section - Always shows, Levered Profit box only when financing */}
                       <div className="space-y-3 mb-4 pt-3 border-t border-gray-200">
                         <div>
                           <span className="text-sm text-gray-600 block mb-2">Target Profit Goal</span>
-                          <div className="grid grid-cols-3 gap-2">
+                          <div className={`grid gap-2 ${loanProgram !== 'Cash' ? 'grid-cols-3' : 'grid-cols-2'}`}>
                             <div className="border border-gray-300 rounded-lg bg-white p-3 text-center">
                               <span className="text-[10px] text-gray-400 uppercase tracking-wider block mb-1">Return %</span>
                               <input 
@@ -2999,10 +2998,12 @@ function PIQContent() {
                                 data-testid="input-target-profit-amount"
                               />
                             </div>
+                            {loanProgram !== 'Cash' && (
                             <div className="border border-gray-300 rounded-lg bg-gray-50 p-3 text-center">
                               <span className="text-[10px] text-gray-400 uppercase tracking-wider block mb-1">Levered Profit</span>
                               <div className="text-lg font-bold text-gray-900" data-testid="display-levered-profit-target">$40,734</div>
                             </div>
+                            )}
                           </div>
                         </div>
                         
@@ -3042,7 +3043,6 @@ function PIQContent() {
                           Calculate
                         </button>
                       </div>
-                      )}
                       
                       {/* The Results */}
                       <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4">
