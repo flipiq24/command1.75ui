@@ -958,6 +958,9 @@ function PIQContent() {
   const [showMapValueIQCompletion, setShowMapValueIQCompletion] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [loanProgram, setLoanProgram] = useState('Cash');
+  const [targetReturnPercent, setTargetReturnPercent] = useState('12');
+  const [showLowRoiWarning, setShowLowRoiWarning] = useState(false);
+  const [suppressLowRoiWarning, setSuppressLowRoiWarning] = useState(false);
   const [otherCosts, setOtherCosts] = useState<{id: number, type: string, customName: string, amount: string}[]>([]);
   const [nextCostId, setNextCostId] = useState(1);
   
@@ -2979,15 +2982,41 @@ function PIQContent() {
                         <div>
                           <span className="text-sm text-gray-600 block mb-2">Target Profit Goal</span>
                           <div className={`grid gap-2 ${loanProgram !== 'Cash' ? 'grid-cols-3' : 'grid-cols-2'}`}>
-                            <div className="border border-gray-300 rounded-lg bg-white p-3 text-center">
-                              <span className="text-[10px] text-gray-400 uppercase tracking-wider block mb-1">Return %</span>
+                            <div className={`rounded-lg p-3 text-center border-2 ${
+                              parseFloat(targetReturnPercent) < 10 
+                                ? 'border-red-400 bg-red-50' 
+                                : parseFloat(targetReturnPercent) < 12 
+                                  ? 'border-yellow-400 bg-yellow-50' 
+                                  : 'border-green-400 bg-green-50'
+                            }`}>
+                              <span className={`text-[10px] uppercase tracking-wider block mb-1 ${
+                                parseFloat(targetReturnPercent) < 10 
+                                  ? 'text-red-500 font-semibold' 
+                                  : parseFloat(targetReturnPercent) < 12 
+                                    ? 'text-yellow-600' 
+                                    : 'text-green-600'
+                              }`}>Return %</span>
                               <input 
                                 type="text" 
-                                defaultValue="12" 
+                                value={targetReturnPercent}
+                                onChange={(e) => {
+                                  const val = e.target.value;
+                                  setTargetReturnPercent(val);
+                                  const num = parseFloat(val);
+                                  if (!isNaN(num) && num < 10 && !suppressLowRoiWarning) {
+                                    setShowLowRoiWarning(true);
+                                  }
+                                }}
                                 className="w-full text-center text-lg font-bold text-gray-900 bg-transparent focus:outline-none"
                                 data-testid="input-target-profit-percent"
                               />
-                              <span className="text-xs text-gray-400">%</span>
+                              <span className={`text-xs ${
+                                parseFloat(targetReturnPercent) < 10 
+                                  ? 'text-red-400' 
+                                  : parseFloat(targetReturnPercent) < 12 
+                                    ? 'text-yellow-500' 
+                                    : 'text-green-500'
+                              }`}>%</span>
                             </div>
                             <div className="border border-gray-300 rounded-lg bg-white p-3 text-center">
                               <span className="text-[10px] text-gray-400 uppercase tracking-wider block mb-1">Cash Net Profits</span>
@@ -3493,6 +3522,38 @@ function PIQContent() {
           </div>
         )}
       </div>
+
+      {showLowRoiWarning && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50" data-testid="modal-low-roi-warning">
+          <div className="bg-white rounded-xl shadow-xl max-w-sm w-full mx-4 p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                <Target className="w-5 h-5 text-red-500" />
+              </div>
+              <h3 className="text-base font-bold text-gray-900">Low ROI Warning</h3>
+            </div>
+            <p className="text-sm text-gray-600 mb-5 leading-relaxed">
+              Generally investors don't buy properties at this return. Make sure you check your numbers before proceeding.
+            </p>
+            <label className="flex items-center gap-2 mb-5 cursor-pointer">
+              <input 
+                type="checkbox" 
+                className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                onChange={(e) => setSuppressLowRoiWarning(e.target.checked)}
+                data-testid="checkbox-suppress-roi-warning"
+              />
+              <span className="text-xs text-gray-500">Don't show this again</span>
+            </label>
+            <button 
+              className="w-full px-4 py-2.5 bg-gray-900 hover:bg-gray-800 text-white font-medium rounded-lg transition text-sm"
+              onClick={() => setShowLowRoiWarning(false)}
+              data-testid="button-dismiss-roi-warning"
+            >
+              Got it
+            </button>
+          </div>
+        </div>
+      )}
       </>
   );
 }
